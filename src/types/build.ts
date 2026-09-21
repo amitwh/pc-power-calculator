@@ -1,5 +1,7 @@
 import type { WorkloadSchedule } from './workload';
 
+export type BuildCategory = 'gaming' | 'workstation' | 'nas' | 'ai' | 'general';
+
 export interface BuildComponents {
   cpu?: string;
   gpu?: string;
@@ -26,6 +28,8 @@ export type TdpOverrides = Record<string, number>;
 export interface BuildConfig {
   id: string;
   name: string;
+  /** Optional purpose tag — drives the chip emoji + summary tile icon. */
+  category?: BuildCategory;
   components: BuildComponents;
   tdpOverrides: TdpOverrides;
   schedule: WorkloadSchedule[];

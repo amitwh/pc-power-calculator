@@ -5,8 +5,9 @@ import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { ComponentCard } from './ComponentCard';
-import type { BuildComponents, ComponentSlot } from '@/types/build';
+import type { BuildComponents, BuildCategory, ComponentSlot } from '@/types/build';
 import type { ComponentCategory } from '@/types/component';
+import { CATEGORY_EMOJI, CATEGORY_LABEL } from '@/lib/buildCategory';
 
 interface SlotDef {
   key: ComponentSlot;
@@ -20,6 +21,8 @@ const slots: SlotDef[] = [
   { key: 'motherboard', label: 'Motherboard', category: 'motherboard' },
 ];
 
+const CATEGORIES: BuildCategory[] = ['gaming', 'workstation', 'nas', 'ai', 'general'];
+
 export function BuildPicker() {
   const builds = useBuildStore((s) => s.builds);
   const activeBuildId = useBuildStore((s) => s.activeBuildId);
@@ -29,6 +32,7 @@ export function BuildPicker() {
   const removeBuild = useBuildStore((s) => s.removeBuild);
   const setActiveBuild = useBuildStore((s) => s.setActiveBuild);
   const renameBuild = useBuildStore((s) => s.renameBuild);
+  const setBuildCategory = useBuildStore((s) => s.setBuildCategory);
 
   const activeBuild = builds.find((b) => b.id === activeBuildId);
 
@@ -37,11 +41,10 @@ export function BuildPicker() {
   const [overridingSlot, setOverridingSlot] = useState<string | null>(null);
 
   if (!activeBuild) {
-    // Defensive: should not happen because the store always keeps at least one build.
     return (
       <Card>
-        <CardTitle>1. Your Build</CardTitle>
-        <Button onClick={() => addBuild('My build')}>+ Add system</Button>
+        <CardTitle>1. Your Systems</CardTitle>
+        <Button onClick={() => addBuild('My build', 'gaming')}>+ Add system</Button>
       </Card>
     );
   }
@@ -137,12 +140,9 @@ export function BuildPicker() {
           </span>
           Your Systems
         </span>
-        <Button size="sm" variant="secondary" onClick={() => addBuild()}>
-          + Add system
-        </Button>
       </CardTitle>
 
-      {/* System chips */}
+      {/* System selector chips */}
       <div
         className="flex gap-2 overflow-x-auto pb-2 mb-4 -mx-1 px-1"
         role="tablist"
@@ -151,17 +151,21 @@ export function BuildPicker() {
         {builds.map((b) => {
           const isActive = b.id === activeBuildId;
           const isRenaming = renamingId === b.id;
+          const emoji = CATEGORY_EMOJI[b.category ?? 'general'];
           return (
             <div
               key={b.id}
               role="tab"
               aria-selected={isActive}
-              className={`group inline-flex items-center gap-2 rounded-full border px-3 py-1.5 min-h-[36px] whitespace-nowrap transition-colors ${
+              className={`group inline-flex items-center gap-2 rounded-full border px-3 py-1.5 min-h-[44px] whitespace-nowrap transition-colors ${
                 isActive
                   ? 'bg-brand text-white border-brand'
                   : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:border-gray-400'
               }`}
             >
+              <span aria-hidden className="text-base leading-none">
+                {emoji}
+              </span>
               {isRenaming ? (
                 <input
                   autoFocus
@@ -190,7 +194,7 @@ export function BuildPicker() {
                 <button
                   type="button"
                   aria-label={`Remove ${b.name}`}
-                  className={`text-xs leading-none opacity-70 hover:opacity-100 ${isActive ? 'text-white' : 'text-gray-500'}`}
+                  className={`text-base leading-none opacity-70 hover:opacity-100 ${isActive ? 'text-white' : 'text-gray-500'}`}
                   onClick={(e) => {
                     e.stopPropagation();
                     if (confirm(`Remove "${b.name}"?`)) removeBuild(b.id);
@@ -200,6 +204,39 @@ export function BuildPicker() {
                 </button>
               )}
             </div>
+          );
+        })}
+
+        {/* Add-system chip with dashed border */}
+        <button
+          type="button"
+          onClick={() => addBuild(undefined, 'general')}
+          className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-gray-400 dark:border-gray-600 px-3 py-1.5 min-h-[44px] whitespace-nowrap text-sm font-semibold text-gray-600 dark:text-gray-300 hover:border-brand hover:text-brand hover:bg-brand/5 transition-colors"
+        >
+          + Add system
+        </button>
+      </div>
+
+      {/* Category picker for the active build */}
+      <div className="mb-4 flex flex-wrap items-center gap-1.5">
+        <span className="text-xs uppercase tracking-wide text-gray-500 mr-1">Category:</span>
+        {CATEGORIES.map((c) => {
+          const isSelected = (activeBuild.category ?? 'general') === c;
+          return (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setBuildCategory(activeBuild.id, c)}
+              className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors ${
+                isSelected
+                  ? 'bg-brand/10 border-brand text-brand'
+                  : 'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-400'
+              }`}
+              aria-pressed={isSelected}
+            >
+              <span aria-hidden>{CATEGORY_EMOJI[c]}</span>
+              {CATEGORY_LABEL[c]}
+            </button>
           );
         })}
       </div>

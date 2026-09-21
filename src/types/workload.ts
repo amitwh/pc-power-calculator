@@ -21,3 +21,29 @@ export interface WorkloadSchedule {
   hours_per_day: number;
   days_per_week?: number;
 }
+
+export interface WorkloadUtilization {
+  cpu_pct: number;
+  gpu_pct: number;
+  ram_pct: number;
+  storage_pct: number;
+  monitor_w: number;
+}
+
+export interface BenchmarkEntry {
+  component_id: string;
+  metric: string;
+  value: number;
+  unit: string;
+  context?: Record<string, string>;
+  source: string;
+}
+
+export interface Workload {
+  id: WorkloadId;
+  name: string;
+  category: 'gaming' | 'content' | 'productivity' | 'ai' | 'mining' | 'server';
+  description: string;
+  utilization: WorkloadUtilization;
+  benchmarks: BenchmarkEntry[];
+}

@@ -51,6 +51,7 @@ export function systemPowerW(
   components: Component[],
   utilization: { cpu: number; gpu: number; ram: number; storage: number },
   psuRating: PsuEfficiencyRating | null,
+  psuWattage: number = 650,
 ): { componentDrawW: number; wallDrawW: number } {
   let total = 0;
   for (const c of components) {
@@ -62,6 +63,8 @@ export function systemPowerW(
     else if (c.category === 'peripheral' || c.category === 'add_in_card' || c.category === 'optical_drive') total += componentPowerW(c, 1);
     else total += componentPowerW(c, 0);
   }
-  const psu = psuRating ? wallDrawW(total, psuRating, Math.min(100, (total / 650) * 100)) : total;
+  const psu = psuRating
+    ? wallDrawW(total, psuRating, Math.min(100, (total / psuWattage) * 100))
+    : total;
   return { componentDrawW: total, wallDrawW: psu };
 }

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { BuildConfig, ComponentSlot } from '@/types/build';
+import type { BuildCategory, BuildConfig, ComponentSlot } from '@/types/build';
 import type { WorkloadSchedule } from '@/types/workload';
 import type { Component } from '@/types/component';
 
@@ -12,6 +12,7 @@ const generateId = (): string =>
 const defaultBuild = (): BuildConfig => ({
   id: generateId(),
   name: 'My build',
+  category: 'gaming',
   components: {},
   tdpOverrides: {},
   schedule: [
@@ -40,10 +41,11 @@ interface BuildStore {
   customPeripherals: Component[];
 
   // CRUD on builds
-  addBuild: (name?: string) => string;
+  addBuild: (name?: string, category?: BuildCategory) => string;
   removeBuild: (id: string) => void;
   setActiveBuild: (id: string) => void;
   renameBuild: (id: string, name: string) => void;
+  setBuildCategory: (id: string, category: BuildCategory) => void;
 
   // Active-build mutations
   setComponent: (slot: ComponentSlot, id: string | null) => void;
@@ -78,9 +80,14 @@ export const useBuildStore = create<BuildStore>()(
     (set, get) => ({
       ...freshStore(),
 
-      addBuild: (name) => {
+      addBuild: (name, category) => {
         const id = generateId();
-        const build: BuildConfig = { ...defaultBuild(), id, name: name?.trim() || `Build ${get().builds.length + 1}` };
+        const build: BuildConfig = {
+          ...defaultBuild(),
+          id,
+          name: name?.trim() || `Build ${get().builds.length + 1}`,
+          category: category ?? 'general',
+        };
         set((s) => ({ builds: [...s.builds, build], activeBuildId: id }));
         return id;
       },
@@ -118,6 +125,11 @@ export const useBuildStore = create<BuildStore>()(
             builds: s.builds.map((b) => (b.id === id ? { ...b, name: trimmed } : b)),
           };
         }),
+
+      setBuildCategory: (id, category) =>
+        set((s) => ({
+          builds: s.builds.map((b) => (b.id === id ? { ...b, category } : b)),
+        })),
 
       setComponent: (slot, id) =>
         updateActive(set, (b) => {
@@ -223,6 +235,7 @@ export const useBuildStore = create<BuildStore>()(
             ...parsed.build,
             id: generateId(),
             tdpOverrides: parsed.build.tdpOverrides ?? {},
+            category: parsed.build.category ?? 'general',
           };
           set((s) => {
             const peripherals: Component[] = Array.isArray(parsed.customPeripherals)
