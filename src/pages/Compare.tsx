@@ -1,7 +1,6 @@
-import { useMemo, useState } from 'react';
+import { lazy, Suspense, useMemo, useState } from 'react';
 import { BuildSelector } from '@/components/compare/BuildSelector';
 import { ComparisonTable } from '@/components/compare/ComparisonTable';
-import { ComparisonBars } from '@/components/charts/ComparisonBars';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { useBuildStore } from '@/store/buildStore';
 import { findCurrency } from '@/lib/data/currencies';
@@ -9,6 +8,12 @@ import { computeEnergy } from '@/lib/calc/energy';
 import { listWorkloads } from '@/lib/data/workloads';
 import type { BuildConfig } from '@/types/build';
 import type { CurrencyInfo } from '@/types/currency';
+
+// ApexCharts is heavy — only load it once the user actually asks for the
+// comparison view and the table has enough rows to chart.
+const ComparisonBars = lazy(() =>
+  import('@/components/charts/ComparisonBars').then((m) => ({ default: m.ComparisonBars })),
+);
 
 const DEFAULT_INR: CurrencyInfo = {
   code: 'INR',
@@ -53,7 +58,9 @@ export default function Compare() {
         <>
           <Card>
             <CardTitle>Yearly energy side by side</CardTitle>
-            <ComparisonBars builds={yearlyKwh} />
+            <Suspense fallback={<div className="h-[280px] flex items-center justify-center text-sm text-gray-400">Loading chart...</div>}>
+              <ComparisonBars builds={yearlyKwh} />
+            </Suspense>
           </Card>
           <Card>
             <CardTitle>Per-workload breakdown ({currency.code})</CardTitle>

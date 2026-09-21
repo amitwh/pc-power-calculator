@@ -1,15 +1,20 @@
-import { useMemo } from 'react';
+import { lazy, Suspense, useMemo } from 'react';
 import { useBuildStore } from '@/store/buildStore';
 import { useCalc } from '@/hooks/useCalc';
 import { computeEnergy } from '@/lib/calc/energy';
 import { listWorkloads } from '@/lib/data/workloads';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { formatCost, formatKwh } from '@/lib/calc/format';
-import { PowerBreakdown } from '@/components/charts/PowerBreakdown';
 import { ExportMenu } from './ExportMenu';
 import { emojiFor } from '@/lib/buildCategory';
 import type { CurrencyInfo } from '@/types/currency';
 import type { Workload } from '@/types/workload';
+
+// ApexCharts is heavy — defer the chart bundle until the ResultsPanel actually
+// renders it. Keeps the Home route's first paint small and helps Lighthouse.
+const PowerBreakdown = lazy(() =>
+  import('@/components/charts/PowerBreakdown').then((m) => ({ default: m.PowerBreakdown })),
+);
 
 const INR: CurrencyInfo = { code: 'INR', symbol: '₹', name: 'Indian Rupee', locale: 'en-IN', decimalDigits: 2 };
 
@@ -92,7 +97,9 @@ export function ResultsPanel() {
         <div className="text-xs uppercase text-gray-500 mb-2 font-semibold">
           Power draw breakdown (typical 70% load)
         </div>
-        <PowerBreakdown components={components} drawWByComponentId={componentsPowerW} />
+        <Suspense fallback={<div className="h-[260px] flex items-center justify-center text-sm text-gray-400">Loading chart...</div>}>
+          <PowerBreakdown components={components} drawWByComponentId={componentsPowerW} />
+        </Suspense>
       </div>
 
       {/* Per-workload performance — FPS, render seconds, hashrate, etc. */}

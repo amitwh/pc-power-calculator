@@ -1,0 +1,15 @@
+{
+  "name": "PC Power Calculator",
+  "short_name": "PC Power",
+  "description": "Estimate your PC's power consumption and electricity cost in any currency.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0d0b09",
+  "theme_color": "#e5461f",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
