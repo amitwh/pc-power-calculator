@@ -1,20 +1,25 @@
 name: CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
+  push:
     branches: [main]
 
 jobs:
-  typecheck-and-build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
+        with: { node-version: 20, cache: 'npm' }
       - run: npm ci
       - run: npm run typecheck
+      - run: npm test -- --coverage
+      - name: A11y
+        run: npx playwright install --with-deps chromium && npm run test:a11y
       - run: npm run build
+      - name: Lighthouse
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          configPath: .lighthouserc.json
+          uploadArtifacts: true

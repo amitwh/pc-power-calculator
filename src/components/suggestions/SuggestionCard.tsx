@@ -11,7 +11,7 @@ export function SuggestionCard({ s, onApply }: { s: Suggestion; onApply: (altId:
       <div className="font-display text-sm uppercase text-gray-500">{s.category}</div>
       <div className="flex justify-between items-baseline mt-1">
         <div>
-          <div className="text-sm line-through text-gray-400">{s.current.tdp_w} W → </div>
+          <div className="text-sm line-through text-gray-500">{s.current.tdp_w} W → </div>
           <div className="font-display text-lg font-bold">{s.alternative.brand} {s.alternative.model}</div>
           <div className="text-sm text-gray-600 dark:text-gray-400">{s.alt.tdp_w} W · {s.impact.perf_retention_pct.toFixed(0)}% perf retained</div>
         </div>

@@ -135,17 +135,21 @@ export function BuildPicker() {
     <Card>
       <CardTitle>
         <span>
-          <span className="inline-flex items-center justify-center w-6 h-6 mr-2 rounded-full bg-brand text-white text-sm font-bold">
+          <span className="inline-flex items-center justify-center w-6 h-6 mr-2 rounded-full bg-brand-dark text-white text-sm font-bold">
             1
           </span>
           Your Systems
         </span>
       </CardTitle>
 
-      {/* System selector chips */}
+      {/* System selector chips.
+          Using role="group" (not tablist) because each chip contains its own
+          interactive controls (switch + remove + rename). tablist would require
+          each direct child to be a single tab role with no nested interactive
+          content — these chips are pickers, not tabs. */}
       <div
         className="flex gap-2 overflow-x-auto pb-2 mb-4 -mx-1 px-1"
-        role="tablist"
+        role="group"
         aria-label="Build systems"
       >
         {builds.map((b) => {
@@ -155,11 +159,10 @@ export function BuildPicker() {
           return (
             <div
               key={b.id}
-              role="tab"
-              aria-selected={isActive}
+              aria-current={isActive ? 'true' : undefined}
               className={`group inline-flex items-center gap-2 rounded-full border px-3 py-1.5 min-h-[44px] whitespace-nowrap transition-colors ${
                 isActive
-                  ? 'bg-brand text-white border-brand'
+                  ? 'bg-brand-dark text-white border-brand-dark'
                   : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:border-gray-400'
               }`}
             >
@@ -194,7 +197,7 @@ export function BuildPicker() {
                 <button
                   type="button"
                   aria-label={`Remove ${b.name}`}
-                  className={`text-base leading-none opacity-70 hover:opacity-100 ${isActive ? 'text-white' : 'text-gray-500'}`}
+                  className={`text-base leading-none opacity-70 hover:opacity-100 ${isActive ? 'text-white' : 'text-gray-700'}`}
                   onClick={(e) => {
                     e.stopPropagation();
                     if (confirm(`Remove "${b.name}"?`)) removeBuild(b.id);
@@ -211,7 +214,7 @@ export function BuildPicker() {
         <button
           type="button"
           onClick={() => addBuild(undefined, 'general')}
-          className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-gray-400 dark:border-gray-600 px-3 py-1.5 min-h-[44px] whitespace-nowrap text-sm font-semibold text-gray-600 dark:text-gray-300 hover:border-brand hover:text-brand hover:bg-brand/5 transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-gray-400 dark:border-gray-600 px-3 py-1.5 min-h-[44px] whitespace-nowrap text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-brand-dark hover:text-brand-dark transition-colors"
         >
           + Add system
         </button>
@@ -229,7 +232,7 @@ export function BuildPicker() {
               onClick={() => setBuildCategory(activeBuild.id, c)}
               className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors ${
                 isSelected
-                  ? 'bg-brand/10 border-brand text-brand'
+                  ? 'bg-brand/10 border-brand-text text-brand-text'
                   : 'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-400'
               }`}
               aria-pressed={isSelected}

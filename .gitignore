@@ -39,6 +39,9 @@ Thumbs.db
 # Test / coverage
 coverage/
 .nyc_output/
+playwright-report/
+test-results/
+.lighthouseci/
 
 # Misc
 tmp/

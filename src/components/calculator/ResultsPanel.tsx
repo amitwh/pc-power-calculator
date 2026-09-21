@@ -58,7 +58,7 @@ export function ResultsPanel() {
     <Card>
       <CardTitle>
         <span>
-          <span className="inline-flex items-center justify-center w-6 h-6 mr-2 rounded-full bg-brand text-white text-sm font-bold">
+          <span className="inline-flex items-center justify-center w-6 h-6 mr-2 rounded-full bg-brand-dark text-white text-sm font-bold">
             4
           </span>
           Results — {build.name}
@@ -84,7 +84,7 @@ export function ResultsPanel() {
               {row.label}
             </div>
             <div className="font-display text-2xl font-bold mt-1">{formatKwh(row.kwh, 1)}</div>
-            <div className={`font-semibold text-lg ${row.primary ? 'text-white' : 'text-brand'}`}>
+            <div className={`font-semibold text-lg ${row.primary ? 'text-white' : 'text-brand-text'}`}>
               {formatCost(row.cost, INR)}
             </div>
             <div className={`text-xs mt-1 ${row.primary ? 'text-white/85' : 'text-gray-500'}`}>{row.sub}</div>
@@ -97,7 +97,7 @@ export function ResultsPanel() {
         <div className="text-xs uppercase text-gray-500 mb-2 font-semibold">
           Power draw breakdown (typical 70% load)
         </div>
-        <Suspense fallback={<div className="h-[260px] flex items-center justify-center text-sm text-gray-400">Loading chart...</div>}>
+        <Suspense fallback={<div className="h-[260px] flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">Loading chart...</div>}>
           <PowerBreakdown components={components} drawWByComponentId={componentsPowerW} />
         </Suspense>
       </div>
@@ -137,7 +137,7 @@ export function ResultsPanel() {
                 <div className="font-display text-xl font-bold text-gray-900 dark:text-gray-50 tabular-nums">
                   {formatKwh(row.kwh, 0)}/yr
                 </div>
-                <div className="font-numeric text-base font-semibold text-brand tabular-nums">
+                <div className="font-numeric text-base font-semibold text-brand-text tabular-nums">
                   {formatCost(row.cost, INR)}/yr
                 </div>
                 <div className="font-body text-xs text-gray-500 mt-1">{row.meta}</div>

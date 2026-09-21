@@ -5,6 +5,7 @@
 :root {
   --color-brand: #e5461f;
   --color-brand-dark: #c93a18;
+  --color-brand-text: #a82d15;
   --color-brand-light: #ff6b47;
   --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-display: 'Inter', system-ui, sans-serif;

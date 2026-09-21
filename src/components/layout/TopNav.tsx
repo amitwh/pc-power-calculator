@@ -11,7 +11,7 @@ const items = [
 export default function TopNav() {
   return (
     <header className="hidden md:flex h-16 items-center justify-between border-b border-gray-200 dark:border-gray-800 px-6 bg-white dark:bg-gray-950">
-      <NavLink to="/" className="font-display text-xl font-bold text-brand">⚡ PC Power Calculator</NavLink>
+      <NavLink to="/" className="font-display text-xl font-bold text-brand-dark">⚡ PC Power Calculator</NavLink>
       <nav className="flex gap-6">
         {items.map((item) => (
           <NavLink
@@ -19,7 +19,7 @@ export default function TopNav() {
             to={item.to}
             end={item.end}
             className={({ isActive }) =>
-              `font-body text-sm ${isActive ? 'text-brand font-semibold' : 'text-gray-700 dark:text-gray-300 hover:text-brand'}`
+              `font-body text-sm ${isActive ? 'text-brand-dark font-semibold' : 'text-gray-700 dark:text-gray-300 hover:text-brand-dark'}`
             }
           >
             {item.label}

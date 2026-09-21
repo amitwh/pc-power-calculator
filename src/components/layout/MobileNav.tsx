@@ -20,7 +20,7 @@ export default function MobileNav() {
           to={item.to}
           end={item.end}
           className={({ isActive }) =>
-            `font-body text-xs flex flex-col items-center px-3 py-2 min-w-[44px] min-h-[44px] ${isActive ? 'text-brand font-semibold' : 'text-gray-600 dark:text-gray-400'}`
+            `font-body text-xs flex flex-col items-center px-3 py-2 min-w-[44px] min-h-[44px] ${isActive ? 'text-brand-dark font-semibold' : 'text-gray-700 dark:text-gray-300'}`
           }
         >
           {item.label}

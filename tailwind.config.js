@@ -8,6 +8,7 @@ export default {
         brand: {
           DEFAULT: '#e5461f',
           dark: '#c93a18',
+          text: '#a82d15',
           light: '#ff6b47',
         },
         success: '#1a7a56',

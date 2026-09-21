@@ -34,7 +34,7 @@ export function ScheduleEditor() {
     <Card>
       <CardTitle>
         <span>
-          <span className="inline-flex items-center justify-center w-6 h-6 mr-2 rounded-full bg-brand text-white text-sm font-bold">
+          <span className="inline-flex items-center justify-center w-6 h-6 mr-2 rounded-full bg-brand-dark text-white text-sm font-bold">
             3
           </span>
           Usage schedule

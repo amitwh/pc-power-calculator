@@ -32,7 +32,7 @@ export function ComponentCard({ categoryLabel, component, tdpOverrideW, onClear,
             )}
           </div>
         ) : (
-          <div className="text-gray-400">Not selected</div>
+          <div className="text-gray-600 dark:text-gray-400">Not selected</div>
         )}
       </div>
       {component && (

@@ -18,7 +18,8 @@ describe('BuildPicker', () => {
     expect(screen.getByRole('combobox', { name: /Select CPU/i })).toBeInTheDocument();
     expect(screen.getByRole('combobox', { name: /Select GPU/i })).toBeInTheDocument();
     expect(screen.getByRole('combobox', { name: /Select Motherboard/i })).toBeInTheDocument();
-    expect(screen.getByRole('tab', { name: /My build/i })).toBeInTheDocument();
+    // Each build chip exposes a switch button with the build name.
+    expect(screen.getByRole('button', { name: /My build/i })).toBeInTheDocument();
   });
 
   test('shows "Not selected" until a slot is chosen', () => {
@@ -41,10 +42,12 @@ describe('BuildPicker', () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
     await user.click(screen.getByRole('button', { name: /\+ Add system/i }));
-    const tabs = screen.getAllByRole('tab');
-    expect(tabs.length).toBeGreaterThanOrEqual(2);
-    const activeTab = tabs.find((t) => t.getAttribute('aria-selected') === 'true');
-    expect(activeTab?.textContent).toMatch(/Build 2|My build/);
+    // Each chip is a switch button labelled with its build name. The group
+    // also contains the "+ Add system" button and remove buttons when more
+    // than one build exists, so filter to just the switch buttons.
+    const group = screen.getByRole('group', { name: /Build systems/i });
+    const switchButtons = within(group).getAllByRole('button', { name: /My build|Build \d+/i });
+    expect(switchButtons.length).toBeGreaterThanOrEqual(2);
     expect(useBuildStore.getState().builds).toHaveLength(2);
   });
 

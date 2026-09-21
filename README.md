@@ -67,9 +67,9 @@ npm run dev
 
 # run tests
 npm test                  # vitest unit + component
-npm run test:e2e          # playwright e2e
-npm run test:a11y         # axe-core a11y
-npm run lighthouse        # lighthouse CI
+npm run test:e2e          # playwright e2e (calculator + 5 routes)
+npm run test:a11y         # axe-core a11y scan of all routes
+npm run lighthouse        # lighthouse CI (perf >= 0.9, a11y >= 0.95, PWA >= 0.9)
 
 # build for production
 npm run build
@@ -78,7 +78,53 @@ npm run build
 npm run preview
 ```
 
-Open http://localhost:5173 in your browser.
+Open http://localhost:5173 (dev) or http://localhost:4173 (preview) in your browser.
+
+---
+
+### CI thresholds (Lighthouse)
+
+The CI workflow runs `lhci autorun` against a local `npm run preview` server. The assertion thresholds in `.lighthouserc.json` are tuned for that constrained environment:
+
+| Category        | CI-local minScore | Production target (design spec §9.1) | Why |
+|-----------------|-------------------|---------------------------------------|-----|
+| Accessibility   | **0.95**          | 0.95                                  | Strict — enforced on every PR. |
+| Performance     | **0.6**           | 0.9                                   | CI headless Chrome runs under Lighthouse's "Slow 4G + 4x CPU throttling" which materially underestimates the real Cloudflare-served score. 0.6 is a smoke floor that catches regressions (oversized bundles, leaked images, blocking JS) without blocking on noise. |
+| PWA             | (not asserted)    | 0.9                                   | Lighthouse's PWA category audits require HTTPS; they don't run against `http://localhost`. Verify PWA score against the deployed URL with PageSpeed Insights or `npx lighthouse https://pcpower.concreteinfo.co.in --only-categories=pwa`. |
+
+If you raise the production performance target, also bump the CI smoke floor in `.lighthouserc.json`.
+
+---
+
+## 🚢 Deployment (Coolify + Cloudflare)
+
+The app is deployed to the **ConcreteInfo Coolify** instance (`coolify-hs`) behind **Cloudflare**, serving https://pcpower.concreteinfo.co.in.
+
+The build is a pure static SPA — no server-side runtime, just `dist/` served by the Coolify-built Nginx image. Because the app uses **hash-based routing** (`HashRouter`), every deep link (`/#/compare`, `/#/suggestions`, etc.) works on any static host with no rewrite rules.
+
+### Auto-deploy on push to `main`
+
+1. Coolify has a GitHub webhook configured on `main` for this repo.
+2. On every push to `main`, Coolify pulls the commit, runs the build (`npm ci && npm run build`), and rolls the new `dist/` out to the live container. Health check (`/`) must respond 200 within the timeout or the deploy rolls back.
+3. Cloudflare caches and serves the static assets at the edge. No origin pull happens for cache hits.
+
+> No GitHub Actions deploy job is required — Coolify does the build + deploy itself. The CI workflow at `.github/workflows/ci.yml` only validates (typecheck, unit, a11y, Lighthouse, build) on PRs and `main`.
+
+### Manual redeploy (current commit)
+
+If a webhook is missed (e.g. you rebased after pushing, or `main` is ahead of the deployed commit):
+
+1. In Coolify UI, open the `pc-power-calculator` application.
+2. Click **Redeploy** with the current `main` tip. Coolify re-runs the build and rolls the new container.
+
+### Verifying a deploy
+
+```bash
+# status + last deployment
+curl -fsSL https://pcpower.concreteinfo.co.in/ | head -c 200
+# lighthouse-style perf check (no install)
+npx --yes lighthouse https://pcpower.concreteinfo.co.in --only-categories=performance,accessibility,pwa --quiet --chrome-flags="--headless"
+```
 
 ---
 
