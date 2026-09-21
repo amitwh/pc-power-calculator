@@ -128,27 +128,28 @@ npx --yes lighthouse https://pcpower.concreteinfo.co.in --only-categories=perfor
 
 ### Security headers (CSP)
 
-The strict Content-Security-Policy from design spec §9.3, plus `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin`, are declared in two places so they are always applied:
+The strict Content-Security-Policy from design spec §9.3, plus `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin`, are declared in **one** place — the source of truth for production:
 
-1. **`public/_headers`** — served automatically by Cloudflare Pages on every response. Verifiable with `curl -fsSLI https://pcpower.concreteinfo.co.in/ | grep -i 'content-security-policy'`.
-2. **`<meta http-equiv="Content-Security-Policy">` in `index.html`** — defence-in-depth fallback for environments that strip the header, and for `vite dev` / `vite preview` (which don't honour `_headers`).
+- **`public/_headers`** — served automatically by Cloudflare Pages on every response. Verifiable with `curl -fsSLI https://pcpower.concreteinfo.co.in/ | grep -i 'content-security-policy'`.
 
-**Coolify:** the bundled Nginx image that Coolify builds does NOT honour `public/_headers`. The deploy operator must paste the exact header block below into the application's **Headers** tab (Coolify → Application → `pc-power-calculator` → "Headers" / "Custom Headers") so every response carries it:
+**Important:** there is intentionally **no** `<meta http-equiv="Content-Security-Policy">` in `index.html`. The single-source `_headers` block is what production runs under; duplicating the CSP into a meta tag creates a drift surface where the two fall out of sync and one of them is silently wrong. (Note: `vite dev` / `vite preview` don't honour `_headers` either, but the browser also does not enforce CSP in development the way it does in production, so no fallback is needed.)
+
+If your hosting environment doesn't honour `public/_headers` (e.g. Coolify's bundled Nginx image does not), paste the **exact** block below into the host's response-headers config (Coolify → Application → `pc-power-calculator` → "Headers" / "Custom Headers", or the equivalent in Traefik / Caddy / Nginx). Do not paste a stripped-down copy — keep the full CSP including Google Fonts, the FX subdomain, and the hardening directives (`frame-ancestors 'none'`, `base-uri 'self'`).
 
 ```
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://ipapi.co https://ip-api.com https://exchangerate.host; img-src 'self' data:;
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://ipapi.co https://ip-api.com https://api.exchangerate.host https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
 ```
 
-If the Coolify UI exposes only individual header fields, set:
+If the host UI exposes only individual header fields, set:
 
-- `Content-Security-Policy` = `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://ipapi.co https://ip-api.com https://exchangerate.host; img-src 'self' data:;`
+- `Content-Security-Policy` = `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://ipapi.co https://ip-api.com https://api.exchangerate.host https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'`
 - `X-Content-Type-Options` = `nosniff`
 - `Referrer-Policy` = `strict-origin-when-cross-origin`
 
-If a reverse proxy sits in front of Coolify (Traefik, Caddy, Nginx), apply the same three headers there instead — never on both, or the proxy will overwrite Coolify's set.
+If a reverse proxy sits in front of the app host (Traefik, Caddy, Nginx), apply the same three headers there instead — never on both, or the proxy will overwrite the app host's set.
 
 ---
 
