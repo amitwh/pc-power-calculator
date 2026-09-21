@@ -6,6 +6,7 @@ import { listWorkloads } from '@/lib/data/workloads';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { formatCost, formatKwh } from '@/lib/calc/format';
 import { PowerBreakdown } from '@/components/charts/PowerBreakdown';
+import { ExportMenu } from './ExportMenu';
 import { emojiFor } from '@/lib/buildCategory';
 import type { CurrencyInfo } from '@/types/currency';
 import type { Workload } from '@/types/workload';
@@ -93,6 +94,9 @@ export function ResultsPanel() {
         </div>
         <PowerBreakdown components={components} drawWByComponentId={componentsPowerW} />
       </div>
+
+      {/* Export menu — PDF (window.print) and HTML (re-importable) */}
+      <ExportMenu />
 
       {/* Multi-system summary */}
       {summary.length > 0 && (

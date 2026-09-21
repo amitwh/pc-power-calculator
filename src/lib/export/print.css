@@ -1,0 +1,9 @@
+@media print {
+  header, nav, .no-print { display: none !important; }
+  body { background: white !important; color: black !important; font-size: 11pt; }
+  .print-only { display: block !important; }
+  main { padding: 0 !important; max-width: 100% !important; }
+  .results-grid { page-break-inside: avoid; }
+  [data-chart] { max-height: 200px; }
+}
+.print-only { display: none; }
