@@ -1,5 +1,5 @@
 {
-  "version": "2026-09-21-expanded",
+  "version": "2026-09-21-peripherals",
   "lastUpdated": "2026-09-21",
   "components": [
     {
@@ -8118,6 +8118,3118 @@
         "tdp_w": 130
       },
       "source": "amd-product-page",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-samsung-980-500gb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "980 500GB",
+      "releaseYear": 2021,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 500,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "samsung-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-samsung-980-1tb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "980 1TB",
+      "releaseYear": 2021,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "samsung-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-samsung-980-2tb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "980 2TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "samsung-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-samsung-980-pro-2tb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "980 PRO 2TB",
+      "releaseYear": 2020,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "samsung-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-samsung-990-pro-4tb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "990 PRO 4TB",
+      "releaseYear": 2023,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 4000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "samsung-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-samsung-990-evo-plus-1tb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "990 EVO Plus 1TB",
+      "releaseYear": 2024,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "samsung-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-samsung-990-evo-plus-2tb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "990 EVO Plus 2TB",
+      "releaseYear": 2024,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "samsung-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-wd-sn770-2tb",
+      "category": "storage",
+      "brand": "Western Digital",
+      "model": "WD Black SN770 2TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "wd-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-wd-sn850x-1tb",
+      "category": "storage",
+      "brand": "Western Digital",
+      "model": "WD Black SN850X 1TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "wd-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-wd-sn850x-4tb",
+      "category": "storage",
+      "brand": "Western Digital",
+      "model": "WD Black SN850X 4TB",
+      "releaseYear": 2023,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 4000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "wd-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-crucial-p3-1tb",
+      "category": "storage",
+      "brand": "Crucial",
+      "model": "P3 1TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-crucial-p3-2tb",
+      "category": "storage",
+      "brand": "Crucial",
+      "model": "P3 2TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-crucial-p3-plus-1tb",
+      "category": "storage",
+      "brand": "Crucial",
+      "model": "P3 Plus 1TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-crucial-p5-plus-2tb",
+      "category": "storage",
+      "brand": "Crucial",
+      "model": "P5 Plus 2TB",
+      "releaseYear": 2021,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-crucial-t700-1tb",
+      "category": "storage",
+      "brand": "Crucial",
+      "model": "T700 1TB",
+      "releaseYear": 2023,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-crucial-t700-2tb",
+      "category": "storage",
+      "brand": "Crucial",
+      "model": "T700 2TB",
+      "releaseYear": 2023,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-kingston-kc3000-1tb",
+      "category": "storage",
+      "brand": "Kingston",
+      "model": "KC3000 1TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-sk-hynix-p41-1tb",
+      "category": "storage",
+      "brand": "SK Hynix",
+      "model": "Platinum P41 1TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "sk-hynix-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-sk-hynix-p41-2tb",
+      "category": "storage",
+      "brand": "SK Hynix",
+      "model": "Platinum P41 2TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "sk-hynix-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-corsair-mp600-1tb",
+      "category": "storage",
+      "brand": "Corsair",
+      "model": "MP600 Pro LPX 1TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-corsair-mp600-2tb",
+      "category": "storage",
+      "brand": "Corsair",
+      "model": "MP600 Pro LPX 2TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "NVMe",
+        "form_factor": "M.2-2280",
+        "idle_profile": "nvme_ssd"
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-samsung-870-evo-500gb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "870 EVO 500GB",
+      "releaseYear": 2021,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 500,
+        "interface": "SATA",
+        "form_factor": "2.5\"",
+        "idle_profile": "sata_ssd"
+      },
+      "source": "samsung-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-samsung-870-evo-2tb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "870 EVO 2TB",
+      "releaseYear": 2021,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "SATA",
+        "form_factor": "2.5\"",
+        "idle_profile": "sata_ssd"
+      },
+      "source": "samsung-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-samsung-870-evo-4tb",
+      "category": "storage",
+      "brand": "Samsung",
+      "model": "870 EVO 4TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 4000,
+        "interface": "SATA",
+        "form_factor": "2.5\"",
+        "idle_profile": "sata_ssd"
+      },
+      "source": "samsung-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-crucial-mx500-2tb",
+      "category": "storage",
+      "brand": "Crucial",
+      "model": "MX500 2TB",
+      "releaseYear": 2018,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "SATA",
+        "form_factor": "2.5\"",
+        "idle_profile": "sata_ssd"
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-crucial-bx500-500gb",
+      "category": "storage",
+      "brand": "Crucial",
+      "model": "BX500 500GB",
+      "releaseYear": 2018,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 500,
+        "interface": "SATA",
+        "form_factor": "2.5\"",
+        "idle_profile": "sata_ssd"
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-kingston-a400-480gb",
+      "category": "storage",
+      "brand": "Kingston",
+      "model": "A400 480GB",
+      "releaseYear": 2017,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 480,
+        "interface": "SATA",
+        "form_factor": "2.5\"",
+        "idle_profile": "sata_ssd"
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-wd-blue-1tb",
+      "category": "storage",
+      "brand": "Western Digital",
+      "model": "WD Blue SA510 1TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "SATA",
+        "form_factor": "2.5\"",
+        "idle_profile": "sata_ssd"
+      },
+      "source": "wd-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-wd-blue-1tb-hdd",
+      "category": "storage",
+      "brand": "Western Digital",
+      "model": "WD Blue 1TB",
+      "releaseYear": 2012,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 1000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "wd-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-wd-blue-2tb-hdd",
+      "category": "storage",
+      "brand": "Western Digital",
+      "model": "WD Blue 2TB",
+      "releaseYear": 2014,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "wd-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-wd-blue-4tb-hdd",
+      "category": "storage",
+      "brand": "Western Digital",
+      "model": "WD Blue 4TB",
+      "releaseYear": 2018,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 4000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "wd-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-wd-blue-6tb-hdd",
+      "category": "storage",
+      "brand": "Western Digital",
+      "model": "WD Blue 6TB",
+      "releaseYear": 2022,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 6000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "wd-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-seagate-barracuda-2tb",
+      "category": "storage",
+      "brand": "Seagate",
+      "model": "BarraCuda 2TB",
+      "releaseYear": 2016,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "seagate-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-seagate-barracuda-4tb",
+      "category": "storage",
+      "brand": "Seagate",
+      "model": "BarraCuda 4TB",
+      "releaseYear": 2018,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 4000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "seagate-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-seagate-barracuda-8tb",
+      "category": "storage",
+      "brand": "Seagate",
+      "model": "BarraCuda 8TB",
+      "releaseYear": 2020,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 8000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "seagate-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-toshiba-p300-2tb",
+      "category": "storage",
+      "brand": "Toshiba",
+      "model": "P300 2TB",
+      "releaseYear": 2017,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "toshiba-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-toshiba-p300-4tb",
+      "category": "storage",
+      "brand": "Toshiba",
+      "model": "P300 4TB",
+      "releaseYear": 2018,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 4000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "toshiba-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-wd-black-2tb-hdd",
+      "category": "storage",
+      "brand": "Western Digital",
+      "model": "WD Black 2TB",
+      "releaseYear": 2018,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 2000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "wd-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-wd-black-8tb-hdd",
+      "category": "storage",
+      "brand": "Western Digital",
+      "model": "WD Black 8TB",
+      "releaseYear": 2020,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 8000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "wd-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-seagate-ironwolf-4tb",
+      "category": "storage",
+      "brand": "Seagate",
+      "model": "IronWolf 4TB NAS",
+      "releaseYear": 2019,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 4000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "seagate-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-seagate-ironwolf-8tb",
+      "category": "storage",
+      "brand": "Seagate",
+      "model": "IronWolf 8TB NAS",
+      "releaseYear": 2020,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 8000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "seagate-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "storage-seagate-exos-16tb",
+      "category": "storage",
+      "brand": "Seagate",
+      "model": "Exos 16TB Enterprise",
+      "releaseYear": 2020,
+      "tdp_w": 8,
+      "specs": {
+        "capacity_gb": 16000,
+        "interface": "SATA",
+        "form_factor": "3.5\"",
+        "idle_profile": "hdd_7200"
+      },
+      "source": "seagate-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-kingston-fury-beast-8gb-ddr4-3200",
+      "category": "ram",
+      "brand": "Kingston",
+      "model": "FURY Beast 8GB DDR4-3200",
+      "releaseYear": 2018,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 8,
+        "generation": "DDR4",
+        "speed_mt_s": 3200,
+        "sticks": 1
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-kingston-fury-beast-16gb-ddr4-3200",
+      "category": "ram",
+      "brand": "Kingston",
+      "model": "FURY Beast 16GB DDR4-3200",
+      "releaseYear": 2018,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 16,
+        "generation": "DDR4",
+        "speed_mt_s": 3200,
+        "sticks": 1
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-kingston-fury-beast-32gb-ddr4-3600",
+      "category": "ram",
+      "brand": "Kingston",
+      "model": "FURY Beast 32GB DDR4-3600",
+      "releaseYear": 2020,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR4",
+        "speed_mt_s": 3600,
+        "sticks": 1
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-kingston-fury-beast-64gb-ddr4-3200",
+      "category": "ram",
+      "brand": "Kingston",
+      "model": "FURY Beast 64GB DDR4-3200",
+      "releaseYear": 2020,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 64,
+        "generation": "DDR4",
+        "speed_mt_s": 3200,
+        "sticks": 2
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-corsair-vengeance-lpx-8gb-ddr4-3200",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Vengeance LPX 8GB DDR4-3200",
+      "releaseYear": 2017,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 8,
+        "generation": "DDR4",
+        "speed_mt_s": 3200,
+        "sticks": 1
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-corsair-vengeance-lpx-16gb-ddr4-3200",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Vengeance LPX 16GB DDR4-3200",
+      "releaseYear": 2017,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 16,
+        "generation": "DDR4",
+        "speed_mt_s": 3200,
+        "sticks": 1
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-corsair-vengeance-lpx-32gb-ddr4-3600",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Vengeance LPX 32GB DDR4-3600",
+      "releaseYear": 2019,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR4",
+        "speed_mt_s": 3600,
+        "sticks": 1
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-corsair-vengeance-rgb-16gb-ddr4-3600",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Vengeance RGB Pro 16GB DDR4-3600",
+      "releaseYear": 2019,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 16,
+        "generation": "DDR4",
+        "speed_mt_s": 3600,
+        "sticks": 1
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-corsair-vengeance-rgb-32gb-ddr4-3600",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Vengeance RGB Pro 32GB DDR4-3600",
+      "releaseYear": 2020,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR4",
+        "speed_mt_s": 3600,
+        "sticks": 1
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-gskill-trident-z-16gb-ddr4-3600",
+      "category": "ram",
+      "brand": "G.Skill",
+      "model": "Trident Z RGB 16GB DDR4-3600",
+      "releaseYear": 2017,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 16,
+        "generation": "DDR4",
+        "speed_mt_s": 3600,
+        "sticks": 1
+      },
+      "source": "gskill-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-gskill-trident-z-32gb-ddr4-3600",
+      "category": "ram",
+      "brand": "G.Skill",
+      "model": "Trident Z RGB 32GB DDR4-3600",
+      "releaseYear": 2018,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR4",
+        "speed_mt_s": 3600,
+        "sticks": 1
+      },
+      "source": "gskill-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-gskill-trident-z-64gb-ddr4-3200",
+      "category": "ram",
+      "brand": "G.Skill",
+      "model": "Trident Z 64GB DDR4-3200",
+      "releaseYear": 2018,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 64,
+        "generation": "DDR4",
+        "speed_mt_s": 3200,
+        "sticks": 2
+      },
+      "source": "gskill-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-gskill-ripjaws-v-16gb-ddr4-3600",
+      "category": "ram",
+      "brand": "G.Skill",
+      "model": "Ripjaws V 16GB DDR4-3600",
+      "releaseYear": 2017,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 16,
+        "generation": "DDR4",
+        "speed_mt_s": 3600,
+        "sticks": 1
+      },
+      "source": "gskill-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-crucial-ballistix-16gb-ddr4-3600",
+      "category": "ram",
+      "brand": "Crucial",
+      "model": "Ballistix 16GB DDR4-3600",
+      "releaseYear": 2018,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 16,
+        "generation": "DDR4",
+        "speed_mt_s": 3600,
+        "sticks": 1
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-crucial-pro-32gb-ddr4-3200-ecc",
+      "category": "ram",
+      "brand": "Crucial",
+      "model": "Pro 32GB DDR4-3200 ECC",
+      "releaseYear": 2020,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR4",
+        "speed_mt_s": 3200,
+        "sticks": 1
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-crucial-pro-128gb-ddr4-2933-ecc",
+      "category": "ram",
+      "brand": "Crucial",
+      "model": "Pro 128GB DDR4-2933 ECC",
+      "releaseYear": 2020,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 128,
+        "generation": "DDR4",
+        "speed_mt_s": 2933,
+        "sticks": 4
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-kingston-fury-beast-8gb-ddr5-4800",
+      "category": "ram",
+      "brand": "Kingston",
+      "model": "FURY Beast 8GB DDR5-4800",
+      "releaseYear": 2022,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 8,
+        "generation": "DDR5",
+        "speed_mt_s": 4800,
+        "sticks": 1
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-kingston-fury-beast-16gb-ddr5-5200",
+      "category": "ram",
+      "brand": "Kingston",
+      "model": "FURY Beast 16GB DDR5-5200",
+      "releaseYear": 2022,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 16,
+        "generation": "DDR5",
+        "speed_mt_s": 5200,
+        "sticks": 1
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-kingston-fury-beast-32gb-ddr5-5200",
+      "category": "ram",
+      "brand": "Kingston",
+      "model": "FURY Beast 32GB DDR5-5200",
+      "releaseYear": 2022,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR5",
+        "speed_mt_s": 5200,
+        "sticks": 1
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-kingston-fury-beast-32gb-ddr5-6000",
+      "category": "ram",
+      "brand": "Kingston",
+      "model": "FURY Beast 32GB DDR5-6000",
+      "releaseYear": 2023,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR5",
+        "speed_mt_s": 6000,
+        "sticks": 1
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-kingston-fury-beast-64gb-ddr5-5600",
+      "category": "ram",
+      "brand": "Kingston",
+      "model": "FURY Beast 64GB DDR5-5600",
+      "releaseYear": 2023,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 64,
+        "generation": "DDR5",
+        "speed_mt_s": 5600,
+        "sticks": 2
+      },
+      "source": "kingston-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-corsair-vengeance-16gb-ddr5-5600",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Vengeance 16GB DDR5-5600",
+      "releaseYear": 2022,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 16,
+        "generation": "DDR5",
+        "speed_mt_s": 5600,
+        "sticks": 1
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-corsair-vengeance-32gb-ddr5-5600",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Vengeance 32GB DDR5-5600",
+      "releaseYear": 2022,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR5",
+        "speed_mt_s": 5600,
+        "sticks": 1
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-corsair-vengeance-64gb-ddr5-5600",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Vengeance 64GB DDR5-5600",
+      "releaseYear": 2023,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 64,
+        "generation": "DDR5",
+        "speed_mt_s": 5600,
+        "sticks": 2
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-corsair-vengeance-32gb-ddr5-6000",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Vengeance 32GB DDR5-6000",
+      "releaseYear": 2023,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR5",
+        "speed_mt_s": 6000,
+        "sticks": 1
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-corsair-dominator-32gb-ddr5-6000",
+      "category": "ram",
+      "brand": "Corsair",
+      "model": "Dominator Platinum RGB 32GB DDR5-6000",
+      "releaseYear": 2023,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR5",
+        "speed_mt_s": 6000,
+        "sticks": 1
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-gskill-trident-z5-32gb-ddr5-6000",
+      "category": "ram",
+      "brand": "G.Skill",
+      "model": "Trident Z5 RGB 32GB DDR5-6000",
+      "releaseYear": 2022,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR5",
+        "speed_mt_s": 6000,
+        "sticks": 1
+      },
+      "source": "gskill-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-gskill-trident-z5-64gb-ddr5-6000",
+      "category": "ram",
+      "brand": "G.Skill",
+      "model": "Trident Z5 RGB 64GB DDR5-6000",
+      "releaseYear": 2023,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 64,
+        "generation": "DDR5",
+        "speed_mt_s": 6000,
+        "sticks": 2
+      },
+      "source": "gskill-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-gskill-trident-z5-48gb-ddr5-8000",
+      "category": "ram",
+      "brand": "G.Skill",
+      "model": "Trident Z5 RGB 48GB DDR5-8000",
+      "releaseYear": 2024,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 48,
+        "generation": "DDR5",
+        "speed_mt_s": 8000,
+        "sticks": 2
+      },
+      "source": "gskill-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-crucial-pro-32gb-ddr5-4800-ecc",
+      "category": "ram",
+      "brand": "Crucial",
+      "model": "Pro 32GB DDR5-4800 ECC",
+      "releaseYear": 2023,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 32,
+        "generation": "DDR5",
+        "speed_mt_s": 4800,
+        "sticks": 1
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-crucial-pro-64gb-ddr5-5600-ecc",
+      "category": "ram",
+      "brand": "Crucial",
+      "model": "Pro 64GB DDR5-5600 ECC",
+      "releaseYear": 2024,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 64,
+        "generation": "DDR5",
+        "speed_mt_s": 5600,
+        "sticks": 2
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ram-crucial-pro-128gb-ddr5-5600-ecc",
+      "category": "ram",
+      "brand": "Crucial",
+      "model": "Pro 128GB DDR5-5600 ECC",
+      "releaseYear": 2024,
+      "tdp_w": 5,
+      "specs": {
+        "capacity_gb": 128,
+        "generation": "DDR5",
+        "speed_mt_s": 5600,
+        "sticks": 4
+      },
+      "source": "crucial-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-rog-strix-x670e-e",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "ROG Strix X670E-E Gaming WIFI",
+      "releaseYear": 2022,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "X670",
+        "socket": "AM5",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-rog-crosshair-x670e-hero",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "ROG Crosshair X670E Hero",
+      "releaseYear": 2022,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "X670",
+        "socket": "AM5",
+        "form_factor": "EATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-msi-mag-x670e-tomahawk",
+      "category": "motherboard",
+      "brand": "MSI",
+      "model": "MAG X670E Tomahawk WIFI",
+      "releaseYear": 2022,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "X670",
+        "socket": "AM5",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-gigabyte-x670-aorus-elite",
+      "category": "motherboard",
+      "brand": "Gigabyte",
+      "model": "X670 AORUS Elite AX",
+      "releaseYear": 2022,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "X670",
+        "socket": "AM5",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-tuf-b650-plus",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "TUF Gaming B650-Plus WIFI",
+      "releaseYear": 2022,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "B650",
+        "socket": "AM5",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asrock-b650m-hdv",
+      "category": "motherboard",
+      "brand": "ASRock",
+      "model": "B650M-HDV/M.2",
+      "releaseYear": 2022,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "B650",
+        "socket": "AM5",
+        "form_factor": "mATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-prime-x870-p",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "Prime X870-P WIFI",
+      "releaseYear": 2024,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "X870",
+        "socket": "AM5",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-gigabyte-b840m-ds3h",
+      "category": "motherboard",
+      "brand": "Gigabyte",
+      "model": "B840M DS3H",
+      "releaseYear": 2024,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "B840",
+        "socket": "AM5",
+        "form_factor": "mATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-msi-pro-a620m-e",
+      "category": "motherboard",
+      "brand": "MSI",
+      "model": "PRO A620M-E",
+      "releaseYear": 2023,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "A620",
+        "socket": "AM5",
+        "form_factor": "mATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-rog-strix-x570-e",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "ROG Strix X570-E Gaming WIFI",
+      "releaseYear": 2019,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "X570",
+        "socket": "AM4",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-msi-mag-b550-tomahawk",
+      "category": "motherboard",
+      "brand": "MSI",
+      "model": "MAG B550 Tomahawk",
+      "releaseYear": 2020,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "B550",
+        "socket": "AM4",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-prime-b550-plus",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "Prime B550-Plus",
+      "releaseYear": 2020,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "B550",
+        "socket": "AM4",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-gigabyte-b550m-ds3h",
+      "category": "motherboard",
+      "brand": "Gigabyte",
+      "model": "B550M DS3H",
+      "releaseYear": 2020,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "B550",
+        "socket": "AM4",
+        "form_factor": "mATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-rog-zenith-ii-extreme",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "ROG Zenith II Extreme",
+      "releaseYear": 2019,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "TRX40",
+        "socket": "TRX4",
+        "form_factor": "EATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-rog-maximus-z790-hero",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "ROG Maximus Z790 Hero",
+      "releaseYear": 2022,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "Z790",
+        "socket": "LGA1700",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-msi-mag-z790-tomahawk",
+      "category": "motherboard",
+      "brand": "MSI",
+      "model": "MAG Z790 Tomahawk WIFI",
+      "releaseYear": 2022,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "Z790",
+        "socket": "LGA1700",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-tuf-b760-plus",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "TUF Gaming B760-Plus WIFI D4",
+      "releaseYear": 2023,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "B760",
+        "socket": "LGA1700",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-msi-mag-b760-tomahawk",
+      "category": "motherboard",
+      "brand": "MSI",
+      "model": "MAG B760 Tomahawk WIFI DDR4",
+      "releaseYear": 2023,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "B760",
+        "socket": "LGA1700",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-gigabyte-b760m-ds3h",
+      "category": "motherboard",
+      "brand": "Gigabyte",
+      "model": "B760M DS3H DDR4",
+      "releaseYear": 2023,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "B760",
+        "socket": "LGA1700",
+        "form_factor": "mATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-prime-z690-p",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "Prime Z690-P WIFI D4",
+      "releaseYear": 2021,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "Z690",
+        "socket": "LGA1700",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-msi-pro-b660m-a",
+      "category": "motherboard",
+      "brand": "MSI",
+      "model": "PRO B660M-A DDR4",
+      "releaseYear": 2022,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "B660",
+        "socket": "LGA1700",
+        "form_factor": "mATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-rog-strix-x299-e",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "ROG Strix X299-E Gaming II",
+      "releaseYear": 2018,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "X299",
+        "socket": "LGA2066",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "mb-asus-prime-x299-deluxe",
+      "category": "motherboard",
+      "brand": "ASUS",
+      "model": "Prime X299-Deluxe II",
+      "releaseYear": 2018,
+      "tdp_w": 30,
+      "specs": {
+        "chipset": "X299",
+        "socket": "LGA2066",
+        "form_factor": "ATX"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-rm650x-2021",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "RM650x (2021)",
+      "releaseYear": 2021,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 650,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-rm750x-2021",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "RM750x (2021)",
+      "releaseYear": 2021,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 750,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-rm850x-2021",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "RM850x (2021)",
+      "releaseYear": 2021,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 850,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-rm1000x-2021",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "RM1000x (2021)",
+      "releaseYear": 2021,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1000,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-hx750-2022",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "HX750",
+      "releaseYear": 2022,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 750,
+        "efficiency": "Platinum",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-hx1000-2022",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "HX1000",
+      "releaseYear": 2022,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1000,
+        "efficiency": "Platinum",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-rm850i-2018",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "RM850i",
+      "releaseYear": 2018,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 850,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-ax850-2022",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "AX850",
+      "releaseYear": 2022,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 850,
+        "efficiency": "Titanium",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-ax1000-2022",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "AX1000",
+      "releaseYear": 2022,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1000,
+        "efficiency": "Titanium",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-seasonic-focus-px-750",
+      "category": "psu",
+      "brand": "Seasonic",
+      "model": "Focus PX-750",
+      "releaseYear": 2018,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 750,
+        "efficiency": "Platinum",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-seasonic-prime-tx-1000",
+      "category": "psu",
+      "brand": "Seasonic",
+      "model": "Prime TX-1000",
+      "releaseYear": 2018,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1000,
+        "efficiency": "Titanium",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-seasonic-prime-gx-850",
+      "category": "psu",
+      "brand": "Seasonic",
+      "model": "Prime GX-850",
+      "releaseYear": 2019,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 850,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-seasonic-focus-gx-550",
+      "category": "psu",
+      "brand": "Seasonic",
+      "model": "Focus GX-550",
+      "releaseYear": 2018,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 550,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-evga-supernova-650-g7",
+      "category": "psu",
+      "brand": "EVGA",
+      "model": "SuperNOVA 650 G7",
+      "releaseYear": 2020,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 650,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-evga-supernova-850-g7",
+      "category": "psu",
+      "brand": "EVGA",
+      "model": "SuperNOVA 850 G7",
+      "releaseYear": 2020,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 850,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-evga-supernova-1000-g7",
+      "category": "psu",
+      "brand": "EVGA",
+      "model": "SuperNOVA 1000 G7",
+      "releaseYear": 2020,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1000,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-evga-supernova-850-p5",
+      "category": "psu",
+      "brand": "EVGA",
+      "model": "SuperNOVA 850 P5",
+      "releaseYear": 2018,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 850,
+        "efficiency": "Platinum",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-evga-supernova-1300-p5",
+      "category": "psu",
+      "brand": "EVGA",
+      "model": "SuperNOVA 1300 P5",
+      "releaseYear": 2018,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1300,
+        "efficiency": "Platinum",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-evga-supernova-850-t2",
+      "category": "psu",
+      "brand": "EVGA",
+      "model": "SuperNOVA 850 T2",
+      "releaseYear": 2017,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 850,
+        "efficiency": "Titanium",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-bequiet-straight-power-12-1000w",
+      "category": "psu",
+      "brand": "be quiet!",
+      "model": "Straight Power 12 1000W",
+      "releaseYear": 2023,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1000,
+        "efficiency": "Platinum",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-bequiet-straight-power-12-1500w",
+      "category": "psu",
+      "brand": "be quiet!",
+      "model": "Straight Power 12 1500W",
+      "releaseYear": 2023,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1500,
+        "efficiency": "Platinum",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-bequiet-dark-power-pro-13-1300w",
+      "category": "psu",
+      "brand": "be quiet!",
+      "model": "Dark Power Pro 13 1300W",
+      "releaseYear": 2023,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1300,
+        "efficiency": "Titanium",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-bequiet-system-power-10-650w",
+      "category": "psu",
+      "brand": "be quiet!",
+      "model": "System Power 10 650W",
+      "releaseYear": 2022,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 650,
+        "efficiency": "Bronze",
+        "modular": "non-modular"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-coolermaster-v850-sfx",
+      "category": "psu",
+      "brand": "Cooler Master",
+      "model": "V850 SFX Gold",
+      "releaseYear": 2021,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 850,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-thermaltake-toughpower-gf3-1200",
+      "category": "psu",
+      "brand": "Thermaltake",
+      "model": "Toughpower GF3 1200W",
+      "releaseYear": 2022,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1200,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-thermaltake-toughpower-gf3-1650",
+      "category": "psu",
+      "brand": "Thermaltake",
+      "model": "Toughpower GF3 1650W",
+      "releaseYear": 2022,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1650,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-msi-mag-a850gl",
+      "category": "psu",
+      "brand": "MSI",
+      "model": "MAG A850GL PCIE5",
+      "releaseYear": 2023,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 850,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-msi-mag-a1000gl",
+      "category": "psu",
+      "brand": "MSI",
+      "model": "MAG A1000GL PCIE5",
+      "releaseYear": 2023,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1000,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-rm850x-shift-2024",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "RM850x SHIFT (2024)",
+      "releaseYear": 2024,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 850,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "psu-corsair-rm1000x-shift-2024",
+      "category": "psu",
+      "brand": "Corsair",
+      "model": "RM1000x SHIFT (2024)",
+      "releaseYear": 2024,
+      "tdp_w": 0,
+      "specs": {
+        "wattage_w": 1000,
+        "efficiency": "Gold",
+        "modular": "full"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-noctua-nh-d15",
+      "category": "cooler",
+      "brand": "Noctua",
+      "model": "NH-D15",
+      "releaseYear": 2014,
+      "tdp_w": 6,
+      "specs": {
+        "type": "air",
+        "fan_count": 2,
+        "tdp_rating_w": 220
+      },
+      "source": "noctua-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-noctua-nh-d15s",
+      "category": "cooler",
+      "brand": "Noctua",
+      "model": "NH-D15S",
+      "releaseYear": 2019,
+      "tdp_w": 6,
+      "specs": {
+        "type": "air",
+        "fan_count": 1,
+        "tdp_rating_w": 220
+      },
+      "source": "noctua-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-noctua-nh-u12a",
+      "category": "cooler",
+      "brand": "Noctua",
+      "model": "NH-U12A",
+      "releaseYear": 2018,
+      "tdp_w": 6,
+      "specs": {
+        "type": "air",
+        "fan_count": 2,
+        "tdp_rating_w": 170
+      },
+      "source": "noctua-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-noctua-nh-u9s",
+      "category": "cooler",
+      "brand": "Noctua",
+      "model": "NH-U9S",
+      "releaseYear": 2015,
+      "tdp_w": 6,
+      "specs": {
+        "type": "air",
+        "fan_count": 1,
+        "tdp_rating_w": 140
+      },
+      "source": "noctua-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-noctua-nh-p1",
+      "category": "cooler",
+      "brand": "Noctua",
+      "model": "NH-P1",
+      "releaseYear": 2022,
+      "tdp_w": 6,
+      "specs": {
+        "type": "air",
+        "fan_count": 1,
+        "tdp_rating_w": 180
+      },
+      "source": "noctua-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-bequiet-dark-rock-pro-4",
+      "category": "cooler",
+      "brand": "be quiet!",
+      "model": "Dark Rock Pro 4",
+      "releaseYear": 2018,
+      "tdp_w": 6,
+      "specs": {
+        "type": "air",
+        "fan_count": 2,
+        "tdp_rating_w": 250
+      },
+      "source": "bequiet-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-bequiet-dark-rock-4",
+      "category": "cooler",
+      "brand": "be quiet!",
+      "model": "Dark Rock 4",
+      "releaseYear": 2018,
+      "tdp_w": 6,
+      "specs": {
+        "type": "air",
+        "fan_count": 1,
+        "tdp_rating_w": 200
+      },
+      "source": "bequiet-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-bequiet-pure-rock-2",
+      "category": "cooler",
+      "brand": "be quiet!",
+      "model": "Pure Rock 2",
+      "releaseYear": 2019,
+      "tdp_w": 6,
+      "specs": {
+        "type": "air",
+        "fan_count": 1,
+        "tdp_rating_w": 150
+      },
+      "source": "bequiet-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-bequiet-shadow-rock-3",
+      "category": "cooler",
+      "brand": "be quiet!",
+      "model": "Shadow Rock 3",
+      "releaseYear": 2021,
+      "tdp_w": 6,
+      "specs": {
+        "type": "air",
+        "fan_count": 1,
+        "tdp_rating_w": 190
+      },
+      "source": "bequiet-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-arctic-freezer-34-esports-duo",
+      "category": "cooler",
+      "brand": "Arctic",
+      "model": "Freezer 34 eSports Duo",
+      "releaseYear": 2019,
+      "tdp_w": 6,
+      "specs": {
+        "type": "air",
+        "fan_count": 2,
+        "tdp_rating_w": 210
+      },
+      "source": "arctic-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-arctic-liquid-freezer-iii-360",
+      "category": "cooler",
+      "brand": "Arctic",
+      "model": "Liquid Freezer III 360",
+      "releaseYear": 2024,
+      "tdp_w": 10,
+      "specs": {
+        "type": "Arctic",
+        "fan_count": 3,
+        "tdp_rating_w": 350
+      },
+      "source": "Arctic-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-arctic-liquid-freezer-iii-240",
+      "category": "cooler",
+      "brand": "Arctic",
+      "model": "Liquid Freezer III 240",
+      "releaseYear": 2024,
+      "tdp_w": 10,
+      "specs": {
+        "type": "Arctic",
+        "fan_count": 2,
+        "tdp_rating_w": 240
+      },
+      "source": "Arctic-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-corsair-h150i-elite-capellix",
+      "category": "cooler",
+      "brand": "Corsair",
+      "model": "iCUE H150i Elite Capellix",
+      "releaseYear": 2021,
+      "tdp_w": 10,
+      "specs": {
+        "type": "aio",
+        "fan_count": 3,
+        "tdp_rating_w": 360
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-corsair-h100i-elite-capellix",
+      "category": "cooler",
+      "brand": "Corsair",
+      "model": "iCUE H100i Elite Capellix",
+      "releaseYear": 2021,
+      "tdp_w": 10,
+      "specs": {
+        "type": "aio",
+        "fan_count": 2,
+        "tdp_rating_w": 240
+      },
+      "source": "corsair-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "cooler-nzxt-kraken-x73",
+      "category": "cooler",
+      "brand": "NZXT",
+      "model": "Kraken X73 RGB",
+      "releaseYear": 2020,
+      "tdp_w": 10,
+      "specs": {
+        "type": "aio",
+        "fan_count": 3,
+        "tdp_rating_w": 360
+      },
+      "source": "nzxt-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-dell-u2419h",
+      "category": "monitor",
+      "brand": "Dell",
+      "model": "UltraSharp U2419H",
+      "releaseYear": 2018,
+      "tdp_w": 17,
+      "specs": {
+        "size_in": 24,
+        "resolution": "1920x1080",
+        "refresh_hz": 60,
+        "panel_w": 17,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-dell-p2422he",
+      "category": "monitor",
+      "brand": "Dell",
+      "model": "P2422HE",
+      "releaseYear": 2021,
+      "tdp_w": 16,
+      "specs": {
+        "size_in": 24,
+        "resolution": "1920x1080",
+        "refresh_hz": 60,
+        "panel_w": 16,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-27gp850-b",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "27GP850-B UltraGear",
+      "releaseYear": 2021,
+      "tdp_w": 32,
+      "specs": {
+        "size_in": 27,
+        "resolution": "2560x1440",
+        "refresh_hz": 165,
+        "panel_w": 32,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-27gn950-b",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "27GN950-B UltraGear",
+      "releaseYear": 2020,
+      "tdp_w": 45,
+      "specs": {
+        "size_in": 27,
+        "resolution": "3840x2160",
+        "refresh_hz": 144,
+        "panel_w": 45,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-27ul850-w",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "27UL850-W",
+      "releaseYear": 2019,
+      "tdp_w": 40,
+      "specs": {
+        "size_in": 27,
+        "resolution": "3840x2160",
+        "refresh_hz": 60,
+        "panel_w": 40,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-dell-s2722qc",
+      "category": "monitor",
+      "brand": "Dell",
+      "model": "S2722QC",
+      "releaseYear": 2022,
+      "tdp_w": 38,
+      "specs": {
+        "size_in": 27,
+        "resolution": "3840x2160",
+        "refresh_hz": 60,
+        "panel_w": 38,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-dell-u2723qe",
+      "category": "monitor",
+      "brand": "Dell",
+      "model": "U2723QE",
+      "releaseYear": 2022,
+      "tdp_w": 36,
+      "specs": {
+        "size_in": 27,
+        "resolution": "3840x2160",
+        "refresh_hz": 60,
+        "panel_w": 36,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-32un880-b",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "32UN880-B Ergo",
+      "releaseYear": 2021,
+      "tdp_w": 50,
+      "specs": {
+        "size_in": 32,
+        "resolution": "3840x2160",
+        "refresh_hz": 60,
+        "panel_w": 50,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-dell-u3223qe",
+      "category": "monitor",
+      "brand": "Dell",
+      "model": "U3223QE",
+      "releaseYear": 2022,
+      "tdp_w": 45,
+      "specs": {
+        "size_in": 32,
+        "resolution": "3840x2160",
+        "refresh_hz": 60,
+        "panel_w": 45,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-32gp850-b",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "32GP850-B UltraGear",
+      "releaseYear": 2021,
+      "tdp_w": 45,
+      "specs": {
+        "size_in": 32,
+        "resolution": "2560x1440",
+        "refresh_hz": 165,
+        "panel_w": 45,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-34gp950g-b",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "34GP950G-B UltraGear",
+      "releaseYear": 2021,
+      "tdp_w": 55,
+      "specs": {
+        "size_in": 34,
+        "resolution": "3440x1440",
+        "refresh_hz": 180,
+        "panel_w": 55,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-34wn80c-b",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "34WN80C-B UltraWide",
+      "releaseYear": 2020,
+      "tdp_w": 42,
+      "specs": {
+        "size_in": 34,
+        "resolution": "3440x1440",
+        "refresh_hz": 60,
+        "panel_w": 42,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-38gl950g-b",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "38GL950G-B UltraGear",
+      "releaseYear": 2019,
+      "tdp_w": 65,
+      "specs": {
+        "size_in": 38,
+        "resolution": "3840x1600",
+        "refresh_hz": 175,
+        "panel_w": 65,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-49wq95c-w",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "49WQ95C-W UltraWide",
+      "releaseYear": 2022,
+      "tdp_w": 80,
+      "specs": {
+        "size_in": 49,
+        "resolution": "5120x1440",
+        "refresh_hz": 60,
+        "panel_w": 80,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-asus-pg279qm",
+      "category": "monitor",
+      "brand": "ASUS",
+      "model": "ROG Swift PG279QM",
+      "releaseYear": 2021,
+      "tdp_w": 38,
+      "specs": {
+        "size_in": 27,
+        "resolution": "2560x1440",
+        "refresh_hz": 240,
+        "panel_w": 38,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-asus-pg42uq",
+      "category": "monitor",
+      "brand": "ASUS",
+      "model": "ROG Swift PG42UQ",
+      "releaseYear": 2022,
+      "tdp_w": 90,
+      "specs": {
+        "size_in": 42,
+        "resolution": "3840x2160",
+        "refresh_hz": 138,
+        "panel_w": 90,
+        "panel_type": "OLED"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-48c1pub",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "48C1PUB OLED",
+      "releaseYear": 2021,
+      "tdp_w": 160,
+      "specs": {
+        "size_in": 48,
+        "resolution": "3840x2160",
+        "refresh_hz": 120,
+        "panel_w": 160,
+        "panel_type": "OLED"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-lg-27gp950-b",
+      "category": "monitor",
+      "brand": "LG",
+      "model": "27GP950-B UltraGear",
+      "releaseYear": 2021,
+      "tdp_w": 50,
+      "specs": {
+        "size_in": 27,
+        "resolution": "3840x2160",
+        "refresh_hz": 144,
+        "panel_w": 50,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-benq-pd2725u",
+      "category": "monitor",
+      "brand": "BenQ",
+      "model": "PD2725U DesignVue",
+      "releaseYear": 2022,
+      "tdp_w": 42,
+      "specs": {
+        "size_in": 27,
+        "resolution": "3840x2160",
+        "refresh_hz": 60,
+        "panel_w": 42,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "monitor-asus-proart-pa32ucg",
+      "category": "monitor",
+      "brand": "ASUS",
+      "model": "ProArt PA32UCG",
+      "releaseYear": 2019,
+      "tdp_w": 85,
+      "specs": {
+        "size_in": 32,
+        "resolution": "3840x2160",
+        "refresh_hz": 120,
+        "panel_w": 85,
+        "panel_type": "IPS"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-apc-be600m1",
+      "category": "ups",
+      "brand": "APC",
+      "model": "Back-UPS BE600M1",
+      "releaseYear": 2016,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 600,
+        "capacity_w": 330
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-apc-be850m2",
+      "category": "ups",
+      "brand": "APC",
+      "model": "Back-UPS BE850M2",
+      "releaseYear": 2019,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 850,
+        "capacity_w": 450
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-apc-bx1500m",
+      "category": "ups",
+      "brand": "APC",
+      "model": "Back-UPS BX1500M",
+      "releaseYear": 2018,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 1500,
+        "capacity_w": 900
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-apc-br1000ms",
+      "category": "ups",
+      "brand": "APC",
+      "model": "Back-UPS Pro BR1000MS",
+      "releaseYear": 2020,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 1000,
+        "capacity_w": 600
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-apc-smt1500",
+      "category": "ups",
+      "brand": "APC",
+      "model": "Smart-UPS SMT1500",
+      "releaseYear": 2019,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 1500,
+        "capacity_w": 1000
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-apc-smt3000",
+      "category": "ups",
+      "brand": "APC",
+      "model": "Smart-UPS SMT3000",
+      "releaseYear": 2019,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 3000,
+        "capacity_w": 2700
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-cyberpower-cp1500avrlcd",
+      "category": "ups",
+      "brand": "CyberPower",
+      "model": "CP1500AVRLCD",
+      "releaseYear": 2020,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 1500,
+        "capacity_w": 900
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-cyberpower-pr3000rt2u",
+      "category": "ups",
+      "brand": "CyberPower",
+      "model": "PR3000RT2U",
+      "releaseYear": 2021,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 3000,
+        "capacity_w": 2700
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-eaton-5s1500lcd",
+      "category": "ups",
+      "brand": "Eaton",
+      "model": "5S1500LCD",
+      "releaseYear": 2020,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 1500,
+        "capacity_w": 900
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-tripp-lite-su1000rtxlcd2u",
+      "category": "ups",
+      "brand": "Tripp Lite",
+      "model": "SmartOnline SU1000RTXLCD2U",
+      "releaseYear": 2019,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 1000,
+        "capacity_w": 900
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "ups-apc-sua3000",
+      "category": "ups",
+      "brand": "APC",
+      "model": "Smart-UPS SUA3000",
+      "releaseYear": 2018,
+      "tdp_w": 0,
+      "specs": {
+        "capacity_va": 3000,
+        "capacity_w": 2700
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "optical-lg-gh24nsc0b",
+      "category": "optical_drive",
+      "brand": "LG",
+      "model": "GH24NSC0B 24x DVD\u00b1RW",
+      "releaseYear": 2018,
+      "tdp_w": 8,
+      "specs": {
+        "type": "dvd"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "optical-asus-drw-24b1st",
+      "category": "optical_drive",
+      "brand": "ASUS",
+      "model": "DRW-24B1ST 24x DVD\u00b1RW",
+      "releaseYear": 2017,
+      "tdp_w": 8,
+      "specs": {
+        "type": "dvd"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "optical-lg-bh16ns40",
+      "category": "optical_drive",
+      "brand": "LG",
+      "model": "BH16NS40 16x Blu-ray",
+      "releaseYear": 2018,
+      "tdp_w": 12,
+      "specs": {
+        "type": "blu-ray"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "optical-lg-wh16ns40",
+      "category": "optical_drive",
+      "brand": "LG",
+      "model": "WH16NS40 16x Blu-ray Writer",
+      "releaseYear": 2018,
+      "tdp_w": 12,
+      "specs": {
+        "type": "blu-ray"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "optical-asus-bc-12d2ht",
+      "category": "optical_drive",
+      "brand": "ASUS",
+      "model": "BC-12D2HT 12x Blu-ray",
+      "releaseYear": 2017,
+      "tdp_w": 12,
+      "specs": {
+        "type": "blu-ray"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-asus-xonar-se",
+      "category": "add_in_card",
+      "brand": "ASUS",
+      "model": "Xonar SE 5.1 PCIe",
+      "releaseYear": 2020,
+      "tdp_w": 5,
+      "specs": {
+        "interface": "PCIe-x1",
+        "function": "sound-card"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-creative-sound-blaster-ae-7",
+      "category": "add_in_card",
+      "brand": "Creative",
+      "model": "Sound BlasterX AE-7",
+      "releaseYear": 2020,
+      "tdp_w": 8,
+      "specs": {
+        "interface": "PCIe-x1",
+        "function": "sound-card"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-elgato-hd60-x",
+      "category": "add_in_card",
+      "brand": "Elgato",
+      "model": "HD60 X Capture Card",
+      "releaseYear": 2022,
+      "tdp_w": 12,
+      "specs": {
+        "interface": "PCIe-x1",
+        "function": "capture-card"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-elgato-4k60-pro-mk2",
+      "category": "add_in_card",
+      "brand": "Elgato",
+      "model": "4K60 Pro MK.2 Capture",
+      "releaseYear": 2022,
+      "tdp_w": 18,
+      "specs": {
+        "interface": "PCIe-x4",
+        "function": "capture-card"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-intel-x710-da2",
+      "category": "add_in_card",
+      "brand": "Intel",
+      "model": "X710-DA2 10GbE SFP+",
+      "releaseYear": 2018,
+      "tdp_w": 10,
+      "specs": {
+        "interface": "PCIe-x8",
+        "function": "nic"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-intel-x550-t2",
+      "category": "add_in_card",
+      "brand": "Intel",
+      "model": "X550-T2 10GbE",
+      "releaseYear": 2017,
+      "tdp_w": 12,
+      "specs": {
+        "interface": "PCIe-x4",
+        "function": "nic"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-aquantia-aqc-107",
+      "category": "add_in_card",
+      "brand": "Aquantia",
+      "model": "AQtion AQC-107 5GbE",
+      "releaseYear": 2019,
+      "tdp_w": 6,
+      "specs": {
+        "interface": "PCIe-x1",
+        "function": "nic"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-asus-xg-c100c",
+      "category": "add_in_card",
+      "brand": "ASUS",
+      "model": "XG-C100C 10GbE",
+      "releaseYear": 2019,
+      "tdp_w": 7,
+      "specs": {
+        "interface": "PCIe-x1",
+        "function": "nic"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-intel-ax210",
+      "category": "add_in_card",
+      "brand": "Intel",
+      "model": "Wi-Fi 6E AX210",
+      "releaseYear": 2020,
+      "tdp_w": 3,
+      "specs": {
+        "interface": "M.2-2230",
+        "function": "wifi-card"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-intel-be200",
+      "category": "add_in_card",
+      "brand": "Intel",
+      "model": "Wi-Fi 7 BE200",
+      "releaseYear": 2023,
+      "tdp_w": 4,
+      "specs": {
+        "interface": "M.2-2230",
+        "function": "wifi-card"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "addon-tp-link-archer-tx3000e",
+      "category": "add_in_card",
+      "brand": "TP-Link",
+      "model": "Archer TX3000E Wi-Fi 6",
+      "releaseYear": 2020,
+      "tdp_w": 4,
+      "specs": {
+        "interface": "PCIe-x1",
+        "function": "wifi-card"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-logitech-g-pro-x-keyboard",
+      "category": "peripheral",
+      "brand": "Logitech",
+      "model": "G Pro X Mechanical Keyboard",
+      "releaseYear": 2019,
+      "tdp_w": 3,
+      "specs": {
+        "type": "keyboard"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-logitech-g915-tkl",
+      "category": "peripheral",
+      "brand": "Logitech",
+      "model": "G915 TKL Lightspeed",
+      "releaseYear": 2019,
+      "tdp_w": 4,
+      "specs": {
+        "type": "keyboard"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-corsair-k100-rgb",
+      "category": "peripheral",
+      "brand": "Corsair",
+      "model": "K100 RGB Optical",
+      "releaseYear": 2020,
+      "tdp_w": 4,
+      "specs": {
+        "type": "keyboard"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-razer-huntsman-v3-pro",
+      "category": "peripheral",
+      "brand": "Razer",
+      "model": "Huntsman V3 Pro",
+      "releaseYear": 2023,
+      "tdp_w": 5,
+      "specs": {
+        "type": "keyboard"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-keychron-q1",
+      "category": "peripheral",
+      "brand": "Keychron",
+      "model": "Q1 Pro Wireless",
+      "releaseYear": 2022,
+      "tdp_w": 4,
+      "specs": {
+        "type": "keyboard"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-logitech-g-pro-x-superlight",
+      "category": "peripheral",
+      "brand": "Logitech",
+      "model": "G Pro X Superlight 2 Mouse",
+      "releaseYear": 2023,
+      "tdp_w": 2,
+      "specs": {
+        "type": "mouse"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-razer-deathadder-v3-pro",
+      "category": "peripheral",
+      "brand": "Razer",
+      "model": "DeathAdder V3 Pro",
+      "releaseYear": 2022,
+      "tdp_w": 2,
+      "specs": {
+        "type": "mouse"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-logitech-mx-master-3s",
+      "category": "peripheral",
+      "brand": "Logitech",
+      "model": "MX Master 3S",
+      "releaseYear": 2022,
+      "tdp_w": 2,
+      "specs": {
+        "type": "mouse"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-logitech-g502-x-plus",
+      "category": "peripheral",
+      "brand": "Logitech",
+      "model": "G502 X PLUS",
+      "releaseYear": 2023,
+      "tdp_w": 3,
+      "specs": {
+        "type": "mouse"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-hyperx-cloud-iii",
+      "category": "peripheral",
+      "brand": "HyperX",
+      "model": "Cloud III Wireless",
+      "releaseYear": 2023,
+      "tdp_w": 3,
+      "specs": {
+        "type": "headset"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-steelseries-arctis-nova-pro",
+      "category": "peripheral",
+      "brand": "SteelSeries",
+      "model": "Arctis Nova Pro Wireless",
+      "releaseYear": 2022,
+      "tdp_w": 5,
+      "specs": {
+        "type": "headset"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-logitech-g735",
+      "category": "peripheral",
+      "brand": "Logitech",
+      "model": "G735 Wireless Headset",
+      "releaseYear": 2022,
+      "tdp_w": 4,
+      "specs": {
+        "type": "headset"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-elgato-facecam-pro",
+      "category": "peripheral",
+      "brand": "Elgato",
+      "model": "Facecam Pro 4K Webcam",
+      "releaseYear": 2022,
+      "tdp_w": 6,
+      "specs": {
+        "type": "webcam"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-logitech-brio-4k",
+      "category": "peripheral",
+      "brand": "Logitech",
+      "model": "BRIO 4K Webcam",
+      "releaseYear": 2017,
+      "tdp_w": 4,
+      "specs": {
+        "type": "webcam"
+      },
+      "source": "vendor-spec",
+      "addedAt": "2026-09-21"
+    },
+    {
+      "id": "peripheral-elgato-stream-deck-xl",
+      "category": "peripheral",
+      "brand": "Elgato",
+      "model": "Stream Deck XL",
+      "releaseYear": 2021,
+      "tdp_w": 3,
+      "specs": {
+        "type": "stream-deck"
+      },
+      "source": "vendor-spec",
       "addedAt": "2026-09-21"
     }
   ]

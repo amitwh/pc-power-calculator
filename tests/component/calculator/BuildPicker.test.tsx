@@ -15,17 +15,43 @@ describe('BuildPicker', () => {
   test('renders the default build and slot pickers', () => {
     render(<BuildPicker />);
     expect(screen.getByRole('heading', { name: /Your Systems/i })).toBeInTheDocument();
-    // CPU + GPU now use SearchableSelect (button role); motherboard stays on native <select>.
+    // Single-slot pickers now use SearchableSelect when category has >12 options
+    // (CPU 358, GPU 111, motherboard 36, psu 30, cooler 15). Multi-slots
+    // (RAM/storage/monitor) use a button + chips; we just verify the pickers render.
     expect(screen.getByRole('button', { name: /Select CPU/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Select GPU/i })).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: /Select Motherboard/i })).toBeInTheDocument();
-    // Each build chip exposes a switch button with the build name.
+    expect(screen.getByRole('button', { name: /Select Motherboard/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Select PSU/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Select Cooler/i })).toBeInTheDocument();
+    // Multi-slot "Add" buttons (aria-label is "Add RAM" etc; "+" is shown in the trigger text)
+    expect(screen.getByRole('button', { name: /^Add RAM/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^Add Storage/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^Add Monitor/i })).toBeInTheDocument();
+    // Build chip switch button
     expect(screen.getByRole('button', { name: /My build/i })).toBeInTheDocument();
   });
 
-  test('shows "Not selected" until a slot is chosen', () => {
+  test('shows "Not selected" once per single-slot component (CPU/GPU/MB/PSU/Cooler)', () => {
     render(<BuildPicker />);
-    expect(screen.getAllByText('Not selected')).toHaveLength(3);
+    // 5 single-slot ComponentCards × 1 "Not selected" each.
+    expect(screen.getAllByText('Not selected')).toHaveLength(5);
+  });
+
+  test('adding RAM to multi-slot updates store', async () => {
+    const user = userEvent.setup();
+    render(<BuildPicker />);
+    await user.click(screen.getByRole('button', { name: /^Add RAM/i }));
+    await user.click(screen.getByRole('option', { name: /Corsair Vengeance 32GB DDR5-5600/ }));
+    expect(useBuildStore.getState().builds[0].components.ram).toContain('ram-corsair-vengeance-32gb-ddr5-5600');
+  });
+
+  test('removing a selected storage chip clears it', async () => {
+    const user = userEvent.setup();
+    useBuildStore.getState().addComponent('storage', 'storage-samsung-980-1tb');
+    render(<BuildPicker />);
+    expect(screen.getByText(/Samsung 980 1TB/)).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /Remove Samsung 980 1TB/i }));
+    expect(useBuildStore.getState().builds[0].components.storage ?? []).not.toContain('storage-samsung-980-1tb');
   });
 
   test('selecting a CPU via the searchable picker updates the card and store', async () => {

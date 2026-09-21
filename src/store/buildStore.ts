@@ -49,6 +49,10 @@ interface BuildStore {
 
   // Active-build mutations
   setComponent: (slot: ComponentSlot, id: string | null) => void;
+  /** Append a component id to an array slot (idempotent — no duplicates). */
+  addComponent: (slot: ComponentSlot, id: string) => void;
+  /** Remove a component id from an array slot. */
+  removeComponent: (slot: ComponentSlot, id: string) => void;
   setSchedule: (schedule: WorkloadSchedule[]) => void;
   setLocation: (country: string, subdivision?: string) => void;
   setCurrency: (currency: string) => void;
@@ -140,6 +144,36 @@ export const useBuildStore = create<BuildStore>()(
             (components as Record<string, unknown>)[slot as string] = id;
           }
           return { ...b, components };
+        }),
+
+      // Normalize singular slot names ("monitor") to the plural keys actually used
+      // by BuildComponents ("monitors"). The ComponentSlot type uses the singular
+      // form so the public API stays readable.
+      addComponent: (slot, id) =>
+        updateActive(set, (b) => {
+          const key = slot === 'monitor' ? 'monitors'
+            : slot === 'add_in_card' ? 'add_in_cards'
+            : slot === 'optical_drive' ? 'optical_drives'
+            : slot === 'peripheral' ? 'peripherals'
+            : slot;
+          const arrKey = key as keyof typeof b.components;
+          const existing = (b.components[arrKey] as unknown as string[] | undefined) ?? [];
+          if (existing.includes(id)) return b; // idempotent
+          return { ...b, components: { ...b.components, [arrKey]: [...existing, id] } };
+        }),
+
+      removeComponent: (slot, id) =>
+        updateActive(set, (b) => {
+          const key = slot === 'monitor' ? 'monitors'
+            : slot === 'add_in_card' ? 'add_in_cards'
+            : slot === 'optical_drive' ? 'optical_drives'
+            : slot === 'peripheral' ? 'peripherals'
+            : slot;
+          const arrKey = key as keyof typeof b.components;
+          const existing = (b.components[arrKey] as unknown as string[] | undefined) ?? [];
+          const next = existing.filter((x) => x !== id);
+          if (next.length === existing.length) return b;
+          return { ...b, components: { ...b.components, [arrKey]: next } };
         }),
 
       setSchedule: (schedule) =>

@@ -7,19 +7,26 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { ComponentCard } from './ComponentCard';
 import type { BuildComponents, BuildCategory, ComponentSlot } from '@/types/build';
-import type { ComponentCategory } from '@/types/component';
+import type { ComponentCategory, Component } from '@/types/component';
 import { CATEGORY_EMOJI, CATEGORY_LABEL } from '@/lib/buildCategory';
 
 interface SlotDef {
   key: ComponentSlot;
   label: string;
   category: ComponentCategory;
+  /** True for slots that hold multiple components (storage, ram, monitors, etc.). */
+  multi?: boolean;
 }
 
 const slots: SlotDef[] = [
   { key: 'cpu', label: 'CPU', category: 'cpu' },
   { key: 'gpu', label: 'GPU', category: 'gpu' },
   { key: 'motherboard', label: 'Motherboard', category: 'motherboard' },
+  { key: 'psu', label: 'PSU', category: 'psu' },
+  { key: 'cooler', label: 'Cooler', category: 'cooler' },
+  { key: 'ram', label: 'RAM', category: 'ram', multi: true },
+  { key: 'storage', label: 'Storage', category: 'storage', multi: true },
+  { key: 'monitor', label: 'Monitor', category: 'monitor', multi: true },
 ];
 
 const CATEGORIES: BuildCategory[] = ['gaming', 'workstation', 'nas', 'ai', 'general'];
@@ -28,6 +35,8 @@ export function BuildPicker() {
   const builds = useBuildStore((s) => s.builds);
   const activeBuildId = useBuildStore((s) => s.activeBuildId);
   const setComponent = useBuildStore((s) => s.setComponent);
+  const addComponent = useBuildStore((s) => s.addComponent);
+  const removeComponent = useBuildStore((s) => s.removeComponent);
   const setTdpOverride = useBuildStore((s) => s.setTdpOverride);
   const addBuild = useBuildStore((s) => s.addBuild);
   const removeBuild = useBuildStore((s) => s.removeBuild);
@@ -63,9 +72,11 @@ export function BuildPicker() {
   };
 
   const renderSlot = (slot: SlotDef) => {
+    const isMulti = !!slot.multi;
     const slotValue = activeBuild.components[slot.key as keyof BuildComponents];
-    const selectedId = Array.isArray(slotValue) ? slotValue[0] : slotValue;
-    const component = selectedId ? findComponent(selectedId) ?? null : null;
+    const selectedIds: string[] = isMulti
+      ? ((slotValue as string[] | undefined) ?? [])
+      : (slotValue ? [slotValue as string] : []);
     const overrideW = activeBuild.tdpOverrides[slot.key] ?? null;
     const categoryComponents = listComponents(slot.category);
     const options = categoryComponents.map((c) => ({
@@ -74,8 +85,49 @@ export function BuildPicker() {
       meta: { brand: c.brand, year: c.releaseYear, tdp_w: c.tdp_w },
     }));
 
+    if (isMulti) {
+      const selectedComps: Component[] = selectedIds
+        .map((id) => findComponent(id))
+        .filter((c): c is Component => !!c);
+      return (
+        <div key={slot.key} className="space-y-2">
+          <div className="flex flex-wrap gap-2">
+            {selectedComps.map((c) => (
+              <span
+                key={c.id}
+                className="inline-flex items-center gap-1.5 rounded-full border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-1.5 min-h-[36px] text-sm"
+              >
+                <span className="font-semibold truncate max-w-[260px]">
+                  {c.brand} {c.model}
+                </span>
+                <button
+                  type="button"
+                  aria-label={`Remove ${c.brand} ${c.model}`}
+                  className="text-base leading-none opacity-70 hover:opacity-100"
+                  onClick={() => removeComponent(slot.key, c.id)}
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
+          <SearchableSelect
+            ariaLabel={`Add ${slot.label}`}
+            placeholder={`+ Add ${slot.label}…`}
+            value=""
+            options={options.filter((o) => !selectedIds.includes(o.value))}
+            onChange={(v) => v && addComponent(slot.key, v)}
+            brandFilter
+          />
+        </div>
+      );
+    }
+
+    // Single-slot rendering (CPU / GPU / motherboard / PSU / cooler)
+    const selectedId = selectedIds[0] ?? null;
+    const component = selectedId ? findComponent(selectedId) ?? null : null;
     const isOverridingThis = overridingSlot === slot.key;
-    const useSearchable = slot.category === 'cpu' || slot.category === 'gpu';
+    const useSearchable = categoryComponents.length > 12;
     return (
       <div key={slot.key} className="space-y-2">
         {useSearchable ? (
