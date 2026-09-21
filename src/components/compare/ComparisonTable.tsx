@@ -47,6 +47,17 @@ export function ComparisonTable({ builds, currency }: Props) {
           formatCost(row.original.perBuildCost[b.id] ?? 0, resolvedCurrency),
         meta: { numeric: true },
       },
+      {
+        id: `${b.id}-perf`,
+        header: `${b.name} perf`,
+        cell: ({ row }: { row: { original: ComparisonRow } }) => {
+          const metrics = row.original.perBuildPerf?.[b.id] ?? [];
+          return metrics.length === 0
+            ? '—'
+            : metrics.map((m) => `${m.value}${m.unit}`).join(' · ');
+        },
+        meta: { numeric: true },
+      },
     ]),
   ];
 
@@ -96,6 +107,7 @@ export function ComparisonTable({ builds, currency }: Props) {
                 <td key={`${b.id}-yc`} className="p-2 text-brand">
                   {formatCost(t.cost, resolvedCurrency)}
                 </td>,
+                <td key={`${b.id}-yp`} className="p-2 text-gray-500">—</td>,
               ];
             })}
           </tr>

@@ -14,6 +14,9 @@ export type ResolvedComponent = Component & { effective_tdp_w: number | null };
 export interface PeriodEnergy {
   kwh: number;
   cost: number;
+  /** Per-workload rows for the active build; populated for daily/monthly/yearly
+   *  inside `useCalc`, left undefined for aggregate sums across all builds. */
+  perWorkload?: PerWorkloadEnergy[];
 }
 
 export interface CalcInputs {
@@ -26,9 +29,10 @@ export interface CalcInputs {
 }
 
 export interface CalcResult extends CalcInputs {
-  /** Per-workload energy breakdown for the active build. */
+  /** Per-workload energy breakdown for the active build (yearly view). */
   perWorkload: PerWorkloadEnergy[];
-  /** Pre-aggregated daily / monthly / yearly totals for the active build. */
+  /** Pre-aggregated daily / monthly / yearly totals for the active build,
+   *  plus per-workload rows for rendering perf metrics in the UI. */
   daily: PeriodEnergy;
   monthly: PeriodEnergy;
   yearly: PeriodEnergy;
@@ -134,9 +138,9 @@ export function useCalc(): CalcResult {
       psuWattage,
       totalEffectiveTdpW,
       perWorkload: yearly.perWorkload,
-      daily: daily.total,
-      monthly: monthly.total,
-      yearly: yearly.total,
+      daily: { ...daily.total, perWorkload: daily.perWorkload },
+      monthly: { ...monthly.total, perWorkload: monthly.perWorkload },
+      yearly: { ...yearly.total, perWorkload: yearly.perWorkload },
       componentsPowerW,
       allDaily,
       allMonthly,

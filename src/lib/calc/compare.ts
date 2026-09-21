@@ -1,11 +1,13 @@
 import type { BuildConfig } from '@/types/build';
-import type { Workload, WorkloadId } from '@/types/workload';
+import type { BenchmarkEntry, Workload, WorkloadId } from '@/types/workload';
+import { lookupBenchmark } from '@/lib/data/benchmarks';
 import { computeEnergy } from './energy';
 
 export interface ComparisonRow {
   workload_id: WorkloadId;
   perBuildKwh: Record<string, number>;
   perBuildCost: Record<string, number>;
+  perBuildPerf: Record<string, BenchmarkEntry[]>;
 }
 
 export interface ComparisonTotal {
@@ -31,7 +33,7 @@ export function compareBuilds(
   const rows: ComparisonRow[] = [];
   for (let i = 0; i < workloads.length; i++) {
     const wlId = workloads[i].id;
-    const row: ComparisonRow = { workload_id: wlId, perBuildKwh: {}, perBuildCost: {} };
+    const row: ComparisonRow = { workload_id: wlId, perBuildKwh: {}, perBuildCost: {}, perBuildPerf: {} };
     for (let j = 0; j < builds.length; j++) {
       const r = results[j].perWorkload[i];
       if (r) {
@@ -41,6 +43,16 @@ export function compareBuilds(
         row.perBuildKwh[builds[j].id] = 0;
         row.perBuildCost[builds[j].id] = 0;
       }
+
+      // Per-workload benchmark lookup — works regardless of whether this
+      // workload is in the build's schedule, so the comparison column stays
+      // populated for every workload/component combo.
+      const perfMetricsForRow: BenchmarkEntry[] = [];
+      const gpuId = builds[j].components.gpu;
+      const cpuId = builds[j].components.cpu;
+      if (gpuId) perfMetricsForRow.push(...lookupBenchmark(gpuId, wlId));
+      if (cpuId) perfMetricsForRow.push(...lookupBenchmark(cpuId, wlId));
+      row.perBuildPerf[builds[j].id] = perfMetricsForRow;
     }
     rows.push(row);
   }

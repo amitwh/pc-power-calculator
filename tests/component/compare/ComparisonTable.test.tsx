@@ -41,10 +41,12 @@ describe('ComparisonTable', () => {
     render(<ComparisonTable builds={[a, b]} />);
     const table = screen.getByRole('table');
     // The footer row "Yearly total" exposes both builds' yearly kWh side by side.
+    // Per-build columns are: kWh, cost, perf — so AMD kWh sits at cells[1] and
+    // Intel kWh at cells[4].
     const footer = within(table).getAllByText(/Yearly total/i)[0].closest('tr')!;
     const cells = within(footer).getAllByRole('cell');
     const amdkwh = cells[1].textContent ?? '';
-    const intelkwh = cells[3].textContent ?? '';
+    const intelkwh = cells[4].textContent ?? '';
     const parse = (s: string) => Number(s.replace(/[^\d.]/g, ''));
     expect(parse(intelkwh)).toBeGreaterThan(parse(amdkwh));
   });

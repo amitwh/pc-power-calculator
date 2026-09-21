@@ -46,4 +46,18 @@ describe('computeEnergy', () => {
     expect(m).toBeCloseTo(d * 30.44, 5);
     expect(y).toBeCloseTo(d * 365.25, 5);
   });
+
+  test('attaches benchmark entries for known GPU + workload', () => {
+    const r = computeEnergy(
+      {
+        ...build,
+        components: { ...build.components, gpu: 'gpu-nvidia-rtx-4070' },
+        schedule: [{ workload_id: 'gaming_1080p', hours_per_day: 4 }],
+      },
+      workloads.map((w) => ({ ...w, id: 'gaming_1080p', utilization: { ...w.utilization, cpu_pct: 0.4, gpu_pct: 0.95 } })),
+      'day',
+    );
+    const gamingRow = r.perWorkload.find((x) => x.workload_id === 'gaming_1080p');
+    expect(gamingRow?.perfMetrics.length).toBeGreaterThan(0);
+  });
 });

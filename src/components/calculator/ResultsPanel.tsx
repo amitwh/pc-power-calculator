@@ -95,6 +95,19 @@ export function ResultsPanel() {
         <PowerBreakdown components={components} drawWByComponentId={componentsPowerW} />
       </div>
 
+      {/* Per-workload performance — FPS, render seconds, hashrate, etc. */}
+      <div className="mt-4">
+        <div className="text-xs uppercase text-gray-500 mb-2 font-semibold">Per-workload performance</div>
+        <ul className="text-sm space-y-1">
+          {daily.perWorkload?.map((row) => (
+            <li key={row.workload_id} className="flex justify-between font-numeric tabular-nums">
+              <span>{row.workload_id}</span>
+              <span>{row.perfMetrics.map((m) => `${m.value}${m.unit}`).join(' · ') || '—'}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       {/* Export menu — PDF (window.print) and HTML (re-importable) */}
       <ExportMenu />
 

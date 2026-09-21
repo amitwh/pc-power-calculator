@@ -1,7 +1,8 @@
 import type { BuildConfig } from '@/types/build';
 import type { Component, PsuEfficiencyRating } from '@/types/component';
-import type { Workload, WorkloadId } from '@/types/workload';
+import type { BenchmarkEntry, Workload, WorkloadId } from '@/types/workload';
 import { findComponent } from '@/lib/data/components';
+import { lookupBenchmark } from '@/lib/data/benchmarks';
 import { systemPowerW } from './power';
 
 export interface PerWorkloadEnergy {
@@ -10,6 +11,7 @@ export interface PerWorkloadEnergy {
   draw_w: number;
   kwh: number;
   cost: number;
+  perfMetrics: BenchmarkEntry[];
 }
 
 const DAYS_IN_MONTH = 30.44;
@@ -122,7 +124,20 @@ export function computeEnergy(
     const ratePerKwh = tariffRateOverride ?? build.location.manual_rate_override ?? 0;
     const cost = ratePerKwh * periodKwh;
 
-    rows.push({ workload_id: s.workload_id, hours_per_day: s.hours_per_day, draw_w: wallDrawW, kwh: periodKwh, cost });
+    const gpuId = build.components.gpu;
+    const cpuId = build.components.cpu;
+    const perf: BenchmarkEntry[] = [];
+    if (gpuId) perf.push(...lookupBenchmark(gpuId, s.workload_id));
+    if (cpuId) perf.push(...lookupBenchmark(cpuId, s.workload_id));
+
+    rows.push({
+      workload_id: s.workload_id,
+      hours_per_day: s.hours_per_day,
+      draw_w: wallDrawW,
+      kwh: periodKwh,
+      cost,
+      perfMetrics: perf,
+    });
     totalKwh += periodKwh;
   }
 
