@@ -1,0 +1,49 @@
+# Build context exclusions — keep the Docker build context small and prevent
+# stale local node_modules/dist/etc from overriding what the image installs.
+
+# Dependencies & build outputs (rebuilt inside the image)
+node_modules/
+dist/
+.npm/
+.cache/
+.eslintcache
+
+# Test & CI artefacts
+test-results/
+playwright-report/
+.lighthouseci/
+
+# Repo-local scratch & history
+.remember/
+.superpowers/
+docs/
+mockups/
+
+# Editor / OS junk
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# VCS
+.git/
+.gitignore
+.gitattributes
+
+# GitHub config
+.github/
+
+# Vite + TS caches
+.vite/
+*.tsbuildinfo
