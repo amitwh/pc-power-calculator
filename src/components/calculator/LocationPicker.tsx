@@ -67,7 +67,11 @@ export function LocationPicker() {
             step="0.01"
             value={manualOverride ?? ''}
             placeholder={rate.toFixed(2)}
-            onChange={(e) => setManualRate(e.target.value === '' ? null : Math.max(0, Number(e.target.value)))}
+            onChange={(e) => {
+              if (e.target.value === '') return setManualRate(null);
+              const n = Number(e.target.value);
+              setManualRate(Number.isFinite(n) ? Math.max(0, n) : null);
+            }}
             className="min-h-[44px] px-3 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 w-32 font-numeric tabular-nums"
           />
           <Button variant="secondary" onClick={handleDetect} disabled={refreshing || loading}>
