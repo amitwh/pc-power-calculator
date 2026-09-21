@@ -15,7 +15,7 @@ export default function About() {
         <ul className="text-sm list-disc pl-5 space-y-1">
           <li>Component specs — manufacturer pages, TechPowerUp database</li>
           <li>Electricity tariffs — public utility regulators (CEA, EIA, Ofgem, Eurostat)</li>
-          <li>FX rates — exchangerate.host</li>
+          <li>FX rates — bundled snapshot (refreshed as part of the data-freshness workflow)</li>
           <li>Benchmarks — TechPowerUp, Gamers Nexus, Blender Open Data, PassMark, WhatToMine</li>
         </ul>
       </Card>

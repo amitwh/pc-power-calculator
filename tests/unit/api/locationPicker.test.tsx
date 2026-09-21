@@ -15,7 +15,7 @@ describe('LocationPicker manual-rate input', () => {
   test('non-numeric input (e.g. "abc") is rejected — manual_rate_override stays null', async () => {
     const user = userEvent.setup();
     render(<LocationPicker />);
-    const input = screen.getByLabelText(/Override ₹\/kWh/i) as HTMLInputElement;
+    const input = screen.getByLabelText(/Override \w+\/kWh/i) as HTMLInputElement;
     // Sanity: initial state has no manual override.
     expect(useBuildStore.getState().builds[0].location.manual_rate_override).toBeUndefined();
     // Type a non-numeric string. The browser ignores most non-digit chars for `type=number`,
@@ -31,7 +31,7 @@ describe('LocationPicker manual-rate input', () => {
   test('empty input clears the override (null)', async () => {
     const user = userEvent.setup();
     render(<LocationPicker />);
-    const input = screen.getByLabelText(/Override ₹\/kWh/i) as HTMLInputElement;
+    const input = screen.getByLabelText(/Override \w+\/kWh/i) as HTMLInputElement;
     await user.type(input, '8.5');
     expect(useBuildStore.getState().builds[0].location.manual_rate_override).toBe(8.5);
     await user.clear(input);
@@ -41,7 +41,7 @@ describe('LocationPicker manual-rate input', () => {
   test('digits above zero set the override', async () => {
     const user = userEvent.setup();
     render(<LocationPicker />);
-    const input = screen.getByLabelText(/Override ₹\/kWh/i) as HTMLInputElement;
+    const input = screen.getByLabelText(/Override \w+\/kWh/i) as HTMLInputElement;
     await user.type(input, '9.25');
     expect(useBuildStore.getState().builds[0].location.manual_rate_override).toBe(9.25);
   });

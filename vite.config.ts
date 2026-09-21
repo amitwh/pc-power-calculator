@@ -24,7 +24,6 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,json,svg,png,ico,webmanifest}'],
         runtimeCaching: [
           { urlPattern: /^https:\/\/ipapi\.co\//, handler: 'NetworkFirst', options: { cacheName: 'geo', networkTimeoutSeconds: 3 } },
-          { urlPattern: /^https:\/\/api\.exchangerate\.host\//, handler: 'StaleWhileRevalidate', options: { cacheName: 'fx' } },
         ],
       },
     }),

@@ -1,11 +1,21 @@
 import { useBuildStore } from '@/store/buildStore';
 import { listCountries, listSubdivisions, effectiveRateForCountry, tariffsLastUpdated } from '@/lib/data/tariffs';
+import { findCurrency } from '@/lib/data/currencies';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useFx } from '@/hooks/useFx';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { effectiveRate } from '@/lib/calc/cost';
+import type { CurrencyInfo } from '@/types/currency';
+
+const DEFAULT_INR: CurrencyInfo = {
+  code: 'INR',
+  symbol: '₹',
+  name: 'Indian Rupee',
+  locale: 'en-IN',
+  decimalDigits: 2,
+};
 
 export function LocationPicker() {
   const { loading, detect } = useGeolocation();
@@ -15,6 +25,11 @@ export function LocationPicker() {
   const build = builds.find((b) => b.id === activeBuildId);
   const setLocation = useBuildStore((s) => s.setLocation);
   const setManualRate = useBuildStore((s) => s.setManualRate);
+
+  // Currency follows the active build's override; falls back to INR.
+  // Mirrors the same pattern in src/components/calculator/ExportMenu.tsx
+  // so a US/EU user sees their own currency here (not a stray ₹).
+  const currency = findCurrency(build?.currency_override ?? '') ?? DEFAULT_INR;
 
   const countries = listCountries();
   const subdivisions = listSubdivisions(build?.location.country_iso2 ?? '');
@@ -44,11 +59,11 @@ export function LocationPicker() {
           />
         )}
         <div className="text-sm font-numeric tabular-nums">
-          Tariff: <span className="font-semibold">₹{rate.toFixed(2)}/kWh</span>
+          Tariff: <span className="font-semibold">{currency.symbol}{rate.toFixed(2)}/kWh</span>
           <span className="ml-2 text-xs text-gray-500">FX as of {snapshot.date} {isLive ? '(live)' : '(bundled)'}</span>
         </div>
         <div className="flex gap-2 items-center">
-          <label htmlFor="manual-rate" className="text-sm">Override ₹/kWh:</label>
+          <label htmlFor="manual-rate" className="text-sm">Override {currency.code}/kWh:</label>
           <input
             id="manual-rate"
             type="number"

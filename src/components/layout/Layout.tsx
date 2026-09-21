@@ -5,6 +5,7 @@ import { useInteractionCounter } from '@/hooks/useInteractionCounter';
 import { usePageView } from '@/hooks/usePageView';
 import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
 import { CookieBanner } from '@/components/CookieBanner';
+import { PrivacyLink } from '@/components/PrivacyLink';
 
 export default function Layout({ children }: { children: ReactNode }) {
   // Track meaningful user interactions so the install prompt only fires after
@@ -25,6 +26,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <MobileNav />
       <PWAInstallPrompt />
       <CookieBanner />
+      <PrivacyLink />
     </div>
   );
 }

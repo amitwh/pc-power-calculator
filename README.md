@@ -128,24 +128,24 @@ npx --yes lighthouse https://pcpower.concreteinfo.co.in --only-categories=perfor
 
 ### Security headers (CSP)
 
-The strict Content-Security-Policy from design spec §9.3, plus `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin`, are declared in **one** place — the source of truth for production:
+The strict Content-Security-Policy from design spec §9.3, plus `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin`, are declared in three synced sources. The order below is **canonical-first**: the first source is authoritative, the others are intentional mirrors so a misconfigured host still ships a sane policy.
 
-- **`public/_headers`** — served automatically by Cloudflare Pages on every response. Verifiable with `curl -fsSLI https://pcpower.concreteinfo.co.in/ | grep -i 'content-security-policy'`.
+1. **`nginx/default.conf`** — the **canonical** source. Emitted by the Coolify Nginx image on every response (including SPA-fallback 404s to `/index.html`). Verifiable with `curl -fsSLI https://pcpower.concreteinfo.co.in/ | grep -i 'content-security-policy'`. See the header comment at `nginx/default.conf:3-7` for why `frame-ancestors 'none'` is HTTP-only (the HTML spec disallows it inside `<meta>`).
+2. **`index.html` `<meta http-equiv="Content-Security-Policy">`** — an HTML fallback for hosts that don't honour a Netlify `_headers` file (e.g. when previewing `vite preview` against a raw static server). Browser-supported directives only — `frame-ancestors` is intentionally omitted; see the comment above the meta tag.
+3. **`public/_headers`** — Netlify mirror, kept in lock-step with `nginx/default.conf` for anyone running the same build on Netlify or Cloudflare Pages. The same policy as (1) verbatim.
 
-**Important:** there is intentionally **no** `<meta http-equiv="Content-Security-Policy">` in `index.html`. The single-source `_headers` block is what production runs under; duplicating the CSP into a meta tag creates a drift surface where the two fall out of sync and one of them is silently wrong. (Note: `vite dev` / `vite preview` don't honour `_headers` either, but the browser also does not enforce CSP in development the way it does in production, so no fallback is needed.)
-
-If your hosting environment doesn't honour `public/_headers` (e.g. Coolify's bundled Nginx image does not), paste the **exact** block below into the host's response-headers config (Coolify → Application → `pc-power-calculator` → "Headers" / "Custom Headers", or the equivalent in Traefik / Caddy / Nginx). Do not paste a stripped-down copy — keep the full CSP including Google Fonts, the FX subdomain, and the hardening directives (`frame-ancestors 'none'`, `base-uri 'self'`).
+If your hosting environment honours none of the above, paste the **exact** block below into the host's response-headers config (Coolify → Application → `pc-power-calculator` → "Headers" / "Custom Headers", or the equivalent in Traefik / Caddy / Nginx). Do not paste a stripped-down copy — keep the full CSP including Google Fonts, Google Analytics, and the hardening directives (`frame-ancestors 'none'`, `base-uri 'self'`).
 
 ```
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://ipapi.co https://ip-api.com https://api.exchangerate.host https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ipapi.co https://ip-api.com https://fonts.googleapis.com https://fonts.gstatic.com https://www.google-analytics.com; img-src 'self' data: https://www.google-analytics.com; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
 ```
 
 If the host UI exposes only individual header fields, set:
 
-- `Content-Security-Policy` = `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://ipapi.co https://ip-api.com https://api.exchangerate.host https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'`
+- `Content-Security-Policy` = `default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://ipapi.co https://ip-api.com https://fonts.googleapis.com https://fonts.gstatic.com https://www.google-analytics.com; img-src 'self' data: https://www.google-analytics.com; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`
 - `X-Content-Type-Options` = `nosniff`
 - `Referrer-Policy` = `strict-origin-when-cross-origin`
 
