@@ -29,6 +29,13 @@ beforeEach(() => {
   mockGtag.grantAnalyticsConsent.mockClear();
   mockGtag.denyAnalyticsConsent.mockClear();
   mockGtag.event.mockClear();
+  // Mirror the real implementation: consent helpers also emit consent_update.
+  mockGtag.grantAnalyticsConsent.mockImplementation(() => {
+    mockGtag.event('consent_update', { state: 'granted' });
+  });
+  mockGtag.denyAnalyticsConsent.mockImplementation(() => {
+    mockGtag.event('consent_update', { state: 'denied' });
+  });
 });
 
 describe('CookieBanner', () => {
@@ -43,6 +50,7 @@ describe('CookieBanner', () => {
     render(<CookieBanner />);
     await user.click(screen.getByRole('button', { name: /Allow analytics/i }));
     expect(mockGtag.grantAnalyticsConsent).toHaveBeenCalledTimes(1);
+    expect(mockGtag.event).toHaveBeenCalledWith('consent_update', { state: 'granted' });
     expect(localStorage.getItem(KEY)).toBe('granted');
     expect(screen.queryByText(/Allow analytics/i)).not.toBeInTheDocument();
   });
@@ -52,6 +60,7 @@ describe('CookieBanner', () => {
     render(<CookieBanner />);
     await user.click(screen.getByRole('button', { name: /Decline/i }));
     expect(mockGtag.denyAnalyticsConsent).toHaveBeenCalledTimes(1);
+    expect(mockGtag.event).toHaveBeenCalledWith('consent_update', { state: 'denied' });
     expect(localStorage.getItem(KEY)).toBe('denied');
     expect(screen.queryByText(/Allow analytics/i)).not.toBeInTheDocument();
   });

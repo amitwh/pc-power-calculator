@@ -22,10 +22,12 @@ export function loadGtag(): void {
 
 export function grantAnalyticsConsent(): void {
   window.gtag?.('consent', 'update', { analytics_storage: 'granted' });
+  event('consent_update', { state: 'granted' });
 }
 
 export function denyAnalyticsConsent(): void {
   window.gtag?.('consent', 'update', { analytics_storage: 'denied' });
+  event('consent_update', { state: 'denied' });
 }
 
 export function event(name: string, params?: Record<string, unknown>): void {
