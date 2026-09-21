@@ -42,4 +42,38 @@ describe('ExportMenu', () => {
     expect(blob.type).toBe('text/html');
     createObjectURLSpy.mockRestore();
   });
+
+  test('uses the active build currency_override (USD) in the exported HTML', async () => {
+    const user = userEvent.setup();
+    // Active build starts with no currency_override → ExportMenu falls back to INR.
+    useBuildStore.getState().setCurrency('USD');
+    const createObjectURLSpy = vi.spyOn(URL, 'createObjectURL');
+    const { rerender } = render(<ExportMenu />);
+    // Re-render so the store subscription picks up the new override before the click.
+    rerender(<ExportMenu />);
+    await user.click(screen.getByRole('button', { name: /Export HTML/i }));
+    expect(createObjectURLSpy).toHaveBeenCalledTimes(1);
+    const blob = createObjectURLSpy.mock.calls[0][0] as Blob;
+    const html = await blob.text();
+    // USD was wired through: findCurrency('USD') → symbol '$' must appear, INR ₹ must not.
+    expect(html).toContain('$');
+    expect(html).not.toContain('₹');
+    createObjectURLSpy.mockRestore();
+  });
+
+  test('falls back to INR (₹) when the active build has no currency_override', async () => {
+    const user = userEvent.setup();
+    // Defensive: a previous test may have set currency_override to USD; clear it.
+    useBuildStore.getState().setCurrency('');
+    const createObjectURLSpy = vi.spyOn(URL, 'createObjectURL');
+    const { rerender } = render(<ExportMenu />);
+    rerender(<ExportMenu />);
+    await user.click(screen.getByRole('button', { name: /Export HTML/i }));
+    expect(createObjectURLSpy).toHaveBeenCalledTimes(1);
+    const blob = createObjectURLSpy.mock.calls[0][0] as Blob;
+    const html = await blob.text();
+    expect(html).toContain('₹');
+    expect(html).not.toContain('$');
+    createObjectURLSpy.mockRestore();
+  });
 });
