@@ -1,3 +1,5 @@
-// Shared types across the PC Power Calculator app.
-// Populated by later tasks (T2 component catalog, T3 tariff model, etc.).
-export {};
+export * from './component';
+export * from './currency';
+export * from './tariff';
+export * from './workload';
+export * from './build';

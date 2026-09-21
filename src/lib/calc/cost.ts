@@ -25,7 +25,11 @@ export function computeCost(energyKwh: number, tariff: TariffRate, taxes: TaxRul
   const taxBreakdown: Record<string, number> = {};
   let total = subtotal;
   for (const t of taxes) {
-    const amount = total * (t.rate_pct / 100);
+    // `appliesTo: 'energy'` taxes (e.g. renewable surcharges, fixed per-kWh fees)
+    // are computed on the energy subtotal, NOT on the running total — otherwise
+    // they'd compound on top of themselves and on top of other taxes.
+    const base = t.appliesTo === 'energy' ? subtotal : total;
+    const amount = base * (t.rate_pct / 100);
     taxBreakdown[t.name] = amount;
     total += amount;
   }

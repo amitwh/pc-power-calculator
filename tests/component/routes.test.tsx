@@ -10,7 +10,9 @@ test('renders Home on /', () => {
       <Routes />
     </MemoryRouter>,
   );
-  expect(screen.getByRole('heading', { name: /Calculator/i })).toBeInTheDocument();
+  // Home now renders BuildPicker (T5) instead of a static heading.
+  expect(screen.getByRole('heading', { name: /Your Systems/i })).toBeInTheDocument();
+  expect(screen.getByRole('combobox', { name: /Select CPU/i })).toBeInTheDocument();
 });
 
 test('renders Compare on /compare', () => {

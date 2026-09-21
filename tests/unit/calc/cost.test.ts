@@ -37,6 +37,33 @@ describe('computeCost', () => {
     const r = computeCost(100, flat, taxes);
     expect(r.total).toBeCloseTo(750 * 1.18, 2);
   });
+  test('appliesTo: "energy" taxes are computed on subtotal, not running total', () => {
+    const taxes: TaxRule[] = [
+      { name: 'Renewable surcharge', rate_pct: 5, appliesTo: 'energy' },
+      { name: 'GST', rate_pct: 18, appliesTo: 'total' },
+    ];
+    const r = computeCost(100, flat, taxes);
+    // subtotal = 750
+    // renewable = 750 * 0.05 = 37.50 (based on subtotal)
+    // running = 750 + 37.50 = 787.50
+    // GST = 787.50 * 0.18 = 141.75 (based on running total)
+    // total = 750 + 37.50 + 141.75 = 929.25
+    expect(r.subtotal).toBe(750);
+    expect(r.taxBreakdown['Renewable surcharge']).toBeCloseTo(37.5, 2);
+    expect(r.taxBreakdown['GST']).toBeCloseTo(141.75, 2);
+    expect(r.total).toBeCloseTo(929.25, 2);
+  });
+  test('appliesTo: "energy" does NOT compound on itself when stacked', () => {
+    const taxes: TaxRule[] = [
+      { name: 'Surcharge A', rate_pct: 5, appliesTo: 'energy' },
+      { name: 'Surcharge B', rate_pct: 5, appliesTo: 'energy' },
+    ];
+    const r = computeCost(100, flat, taxes);
+    // Each surcharge is 750 * 0.05 = 37.50 (NOT 750 * 1.05 * 0.05).
+    expect(r.taxBreakdown['Surcharge A']).toBeCloseTo(37.5, 2);
+    expect(r.taxBreakdown['Surcharge B']).toBeCloseTo(37.5, 2);
+    expect(r.total).toBeCloseTo(825, 2);
+  });
 });
 
 describe('effectiveRate', () => {
