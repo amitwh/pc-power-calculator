@@ -924,7 +924,7 @@ export function effectiveRate(energyKwh: number, tariff: TariffRate): number;
 
 // format.ts
 export function formatCost(amount: number, currency: CurrencyInfo): string;
-export function formatKwh(kwh: number, locale?: string): string;
+export function formatKwh(kwh: number, decimals?: number, locale?: string): string;
 ```
 
 - [ ] **Step 1: Write failing test for tiered cost**
