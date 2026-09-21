@@ -2,12 +2,16 @@ import type { ReactNode } from 'react';
 import TopNav from './TopNav';
 import MobileNav from './MobileNav';
 import { useInteractionCounter } from '@/hooks/useInteractionCounter';
+import { usePageView } from '@/hooks/usePageView';
 import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
+import { CookieBanner } from '@/components/CookieBanner';
 
 export default function Layout({ children }: { children: ReactNode }) {
   // Track meaningful user interactions so the install prompt only fires after
   // a few clicks, not on first paint.
   useInteractionCounter('pc-power-install-prompt-count');
+  // GA4 page_view tracker — gated by Consent Mode v2, no-op when consent is denied.
+  usePageView();
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50">
       <TopNav />
@@ -20,6 +24,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       </main>
       <MobileNav />
       <PWAInstallPrompt />
+      <CookieBanner />
     </div>
   );
 }

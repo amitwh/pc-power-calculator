@@ -198,3 +198,44 @@ In the meantime, open an issue to discuss ideas before sending a PR.
 ## 📄 License
 
 License TBD (default MIT — tracked as open item #1 in the design spec).
+
+---
+
+## 🔒 Privacy & Analytics
+
+Google Analytics 4 (GA4) is integrated via **Consent Mode v2** with **default-deny** semantics. The app is fully functional without analytics — tracking only activates for users who explicitly click **Allow analytics** in the cookie banner.
+
+**Tracking is OFF by default.** The `VITE_GA4_MEASUREMENT_ID` environment variable is empty at build time, so no `gtag.js` loader is injected and no GA requests are made. When the variable is set (see setup below), the consent banner appears on first visit and the user chooses:
+
+- **Allow analytics** → `analytics_storage: granted` — page views and export-format events are sent.
+- **Decline** → `analytics_storage: denied` — no GA requests fire.
+
+### Setup
+
+1. Create a GA4 property in [Google Analytics](https://analytics.google.com/) for `pcpower.concreteinfo.co.in` (Web stream).
+2. Copy the `G-XXXXXXXXXX` Measurement ID.
+3. In Coolify, open the `pc-power-calculator` application → **Environment Variables** → add:
+   ```
+   VITE_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
+   ```
+4. Trigger a redeploy. Coolify rebuilds with the new env var, the consent banner appears for every visitor, and analytics requests start flowing from opted-in users only.
+
+### What gets tracked
+
+| Event            | When                                          | Params              |
+|------------------|-----------------------------------------------|---------------------|
+| `page_view`      | Every client-side route change                | `path` (string)     |
+| `export_format`  | User clicks Export PDF or Export HTML         | `format`: `pdf`/`html` |
+| `consent_update` | User clicks Allow analytics or Decline        | `state`: `granted`/`denied` (for self-monitoring opt-in vs decline ratio) |
+
+Denied users still get full export functionality and full route navigation — `export_format` and `page_view` events are simply not emitted when consent is not `granted`. There are no other tracked events.
+
+### Privacy stance
+
+- **`anonymize_ip: true`** — GA's IP-anonymisation is requested at config time, so the last octet of visitor IPs is stripped before they reach Google's servers.
+- **Default-deny consent** — `analytics_storage` and `ad_storage` are both `denied` until the user opts in.
+- **No PII** — no email addresses, no usernames, no build contents, no component selections are sent. Only aggregate event names + the public route path.
+- **No cross-site tracking** — only the GA4 property for this domain is loaded; no other ad networks, no Facebook Pixel, no third-party cookies beyond GA's own.
+- **No advertising features** — `ad_storage` stays `denied` regardless of consent, so ads-personalisation signals are never sent.
+
+For the upstream spec on Consent Mode v2, see [Google's Consent Mode documentation](https://developers.google.com/tag-platform/security/guides/consent).
