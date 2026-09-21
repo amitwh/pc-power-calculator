@@ -1,0 +1,26 @@
+{
+  "version": "2026-09-21",
+  "idleRatios": {
+    "desktop_cpu": { "idle_fraction_of_tdp": 0.15 },
+    "desktop_gpu": { "idle_fraction_of_tdp": 0.10 },
+    "ram_stick":    { "idle_w": 2, "active_w": 5 },
+    "nvme_ssd":     { "idle_w": 0.1, "active_w": 5 },
+    "sata_ssd":     { "idle_w": 0.5, "active_w": 3 },
+    "hdd_7200":     { "idle_w": 5, "active_w": 8 },
+    "monitor":      { "idle_w": 0, "active_w": 0 },
+    "peripheral":   { "idle_w": 0, "active_w": 0 }
+  },
+  "psuCurves": {
+    "80-plus":  [{ "load_pct": 10, "efficiency": 0.80 }, { "load_pct": 20, "efficiency": 0.82 }, { "load_pct": 50, "efficiency": 0.85 }, { "load_pct": 100, "efficiency": 0.82 }],
+    "bronze":   [{ "load_pct": 10, "efficiency": 0.81 }, { "load_pct": 20, "efficiency": 0.85 }, { "load_pct": 50, "efficiency": 0.88 }, { "load_pct": 100, "efficiency": 0.85 }],
+    "silver":   [{ "load_pct": 10, "efficiency": 0.83 }, { "load_pct": 20, "efficiency": 0.87 }, { "load_pct": 50, "efficiency": 0.89 }, { "load_pct": 100, "efficiency": 0.86 }],
+    "gold":     [{ "load_pct": 10, "efficiency": 0.86 }, { "load_pct": 20, "efficiency": 0.89 }, { "load_pct": 50, "efficiency": 0.90 }, { "load_pct": 100, "efficiency": 0.88 }],
+    "platinum": [{ "load_pct": 10, "efficiency": 0.88 }, { "load_pct": 20, "efficiency": 0.92 }, { "load_pct": 50, "efficiency": 0.94 }, { "load_pct": 100, "efficiency": 0.91 }],
+    "titanium": [{ "load_pct": 10, "efficiency": 0.90 }, { "load_pct": 20, "efficiency": 0.94 }, { "load_pct": 50, "efficiency": 0.96 }, { "load_pct": 100, "efficiency": 0.94 }]
+  },
+  "motherboardChipsetPowerW": {
+    "X670": 10, "B650": 7, "X870": 10, "B840": 7, "A620": 6,
+    "Z790": 10, "B760": 7, "Z690": 10, "B660": 7,
+    "X299": 12, "TRX50": 15
+  }
+}
