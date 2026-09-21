@@ -3,3 +3,4 @@ export * from './tariffs';
 export * from './fx';
 export * from './currencies';
 export * from './workloads';
+export * from './benchmarks';
