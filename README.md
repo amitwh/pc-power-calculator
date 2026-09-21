@@ -126,6 +126,30 @@ curl -fsSL https://pcpower.concreteinfo.co.in/ | head -c 200
 npx --yes lighthouse https://pcpower.concreteinfo.co.in --only-categories=performance,accessibility,pwa --quiet --chrome-flags="--headless"
 ```
 
+### Security headers (CSP)
+
+The strict Content-Security-Policy from design spec §9.3, plus `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin`, are declared in two places so they are always applied:
+
+1. **`public/_headers`** — served automatically by Cloudflare Pages on every response. Verifiable with `curl -fsSLI https://pcpower.concreteinfo.co.in/ | grep -i 'content-security-policy'`.
+2. **`<meta http-equiv="Content-Security-Policy">` in `index.html`** — defence-in-depth fallback for environments that strip the header, and for `vite dev` / `vite preview` (which don't honour `_headers`).
+
+**Coolify:** the bundled Nginx image that Coolify builds does NOT honour `public/_headers`. The deploy operator must paste the exact header block below into the application's **Headers** tab (Coolify → Application → `pc-power-calculator` → "Headers" / "Custom Headers") so every response carries it:
+
+```
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://ipapi.co https://ip-api.com https://exchangerate.host; img-src 'self' data:;
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+```
+
+If the Coolify UI exposes only individual header fields, set:
+
+- `Content-Security-Policy` = `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://ipapi.co https://ip-api.com https://exchangerate.host; img-src 'self' data:;`
+- `X-Content-Type-Options` = `nosniff`
+- `Referrer-Policy` = `strict-origin-when-cross-origin`
+
+If a reverse proxy sits in front of Coolify (Traefik, Caddy, Nginx), apply the same three headers there instead — never on both, or the proxy will overwrite Coolify's set.
+
 ---
 
 ## 📁 Project structure
