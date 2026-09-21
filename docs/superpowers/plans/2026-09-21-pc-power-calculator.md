@@ -114,7 +114,7 @@ pc-power-calculator/
 
 ---
 
-## Task T1: Scaffold Vite + React-TS + Tailwind + ConcreteInfo design tokens
+## Task 1: Scaffold Vite + React-TS + Tailwind + ConcreteInfo design tokens
 
 **Files:**
 - Create: `package.json`, `vite.config.ts`, `tsconfig.json`, `tsconfig.node.json`, `tailwind.config.js`, `postcss.config.js`, `index.html`, `src/main.tsx`, `src/styles/tokens.css`, `src/App.tsx`, `src/types/index.ts`
@@ -376,7 +376,7 @@ git commit -m "chore: scaffold Vite + React-TS + Tailwind + ConcreteInfo tokens 
 
 ---
 
-## Task T2: Routing + layout shell + 5 placeholder pages
+## Task 2: Routing + layout shell + 5 placeholder pages
 
 **Files:**
 - Create: `src/routes.tsx`, `src/components/layout/{TopNav,Sidebar,MobileNav,Layout}.tsx`, `src/pages/{Home,Compare,Suggestions,DataFreshness,About}.tsx`, `tests/component/layout/Layout.test.tsx`
@@ -626,7 +626,7 @@ git commit -m "feat(routing): add 5 routes + Layout/TopNav/MobileNav (T2)"
 
 ---
 
-## Task T3: Calc engine — power model + PSU efficiency + idle/profiles
+## Task 3: Calc engine — power model + PSU efficiency + idle/profiles
 
 **Files:**
 - Create: `src/data/power_profiles.json`, `src/lib/calc/psu.ts`, `src/lib/calc/power.ts`, `src/lib/calc/index.ts`
@@ -908,7 +908,7 @@ git commit -m "feat(calc): power model + PSU efficiency + idle/profiles (T3)"
 
 ---
 
-## Task T4: Calc engine — cost (flat + tiered slabs) + currency formatting
+## Task 4: Calc engine — cost (flat + tiered slabs) + currency formatting
 
 **Files:**
 - Create: `src/lib/calc/cost.ts`, `src/lib/calc/format.ts`, `src/types/{tariff,currency}.ts`, `src/data/currencies.json`
@@ -1202,7 +1202,7 @@ git commit -m "feat(calc): tiered-slab cost + currency/kWh formatting (T4)"
 
 ---
 
-## Task T5: Shared types + `components.json` seed + Zustand store + BuildPicker
+## Task 5: Shared types + `components.json` seed + Zustand store + BuildPicker
 
 **Files:**
 - Create: `src/types/{workload,build,index}.ts`, `src/data/components.json` (initial seed), `src/lib/data/components.ts`, `src/store/buildStore.ts`, `src/components/calculator/{BuildPicker,ComponentCard}.tsx`, `src/components/ui/{Select,Button,Card}.tsx`, `src/hooks/useCalc.ts`
@@ -1690,7 +1690,7 @@ git commit -m "feat(calc): types + components.json seed + store + BuildPicker (T
 
 ---
 
-## Task T6: Schedule editor + Results panel + power-breakdown chart
+## Task 6: Schedule editor + Results panel + power-breakdown chart
 
 **Files:**
 - Create: `src/lib/calc/energy.ts`, `src/hooks/useCalc.ts`, `src/components/calculator/{ScheduleEditor,ResultsPanel}.tsx`, `src/components/charts/PowerBreakdown.tsx`
@@ -2077,7 +2077,7 @@ git commit -m "feat(calc): energy + schedule editor + results panel + power brea
 
 ---
 
-## Task T7: `tariffs.json` (India states, US states, UK, EU, +10) + `fx_rates.json` snapshot
+## Task 7: `tariffs.json` (India states, US states, UK, EU, +10) + `fx_rates.json` snapshot
 
 **Files:**
 - Create: `src/data/tariffs.json`, `src/data/fx_rates.json`, `src/lib/data/{tariffs,fx,currencies,index}.ts`
@@ -2436,7 +2436,7 @@ git commit -m "feat(data): tariffs.json (IN/US/UK/EU/+10) + fx snapshot + loader
 
 ---
 
-## Task T8: Location picker + IP geolocation client + FX client + manual override
+## Task 8: Location picker + IP geolocation client + FX client + manual override
 
 **Files:**
 - Create: `src/lib/api/endpoints.ts`, `src/lib/api/geolocation.ts`, `src/lib/api/fx.ts`, `src/hooks/{useGeolocation,useFx}.ts`, `src/components/calculator/LocationPicker.tsx`
@@ -2745,7 +2745,7 @@ git commit -m "feat(loc): location picker + geolocation + FX + manual override (
 
 ---
 
-## Task T9: Compare engine + Compare page (TanStack Table) + comparison-bars chart
+## Task 9: Compare engine + Compare page (TanStack Table) + comparison-bars chart
 
 **Files:**
 - Create: `src/lib/calc/compare.ts`, `src/components/compare/{BuildSelector,ComparisonTable}.tsx`, `src/components/charts/ComparisonBars.tsx`
@@ -2991,7 +2991,7 @@ git commit -m "feat(compare): compare engine + TanStack table + 2-build selector
 
 ---
 
-## Task T10: PDF export (window.print stylesheet) + HTML export
+## Task 10: PDF export (window.print stylesheet) + HTML export
 
 **Files:**
 - Create: `src/lib/export/{pdf,html,print}.css`, `src/lib/export/index.ts`, `src/components/calculator/ExportMenu.tsx`
@@ -3201,7 +3201,7 @@ git commit -m "feat(export): PDF (window.print) + HTML (re-importable) exports (
 
 ---
 
-## Task T11: Suggestion engine + Suggestions page
+## Task 11: Suggestion engine + Suggestions page
 
 **Files:** `src/lib/calc/suggest.ts`, `src/components/suggestions/SuggestionCard.tsx`, `src/pages/Suggestions.tsx`, `tests/unit/calc/suggest.test.ts`, `tests/component/suggestions/SuggestionCard.test.tsx`.
 
@@ -3394,7 +3394,7 @@ git commit -m "feat(suggest): rule-based lower-power alternatives (T11)"
 
 ---
 
-## Task T12: Workload-aware benchmarks curation (`benchmarks.json`)
+## Task 12: Workload-aware benchmarks curation (`benchmarks.json`)
 
 **Files:** `src/data/benchmarks.json` (curated), `src/lib/data/benchmarks.ts`, `tests/unit/data/benchmarks.test.ts`.
 
@@ -3524,7 +3524,7 @@ git commit -m "feat(bench): benchmarks.json seed + lookup helper (T12)"
 
 ---
 
-## Task T13: Wire benchmarks into calc engine → perf metrics in Results + Compare
+## Task 13: Wire benchmarks into calc engine → perf metrics in Results + Compare
 
 **Files:** `src/lib/calc/energy.ts` (extend), `src/components/calculator/ResultsPanel.tsx` (extend), `src/components/compare/ComparisonTable.tsx` (extend).
 
@@ -3634,7 +3634,7 @@ git commit -m "feat(perf): wire benchmarks into energy + results + compare (T13)
 
 ---
 
-## Task T14: PWA — manifest, service worker, install prompt, iOS meta
+## Task 14: PWA — manifest, service worker, install prompt, iOS meta
 
 **Files:** `vite.config.ts` (extend), `public/manifest.webmanifest`, `public/icons/*` (generated), `index.html` (extend), `src/components/PWAInstallPrompt.tsx`.
 
@@ -3805,7 +3805,7 @@ git commit -m "feat(pwa): manifest + service worker + install prompt + iOS meta 
 
 ---
 
-## Task T15: CI workflow + Coolify deploy
+## Task 15: CI workflow + Coolify deploy
 
 **Files:** `/.github/workflows/ci.yml`, `/.github/workflows/deploy.yml` (optional).
 
@@ -3944,7 +3944,7 @@ git commit -m "ci: typecheck + vitest + a11y + lighthouse + playwright (T15)"
 
 ---
 
-## Task T16: Data freshness page + About/methodology page + LICENSE
+## Task 16: Data freshness page + About/methodology page + LICENSE
 
 **Files:** `src/pages/DataFreshness.tsx`, `src/pages/About.tsx`, `LICENSE`, `src/components/data/FreshnessBanner.tsx`.
 
@@ -4059,7 +4059,7 @@ gh release create v1.0.0 --title "PC Power Calculator v1.0.0" --notes "Initial p
 
 ---
 
-## Task T17: GA4 — site-specific Measurement ID + consent banner (post-launch)
+## Task 17: GA4 — site-specific Measurement ID + consent banner (post-launch)
 
 **Files:** `src/lib/analytics/{consent,gtag}.ts`, `src/components/CookieBanner.tsx`, `index.html` (extend), `src/lib/analytics/measurementId.ts`.
 

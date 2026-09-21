@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-brand: #e5461f;
+  --color-brand-dark: #c93a18;
+  --color-brand-light: #ff6b47;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-numeric: 'Inter', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', monospace;
+}
+
+html { font-family: var(--font-body); font-size: 15px; }
+.tabular-nums { font-variant-numeric: tabular-nums; }
+
+@media (prefers-color-scheme: dark) {
+  html { color-scheme: dark; }
+}
