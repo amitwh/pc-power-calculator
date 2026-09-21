@@ -1,0 +1,172 @@
+{
+  "version": "2026-09-21",
+  "lastUpdated": "2026-09-21",
+  "countries": [
+    {
+      "country_iso2": "IN",
+      "country_name": "India",
+      "subdivisions": [
+        { "code": "IN-AN", "name": "Andhra Pradesh",        "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 75, "rate": 1.95 }, { "upTo_kwh": 200, "rate": 3.10 }, { "upTo_kwh": null, "rate": 4.80 }] } },
+        { "code": "IN-AR", "name": "Arunachal Pradesh",     "rate": { "currency": "INR", "flat": 4.50 } },
+        { "code": "IN-AS", "name": "Assam",                 "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 120, "rate": 5.50 }, { "upTo_kwh": 240, "rate": 6.50 }, { "upTo_kwh": null, "rate": 7.50 }] } },
+        { "code": "IN-BR", "name": "Bihar",                 "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 50, "rate": 5.50 }, { "upTo_kwh": 200, "rate": 6.50 }, { "upTo_kwh": null, "rate": 7.50 }] } },
+        { "code": "IN-CH", "name": "Chandigarh",            "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 150, "rate": 5.00 }, { "upTo_kwh": null, "rate": 6.30 }] } },
+        { "code": "IN-CT", "name": "Chhattisgarh",          "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 4.00 }, { "upTo_kwh": null, "rate": 5.50 }] } },
+        { "code": "IN-DN", "name": "Dadra & Nagar Haveli",  "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 4.50 }, { "upTo_kwh": null, "rate": 5.80 }] } },
+        { "code": "IN-DL", "name": "Delhi",                 "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 200, "rate": 4.50 }, { "upTo_kwh": 400, "rate": 6.50 }, { "upTo_kwh": 800, "rate": 7.50 }, { "upTo_kwh": null, "rate": 8.50 }] } },
+        { "code": "IN-GA", "name": "Goa",                   "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 3.50 }, { "upTo_kwh": null, "rate": 5.00 }] } },
+        { "code": "IN-GJ", "name": "Gujarat",               "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 50, "rate": 4.00 }, { "upTo_kwh": 250, "rate": 5.50 }, { "upTo_kwh": null, "rate": 6.50 }] } },
+        { "code": "IN-HR", "name": "Haryana",               "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 50, "rate": 4.50 }, { "upTo_kwh": 150, "rate": 6.00 }, { "upTo_kwh": null, "rate": 7.50 }] } },
+        { "code": "IN-HP", "name": "Himachal Pradesh",      "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 60, "rate": 3.40 }, { "upTo_kwh": 300, "rate": 4.50 }, { "upTo_kwh": null, "rate": 5.50 }] } },
+        { "code": "IN-JK", "name": "Jammu & Kashmir",       "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 2.50 }, { "upTo_kwh": 200, "rate": 4.00 }, { "upTo_kwh": null, "rate": 5.50 }] } },
+        { "code": "IN-JH", "name": "Jharkhand",             "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 50, "rate": 4.50 }, { "upTo_kwh": 200, "rate": 5.75 }, { "upTo_kwh": null, "rate": 6.75 }] } },
+        { "code": "IN-KA", "name": "Karnataka",             "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 50, "rate": 4.15 }, { "upTo_kwh": 200, "rate": 6.05 }, { "upTo_kwh": null, "rate": 7.65 }] } },
+        { "code": "IN-KL", "name": "Kerala",                "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 50, "rate": 3.50 }, { "upTo_kwh": 150, "rate": 5.00 }, { "upTo_kwh": 300, "rate": 6.50 }, { "upTo_kwh": null, "rate": 7.50 }] } },
+        { "code": "IN-LD", "name": "Lakshadweep",           "rate": { "currency": "INR", "flat": 4.50 } },
+        { "code": "IN-MP", "name": "Madhya Pradesh",        "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 50, "rate": 4.00 }, { "upTo_kwh": 150, "rate": 5.50 }, { "upTo_kwh": null, "rate": 6.50 }] } },
+        { "code": "IN-MH", "name": "Maharashtra",           "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 4.50 }, { "upTo_kwh": 300, "rate": 7.50 }, { "upTo_kwh": null, "rate": 9.50 }] } },
+        { "code": "IN-MN", "name": "Manipur",               "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 4.00 }, { "upTo_kwh": null, "rate": 5.20 }] } },
+        { "code": "IN-ML", "name": "Meghalaya",             "rate": { "currency": "INR", "flat": 5.50 } },
+        { "code": "IN-MZ", "name": "Mizoram",               "rate": { "currency": "INR", "flat": 5.00 } },
+        { "code": "IN-NL", "name": "Nagaland",              "rate": { "currency": "INR", "flat": 5.00 } },
+        { "code": "IN-OD", "name": "Odisha",                "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 50, "rate": 3.50 }, { "upTo_kwh": 200, "rate": 5.00 }, { "upTo_kwh": null, "rate": 6.00 }] } },
+        { "code": "IN-PY", "name": "Puducherry",            "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 3.50 }, { "upTo_kwh": null, "rate": 5.50 }] } },
+        { "code": "IN-PB", "name": "Punjab",                "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 5.00 }, { "upTo_kwh": 300, "rate": 6.50 }, { "upTo_kwh": null, "rate": 7.50 }] } },
+        { "code": "IN-RJ", "name": "Rajasthan",             "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 50, "rate": 4.50 }, { "upTo_kwh": 150, "rate": 6.00 }, { "upTo_kwh": null, "rate": 7.50 }] } },
+        { "code": "IN-SK", "name": "Sikkim",                "rate": { "currency": "INR", "flat": 4.00 } },
+        { "code": "IN-TN", "name": "Tamil Nadu",            "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 4.50 }, { "upTo_kwh": 200, "rate": 6.00 }, { "upTo_kwh": 500, "rate": 8.00 }, { "upTo_kwh": null, "rate": 9.00 }] } },
+        { "code": "IN-TS", "name": "Telangana",             "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 50, "rate": 3.50 }, { "upTo_kwh": 200, "rate": 5.50 }, { "upTo_kwh": null, "rate": 7.00 }] } },
+        { "code": "IN-TR", "name": "Tripura",               "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 4.00 }, { "upTo_kwh": null, "rate": 5.50 }] } },
+        { "code": "IN-UP", "name": "Uttar Pradesh",         "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 5.00 }, { "upTo_kwh": 300, "rate": 6.50 }, { "upTo_kwh": null, "rate": 7.50 }] } },
+        { "code": "IN-UT", "name": "Uttarakhand",           "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 100, "rate": 4.20 }, { "upTo_kwh": 200, "rate": 5.50 }, { "upTo_kwh": null, "rate": 6.80 }] } },
+        { "code": "IN-WB", "name": "West Bengal",           "rate": { "currency": "INR", "slabs": [{ "upTo_kwh": 75, "rate": 4.85 }, { "upTo_kwh": 300, "rate": 6.20 }, { "upTo_kwh": null, "rate": 7.30 }] } }
+      ],
+      "default": { "currency": "INR", "flat": 6.50 },
+      "applicableTaxes": [{ "name": "Electricity duty (avg)", "rate_pct": 8, "appliesTo": "total" }],
+      "notes": "Rates are domestic LT Category I. Industrial / commercial rates differ."
+    },
+    {
+      "country_iso2": "US",
+      "country_name": "United States",
+      "subdivisions": [
+        { "code": "US-CA", "name": "California",       "rate": { "currency": "USD", "flat": 0.32 } },
+        { "code": "US-NY", "name": "New York",         "rate": { "currency": "USD", "flat": 0.21 } },
+        { "code": "US-TX", "name": "Texas",            "rate": { "currency": "USD", "flat": 0.15 } },
+        { "code": "US-FL", "name": "Florida",          "rate": { "currency": "USD", "flat": 0.14 } },
+        { "code": "US-WA", "name": "Washington",       "rate": { "currency": "USD", "flat": 0.11 } },
+        { "code": "US-OR", "name": "Oregon",           "rate": { "currency": "USD", "flat": 0.12 } },
+        { "code": "US-MA", "name": "Massachusetts",    "rate": { "currency": "USD", "flat": 0.27 } },
+        { "code": "US-CT", "name": "Connecticut",      "rate": { "currency": "USD", "flat": 0.25 } },
+        { "code": "US-IL", "name": "Illinois",         "rate": { "currency": "USD", "flat": 0.16 } },
+        { "code": "US-PA", "name": "Pennsylvania",     "rate": { "currency": "USD", "flat": 0.17 } },
+        { "code": "US-OH", "name": "Ohio",             "rate": { "currency": "USD", "flat": 0.13 } },
+        { "code": "US-GA", "name": "Georgia",          "rate": { "currency": "USD", "flat": 0.13 } },
+        { "code": "US-NC", "name": "North Carolina",   "rate": { "currency": "USD", "flat": 0.12 } },
+        { "code": "US-VA", "name": "Virginia",         "rate": { "currency": "USD", "flat": 0.13 } },
+        { "code": "US-MI", "name": "Michigan",         "rate": { "currency": "USD", "flat": 0.17 } },
+        { "code": "US-AZ", "name": "Arizona",          "rate": { "currency": "USD", "flat": 0.14 } },
+        { "code": "US-NV", "name": "Nevada",           "rate": { "currency": "USD", "flat": 0.13 } },
+        { "code": "US-CO", "name": "Colorado",         "rate": { "currency": "USD", "flat": 0.15 } },
+        { "code": "US-NJ", "name": "New Jersey",       "rate": { "currency": "USD", "flat": 0.18 } },
+        { "code": "US-MN", "name": "Minnesota",        "rate": { "currency": "USD", "flat": 0.14 } }
+      ],
+      "default": { "currency": "USD", "flat": 0.16 },
+      "notes": "National residential average per EIA. State rates are blended averages; utility-specific rates vary."
+    },
+    {
+      "country_iso2": "GB",
+      "country_name": "United Kingdom",
+      "default": { "currency": "GBP", "flat": 0.30 },
+      "applicableTaxes": [{ "name": "VAT", "rate_pct": 5, "appliesTo": "total" }],
+      "notes": "Ofgem cap rate 2024. Includes standing charge excluded from per-kWh figure."
+    },
+    {
+      "country_iso2": "DE",
+      "country_name": "Germany",
+      "default": { "currency": "EUR", "flat": 0.40 },
+      "applicableTaxes": [{ "name": "VAT", "rate_pct": 19, "appliesTo": "total" }],
+      "notes": "BDEW average household rate."
+    },
+    {
+      "country_iso2": "FR",
+      "country_name": "France",
+      "default": { "currency": "EUR", "flat": 0.28 },
+      "applicableTaxes": [{ "name": "VAT", "rate_pct": 20, "appliesTo": "total" }]
+    },
+    {
+      "country_iso2": "IT",
+      "country_name": "Italy",
+      "default": { "currency": "EUR", "flat": 0.30 },
+      "applicableTaxes": [{ "name": "VAT", "rate_pct": 10, "appliesTo": "total" }]
+    },
+    {
+      "country_iso2": "ES",
+      "country_name": "Spain",
+      "default": { "currency": "EUR", "flat": 0.26 },
+      "applicableTaxes": [{ "name": "VAT", "rate_pct": 21, "appliesTo": "total" }]
+    },
+    {
+      "country_iso2": "NL",
+      "country_name": "Netherlands",
+      "default": { "currency": "EUR", "flat": 0.35 },
+      "applicableTaxes": [{ "name": "VAT", "rate_pct": 21, "appliesTo": "total" }]
+    },
+    {
+      "country_iso2": "SE",
+      "country_name": "Sweden",
+      "default": { "currency": "SEK", "flat": 1.50 },
+      "applicableTaxes": [{ "name": "VAT", "rate_pct": 25, "appliesTo": "total" }]
+    },
+    {
+      "country_iso2": "PL",
+      "country_name": "Poland",
+      "default": { "currency": "PLN", "flat": 0.95 },
+      "applicableTaxes": [{ "name": "VAT", "rate_pct": 23, "appliesTo": "total" }]
+    },
+    {
+      "country_iso2": "AU",
+      "country_name": "Australia",
+      "default": { "currency": "AUD", "flat": 0.32 },
+      "applicableTaxes": [{ "name": "GST", "rate_pct": 10, "appliesTo": "total" }]
+    },
+    {
+      "country_iso2": "CA",
+      "country_name": "Canada",
+      "default": { "currency": "CAD", "flat": 0.18 }
+    },
+    {
+      "country_iso2": "JP",
+      "country_name": "Japan",
+      "default": { "currency": "JPY", "flat": 36 }
+    },
+    {
+      "country_iso2": "SG",
+      "country_name": "Singapore",
+      "default": { "currency": "SGD", "flat": 0.32 },
+      "applicableTaxes": [{ "name": "GST", "rate_pct": 9, "appliesTo": "total" }]
+    },
+    {
+      "country_iso2": "AE",
+      "country_name": "United Arab Emirates",
+      "default": { "currency": "AED", "flat": 0.38 },
+      "applicableTaxes": [{ "name": "VAT", "rate_pct": 5, "appliesTo": "total" }]
+    },
+    {
+      "country_iso2": "BR",
+      "country_name": "Brazil",
+      "default": { "currency": "BRL", "flat": 0.95 },
+      "applicableTaxes": [{ "name": "ICMS (avg)", "rate_pct": 25, "appliesTo": "total" }]
+    },
+    {
+      "country_iso2": "ZA",
+      "country_name": "South Africa",
+      "default": { "currency": "ZAR", "flat": 3.50 }
+    },
+    {
+      "country_iso2": "NZ",
+      "country_name": "New Zealand",
+      "default": { "currency": "NZD", "flat": 0.34 },
+      "applicableTaxes": [{ "name": "GST", "rate_pct": 15, "appliesTo": "total" }]
+    }
+  ]
+}

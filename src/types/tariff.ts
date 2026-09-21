@@ -28,5 +28,10 @@ export interface TariffSchedule {
   default: TariffRate;
   applicableTaxes?: TaxRule[];
   notes?: string;
-  lastUpdated: string;
+  /**
+   * Per-country data freshness. Optional because the bundled tariff snapshot
+   * publishes a single top-level `lastUpdated` instead; the loader exposes
+   * that via `dataLastUpdated()`.
+   */
+  lastUpdated?: string;
 }

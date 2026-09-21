@@ -1,15 +1,19 @@
 {
   "version": "2026-09-21",
   "currencies": [
-    { "code": "INR", "symbol": "₹", "name": "Indian Rupee", "locale": "en-IN", "decimalDigits": 2 },
-    { "code": "USD", "symbol": "$", "name": "US Dollar", "locale": "en-US", "decimalDigits": 2 },
-    { "code": "EUR", "symbol": "€", "name": "Euro", "locale": "en-DE", "decimalDigits": 2 },
-    { "code": "GBP", "symbol": "£", "name": "British Pound", "locale": "en-GB", "decimalDigits": 2 },
-    { "code": "JPY", "symbol": "¥", "name": "Japanese Yen", "locale": "ja-JP", "decimalDigits": 0 },
-    { "code": "AUD", "symbol": "A$", "name": "Australian Dollar", "locale": "en-AU", "decimalDigits": 2 },
-    { "code": "CAD", "symbol": "C$", "name": "Canadian Dollar", "locale": "en-CA", "decimalDigits": 2 },
-    { "code": "SGD", "symbol": "S$", "name": "Singapore Dollar", "locale": "en-SG", "decimalDigits": 2 },
-    { "code": "AED", "symbol": "د.إ", "name": "UAE Dirham", "locale": "ar-AE", "decimalDigits": 2 },
-    { "code": "BRL", "symbol": "R$", "name": "Brazilian Real", "locale": "pt-BR", "decimalDigits": 2 }
+    { "code": "INR", "symbol": "₹",    "name": "Indian Rupee",    "locale": "en-IN", "decimalDigits": 2 },
+    { "code": "USD", "symbol": "$",    "name": "US Dollar",       "locale": "en-US", "decimalDigits": 2 },
+    { "code": "EUR", "symbol": "€",    "name": "Euro",            "locale": "en-DE", "decimalDigits": 2 },
+    { "code": "GBP", "symbol": "£",    "name": "British Pound",   "locale": "en-GB", "decimalDigits": 2 },
+    { "code": "JPY", "symbol": "¥",    "name": "Japanese Yen",    "locale": "ja-JP", "decimalDigits": 0 },
+    { "code": "AUD", "symbol": "A$",   "name": "Australian Dollar", "locale": "en-AU", "decimalDigits": 2 },
+    { "code": "CAD", "symbol": "C$",   "name": "Canadian Dollar", "locale": "en-CA", "decimalDigits": 2 },
+    { "code": "SGD", "symbol": "S$",   "name": "Singapore Dollar", "locale": "en-SG", "decimalDigits": 2 },
+    { "code": "AED", "symbol": "د.إ",   "name": "UAE Dirham",       "locale": "ar-AE", "decimalDigits": 2 },
+    { "code": "BRL", "symbol": "R$",   "name": "Brazilian Real",  "locale": "pt-BR", "decimalDigits": 2 },
+    { "code": "SEK", "symbol": "kr",   "name": "Swedish Krona",   "locale": "sv-SE", "decimalDigits": 2 },
+    { "code": "PLN", "symbol": "zł",   "name": "Polish Zloty",     "locale": "pl-PL", "decimalDigits": 2 },
+    { "code": "ZAR", "symbol": "R",    "name": "South African Rand", "locale": "en-ZA", "decimalDigits": 2 },
+    { "code": "NZD", "symbol": "NZ$",  "name": "New Zealand Dollar", "locale": "en-NZ", "decimalDigits": 2 }
   ]
 }
