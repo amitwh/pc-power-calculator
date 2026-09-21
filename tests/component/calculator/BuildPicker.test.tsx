@@ -15,8 +15,9 @@ describe('BuildPicker', () => {
   test('renders the default build and slot pickers', () => {
     render(<BuildPicker />);
     expect(screen.getByRole('heading', { name: /Your Systems/i })).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: /Select CPU/i })).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: /Select GPU/i })).toBeInTheDocument();
+    // CPU + GPU now use SearchableSelect (button role); motherboard stays on native <select>.
+    expect(screen.getByRole('button', { name: /Select CPU/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Select GPU/i })).toBeInTheDocument();
     expect(screen.getByRole('combobox', { name: /Select Motherboard/i })).toBeInTheDocument();
     // Each build chip exposes a switch button with the build name.
     expect(screen.getByRole('button', { name: /My build/i })).toBeInTheDocument();
@@ -27,15 +28,26 @@ describe('BuildPicker', () => {
     expect(screen.getAllByText('Not selected')).toHaveLength(3);
   });
 
-  test('selecting a CPU updates the card and store', async () => {
+  test('selecting a CPU via the searchable picker updates the card and store', async () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
-    const cpuSelect = screen.getByRole('combobox', { name: /Select CPU/i });
-    await user.selectOptions(cpuSelect, 'cpu-amd-ryzen-7-7800x3d');
+    // Open the CPU searchable picker, then click the option directly (no need to search for known SKU).
+    await user.click(screen.getByRole('button', { name: /Select CPU/i }));
+    await user.click(screen.getByRole('option', { name: /AMD Ryzen 7 7800X3D/i }));
     const card = screen.getByText('CPU').parentElement!;
     expect(within(card).getByText(/AMD Ryzen 7 7800X3D/i)).toBeInTheDocument();
     expect(within(card).getByText(/120 W/)).toBeInTheDocument();
     expect(useBuildStore.getState().builds[0].components.cpu).toBe('cpu-amd-ryzen-7-7800x3d');
+  });
+
+  test('searchable CPU picker lets you search for a CPU by name', async () => {
+    const user = userEvent.setup();
+    render(<BuildPicker />);
+    await user.click(screen.getByRole('button', { name: /Select CPU/i }));
+    await user.type(screen.getByRole('searchbox'), 'threadripper');
+    // 7800X3D should be filtered out; at least one Threadripper should appear.
+    expect(screen.queryByRole('option', { name: /Ryzen 7 7800X3D/i })).not.toBeInTheDocument();
+    expect(screen.getAllByRole('option').length).toBeGreaterThan(0);
   });
 
   test('add system creates a new build and makes it active', async () => {

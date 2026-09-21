@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { listComponents, findComponent } from '@/lib/data/components';
 import { useBuildStore } from '@/store/buildStore';
 import { Select } from '@/components/ui/Select';
+import { SearchableSelect } from '@/components/ui/SearchableSelect';
 import { Button } from '@/components/ui/Button';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { ComponentCard } from './ComponentCard';
@@ -66,21 +67,34 @@ export function BuildPicker() {
     const selectedId = Array.isArray(slotValue) ? slotValue[0] : slotValue;
     const component = selectedId ? findComponent(selectedId) ?? null : null;
     const overrideW = activeBuild.tdpOverrides[slot.key] ?? null;
-    const options = listComponents(slot.category).map((c) => ({
+    const categoryComponents = listComponents(slot.category);
+    const options = categoryComponents.map((c) => ({
       value: c.id,
       label: `${c.brand} ${c.model} (${c.tdp_w ?? '?'} W)`,
+      meta: { brand: c.brand, year: c.releaseYear, tdp_w: c.tdp_w },
     }));
 
     const isOverridingThis = overridingSlot === slot.key;
+    const useSearchable = slot.category === 'cpu' || slot.category === 'gpu';
     return (
       <div key={slot.key} className="space-y-2">
-        <Select
-          aria-label={`Select ${slot.label}`}
-          placeholder={`Choose ${slot.label}...`}
-          value={selectedId ?? ''}
-          options={options}
-          onChange={(e) => setComponent(slot.key, e.target.value || null)}
-        />
+        {useSearchable ? (
+          <SearchableSelect
+            ariaLabel={`Select ${slot.label}`}
+            placeholder={`Choose ${slot.label}…`}
+            value={selectedId ?? ''}
+            options={options}
+            onChange={(v) => setComponent(slot.key, v)}
+          />
+        ) : (
+          <Select
+            aria-label={`Select ${slot.label}`}
+            placeholder={`Choose ${slot.label}...`}
+            value={selectedId ?? ''}
+            options={options}
+            onChange={(e) => setComponent(slot.key, e.target.value || null)}
+          />
+        )}
         <ComponentCard
           categoryLabel={slot.label}
           component={component}

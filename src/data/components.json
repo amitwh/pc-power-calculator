@@ -5161,23 +5161,6 @@
       "addedAt": "2026-09-21"
     },
     {
-      "id": "cpu-amd-ryzen7-5800x3d",
-      "category": "cpu",
-      "brand": "AMD",
-      "model": "Ryzen 7 5800X3D",
-      "releaseYear": 2022,
-      "tdp_w": 105,
-      "specs": {
-        "cores": 8,
-        "threads": 16,
-        "base_clock_ghz": 3.4,
-        "boost_clock_ghz": 4.5,
-        "socket": "AM4"
-      },
-      "source": "amd-product-page",
-      "addedAt": "2026-09-21"
-    },
-    {
       "id": "cpu-amd-ryzen9-7900x3d",
       "category": "cpu",
       "brand": "AMD",
@@ -5206,23 +5189,6 @@
         "threads": 32,
         "base_clock_ghz": 4.2,
         "boost_clock_ghz": 5.7,
-        "socket": "AM5"
-      },
-      "source": "amd-product-page",
-      "addedAt": "2026-09-21"
-    },
-    {
-      "id": "cpu-amd-ryzen7-7800x3d",
-      "category": "cpu",
-      "brand": "AMD",
-      "model": "Ryzen 7 7800X3D",
-      "releaseYear": 2023,
-      "tdp_w": 120,
-      "specs": {
-        "cores": 8,
-        "threads": 16,
-        "base_clock_ghz": 4.2,
-        "boost_clock_ghz": 5.0,
         "socket": "AM5"
       },
       "source": "amd-product-page",

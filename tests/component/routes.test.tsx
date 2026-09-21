@@ -13,7 +13,7 @@ test('renders Home on /', () => {
   // BuildPicker's heading is "1 Your Systems" (step badge + title); the multi-system
   // summary card in ResultsPanel also contains "your systems", so anchor exactly.
   expect(screen.getByRole('heading', { name: /^1\s*Your Systems$/i })).toBeInTheDocument();
-  expect(screen.getByRole('combobox', { name: /Select CPU/i })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /Select CPU/i })).toBeInTheDocument();
 });
 
 test('renders Compare on /compare', () => {
