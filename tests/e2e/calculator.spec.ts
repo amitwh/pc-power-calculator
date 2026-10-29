@@ -33,6 +33,28 @@ test('picking the same device twice multiplies its units', async ({ page }) => {
   ).toHaveValue('2');
 });
 
+test('single-instance parts (CPU, motherboard) can be removed and swapped', async ({ page }) => {
+  await page.goto('/');
+  const add = page.getByRole('button', { name: 'Add device' });
+  await add.click();
+  await page.getByRole('searchbox').fill('7800x3d');
+  await page.getByRole('option', { name: /Ryzen 7 7800X3D/i }).first().click();
+
+  // Remove via the row's × — single-slot parts must not get stuck.
+  await page.getByRole('button', { name: 'Remove AMD Ryzen 7 7800X3D' }).click();
+  await expect(page.getByText(/Ryzen 7 7800X3D/i)).toHaveCount(0);
+
+  // Add a motherboard, then swap it for a different one.
+  await add.click();
+  await page.getByRole('searchbox').fill('b550m pro4');
+  await page.getByRole('option', { name: /B550M Pro4/i }).first().click();
+  await add.click();
+  await page.getByRole('searchbox').fill('b650m pg riptide');
+  await page.getByRole('option', { name: /B650M PG Riptide/i }).first().click();
+  await expect(page.getByText(/B650M PG Riptide/i).first()).toBeVisible();
+  await expect(page.getByText(/B550M Pro4/i)).toHaveCount(0);
+});
+
 test('results show PSU recommendation and overclock slider adjusts peak draw', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Add device' }).click();

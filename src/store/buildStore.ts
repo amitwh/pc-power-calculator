@@ -208,10 +208,17 @@ export const useBuildStore = create<BuildStore>()(
             : slot === 'peripheral' ? 'peripherals'
             : slot;
           const arrKey = key as keyof typeof b.components;
+          const quantities = { ...(b.quantities ?? {}) };
+          // Single-instance slots (cpu, gpu, motherboard, psu, cooler, ups)
+          // hold a plain string, not an array.
+          if (!Array.isArray(b.components[arrKey])) {
+            if ((b.components[arrKey] as unknown as string | undefined) !== id) return b;
+            delete quantities[id];
+            return { ...b, components: { ...b.components, [arrKey]: undefined }, quantities };
+          }
           const existing = (b.components[arrKey] as unknown as string[] | undefined) ?? [];
           const next = existing.filter((x) => x !== id);
           if (next.length === existing.length) return b;
-          const quantities = { ...(b.quantities ?? {}) };
           delete quantities[id];
           return { ...b, components: { ...b.components, [arrKey]: next }, quantities };
         }),

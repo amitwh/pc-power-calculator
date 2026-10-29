@@ -213,6 +213,34 @@ describe('buildStore — component quantities', () => {
   });
 });
 
+describe('buildStore — single-slot removal (device cart × button)', () => {
+  test('removeComponent clears a single-instance slot (cpu)', () => {
+    useBuildStore.getState().setComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
+    useBuildStore.getState().removeComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
+    expect(active()!.components.cpu).toBeUndefined();
+  });
+
+  test('removeComponent clears a single-instance slot (motherboard)', () => {
+    useBuildStore.getState().setComponent('motherboard', 'mb-asus-rog-strix-x670e');
+    useBuildStore.getState().removeComponent('motherboard', 'mb-asus-rog-strix-x670e');
+    expect(active()!.components.motherboard).toBeUndefined();
+  });
+
+  test('removeComponent on a single slot also clears its quantity', () => {
+    useBuildStore.getState().setComponent('gpu', 'gpu-nvidia-rtx-4070');
+    useBuildStore.getState().setQty('gpu-nvidia-rtx-4070', 2);
+    useBuildStore.getState().removeComponent('gpu', 'gpu-nvidia-rtx-4070');
+    expect(active()!.components.gpu).toBeUndefined();
+    expect(active()!.quantities?.['gpu-nvidia-rtx-4070']).toBeUndefined();
+  });
+
+  test('removeComponent with a foreign id on a single slot is a no-op', () => {
+    useBuildStore.getState().setComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
+    useBuildStore.getState().removeComponent('cpu', 'cpu-amd-ryzen-9-9950x');
+    expect(active()!.components.cpu).toBe('cpu-amd-ryzen-7-7800x3d');
+  });
+});
+
 describe('buildStore — custom peripherals (round-trip)', () => {
   test('addCustomPeripheral adds an entry under components.peripherals', () => {
     const id = useBuildStore.getState().addCustomPeripheral({
