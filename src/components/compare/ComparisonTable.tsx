@@ -3,16 +3,20 @@ import type { LegacyColumnDef } from '@tanstack/react-table/legacy';
 import { flexRender } from '@tanstack/react-table';
 import { listWorkloads } from '@/lib/data/workloads';
 import { findCurrency } from '@/lib/data/currencies';
+import { currencyForLocation } from '@/lib/data/tariffs';
+import { convertCurrency } from '@/lib/data/fx';
 import { compareBuilds } from '@/lib/calc/compare';
 import type { ComparisonRow } from '@/lib/calc/compare';
 import type { BuildConfig } from '@/types/build';
-import type { CurrencyInfo } from '@/types/currency';
+import type { CurrencyInfo, FxSnapshot } from '@/types/currency';
 import { formatCost, formatKwh } from '@/lib/calc/format';
 
 interface Props {
   builds: BuildConfig[];
   /** Currency to use for the cost column. Falls back to the first build's override, then INR. */
   currency?: CurrencyInfo;
+  /** Bundled FX snapshot — foreign-currency builds are converted into `currency`. */
+  fxSnapshot?: FxSnapshot;
 }
 
 const DEFAULT_INR: CurrencyInfo = {
@@ -23,12 +27,29 @@ const DEFAULT_INR: CurrencyInfo = {
   decimalDigits: 0,
 };
 
-export function ComparisonTable({ builds, currency }: Props) {
+export function ComparisonTable({ builds, currency, fxSnapshot }: Props) {
   const workloads = listWorkloads();
   const result = compareBuilds(builds, workloads, 'year');
 
+  // Only rows where at least one system actually runs the workload —
+  // unscheduled workloads would all show 0 and drown the useful rows.
+  const rows = result.rows.filter((r) =>
+    builds.some((b) => (r.perBuildKwh[b.id] ?? 0) > 0),
+  );
+
   const resolvedCurrency: CurrencyInfo =
     currency ?? findCurrency(builds[0]?.currency_override ?? '') ?? DEFAULT_INR;
+
+  const ownCurrency = (b: BuildConfig): CurrencyInfo =>
+    currencyForLocation(b.location.country_iso2, b.location.subdivision_code, b.currency_override);
+
+  // Cross-currency comparisons convert each build's cost into the display
+  // currency; missing FX codes fall back to the raw amount.
+  const inDisplay = (amount: number, b: BuildConfig): number => {
+    const from = ownCurrency(b);
+    if (!fxSnapshot || from.code === resolvedCurrency.code) return amount;
+    return convertCurrency(amount, from.code, resolvedCurrency.code, fxSnapshot) ?? amount;
+  };
 
   const columns: LegacyColumnDef<ComparisonRow>[] = [
     { accessorKey: 'workload_id', header: 'Workload' },
@@ -44,7 +65,7 @@ export function ComparisonTable({ builds, currency }: Props) {
         id: `${b.id}-cost`,
         header: `${b.name} (cost)`,
         cell: ({ row }: { row: { original: ComparisonRow } }) =>
-          formatCost(row.original.perBuildCost[b.id] ?? 0, resolvedCurrency),
+          formatCost(inDisplay(row.original.perBuildCost[b.id] ?? 0, b), resolvedCurrency),
         meta: { numeric: true },
       },
       {
@@ -62,7 +83,7 @@ export function ComparisonTable({ builds, currency }: Props) {
   ];
 
   const table = useLegacyTable({
-    data: result.rows,
+    data: rows,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -105,7 +126,7 @@ export function ComparisonTable({ builds, currency }: Props) {
                   {formatKwh(t.kwh, 0)}
                 </td>,
                 <td key={`${b.id}-yc`} className="p-2 text-brand-text">
-                  {formatCost(t.cost, resolvedCurrency)}
+                  {formatCost(inDisplay(t.cost, b), resolvedCurrency)}
                 </td>,
                 <td key={`${b.id}-yp`} className="p-2 text-gray-500">—</td>,
               ];

@@ -6,6 +6,8 @@ import type { BuildConfig } from '@/types/build';
 
 interface Props {
   onCompare: (b: BuildConfig[]) => void;
+  /** Pre-select this build id in slot B (e.g. a build imported from an exported HTML link). */
+  initialBId?: string;
 }
 
 /**
@@ -14,14 +16,16 @@ interface Props {
  * fires `onCompare` LIVE on mount and whenever the selection changes —
  * no submit button needed.
  */
-export function BuildSelector({ onCompare }: Props) {
+export function BuildSelector({ onCompare, initialBId }: Props) {
   const builds = useBuildStore((s) => s.builds);
 
   const initial = useMemo(() => {
     const first = builds[0]?.id ?? '';
-    const second = builds[1]?.id ?? builds[0]?.id ?? '';
+    const second = initialBId ?? builds[1]?.id ?? builds[0]?.id ?? '';
     return { a: first, b: second };
-  }, [builds]);
+    // initialBId is only meaningful on first mount (imported-link flow).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [buildAId, setBuildAId] = useState<string>(initial.a);
   const [buildBId, setBuildBId] = useState<string>(initial.b);

@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
 import { useBuildStore } from '@/store/buildStore';
 import { useCalc } from '@/hooks/useCalc';
+import { useFx } from '@/hooks/useFx';
 import { computeEnergy } from '@/lib/calc/energy';
 import { currencyForLocation } from '@/lib/data/tariffs';
+import { convertCurrency } from '@/lib/data/fx';
 import { listWorkloads } from '@/lib/data/workloads';
 import { Card } from '@/components/ui/Card';
 import { formatCost, formatKwh } from '@/lib/calc/format';
@@ -27,7 +29,8 @@ function buildMeta(
 /** Full-width card comparing every saved system's yearly energy and cost. */
 export function AllSystemsSummary() {
   const builds = useBuildStore((s) => s.builds);
-  const { allYearly, allDaily, allMonthly, currency } = useCalc();
+  const { allDaily, allMonthly, currency } = useCalc();
+  const { snapshot } = useFx();
 
   const summary = useMemo(() => {
     const workloads = listWorkloads();
@@ -45,6 +48,26 @@ export function AllSystemsSummary() {
       };
     });
   }, [builds]);
+
+  // Systems billing in a different currency are FX-converted before summing,
+  // so the combined total no longer adds rupees to dollars. (kWh is
+  // currency-independent, so energy sums directly.)
+  const { combinedCost, combinedKwh, anyConverted } = useMemo(() => {
+    let cost = 0;
+    let kwh = 0;
+    let converted = false;
+    for (const row of summary) {
+      kwh += row.kwh;
+      if (row.currency.code === currency.code) {
+        cost += row.cost;
+        continue;
+      }
+      const c = convertCurrency(row.cost, row.currency.code, currency.code, snapshot);
+      cost += c ?? row.cost;
+      if (c != null) converted = true;
+    }
+    return { combinedCost: cost, combinedKwh: kwh, anyConverted: converted };
+  }, [summary, currency.code, snapshot]);
 
   if (summary.length === 0) return null;
 
@@ -77,21 +100,24 @@ export function AllSystemsSummary() {
         <div className="font-numeric tabular-nums">
           <div className="text-sm text-gray-500">All systems combined</div>
           <div className="font-display text-2xl font-bold text-gray-900 dark:text-gray-50">
-            {formatKwh(allYearly.kwh, 0)}/yr
+            {formatKwh(combinedKwh, 0)}/yr
           </div>
         </div>
         <div className="font-numeric tabular-nums text-right">
           <div className="text-sm text-gray-500">
-            Total annual cost{summary.some((r) => r.currency.code !== currency.code) ? ' (active build currency)' : ''}
+            Total annual cost{summary.some((r) => r.currency.code !== currency.code)
+              ? ` ≈ (converted to ${currency.code}, FX ${snapshot.date})`
+              : ''}
           </div>
           <div className="font-display text-3xl font-bold text-brand-text">
-            {formatCost(allYearly.cost, currency)}
+            {formatCost(combinedCost, currency)}
           </div>
         </div>
       </div>
       <div className="mt-2 text-xs text-gray-500 font-numeric tabular-nums">
-        Daily: {formatKwh(allDaily.kwh, 1)} · {formatCost(allDaily.cost, currency)} · Monthly: {formatKwh(allMonthly.kwh, 0)} ·{' '}
-        {formatCost(allMonthly.cost, currency)}
+        Daily: {formatKwh(allDaily.kwh, 1)} · Monthly: {formatKwh(allMonthly.kwh, 0)} ·{' '}
+        {anyConverted && 'foreign-currency systems converted at bundled FX · '}
+        Energy totals are currency-independent.
       </div>
     </Card>
   );
