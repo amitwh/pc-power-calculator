@@ -3,7 +3,7 @@ import { BuildSelector } from '@/components/compare/BuildSelector';
 import { ComparisonTable } from '@/components/compare/ComparisonTable';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { useBuildStore } from '@/store/buildStore';
-import { findCurrency } from '@/lib/data/currencies';
+import { currencyForLocation } from '@/lib/data/tariffs';
 import { computeEnergy } from '@/lib/calc/energy';
 import { listWorkloads } from '@/lib/data/workloads';
 import type { BuildConfig } from '@/types/build';
@@ -15,28 +15,18 @@ const ComparisonBars = lazy(() =>
   import('@/components/charts/ComparisonBars').then((m) => ({ default: m.ComparisonBars })),
 );
 
-const DEFAULT_INR: CurrencyInfo = {
-  code: 'INR',
-  symbol: '₹',
-  name: 'Indian Rupee',
-  locale: 'en-IN',
-  decimalDigits: 0,
-};
-
 export default function Compare() {
   const [builds, setBuilds] = useState<BuildConfig[] | null>(null);
   const activeBuildId = useBuildStore((s) => s.activeBuildId);
   const storeBuilds = useBuildStore((s) => s.builds);
 
-  // Currency follows the active build (or the first selected) — falls back to INR.
+  // Currency follows the active build (or the first selected): explicit
+  // override, else the tariff currency of that build's location.
   const currency: CurrencyInfo = useMemo(() => {
-    const fromActive = storeBuilds.find((b) => b.id === activeBuildId)?.currency_override;
-    const fromFirst = builds?.[0]?.currency_override;
-    return (
-      findCurrency(fromActive ?? '') ??
-      findCurrency(fromFirst ?? '') ??
-      DEFAULT_INR
-    );
+    const b =
+      storeBuilds.find((x) => x.id === activeBuildId) ?? builds?.[0] ?? storeBuilds[0];
+    if (!b) return currencyForLocation('IN');
+    return currencyForLocation(b.location.country_iso2, b.location.subdivision_code, b.currency_override);
   }, [activeBuildId, storeBuilds, builds]);
 
   // Yearly kWh per build for the bar chart.

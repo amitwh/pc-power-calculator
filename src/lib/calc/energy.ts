@@ -3,7 +3,9 @@ import type { Component } from '@/types/component';
 import type { BenchmarkEntry, Workload, WorkloadId } from '@/types/workload';
 import { findComponent } from '@/lib/data/components';
 import { lookupBenchmark } from '@/lib/data/benchmarks';
+import { resolveLocationTariff } from '@/lib/data/tariffs';
 import { coercePsuRating, psuWattageFromSpecs } from './psu';
+import { computeCost } from './cost';
 import { systemPowerW } from './power';
 
 export interface PerWorkloadEnergy {
@@ -36,6 +38,7 @@ const SLOT_DEFS: SlotDef[] = [
   { key: 'add_in_cards', isArray: true },
   { key: 'optical_drives', isArray: true },
   { key: 'peripherals', isArray: true },
+  { key: 'fans', isArray: true },
 ];
 
 /** Modeled draw of one 120/140 mm case fan at normal PWM. */
@@ -113,6 +116,40 @@ export function resolveBuildComponents(
   return out;
 }
 
+/**
+ * Cost rate for a build, in currency units per kWh.
+ *
+ * An explicit `tariffRateOverride` (or the build's manual override) wins as a
+ * flat rate. Otherwise the bundled tariff schedule for the build's location is
+ * used — including tiered slabs and applicable taxes. Slabs are billed per
+ * MONTH, so the effective rate is derived by walking the slabs on the build's
+ * monthly consumption and averaging back to a per-kWh rate.
+ */
+export function resolveRatePerKwh(
+  build: BuildConfig,
+  periodKwh: number,
+  period: 'day' | 'month' | 'year',
+  tariffRateOverride?: number,
+): number {
+  const override = tariffRateOverride ?? build.location.manual_rate_override;
+  if (override != null) return override;
+
+  const { rate, taxes } = resolveLocationTariff(
+    build.location.country_iso2,
+    build.location.subdivision_code,
+  );
+
+  // Convert this period's consumption to its monthly equivalent (slabs and
+  // taxes are billed per month), walk the slabs on that, and average back
+  // down to a per-kWh rate for the rows.
+  const monthsPerPeriod = period === 'day' ? DAYS_IN_MONTH : period === 'year' ? 1 / 12 : 1;
+  const kwhPerMonth = periodKwh * monthsPerPeriod;
+  if (kwhPerMonth <= 0) return rate.flat ?? rate.slabs?.[0]?.rate ?? 0;
+  if (rate.flat != null && taxes.length === 0) return rate.flat;
+  const { total } = computeCost(kwhPerMonth, rate, taxes);
+  return total / kwhPerMonth;
+}
+
 export function computeEnergy(
   build: BuildConfig,
   workloads: Workload[],
@@ -152,12 +189,9 @@ export function computeEnergy(
     const dailyKwh = (wallDrawW * s.hours_per_day) / 1000;
     const periodKwh = dailyKwh * factor;
 
-    const ratePerKwh = tariffRateOverride ?? build.location.manual_rate_override ?? 0;
-    const cost = ratePerKwh * periodKwh;
-
+    const perf: BenchmarkEntry[] = [];
     const gpuId = build.components.gpu;
     const cpuId = build.components.cpu;
-    const perf: BenchmarkEntry[] = [];
     if (gpuId) perf.push(...lookupBenchmark(gpuId, s.workload_id));
     if (cpuId) perf.push(...lookupBenchmark(cpuId, s.workload_id));
 
@@ -166,13 +200,14 @@ export function computeEnergy(
       hours_per_day: s.hours_per_day,
       draw_w: wallDrawW,
       kwh: periodKwh,
-      cost,
+      cost: 0, // filled in below once the period total (and thus slab rate) is known
       perfMetrics: perf,
     });
     totalKwh += periodKwh;
   }
 
-  const totalRate = tariffRateOverride ?? build.location.manual_rate_override ?? 0;
-  const totalCost = totalRate * totalKwh;
+  const ratePerKwh = resolveRatePerKwh(build, totalKwh, period, tariffRateOverride);
+  for (const row of rows) row.cost = row.kwh * ratePerKwh;
+  const totalCost = totalKwh * ratePerKwh;
   return { perWorkload: rows, total: { kwh: totalKwh, cost: totalCost } };
 }

@@ -2,12 +2,12 @@ import { lazy, Suspense, useMemo } from 'react';
 import { useBuildStore } from '@/store/buildStore';
 import { useCalc } from '@/hooks/useCalc';
 import { computeEnergy } from '@/lib/calc/energy';
+import { currencyForLocation } from '@/lib/data/tariffs';
 import { listWorkloads } from '@/lib/data/workloads';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { formatCost, formatKwh } from '@/lib/calc/format';
 import { ExportMenu } from './ExportMenu';
 import { emojiFor } from '@/lib/buildCategory';
-import type { CurrencyInfo } from '@/types/currency';
 import type { Workload } from '@/types/workload';
 
 // ApexCharts is heavy — defer the chart bundle until the ResultsPanel actually
@@ -15,8 +15,6 @@ import type { Workload } from '@/types/workload';
 const PowerBreakdown = lazy(() =>
   import('@/components/charts/PowerBreakdown').then((m) => ({ default: m.PowerBreakdown })),
 );
-
-const INR: CurrencyInfo = { code: 'INR', symbol: '₹', name: 'Indian Rupee', locale: 'en-IN', decimalDigits: 2 };
 
 function buildMeta(
   schedule: ReadonlyArray<{ workload_id: string; hours_per_day: number }>,
@@ -35,13 +33,12 @@ function buildMeta(
 
 export function ResultsPanel() {
   const builds = useBuildStore((s) => s.builds);
-  const { build, components, componentsPowerW, daily, monthly, yearly, allYearly, allDaily, allMonthly, psuWattage, peakWallDrawW, recommendedPsuW } = useCalc();
+  const { build, components, componentsPowerW, daily, monthly, yearly, allYearly, allDaily, allMonthly, psuWattage, peakWallDrawW, recommendedPsuW, currency } = useCalc();
 
   const summary = useMemo(() => {
     const workloads = listWorkloads();
     return builds.map((b) => {
-      const rate = b.location.manual_rate_override;
-      const yr = computeEnergy(b, workloads, 'year', rate).total;
+      const yr = computeEnergy(b, workloads, 'year', b.location.manual_rate_override ?? undefined).total;
       const meta = buildMeta(b.schedule, workloads);
       return {
         id: b.id,
@@ -50,6 +47,7 @@ export function ResultsPanel() {
         kwh: yr.kwh,
         cost: yr.cost,
         meta,
+        currency: currencyForLocation(b.location.country_iso2, b.location.subdivision_code, b.currency_override),
       };
     });
   }, [builds]);
@@ -85,7 +83,7 @@ export function ResultsPanel() {
             </div>
             <div className="font-display text-2xl font-bold mt-1">{formatKwh(row.kwh, 1)}</div>
             <div className={`font-semibold text-lg ${row.primary ? 'text-white' : 'text-brand-text'}`}>
-              {formatCost(row.cost, INR)}
+              {formatCost(row.cost, currency)}
             </div>
             <div className={`text-xs mt-1 ${row.primary ? 'text-white/85' : 'text-gray-500'}`}>{row.sub}</div>
           </div>
@@ -168,7 +166,7 @@ export function ResultsPanel() {
                   {formatKwh(row.kwh, 0)}/yr
                 </div>
                 <div className="font-numeric text-base font-semibold text-brand-text tabular-nums">
-                  {formatCost(row.cost, INR)}/yr
+                  {formatCost(row.cost, row.currency)}/yr
                 </div>
                 <div className="font-body text-xs text-gray-500 mt-1">{row.meta}</div>
               </div>
@@ -182,15 +180,17 @@ export function ResultsPanel() {
               </div>
             </div>
             <div className="font-numeric tabular-nums text-right">
-              <div className="text-sm text-gray-500">Total annual cost</div>
+              <div className="text-sm text-gray-500">
+                Total annual cost{summary.some((r) => r.currency.code !== currency.code) ? ' (active build currency)' : ''}
+              </div>
               <div className="font-display text-3xl font-bold text-brand">
-                {formatCost(allYearly.cost, INR)}
+                {formatCost(allYearly.cost, currency)}
               </div>
             </div>
           </div>
           <div className="mt-2 text-xs text-gray-500 font-numeric tabular-nums">
-            Daily: {formatKwh(allDaily.kwh, 1)} · {formatCost(allDaily.cost, INR)} · Monthly: {formatKwh(allMonthly.kwh, 0)} ·{' '}
-            {formatCost(allMonthly.cost, INR)}
+            Daily: {formatKwh(allDaily.kwh, 1)} · {formatCost(allDaily.cost, currency)} · Monthly: {formatKwh(allMonthly.kwh, 0)} ·{' '}
+            {formatCost(allMonthly.cost, currency)}
           </div>
         </div>
       )}

@@ -24,6 +24,7 @@ const slots: SlotDef[] = [
   { key: 'motherboard', label: 'Motherboard', category: 'motherboard' },
   { key: 'psu', label: 'PSU', category: 'psu' },
   { key: 'cooler', label: 'Cooler', category: 'cooler' },
+  { key: 'fans', label: 'Case fans', category: 'fan', multi: true },
   { key: 'ram', label: 'RAM', category: 'ram', multi: true },
   { key: 'storage', label: 'Storage', category: 'storage', multi: true },
   { key: 'monitor', label: 'Monitor', category: 'monitor', multi: true },
@@ -88,11 +89,16 @@ export function BuildPicker() {
       : (slotValue ? [slotValue as string] : []);
     const overrideW = activeBuild.tdpOverrides[slot.key] ?? null;
     const categoryComponents = listComponents(slot.category);
-    const options = categoryComponents.map((c) => ({
-      value: c.id,
-      label: `${c.brand} ${c.model} (${c.tdp_w ?? '?'} W)`,
-      meta: { brand: c.brand, year: c.releaseYear, tdp_w: c.tdp_w },
-    }));
+    // Newest parts first within the category — the common case is browsing
+    // current hardware; old SKUs stay reachable via the brand chips/search.
+    const options = categoryComponents
+      .slice()
+      .sort((a, b) => b.releaseYear - a.releaseYear || a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model))
+      .map((c) => ({
+        value: c.id,
+        label: `${c.brand} ${c.model} (${c.tdp_w ?? '?'} W)`,
+        meta: { brand: c.brand, year: c.releaseYear, tdp_w: c.tdp_w },
+      }));
 
     if (isMulti) {
       const selectedComps: Component[] = selectedIds

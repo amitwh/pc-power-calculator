@@ -1,6 +1,6 @@
 /// <reference types="vitest/globals" />
 import { describe, expect, test } from 'vitest';
-import { CASE_FANS_ID, CASE_FAN_WATTS, computeEnergy, resolveBuildComponents } from '@/lib/calc/energy';
+import { CASE_FANS_ID, CASE_FAN_WATTS, computeEnergy, resolveBuildComponents, resolveRatePerKwh } from '@/lib/calc/energy';
 import type { BuildConfig } from '@/types/build';
 import type { Workload } from '@/types/workload';
 
@@ -101,5 +101,73 @@ describe('resolveBuildComponents — overclock + case fans', () => {
   test('negative/undefined case_fans is clamped or omitted', () => {
     expect(resolveBuildComponents({ ...build, case_fans: -3 }).find((c) => c.id === CASE_FANS_ID)).toBeUndefined();
     expect(resolveBuildComponents(build).find((c) => c.id === CASE_FANS_ID)).toBeUndefined();
+  });
+});
+
+describe('tariff resolution', () => {
+  // Same hardware as `build`, but no manual rate override — the engine must
+  // fall back to the bundled tariff schedule for the build's location.
+  const buildNoRate: BuildConfig = { ...build, location: { country_iso2: 'IN' } };
+
+  test('bundled tariff applies when no manual override (IN: ₹6.50 + 8% duty)', () => {
+    const r = computeEnergy(buildNoRate, workloads, 'day');
+    expect(r.total.kwh).toBeGreaterThan(0);
+    expect(r.total.cost).toBeCloseTo(r.total.kwh * 6.5 * 1.08, 5);
+  });
+
+  test('country taxes apply (GB: £0.30 + 5% VAT)', () => {
+    const r = computeEnergy({ ...buildNoRate, location: { country_iso2: 'GB' } }, workloads, 'day');
+    expect(r.total.cost).toBeCloseTo(r.total.kwh * 0.30 * 1.05, 5);
+  });
+
+  test('monthly slabs walk on the monthly-equivalent consumption (Kerala)', () => {
+    // Kerala: first 50 kWh/month at ₹3.50, plus the country's 8% duty. A
+    // low-draw build whose monthly use stays under 50 kWh bills entirely at
+    // the first slab rate.
+    const r = computeEnergy(
+      { ...buildNoRate, location: { country_iso2: 'IN', subdivision_code: 'IN-KL' } },
+      workloads,
+      'month',
+    );
+    expect(r.total.kwh).toBeLessThan(50);
+    expect(r.total.cost).toBeCloseTo(r.total.kwh * 3.5 * 1.08, 5);
+  });
+
+  test('heavier usage crosses into higher slabs (Kerala)', () => {
+    // 24/7 server on this hardware lands in the 50–150 kWh slab, so the
+    // effective rate must exceed the first slab rate (×duty) but stay well
+    // below the top slab.
+    const heavy: BuildConfig = {
+      ...buildNoRate,
+      location: { country_iso2: 'IN', subdivision_code: 'IN-KL' },
+      schedule: [{ workload_id: 'server_heavy', hours_per_day: 24 }],
+    };
+    const wl: Workload = {
+      id: 'server_heavy',
+      name: 'Server heavy',
+      category: 'server',
+      description: '',
+      utilization: { cpu_pct: 0.9, gpu_pct: 0, ram_pct: 0.8, storage_pct: 0.6, monitor_w: 0 },
+      benchmarks: [],
+    };
+    const r = computeEnergy(heavy, [wl], 'month');
+    const effective = r.total.cost / r.total.kwh;
+    expect(r.total.kwh).toBeGreaterThan(50);
+    expect(effective).toBeGreaterThan(3.5 * 1.08);
+    expect(effective).toBeLessThan(7.5 * 1.08); // slab average, never the top rate alone
+  });
+
+  test('manual override still wins over the bundled tariff', () => {
+    const r = computeEnergy(build, workloads, 'day'); // `build` has manual_rate_override 7.5
+    expect(r.total.cost).toBeCloseTo(r.total.kwh * 7.5, 5);
+  });
+
+  test('explicit override parameter wins over everything', () => {
+    const r = computeEnergy(build, workloads, 'day', 10);
+    expect(r.total.cost).toBeCloseTo(r.total.kwh * 10, 5);
+  });
+
+  test('resolveRatePerKwh returns the flat rate directly', () => {
+    expect(resolveRatePerKwh({ ...buildNoRate, location: { country_iso2: 'US' } }, 100, 'month')).toBe(0.16);
   });
 });

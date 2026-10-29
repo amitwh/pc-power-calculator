@@ -15,6 +15,8 @@ export interface BuildComponents {
   optical_drives?: string[];
   ups?: string;
   peripherals?: string[];
+  /** Individual case fans (in addition to / instead of the case_fans count). */
+  fans?: string[];
 }
 
 /**

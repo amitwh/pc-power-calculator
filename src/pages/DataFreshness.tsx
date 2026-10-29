@@ -13,6 +13,7 @@ const CATEGORY_LABELS: Record<ComponentCategory, string> = {
   storage: 'Storage',
   psu: 'PSUs',
   cooler: 'Coolers',
+  fan: 'Case fans',
   monitor: 'Monitors',
   add_in_card: 'Add-in cards',
   optical_drive: 'Optical drives',

@@ -6,7 +6,7 @@ import type { Component, ComponentCategory } from '@/types/component';
 
 const VALID_CATEGORIES: ComponentCategory[] = [
   'cpu', 'gpu', 'ram', 'storage', 'motherboard', 'psu',
-  'cooler', 'monitor', 'add_in_card', 'optical_drive', 'ups', 'peripheral',
+  'cooler', 'fan', 'monitor', 'add_in_card', 'optical_drive', 'ups', 'peripheral',
 ];
 
 const all = (catalog as unknown as { components: Component[] }).components;

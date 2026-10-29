@@ -35,7 +35,7 @@ Field rules:
   `monitor-`, `addon-` (add_in_card), `optical-`, `ups-`, `peripheral-`.
   Prefix pattern: `<prefix><brand-kebab>-<model-kebab>`, e.g. `gpu-nvidia-geforce-fx-5900`.
 - `category`: one of `cpu | gpu | ram | storage | motherboard | psu | cooler |
-  monitor | add_in_card | optical_drive | ups | peripheral`.
+  fan | monitor | add_in_card | optical_drive | ups | peripheral`.
 - `brand`: canonical display name (Intel, AMD, NVIDIA, ATI (pre-2006 ATI cards),
   Samsung, Seagate, WD, Corsair, ...).
 - `model`: display name exactly as commonly written (e.g. "Core i7-2600K",
@@ -106,6 +106,13 @@ Field rules:
   cooling capacity, e.g. NH-D15 = 220). tdp_w = fan+pump draw: air 2-6 by fan
   count, AIO 8-18 (pump + 2-3 fans). Stock coolers: brand "Generic",
   e.g. "Intel LGA775 Stock Cooler", "AMD Wraith Stealth".
+
+### fan
+- Individual case fans (the build also has a bulk case-fan count slider).
+  specs: `{ type: "case-fan", size_mm, control: "dc"|"pwm",
+  lighting: "none"|"rgb"|"argb" }`. tdp_w = typical draw: 80mm 1.2,
+  92mm 1.5, 120mm DC 1.8 / PWM 2.5 / high-RPM 4.5 / RGB or ARGB 3,
+  140mm DC 2.2 / PWM 3 / ARGB 3.5, 200mm RGB 3.
 
 ### monitor
 - specs: `{ type: "CRT"|"LCD", size_in, resolution, refresh_hz, panel_w,

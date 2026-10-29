@@ -10,7 +10,7 @@ const OUT = join(ROOT, 'src/data/components.json');
 
 const VALID_CATEGORIES = new Set([
   'cpu', 'gpu', 'ram', 'storage', 'motherboard', 'psu',
-  'cooler', 'monitor', 'add_in_card', 'optical_drive', 'ups', 'peripheral',
+  'cooler', 'fan', 'monitor', 'add_in_card', 'optical_drive', 'ups', 'peripheral',
 ]);
 
 const norm = (s) => String(s ?? '').trim().toLowerCase().replace(/\s+/g, ' ');
@@ -84,7 +84,7 @@ for (const file of files) {
 }
 
 // Stable, human-browsable order: category → brand → year → model.
-const CAT_ORDER = ['cpu', 'gpu', 'motherboard', 'ram', 'storage', 'psu', 'cooler', 'monitor', 'add_in_card', 'optical_drive', 'ups', 'peripheral'];
+const CAT_ORDER = ['cpu', 'gpu', 'motherboard', 'ram', 'storage', 'psu', 'cooler', 'fan', 'monitor', 'add_in_card', 'optical_drive', 'ups', 'peripheral'];
 merged.sort(
   (a, b) =>
     CAT_ORDER.indexOf(a.category) - CAT_ORDER.indexOf(b.category) ||

@@ -1,5 +1,7 @@
 import data from '@/data/tariffs.json';
-import type { TariffRate, TariffSchedule } from '@/types/tariff';
+import type { TariffRate, TariffSchedule, TaxRule } from '@/types/tariff';
+import type { CurrencyInfo } from '@/types/currency';
+import { findCurrency } from './currencies';
 
 const list = (data as unknown as { countries: TariffSchedule[] }).countries;
 
@@ -40,4 +42,32 @@ export function listSubdivisions(iso2: string): Array<{ code: string; name: stri
 
 export function tariffsLastUpdated(): string {
   return (data as { lastUpdated: string }).lastUpdated;
+}
+
+/** Bundled fallback when a country has no schedule entry. */
+export const FALLBACK_TARIFF: TariffRate = { currency: 'USD', flat: 0.10 };
+
+/** Rate + applicable taxes for a build location, from the bundled schedule. */
+export function resolveLocationTariff(
+  iso2: string,
+  subdivisionCode?: string,
+): { rate: TariffRate; taxes: TaxRule[] } {
+  const t = findTariff(iso2, subdivisionCode);
+  return { rate: t?.default ?? FALLBACK_TARIFF, taxes: t?.applicableTaxes ?? [] };
+}
+
+/**
+ * The currency a build's money should be displayed in: the explicit override
+ * wins, else the currency of the resolved tariff (so a US build shows $, an
+ * Indian build ₹), else USD.
+ */
+export function currencyForLocation(
+  iso2: string,
+  subdivisionCode?: string,
+  currencyOverride?: string,
+): CurrencyInfo {
+  const resolved = findCurrency(currencyOverride ?? '');
+  if (resolved) return resolved;
+  const { rate } = resolveLocationTariff(iso2, subdivisionCode);
+  return findCurrency(rate.currency) ?? findCurrency('USD')!;
 }

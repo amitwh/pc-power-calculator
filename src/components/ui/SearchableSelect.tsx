@@ -18,7 +18,7 @@ export interface SearchableSelectProps {
 }
 
 /** Max options rendered at once — keeps the DOM small for 1000+ entry catalogs. */
-const MAX_RENDERED = 200;
+const MAX_RENDERED = 300;
 
 /**
  * Searchable combobox — replaces native <select> for long option lists (CPUs / GPUs).

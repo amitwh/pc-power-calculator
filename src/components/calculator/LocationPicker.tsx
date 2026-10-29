@@ -1,21 +1,11 @@
 import { useBuildStore } from '@/store/buildStore';
-import { listCountries, listSubdivisions, effectiveRateForCountry, tariffsLastUpdated } from '@/lib/data/tariffs';
-import { findCurrency } from '@/lib/data/currencies';
+import { listCountries, listSubdivisions, resolveLocationTariff, currencyForLocation, tariffsLastUpdated } from '@/lib/data/tariffs';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useFx } from '@/hooks/useFx';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { effectiveRate } from '@/lib/calc/cost';
-import type { CurrencyInfo } from '@/types/currency';
-
-const DEFAULT_INR: CurrencyInfo = {
-  code: 'INR',
-  symbol: '₹',
-  name: 'Indian Rupee',
-  locale: 'en-IN',
-  decimalDigits: 2,
-};
 
 export function LocationPicker() {
   const { loading, detect } = useGeolocation();
@@ -26,23 +16,22 @@ export function LocationPicker() {
   const setLocation = useBuildStore((s) => s.setLocation);
   const setManualRate = useBuildStore((s) => s.setManualRate);
 
-  // Currency follows the active build's override; falls back to INR.
-  // Mirrors the same pattern in src/components/calculator/ExportMenu.tsx
-  // so a US/EU user sees their own currency here (not a stray ₹).
-  const currency = findCurrency(build?.currency_override ?? '') ?? DEFAULT_INR;
-
   const countries = listCountries();
-  const subdivisions = listSubdivisions(build?.location.country_iso2 ?? '');
   const countryIso2 = build?.location.country_iso2 ?? 'IN';
   const subdivisionCode = build?.location.subdivision_code;
+  const subdivisions = listSubdivisions(countryIso2);
   const manualOverride = build?.location.manual_rate_override;
-  const rate =
-    manualOverride ??
-    effectiveRate(200, effectiveRateForCountry(countryIso2, subdivisionCode));
+
+  // Currency: explicit override, else the tariff currency of this location
+  // (₹ for India, $ for US, …) — matches what the calc engine charges with.
+  const currency = currencyForLocation(countryIso2, subdivisionCode, build?.currency_override);
+  const { rate: tariffRate, taxes } = resolveLocationTariff(countryIso2, subdivisionCode);
+  const rate = manualOverride ?? effectiveRate(200, tariffRate);
+  const isManual = manualOverride != null;
 
   return (
     <Card>
-      <CardTitle>2. Location & Tariff</CardTitle>
+      <CardTitle>2. Location &amp; Tariff</CardTitle>
       <div className="space-y-3">
         <Select
           aria-label="Country"
@@ -60,8 +49,15 @@ export function LocationPicker() {
         )}
         <div className="text-sm font-numeric tabular-nums">
           Tariff: <span className="font-semibold">{currency.symbol}{rate.toFixed(2)}/kWh</span>
-          <span className="ml-2 text-xs text-gray-500">FX as of {snapshot.date} {isLive ? '(live)' : '(bundled)'}</span>
+          <span className="ml-2 text-xs text-gray-500">
+            {isManual ? 'manual override' : tariffRate.slabs ? 'tiered slabs, billed monthly' : 'bundled rate'} · FX as of {snapshot.date} {isLive ? '(live)' : '(bundled)'}
+          </span>
         </div>
+        {taxes.length > 0 && !isManual && (
+          <div className="text-xs text-gray-500">
+            Includes {taxes.map((t) => `${t.name} ${t.rate_pct}%`).join(', ')}
+          </div>
+        )}
         <div className="flex gap-2 items-center">
           <label htmlFor="manual-rate" className="text-sm">Override {currency.code}/kWh:</label>
           <input

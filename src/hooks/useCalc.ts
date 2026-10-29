@@ -7,7 +7,9 @@ import type { Workload } from '@/types/workload';
 import { computeEnergy, resolveBuildComponents, type PerWorkloadEnergy } from '@/lib/calc/energy';
 import { componentPowerW, systemPowerW } from '@/lib/calc/power';
 import { coercePsuRating, psuWattageFromSpecs, recommendPsuW } from '@/lib/calc/psu';
+import { currencyForLocation } from '@/lib/data/tariffs';
 import { listWorkloads } from '@/lib/data/workloads';
+import type { CurrencyInfo } from '@/types/currency';
 
 /** A component with its effective `tdp_w` after any per-build override. */
 export type ResolvedComponent = Component & { effective_tdp_w: number | null };
@@ -43,6 +45,9 @@ export interface CalcResult extends CalcInputs {
   peakWallDrawW: number;
   /** Recommended PSU size for the peak draw (headroom included). */
   recommendedPsuW: number;
+  /** Display currency: explicit override, else the tariff currency of the
+   *  active build's location (₹ for India, $ for US, …). */
+  currency: CurrencyInfo;
   /** Combined energy across ALL systems in the store. */
   allDaily: PeriodEnergy;
   allMonthly: PeriodEnergy;
@@ -108,25 +113,25 @@ export function useCalc(): CalcResult {
     );
     const recommendedPsuW = recommendPsuW(peakWallDrawW);
 
-    // Multi-system: sum energy across every build.
+    // Multi-system: sum energy across every build (each build auto-resolves
+    // its own tariff unless it has a manual rate override).
     let allDaily = { kwh: 0, cost: 0 };
     let allMonthly = { kwh: 0, cost: 0 };
     let allYearly = { kwh: 0, cost: 0 };
     for (const b of builds) {
-      const r = b.location.manual_rate_override;
-      allDaily = {
-        kwh: allDaily.kwh + computeEnergy(b, workloads, 'day', r, customPeripherals).total.kwh,
-        cost: allDaily.cost + computeEnergy(b, workloads, 'day', r, customPeripherals).total.cost,
-      };
-      allMonthly = {
-        kwh: allMonthly.kwh + computeEnergy(b, workloads, 'month', r, customPeripherals).total.kwh,
-        cost: allMonthly.cost + computeEnergy(b, workloads, 'month', r, customPeripherals).total.cost,
-      };
-      allYearly = {
-        kwh: allYearly.kwh + computeEnergy(b, workloads, 'year', r, customPeripherals).total.kwh,
-        cost: allYearly.cost + computeEnergy(b, workloads, 'year', r, customPeripherals).total.cost,
-      };
+      const d = computeEnergy(b, workloads, 'day', undefined, customPeripherals).total;
+      const m = computeEnergy(b, workloads, 'month', undefined, customPeripherals).total;
+      const y = computeEnergy(b, workloads, 'year', undefined, customPeripherals).total;
+      allDaily = { kwh: allDaily.kwh + d.kwh, cost: allDaily.cost + d.cost };
+      allMonthly = { kwh: allMonthly.kwh + m.kwh, cost: allMonthly.cost + m.cost };
+      allYearly = { kwh: allYearly.kwh + y.kwh, cost: allYearly.cost + y.cost };
     }
+
+    const currency = currencyForLocation(
+      activeBuild.location.country_iso2,
+      activeBuild.location.subdivision_code,
+      activeBuild.currency_override,
+    );
 
     return {
       build: activeBuild,
@@ -141,6 +146,7 @@ export function useCalc(): CalcResult {
       componentsPowerW,
       peakWallDrawW,
       recommendedPsuW,
+      currency,
       allDaily,
       allMonthly,
       allYearly,

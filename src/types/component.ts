@@ -1,7 +1,7 @@
 export type ComponentCategory =
   | 'cpu' | 'gpu' | 'ram' | 'storage' | 'motherboard'
-  | 'psu' | 'monitor' | 'cooler' | 'add_in_card'
-  | 'optical_drive' | 'ups' | 'peripheral';
+  | 'psu' | 'cooler' | 'monitor' | 'add_in_card'
+  | 'optical_drive' | 'ups' | 'peripheral' | 'fan';
 
 /** 'none' = pre-80 PLUS generic units (typical for early-2000s supplies). */
 export type PsuEfficiencyRating =

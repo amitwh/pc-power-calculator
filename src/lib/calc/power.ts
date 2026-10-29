@@ -50,6 +50,10 @@ export function componentPowerW(component: Component, utilPct: number): number {
     // tdp_w is the fan/pump draw (cooling capacity lives in specs.tdp_rating_w).
     return component.tdp_w;
   }
+  if (component.category === 'fan') {
+    // Case fans draw their rated power constantly (RGB/PWM variants included).
+    return component.tdp_w;
+  }
   // Fallback: linear between 10% idle and TDP.
   return 0.10 * component.tdp_w + (component.tdp_w - 0.10 * component.tdp_w) * u;
 }
