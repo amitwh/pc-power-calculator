@@ -159,12 +159,16 @@ export function BuildPicker() {
 
   return (
     <Card>
-      <CardTitle>
+      <CardTitle className="text-base">
         <span>Your Systems</span>
         <span className="font-body text-sm font-normal text-gray-500 font-numeric tabular-nums">
           {devices.length} device{devices.length === 1 ? '' : 's'}
         </span>
       </CardTitle>
+      <p className="text-sm text-gray-600 dark:text-gray-400 -mt-1 mb-3">
+        Add each part of your PC below — search by name, click to add. Pick the same part
+        again to add another unit of it. Results update instantly as you edit.
+      </p>
 
       {/* System selector chips.
           Using role="group" (not tablist) because each chip contains its own
@@ -279,9 +283,27 @@ export function BuildPicker() {
 
       {/* Selected devices — cart rows with per-device unit counts */}
       {devices.length === 0 ? (
-        <p className="text-sm text-gray-500 py-3">
-          No devices yet — search above to add your first part.
-        </p>
+        <div className="py-3 text-sm text-gray-600 dark:text-gray-400">
+          <p className="font-semibold text-gray-900 dark:text-gray-50 mb-1.5">
+            No devices yet — set up your system in 3 steps:
+          </p>
+          <ol className="list-decimal list-inside space-y-1">
+            <li>
+              Pick a <strong>system type</strong> above (Gaming, Workstation, NAS…)
+            </li>
+            <li>
+              <strong>Search and add</strong> each part — start with CPU, motherboard, RAM,
+              storage and a PSU (the five essentials)
+            </li>
+            <li>
+              Set your <strong>usage schedule</strong> below — costs update instantly
+            </li>
+          </ol>
+          <p className="text-xs text-gray-500 mt-2">
+            Not sure about a part's wattage? We pre-fill catalog ratings for you — no guesswork
+            needed.
+          </p>
+        </div>
       ) : (
         <ul className="divide-y divide-gray-100 dark:divide-gray-800 border-y border-gray-100 dark:border-gray-800">
           {devices.map((d) => {
@@ -410,6 +432,32 @@ export function BuildPicker() {
             );
           })}
         </ul>
+      )}
+
+      {/* Novice help — what each control does */}
+      {devices.length > 0 && (
+        <details className="mt-2">
+          <summary className="cursor-pointer select-none text-xs font-semibold text-gray-500">
+            New here? What each control does
+          </summary>
+          <ul className="mt-2 space-y-1 text-xs text-gray-600 dark:text-gray-400 list-disc list-inside">
+            <li>
+              <strong>W box</strong> — rated watts per unit. Edit only if your part's rating
+              differs; ↺ restores the catalog value.
+            </li>
+            <li>
+              <strong>− n +</strong> — how many units you have (4× RAM sticks, 2× monitors,
+              3× same hard drive…).
+            </li>
+            <li>
+              <strong>Right number</strong> — combined watts of all units of that part.
+            </li>
+            <li>
+              <strong>×</strong> removes the part. Everything recalculates automatically —
+              no save button.
+            </li>
+          </ul>
+        </details>
       )}
 
       {/* Overclocking + case fans — collapsed by default to keep the card tight */}

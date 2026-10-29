@@ -1,70 +1,16 @@
-import { lazy, Suspense, useMemo } from 'react';
 import { useBuildStore } from '@/store/buildStore';
 import { useCalc } from '@/hooks/useCalc';
-import { computeEnergy } from '@/lib/calc/energy';
-import { currencyForLocation } from '@/lib/data/tariffs';
-import { listWorkloads } from '@/lib/data/workloads';
 import { listComponents } from '@/lib/data/components';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { formatCost, formatKwh } from '@/lib/calc/format';
 import { ExportMenu } from './ExportMenu';
-import { emojiFor } from '@/lib/buildCategory';
-import { categoryColor } from '@/lib/categoryColors';
-import { CASE_FANS_ID } from '@/lib/calc/energy';
-import type { Component } from '@/types/component';
-import type { Workload } from '@/types/workload';
 
-// ApexCharts is heavy — defer the chart bundle until the ResultsPanel actually
-// renders it. Keeps the Home route's first paint small and helps Lighthouse.
-const PowerBreakdown = lazy(() =>
-  import('@/components/charts/PowerBreakdown').then((m) => ({ default: m.PowerBreakdown })),
-);
-
-function buildMeta(
-  schedule: ReadonlyArray<{ workload_id: string; hours_per_day: number }>,
-  workloads: Workload[],
-): string {
-  const map = new Map(workloads.map((w) => [w.id, w]));
-  const lines = schedule
-    .filter((s) => s.hours_per_day > 0)
-    .map((s) => {
-      const wl = map.get(s.workload_id as Workload['id']);
-      const name = wl?.name ?? s.workload_id;
-      return `${s.hours_per_day} h ${name.toLowerCase()}`;
-    });
-  return lines.length > 0 ? lines.join(' · ') : 'idle';
-}
-
+/** Compact results summary — period totals, PSU sizing, export. Lives in the
+ *  sticky sidebar; the chart and per-task tables are in `ResultsBreakdown`. */
 export function ResultsPanel() {
-  const builds = useBuildStore((s) => s.builds);
   const setComponent = useBuildStore((s) => s.setComponent);
-  const { build, components, componentsPowerW, daily, monthly, yearly, allYearly, allDaily, allMonthly, psuWattage, peakWallDrawW, recommendedPsuW, currency } = useCalc();
-
-  const workloadMap = useMemo(() => new Map(listWorkloads().map((w) => [w.id, w])), []);
-
-  // `components` repeats each unit (qty ×N) — the chart wants one slice per
-  // distinct device with the combined draw and a ×N label.
-  const { chartComponents, qtyById, chartColors } = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const c of components) counts.set(c.id, (counts.get(c.id) ?? 0) + 1);
-    const seen = new Set<string>();
-    const unique: Component[] = [];
-    for (const c of components) {
-      if (!seen.has(c.id)) {
-        seen.add(c.id);
-        unique.push(c);
-      }
-    }
-    return {
-      chartComponents: unique,
-      qtyById: Object.fromEntries(counts),
-      // The synthetic case-fans aggregate reads as a fan, not a peripheral.
-      chartColors: unique.map((c) =>
-        categoryColor(c.id === CASE_FANS_ID ? 'fan' : c.category).hex,
-      ),
-    };
-  }, [components]);
+  const { build, daily, monthly, yearly, psuWattage, peakWallDrawW, recommendedPsuW, currency } = useCalc();
 
   /** Closest catalog PSU at or above the recommendation (Generic first). */
   const pickRecommendedPsu = () => {
@@ -80,23 +26,6 @@ export function ResultsPanel() {
       psus.sort((a, b) => byWatt(b) - byWatt(a))[0];
     if (pick) setComponent('psu', pick.id);
   };
-
-  const summary = useMemo(() => {
-    const workloads = listWorkloads();
-    return builds.map((b) => {
-      const yr = computeEnergy(b, workloads, 'year', b.location.manual_rate_override ?? undefined).total;
-      const meta = buildMeta(b.schedule, workloads);
-      return {
-        id: b.id,
-        name: b.name,
-        category: b.category,
-        kwh: yr.kwh,
-        cost: yr.cost,
-        meta,
-        currency: currencyForLocation(b.location.country_iso2, b.location.subdivision_code, b.currency_override),
-      };
-    });
-  }, [builds]);
 
   return (
     <Card>
@@ -169,106 +98,9 @@ export function ResultsPanel() {
         </div>
       </div>
 
-      {/* Power draw breakdown */}
-      <div className="mt-5">
-        <div className="text-xs uppercase text-gray-500 mb-2 font-semibold">
-          Power draw breakdown (typical 70% load)
-        </div>
-        <Suspense fallback={<div className="h-[260px] flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">Loading chart...</div>}>
-          <PowerBreakdown components={chartComponents} drawWByComponentId={componentsPowerW} qtyById={qtyById} colors={chartColors} />
-        </Suspense>
-      </div>
-
-      {/* Per-workload performance + usage — FPS, render seconds, hashrate, etc. */}
-      <div className="mt-4">
-        <div className="text-xs uppercase text-gray-500 mb-2 font-semibold">
-          Per-workload usage &amp; performance
-        </div>
-        {daily.perWorkload?.length ? (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm font-numeric tabular-nums">
-              <thead>
-                <tr className="text-left text-xs uppercase text-gray-500 border-b border-gray-200 dark:border-gray-800">
-                  <th className="py-1.5 pr-3 font-semibold">Workload</th>
-                  <th className="py-1.5 pr-3 font-semibold">Usage</th>
-                  <th className="py-1.5 pr-3 font-semibold">Draw</th>
-                  <th className="py-1.5 pr-3 font-semibold">Perf</th>
-                </tr>
-              </thead>
-              <tbody>
-                {daily.perWorkload.map((row) => {
-                  const wl = workloadMap.get(row.workload_id);
-                  const sched = build.schedule.find((s) => s.workload_id === row.workload_id);
-                  const days = sched?.days_per_week ?? 7;
-                  return (
-                    <tr key={row.workload_id} className="border-b border-gray-100 dark:border-gray-800 last:border-b-0">
-                      <td className="py-1.5 pr-3 font-body">{wl?.name ?? row.workload_id}</td>
-                      <td className="py-1.5 pr-3 text-gray-600 dark:text-gray-400">
-                        {sched ? `${sched.hours_per_day} h/d · ${days} d/wk` : '—'}
-                      </td>
-                      <td className="py-1.5 pr-3">{Math.round(row.draw_w)} W</td>
-                      <td className="py-1.5 pr-3">
-                        {row.perfMetrics.map((m) => `${m.value}${m.unit}`).join(' · ') || '—'}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <p className="text-sm text-gray-500">Add workloads in the schedule above to see per-task numbers.</p>
-        )}
-      </div>
-
-      {/* Multi-system summary */}
-      {summary.length > 0 && (
-        <div className="mt-6 p-5 bg-gradient-to-br from-gray-50 to-white dark:from-gray-950 dark:to-gray-900 border border-gray-200 dark:border-gray-800 rounded-12">
-          <h3 className="font-display text-base font-bold mb-3 text-gray-900 dark:text-gray-50">
-            📊 All your systems at a glance
-          </h3>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {summary.map((row) => (
-              <div
-                key={row.id}
-                className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-8 p-3"
-              >
-                <div className="font-body font-bold text-sm text-gray-900 dark:text-gray-50 mb-1.5 flex items-center gap-1.5">
-                  <span aria-hidden>{emojiFor(row.category)}</span>
-                  {row.name}
-                </div>
-                <div className="font-display text-xl font-bold text-gray-900 dark:text-gray-50 tabular-nums">
-                  {formatKwh(row.kwh, 0)}/yr
-                </div>
-                <div className="font-numeric text-base font-semibold text-brand-text tabular-nums">
-                  {formatCost(row.cost, row.currency)}/yr
-                </div>
-                <div className="font-body text-xs text-gray-500 mt-1">{row.meta}</div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800 flex flex-wrap justify-between items-center gap-3">
-            <div className="font-numeric tabular-nums">
-              <div className="text-sm text-gray-500">All systems combined</div>
-              <div className="font-display text-2xl font-bold text-gray-900 dark:text-gray-50">
-                {formatKwh(allYearly.kwh, 0)}/yr
-              </div>
-            </div>
-            <div className="font-numeric tabular-nums text-right">
-              <div className="text-sm text-gray-500">
-                Total annual cost{summary.some((r) => r.currency.code !== currency.code) ? ' (active build currency)' : ''}
-              </div>
-              <div className="font-display text-3xl font-bold text-brand">
-                {formatCost(allYearly.cost, currency)}
-              </div>
-            </div>
-          </div>
-          <div className="mt-2 text-xs text-gray-500 font-numeric tabular-nums">
-            Daily: {formatKwh(allDaily.kwh, 1)} · {formatCost(allDaily.cost, currency)} · Monthly: {formatKwh(allMonthly.kwh, 0)} ·{' '}
-            {formatCost(allMonthly.cost, currency)}
-          </div>
-        </div>
-      )}
+      <p className="mt-3 text-xs text-gray-500">
+        Power-draw chart, per-task costs and the all-systems summary are below.
+      </p>
     </Card>
   );
 }

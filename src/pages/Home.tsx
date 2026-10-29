@@ -1,6 +1,8 @@
 import { BuildPicker } from '@/components/calculator/BuildPicker';
 import { ScheduleEditor } from '@/components/calculator/ScheduleEditor';
 import { ResultsPanel } from '@/components/calculator/ResultsPanel';
+import { ResultsBreakdown } from '@/components/calculator/ResultsBreakdown';
+import { AllSystemsSummary } from '@/components/calculator/AllSystemsSummary';
 import { LocationPicker } from '@/components/calculator/LocationPicker';
 
 export default function Home() {
@@ -13,6 +15,12 @@ export default function Home() {
       <div className="grid grid-cols-1 gap-3 min-w-0 lg:sticky lg:top-3 self-start">
         <LocationPicker />
         <ResultsPanel />
+      </div>
+      <div className="min-w-0 lg:col-span-2">
+        <ResultsBreakdown />
+      </div>
+      <div className="min-w-0 lg:col-span-2">
+        <AllSystemsSummary />
       </div>
     </div>
   );

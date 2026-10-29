@@ -3,6 +3,8 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ResultsPanel } from '@/components/calculator/ResultsPanel';
+import { ResultsBreakdown } from '@/components/calculator/ResultsBreakdown';
+import { AllSystemsSummary } from '@/components/calculator/AllSystemsSummary';
 import { useBuildStore } from '@/store/buildStore';
 
 beforeEach(() => {
@@ -25,31 +27,42 @@ describe('ResultsPanel', () => {
     expect(allKwh.length).toBeGreaterThanOrEqual(3);
   });
 
-  test('renders the power-draw breakdown heading', () => {
-    render(<ResultsPanel />);
-    expect(screen.getByText(/Power draw breakdown/i)).toBeInTheDocument();
-  });
-
-  test('renders the multi-system summary card', () => {
-    render(<ResultsPanel />);
-    expect(screen.getByText(/All your systems at a glance/i)).toBeInTheDocument();
-  });
-
   test('shows the active build name in the heading', () => {
     useBuildStore.getState().renameBuild(useBuildStore.getState().activeBuildId, 'My rig');
     render(<ResultsPanel />);
     expect(screen.getByText(/Results — My rig/i)).toBeInTheDocument();
   });
 
+  test('points to the breakdown cards below', () => {
+    render(<ResultsPanel />);
+    expect(screen.getByText(/below/i)).toBeInTheDocument();
+  });
+});
+
+describe('ResultsBreakdown', () => {
+  test('renders the power-draw breakdown chart card', () => {
+    render(<ResultsBreakdown />);
+    expect(screen.getByText(/Power draw breakdown/i)).toBeInTheDocument();
+  });
+
+  test('renders the per-workload table card', () => {
+    render(<ResultsBreakdown />);
+    expect(screen.getByText(/Per-workload usage & performance/i)).toBeInTheDocument();
+    // Default schedule has office + browser hours → rows exist.
+    expect(screen.getByText(/Office/i)).toBeInTheDocument();
+  });
+});
+
+describe('AllSystemsSummary', () => {
+  test('renders the multi-system summary card', () => {
+    render(<AllSystemsSummary />);
+    expect(screen.getByText(/All your systems at a glance/i)).toBeInTheDocument();
+  });
+
   test('lists every system in the multi-system summary', () => {
-    const originalId = useBuildStore.getState().activeBuildId;
     useBuildStore.getState().addBuild('Workstation');
     useBuildStore.getState().addBuild('Home NAS');
-    // Switch back to the original build so its name appears in the heading AND the
-    // summary tile — the other builds still appear only in the summary tile.
-    useBuildStore.getState().setActiveBuild(originalId);
-    render(<ResultsPanel />);
-    // Use getAllByText because some names also appear in the CardTitle heading.
+    render(<AllSystemsSummary />);
     expect(screen.getAllByText(/My build/).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/Workstation/)).toBeInTheDocument();
     expect(screen.getByText(/Home NAS/)).toBeInTheDocument();
