@@ -16,7 +16,10 @@ const ComparisonBars = lazy(() =>
 );
 
 export default function Compare() {
-  const [builds, setBuilds] = useState<BuildConfig[] | null>(null);
+  // Start comparing the first two store builds immediately — no click gate.
+  const [builds, setBuilds] = useState<BuildConfig[] | null>(() =>
+    useBuildStore.getState().builds.slice(0, 2),
+  );
   const activeBuildId = useBuildStore((s) => s.activeBuildId);
   const storeBuilds = useBuildStore((s) => s.builds);
 

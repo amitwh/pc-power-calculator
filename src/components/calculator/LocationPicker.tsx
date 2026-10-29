@@ -1,5 +1,6 @@
 import { useBuildStore } from '@/store/buildStore';
 import { listCountries, listSubdivisions, resolveLocationTariff, currencyForLocation, tariffsLastUpdated } from '@/lib/data/tariffs';
+import { listCurrencies } from '@/lib/data/currencies';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useFx } from '@/hooks/useFx';
 import { Card, CardTitle } from '@/components/ui/Card';
@@ -15,16 +16,18 @@ export function LocationPicker() {
   const build = builds.find((b) => b.id === activeBuildId);
   const setLocation = useBuildStore((s) => s.setLocation);
   const setManualRate = useBuildStore((s) => s.setManualRate);
+  const setCurrency = useBuildStore((s) => s.setCurrency);
 
   const countries = listCountries();
   const countryIso2 = build?.location.country_iso2 ?? 'IN';
   const subdivisionCode = build?.location.subdivision_code;
   const subdivisions = listSubdivisions(countryIso2);
   const manualOverride = build?.location.manual_rate_override;
+  const currencyOverride = build?.currency_override ?? '';
 
   // Currency: explicit override, else the tariff currency of this location
   // (₹ for India, $ for US, …) — matches what the calc engine charges with.
-  const currency = currencyForLocation(countryIso2, subdivisionCode, build?.currency_override);
+  const currency = currencyForLocation(countryIso2, subdivisionCode, currencyOverride);
   const { rate: tariffRate, taxes } = resolveLocationTariff(countryIso2, subdivisionCode);
   // Display the effective rate INCLUDING taxes at a typical 200 kWh month —
   // the same basis the engine charges with (manual overrides are tax-free).
@@ -81,6 +84,15 @@ export function LocationPicker() {
             {loading ? 'Detecting…' : 'Detect from IP ↻'}
           </Button>
         </div>
+        <Select
+          aria-label="Currency"
+          value={currencyOverride}
+          options={[
+            { value: '', label: `Auto (${currency.code} — from location)` },
+            ...listCurrencies().map((c) => ({ value: c.code, label: `${c.code} — ${c.name}` })),
+          ]}
+          onChange={(e) => setCurrency(e.target.value)}
+        />
         <div className="text-xs text-gray-500">Tariff data last updated {tariffsLastUpdated()}</div>
       </div>
     </Card>

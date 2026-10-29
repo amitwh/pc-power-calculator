@@ -47,6 +47,30 @@ describe('computeEnergy', () => {
     expect(y).toBeCloseTo(d * 365.25, 5);
   });
 
+  test('days_per_week scales consumption (office 5d/wk = 5/7 full-time)', () => {
+    const fiveDays: BuildConfig = {
+      ...build,
+      schedule: [{ workload_id: 'office', hours_per_day: 8, days_per_week: 5 }],
+    };
+    const sevenDays: BuildConfig = {
+      ...build,
+      schedule: [{ workload_id: 'office', hours_per_day: 8, days_per_week: 7 }],
+    };
+    const a = computeEnergy(fiveDays, workloads, 'year').total.kwh;
+    const b = computeEnergy(sevenDays, workloads, 'year').total.kwh;
+    expect(b).toBeGreaterThan(0);
+    expect(a).toBeCloseTo(b * (5 / 7), 5);
+  });
+
+  test('missing days_per_week defaults to 7 days', () => {
+    const implicit = computeEnergy(build, workloads, 'year').total.kwh;
+    const explicit: BuildConfig = {
+      ...build,
+      schedule: build.schedule.map((s) => ({ ...s, days_per_week: 7 })),
+    };
+    expect(implicit).toBeCloseTo(computeEnergy(explicit, workloads, 'year').total.kwh, 5);
+  });
+
   test('attaches benchmark entries for known GPU + workload', () => {
     const r = computeEnergy(
       {

@@ -4,6 +4,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SuggestionCard } from '@/components/suggestions/SuggestionCard';
+import { findCurrency } from '@/lib/data/currencies';
 import type { Suggestion } from '@/lib/calc/suggest';
 
 const suggestion: Suggestion = {
@@ -31,7 +32,7 @@ const suggestion: Suggestion = {
 
 describe('SuggestionCard', () => {
   test('shows category, brand/model, and savings for the alternative', () => {
-    render(<SuggestionCard s={suggestion} onApply={vi.fn()} />);
+    render(<SuggestionCard s={suggestion} currency={findCurrency("INR")!} onApply={vi.fn()} />);
     expect(screen.getByText(/^cpu$/i)).toBeInTheDocument();
     expect(screen.getByText(/AMD Ryzen 7 7800X3D/)).toBeInTheDocument();
     expect(screen.getByText(/120 W/)).toBeInTheDocument();
@@ -39,19 +40,19 @@ describe('SuggestionCard', () => {
   });
 
   test('renders Apply button', () => {
-    render(<SuggestionCard s={suggestion} onApply={vi.fn()} />);
+    render(<SuggestionCard s={suggestion} currency={findCurrency("INR")!} onApply={vi.fn()} />);
     expect(screen.getByRole('button', { name: /apply/i })).toBeInTheDocument();
   });
 
   test('invokes onApply with alternative id and slot when Apply is clicked', async () => {
     const onApply = vi.fn();
-    render(<SuggestionCard s={suggestion} onApply={onApply} />);
+    render(<SuggestionCard s={suggestion} currency={findCurrency("INR")!} onApply={onApply} />);
     await userEvent.click(screen.getByRole('button', { name: /apply/i }));
     expect(onApply).toHaveBeenCalledWith('cpu-amd-ryzen-7-7800x3d', 'cpu');
   });
 
   test('shows kWh and INR savings with the success color', () => {
-    render(<SuggestionCard s={suggestion} onApply={vi.fn()} />);
+    render(<SuggestionCard s={suggestion} currency={findCurrency("INR")!} onApply={vi.fn()} />);
     expect(screen.getByText(/146 kWh\/yr/i)).toBeInTheDocument();
     expect(screen.getByText(/₹1,095/i)).toBeInTheDocument();
   });

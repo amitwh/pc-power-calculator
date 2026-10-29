@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Card, CardTitle } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
 import { useBuildStore } from '@/store/buildStore';
 import type { BuildConfig } from '@/types/build';
@@ -12,12 +11,11 @@ interface Props {
 /**
  * Multi-system 2-build selector. Defaults to the first two builds in the
  * store (so the page is meaningful the moment the user lands on it) and
- * lets them choose any two via the dropdowns. No new store actions —
- * we read `builds` + `setActiveBuild` and pass the chosen configs up.
+ * fires `onCompare` LIVE on mount and whenever the selection changes —
+ * no submit button needed.
  */
 export function BuildSelector({ onCompare }: Props) {
   const builds = useBuildStore((s) => s.builds);
-  const setActiveBuild = useBuildStore((s) => s.setActiveBuild);
 
   const initial = useMemo(() => {
     const first = builds[0]?.id ?? '';
@@ -41,15 +39,16 @@ export function BuildSelector({ onCompare }: Props) {
     }
   }, [builds, buildAId, buildBId]);
 
-  const options = builds.map((b) => ({ value: b.id, label: `${b.name}` }));
-
-  const handleCompare = () => {
+  // Live comparison: fire on mount and on every selection change.
+  const selectionKey = `${buildAId}|${buildBId}|${builds.length}`;
+  useEffect(() => {
     const a = builds.find((x) => x.id === buildAId);
     const b = builds.find((x) => x.id === buildBId);
-    if (!a || !b) return;
-    setActiveBuild(a.id);
-    onCompare([a, b]);
-  };
+    if (a && b) onCompare([a, b]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectionKey]);
+
+  const options = builds.map((b) => ({ value: b.id, label: `${b.name}` }));
 
   if (builds.length < 2) {
     return (
@@ -100,9 +99,7 @@ export function BuildSelector({ onCompare }: Props) {
           />
         </div>
       </div>
-      <Button className="mt-3" onClick={handleCompare}>
-        Compare
-      </Button>
+      <p className="mt-3 text-xs text-gray-500">The comparison below updates live.</p>
     </Card>
   );
 }

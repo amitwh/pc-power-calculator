@@ -4,7 +4,9 @@ import { useCalc } from '@/hooks/useCalc';
 import { computeEnergy } from '@/lib/calc/energy';
 import { currencyForLocation } from '@/lib/data/tariffs';
 import { listWorkloads } from '@/lib/data/workloads';
+import { listComponents } from '@/lib/data/components';
 import { Card, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
 import { formatCost, formatKwh } from '@/lib/calc/format';
 import { ExportMenu } from './ExportMenu';
 import { emojiFor } from '@/lib/buildCategory';
@@ -33,7 +35,25 @@ function buildMeta(
 
 export function ResultsPanel() {
   const builds = useBuildStore((s) => s.builds);
+  const setComponent = useBuildStore((s) => s.setComponent);
   const { build, components, componentsPowerW, daily, monthly, yearly, allYearly, allDaily, allMonthly, psuWattage, peakWallDrawW, recommendedPsuW, currency } = useCalc();
+
+  const workloadMap = useMemo(() => new Map(listWorkloads().map((w) => [w.id, w])), []);
+
+  /** Closest catalog PSU at or above the recommendation (Generic first). */
+  const pickRecommendedPsu = () => {
+    const psus = listComponents('psu').filter((p) => Number(p.specs.wattage_w) > 0);
+    const byWatt = (p: (typeof psus)[number]) => Number(p.specs.wattage_w);
+    const exact = psus.filter((p) => byWatt(p) === recommendedPsuW);
+    const up = psus.filter((p) => byWatt(p) >= recommendedPsuW).sort((a, b) => byWatt(a) - byWatt(b));
+    const pick =
+      exact.find((p) => p.brand === 'Generic') ??
+      exact[0] ??
+      up.find((p) => p.brand === 'Generic') ??
+      up[0] ??
+      psus.sort((a, b) => byWatt(b) - byWatt(a))[0];
+    if (pick) setComponent('psu', pick.id);
+  };
 
   const summary = useMemo(() => {
     const workloads = listWorkloads();
@@ -93,7 +113,7 @@ export function ResultsPanel() {
       {/* PSU sizing guidance */}
       <div className="mt-5 border rounded-8 p-3 border-gray-200 dark:border-gray-800">
         <div className="text-xs uppercase text-gray-500 mb-2 font-semibold">PSU recommendation</div>
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-1 font-numeric tabular-nums text-sm">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-numeric tabular-nums text-sm">
           <span>
             Peak draw (all components at 100%):{' '}
             <strong className="font-display">{Math.round(peakWallDrawW)} W</strong>
@@ -101,21 +121,28 @@ export function ResultsPanel() {
           <span>
             Recommended PSU: <strong className="font-display text-brand-text">{recommendedPsuW} W</strong>
           </span>
-          {psuWattage != null && (
-            <span
-              className={
-                psuWattage >= recommendedPsuW
-                  ? 'text-green-700 dark:text-green-400 font-semibold'
-                  : 'text-red-600 dark:text-red-400 font-semibold'
-              }
-            >
-              {psuWattage >= recommendedPsuW
-                ? `✓ Your ${psuWattage} W PSU has enough headroom`
-                : `⚠ Your ${psuWattage} W PSU is undersized`}
+          {psuWattage != null && psuWattage >= recommendedPsuW && (
+            <span className="text-green-700 dark:text-green-400 font-semibold">
+              ✓ Your {psuWattage} W PSU has enough headroom
             </span>
           )}
+          {psuWattage != null && psuWattage < recommendedPsuW && (
+            <>
+              <span className="text-red-600 dark:text-red-400 font-semibold">
+                ⚠ Your {psuWattage} W PSU is undersized
+              </span>
+              <Button size="sm" variant="secondary" onClick={pickRecommendedPsu}>
+                Pick a {recommendedPsuW} W PSU for me
+              </Button>
+            </>
+          )}
           {psuWattage == null && (
-            <span className="text-gray-500">Pick a PSU above to check headroom (35% safety margin included)</span>
+            <>
+              <span className="text-gray-500">No PSU selected (35% safety margin included)</span>
+              <Button size="sm" variant="secondary" onClick={pickRecommendedPsu}>
+                Pick a {recommendedPsuW} W PSU for me
+              </Button>
+            </>
           )}
         </div>
       </div>
@@ -130,17 +157,46 @@ export function ResultsPanel() {
         </Suspense>
       </div>
 
-      {/* Per-workload performance — FPS, render seconds, hashrate, etc. */}
+      {/* Per-workload performance + usage — FPS, render seconds, hashrate, etc. */}
       <div className="mt-4">
-        <div className="text-xs uppercase text-gray-500 mb-2 font-semibold">Per-workload performance</div>
-        <ul className="text-sm space-y-1">
-          {daily.perWorkload?.map((row) => (
-            <li key={row.workload_id} className="flex justify-between font-numeric tabular-nums">
-              <span>{row.workload_id}</span>
-              <span>{row.perfMetrics.map((m) => `${m.value}${m.unit}`).join(' · ') || '—'}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="text-xs uppercase text-gray-500 mb-2 font-semibold">
+          Per-workload usage &amp; performance
+        </div>
+        {daily.perWorkload?.length ? (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm font-numeric tabular-nums">
+              <thead>
+                <tr className="text-left text-xs uppercase text-gray-500 border-b border-gray-200 dark:border-gray-800">
+                  <th className="py-1.5 pr-3 font-semibold">Workload</th>
+                  <th className="py-1.5 pr-3 font-semibold">Usage</th>
+                  <th className="py-1.5 pr-3 font-semibold">Draw</th>
+                  <th className="py-1.5 pr-3 font-semibold">Perf</th>
+                </tr>
+              </thead>
+              <tbody>
+                {daily.perWorkload.map((row) => {
+                  const wl = workloadMap.get(row.workload_id);
+                  const sched = build.schedule.find((s) => s.workload_id === row.workload_id);
+                  const days = sched?.days_per_week ?? 7;
+                  return (
+                    <tr key={row.workload_id} className="border-b border-gray-100 dark:border-gray-800 last:border-b-0">
+                      <td className="py-1.5 pr-3 font-body">{wl?.name ?? row.workload_id}</td>
+                      <td className="py-1.5 pr-3 text-gray-600 dark:text-gray-400">
+                        {sched ? `${sched.hours_per_day} h/d · ${days} d/wk` : '—'}
+                      </td>
+                      <td className="py-1.5 pr-3">{Math.round(row.draw_w)} W</td>
+                      <td className="py-1.5 pr-3">
+                        {row.perfMetrics.map((m) => `${m.value}${m.unit}`).join(' · ') || '—'}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500">Add workloads in the schedule above to see per-task numbers.</p>
+        )}
       </div>
 
       {/* Export menu — PDF (window.print) and HTML (re-importable) */}

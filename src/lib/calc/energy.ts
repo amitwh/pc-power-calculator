@@ -186,7 +186,7 @@ export function computeEnergy(
       psuWattage,
     );
 
-    const dailyKwh = (wallDrawW * s.hours_per_day) / 1000;
+    const dailyKwh = (wallDrawW * s.hours_per_day * (s.days_per_week ?? 7)) / (1000 * 7);
     const periodKwh = dailyKwh * factor;
 
     const perf: BenchmarkEntry[] = [];
