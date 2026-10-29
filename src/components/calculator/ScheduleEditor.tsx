@@ -38,6 +38,19 @@ export function ScheduleEditor() {
   const schedule = build?.schedule ?? [];
   const scheduledIds = new Set(schedule.map((s) => s.workload_id));
 
+  const totalHours = schedule.reduce(
+    (acc: number, s: WorkloadSchedule) => acc + (s.hours_per_day * (s.days_per_week ?? 7)) / 7,
+    0,
+  );
+  // The 24-hour budget is per calendar DAY: workload hours are additive
+  // energy blocks, so the sum of hours_per_day cannot exceed 24 no matter
+  // how many days a week each runs. `remaining` caps every slider.
+  const dailyHours = schedule.reduce((acc: number, s: WorkloadSchedule) => acc + s.hours_per_day, 0);
+  const avgHours = totalHours;
+  const overBudget = dailyHours > 24 + 1e-9;
+  const remaining = Math.max(0, 24 - dailyHours);
+  const anyPartWeek = schedule.some((s) => (s.days_per_week ?? 7) < 7);
+
   // Yearly kWh + cost per scheduled workload (respects tariff + PSU).
   const yearlyByWorkload = useMemo(() => {
     if (!build) return {};
@@ -52,7 +65,12 @@ export function ScheduleEditor() {
 
   const addWorkload = (id: string) => {
     if (scheduledIds.has(id as Workload['id'])) return;
-    setSchedule([...schedule, { workload_id: id as Workload['id'], hours_per_day: 2, days_per_week: 7 }]);
+    // A new workload can only claim hours the day still has free.
+    const hours = Math.min(2, Math.max(remaining, 0));
+    setSchedule([
+      ...schedule,
+      { workload_id: id as Workload['id'], hours_per_day: hours > 0 ? hours : 0, days_per_week: 7 },
+    ]);
     setAddOpen(false);
   };
 
@@ -60,10 +78,6 @@ export function ScheduleEditor() {
     setSchedule(schedule.filter((s) => s.workload_id !== id));
   };
 
-  const totalHours = schedule.reduce(
-    (acc: number, s: WorkloadSchedule) => acc + (s.hours_per_day * (s.days_per_week ?? 7)) / 7,
-    0,
-  );
   const unscheduled = workloads.filter((w) => !scheduledIds.has(w.id));
   const byCategory = unscheduled.reduce<Record<string, Workload[]>>((acc, w) => {
     (acc[w.category] ??= []).push(w);
@@ -74,10 +88,25 @@ export function ScheduleEditor() {
     <Card>
       <CardTitle className="text-base">
         <span>Usage Schedule</span>
-        <span className="font-body text-sm font-normal text-gray-500">
-          Total: {totalHours.toFixed(1)} h/day avg
+        <span
+          className={`font-body text-sm font-normal font-numeric tabular-nums ${
+            overBudget ? 'text-red-600 dark:text-red-400 font-semibold' : 'text-gray-500'
+          }`}
+        >
+          {dailyHours.toFixed(1)} of 24 h/day booked · {remaining.toFixed(1)} h free
+          {anyPartWeek && !overBudget ? ` · ${avgHours.toFixed(1)} h/day avg` : ''}
         </span>
       </CardTitle>
+
+      {overBudget && (
+        <p
+          role="alert"
+          className="mb-2 rounded-8 border border-red-300 dark:border-red-500/40 bg-red-50 dark:bg-red-500/10 px-3 py-2 text-sm text-red-700 dark:text-red-300"
+        >
+          This schedule totals {dailyHours.toFixed(1)} h in a day — a day only has 24. Lower some
+          workloads below; until then the estimate above is overstated.
+        </p>
+      )}
 
       {schedule.length === 0 && (
         <p className="text-sm text-gray-500 mb-2">
@@ -122,11 +151,12 @@ export function ScheduleEditor() {
                 <input
                   type="range"
                   min={0}
-                  max={24}
+                  max={s.hours_per_day + remaining}
                   step={0.5}
                   value={s.hours_per_day}
                   onChange={(e) => update(s.workload_id, { hours_per_day: Number(e.target.value) })}
                   aria-label={`Hours per day for ${wl.name}`}
+                  title={remaining > 0 ? `Up to ${(s.hours_per_day + remaining).toFixed(1)} h — 24 h daily budget` : 'No free hours left in the day'}
                   className="flex-1 min-w-[140px] accent-brand min-h-[32px]"
                 />
                 <span className="font-numeric tabular-nums text-gray-500 text-sm w-14 text-right shrink-0">
@@ -182,14 +212,22 @@ export function ScheduleEditor() {
             </Button>
           </div>
         ) : (
-          <Button
-            size="sm"
-            variant="secondary"
-            onClick={() => setAddOpen(true)}
-            disabled={unscheduled.length === 0}
-          >
-            + Add workload
-          </Button>
+          <span className="inline-flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="secondary"
+              onClick={() => setAddOpen(true)}
+              disabled={unscheduled.length === 0 || remaining <= 0}
+              title={remaining <= 0 ? 'No free hours left — reduce an existing workload first' : undefined}
+            >
+              + Add workload
+            </Button>
+            {remaining <= 0 && unscheduled.length > 0 && (
+              <span className="text-xs text-gray-500">
+                24 h fully booked — reduce a workload to add another.
+              </span>
+            )}
+          </span>
         )}
       </div>
     </Card>
