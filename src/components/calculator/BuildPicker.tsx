@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { listComponents, findComponent } from '@/lib/data/components';
 import { useBuildStore } from '@/store/buildStore';
+import { Select } from '@/components/ui/Select';
 import { SearchableSelect } from '@/components/ui/SearchableSelect';
 import { Button } from '@/components/ui/Button';
 import { Card, CardTitle } from '@/components/ui/Card';
@@ -42,19 +43,19 @@ const SLOT_ORDER: Array<{ key: ComponentSlot; category: ComponentCategory; label
   { key: 'peripherals', category: 'peripheral', label: 'Peripheral' },
 ];
 
-const FILTERS: Array<{ value: ComponentCategory | 'all'; label: string }> = [
-  { value: 'all', label: 'All' },
+const FILTER_OPTIONS: Array<{ value: ComponentCategory | 'all'; label: string }> = [
+  { value: 'all', label: 'All categories' },
   { value: 'cpu', label: 'CPU' },
   { value: 'gpu', label: 'GPU' },
-  { value: 'motherboard', label: 'Board' },
+  { value: 'motherboard', label: 'Motherboard' },
   { value: 'ram', label: 'RAM' },
   { value: 'storage', label: 'Storage' },
   { value: 'psu', label: 'PSU' },
   { value: 'cooler', label: 'Cooler' },
-  { value: 'fan', label: 'Fan' },
+  { value: 'fan', label: 'Case fan' },
   { value: 'monitor', label: 'Monitor' },
-  { value: 'optical_drive', label: 'Optical' },
-  { value: 'add_in_card', label: 'Add-in' },
+  { value: 'optical_drive', label: 'Optical drive' },
+  { value: 'add_in_card', label: 'Add-in card' },
   { value: 'ups', label: 'UPS' },
   { value: 'peripheral', label: 'Peripheral' },
 ];
@@ -182,7 +183,7 @@ export function BuildPicker() {
             <div
               key={b.id}
               aria-current={isActive ? 'true' : undefined}
-              className={`group inline-flex items-center gap-2 rounded-full border pl-2.5 pr-2 py-1 min-h-[36px] whitespace-nowrap transition-colors ${
+              className={`group inline-flex items-center gap-2 rounded-full border pl-3 pr-2.5 py-1.5 min-h-[40px] whitespace-nowrap transition-colors ${
                 isActive
                   ? 'bg-brand-dark text-white border-brand-dark'
                   : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:border-gray-400'
@@ -236,57 +237,33 @@ export function BuildPicker() {
         <button
           type="button"
           onClick={() => addBuild(undefined, 'general')}
-          className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-gray-400 dark:border-gray-600 px-2.5 py-1 min-h-[36px] whitespace-nowrap text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-brand-dark hover:text-brand-dark transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-gray-400 dark:border-gray-600 px-3 py-1.5 min-h-[40px] whitespace-nowrap text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-brand-dark hover:text-brand-dark transition-colors"
         >
           + Add system
         </button>
       </div>
 
-      {/* Category picker for the active build */}
-      <div className="mb-3 flex flex-wrap items-center gap-1">
-        {CATEGORIES.map((c) => {
-          const isSelected = (activeBuild.category ?? 'general') === c;
-          return (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setBuildCategory(activeBuild.id, c)}
-              className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-semibold transition-colors ${
-                isSelected
-                  ? 'bg-brand/10 border-brand-text text-brand-text'
-                  : 'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-400'
-              }`}
-              aria-pressed={isSelected}
-            >
-              <span aria-hidden>{CATEGORY_EMOJI[c]}</span>
-              {CATEGORY_LABEL[c]}
-            </button>
-          );
-        })}
+      {/* System type + catalog filter — native selects: one row, thumb-friendly */}
+      <div className="mb-3 grid grid-cols-2 gap-2">
+        <Select
+          aria-label="System type"
+          value={activeBuild.category ?? 'general'}
+          options={CATEGORIES.map((c) => ({ value: c, label: `${CATEGORY_EMOJI[c]} ${CATEGORY_LABEL[c]}` }))}
+          onChange={(e) => setBuildCategory(activeBuild.id, e.target.value as BuildCategory)}
+        />
+        <Select
+          aria-label="Filter parts by category"
+          value={filter}
+          options={FILTER_OPTIONS}
+          onChange={(e) => setFilter(e.target.value as ComponentCategory | 'all')}
+        />
       </div>
 
-      {/* The one device picker — whole catalog, filtered by category chip */}
+      {/* The one device picker — whole catalog, filtered by category select */}
       <div className="mb-3">
-        <div className="flex flex-wrap gap-1 mb-2" role="group" aria-label="Filter catalog by category">
-          {FILTERS.map((f) => (
-            <button
-              key={f.value}
-              type="button"
-              onClick={() => setFilter(f.value)}
-              aria-pressed={filter === f.value}
-              className={`rounded-full border px-2 py-0.5 text-xs font-semibold min-h-[26px] transition-colors ${
-                filter === f.value
-                  ? 'bg-brand-dark text-white border-brand-dark'
-                  : 'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-400'
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
         <SearchableSelect
           ariaLabel="Add device"
-          placeholder="+ Add device — search 1,900+ parts, pick again to add another unit"
+          placeholder="+ Add device — search 2,200+ parts, pick again to add another unit"
           value=""
           options={options}
           onChange={(v) => {
@@ -312,114 +289,119 @@ export function BuildPicker() {
             const overridden = activeBuild.tdpOverrides[d.component.id] != null
               || activeBuild.tdpOverrides[d.slot] != null;
             return (
-              <li key={`${d.slot}:${d.component.id}`} className="py-1.5 flex items-center gap-2 text-sm">
-                <span
-                  aria-hidden
-                  title={SLOT_LABEL_BY_KEY.get(d.slot)}
-                  className="w-5 text-center shrink-0"
-                >
-                  {d.component.category === 'cpu' ? '🧠'
-                    : d.component.category === 'gpu' ? '🎮'
-                    : d.component.category === 'monitor' ? '🖥️'
-                    : d.component.category === 'psu' ? '🔌'
-                    : d.component.category === 'storage' ? '💾'
-                    : d.component.category === 'ram' ? '🧩'
-                    : d.component.category === 'fan' ? '🌀'
-                    : '⚙️'}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate font-medium text-gray-900 dark:text-gray-50" title={name}>
-                    {name}
+              <li key={`${d.slot}:${d.component.id}`} className="py-2 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm">
+                <span className="flex items-center gap-2 min-w-0 flex-1 basis-full sm:basis-auto">
+                  <span
+                    aria-hidden
+                    title={SLOT_LABEL_BY_KEY.get(d.slot)}
+                    className="w-6 text-center shrink-0"
+                  >
+                    {d.component.category === 'cpu' ? '🧠'
+                      : d.component.category === 'gpu' ? '🎮'
+                      : d.component.category === 'monitor' ? '🖥️'
+                      : d.component.category === 'psu' ? '🔌'
+                      : d.component.category === 'storage' ? '💾'
+                      : d.component.category === 'ram' ? '🧩'
+                      : d.component.category === 'fan' ? '🌀'
+                      : '⚙️'}
                   </span>
-                  <span className="block text-xs text-gray-500">{SLOT_LABEL_BY_KEY.get(d.slot)}</span>
+                  <span className="min-w-0">
+                    <span className="block truncate font-medium text-gray-900 dark:text-gray-50" title={name}>
+                      {name}
+                    </span>
+                    <span className="block text-xs text-gray-500">{SLOT_LABEL_BY_KEY.get(d.slot)}</span>
+                  </span>
                 </span>
-                <span className="flex items-center gap-1 shrink-0">
-                  <input
-                    type="number"
-                    inputMode="decimal"
-                    min={0}
-                    step={1}
-                    defaultValue={w ?? ''}
-                    key={`${d.component.id}-w-${w ?? 'na'}`}
-                    aria-label={`Rated watts for ${name}`}
-                    title="Rated watts per unit"
-                    className="w-16 min-h-[32px] px-1.5 text-right rounded-8 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-xs"
-                    onBlur={(e) => {
-                      const v = e.target.value.trim();
-                      const n = v === '' ? null : Number(v);
-                      setTdpOverride(d.component.id, n != null && Number.isFinite(n) && n !== d.component.tdp_w ? n : null);
-                      setTdpOverride(d.slot, null);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
-                    }}
-                  />
-                  {overridden && (
-                    <button
-                      type="button"
-                      aria-label={`Reset wattage for ${name}`}
-                      title="Reset to catalog rating"
-                      className="text-xs opacity-60 hover:opacity-100 min-h-[24px] min-w-[24px]"
-                      onClick={() => {
-                        setTdpOverride(d.component.id, null);
+                <span className="flex items-center gap-2 ml-auto">
+                  <span className="flex items-center gap-1">
+                    <input
+                      type="number"
+                      inputMode="decimal"
+                      min={0}
+                      step={1}
+                      defaultValue={w ?? ''}
+                      key={`${d.component.id}-w-${w ?? 'na'}`}
+                      aria-label={`Rated watts for ${name}`}
+                      title="Rated watts per unit"
+                      className="w-16 min-h-[36px] px-1.5 text-right rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
+                      onBlur={(e) => {
+                        const v = e.target.value.trim();
+                        const n = v === '' ? null : Number(v);
+                        setTdpOverride(d.component.id, n != null && Number.isFinite(n) && n !== d.component.tdp_w ? n : null);
                         setTdpOverride(d.slot, null);
                       }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+                      }}
+                    />
+                    <span aria-hidden className="text-xs text-gray-500">W</span>
+                    {overridden && (
+                      <button
+                        type="button"
+                        aria-label={`Reset wattage for ${name}`}
+                        title="Reset to catalog rating"
+                        className="text-sm opacity-60 hover:opacity-100 min-h-[32px] min-w-[28px]"
+                        onClick={() => {
+                          setTdpOverride(d.component.id, null);
+                          setTdpOverride(d.slot, null);
+                        }}
+                      >
+                        ↺
+                      </button>
+                    )}
+                  </span>
+                  <span className="flex items-center gap-1" role="group" aria-label={`Units of ${name}`}>
+                    <button
+                      type="button"
+                      aria-label={`Decrease quantity for ${name}`}
+                      disabled={d.qty <= 1}
+                      className="w-9 h-9 rounded-full border border-gray-300 dark:border-gray-700 text-base leading-none opacity-80 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
+                      onClick={() => setQty(d.component.id, d.qty - 1)}
                     >
-                      ↺
+                      −
                     </button>
-                  )}
-                </span>
-                <span className="flex items-center gap-0.5 shrink-0" role="group" aria-label={`Units of ${name}`}>
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      min={1}
+                      max={999}
+                      step={1}
+                      value={d.qty}
+                      aria-label={`Quantity for ${name}`}
+                      className="w-12 min-h-[36px] px-0.5 text-center rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
+                      onChange={(e) => {
+                        const n = Number(e.target.value);
+                        if (Number.isFinite(n) && n >= 1) setQty(d.component.id, n);
+                      }}
+                      onBlur={(e) => {
+                        const n = Number(e.target.value);
+                        if (!Number.isFinite(n) || n < 1) setQty(d.component.id, 1);
+                      }}
+                    />
+                    <button
+                      type="button"
+                      aria-label={`Increase quantity for ${name}`}
+                      className="w-9 h-9 rounded-full border border-gray-300 dark:border-gray-700 text-base leading-none opacity-80 hover:opacity-100"
+                      onClick={() => setQty(d.component.id, d.qty + 1)}
+                    >
+                      +
+                    </button>
+                  </span>
+                  <span className="w-16 text-right font-numeric tabular-nums font-semibold" title="Subtotal for all units">
+                    {w != null ? `${Math.round(w * d.qty)} W` : '—'}
+                  </span>
                   <button
                     type="button"
-                    aria-label={`Decrease quantity for ${name}`}
-                    disabled={d.qty <= 1}
-                    className="w-7 h-7 rounded-full border border-gray-300 dark:border-gray-700 leading-none opacity-80 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
-                    onClick={() => setQty(d.component.id, d.qty - 1)}
-                  >
-                    −
-                  </button>
-                  <input
-                    type="number"
-                    inputMode="numeric"
-                    min={1}
-                    max={999}
-                    step={1}
-                    value={d.qty}
-                    aria-label={`Quantity for ${name}`}
-                    className="w-11 min-h-[28px] px-0.5 text-center rounded-8 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
-                    onChange={(e) => {
-                      const n = Number(e.target.value);
-                      if (Number.isFinite(n) && n >= 1) setQty(d.component.id, n);
+                    aria-label={`Remove ${name}`}
+                    className="text-lg leading-none opacity-60 hover:opacity-100 min-h-[36px] min-w-[28px]"
+                    onClick={() => {
+                      removeComponent(d.slot, d.component.id);
+                      if (d.component.id.startsWith('user-peripheral-')) removeCustomPeripheral(d.component.id);
                     }}
-                    onBlur={(e) => {
-                      const n = Number(e.target.value);
-                      if (!Number.isFinite(n) || n < 1) setQty(d.component.id, 1);
-                    }}
-                  />
-                  <button
-                    type="button"
-                    aria-label={`Increase quantity for ${name}`}
-                    className="w-7 h-7 rounded-full border border-gray-300 dark:border-gray-700 leading-none opacity-80 hover:opacity-100"
-                    onClick={() => setQty(d.component.id, d.qty + 1)}
                   >
-                    +
+                    ×
                   </button>
                 </span>
-                <span className="w-14 text-right font-numeric tabular-nums font-semibold shrink-0">
-                  {w != null ? `${Math.round(w * d.qty)} W` : '—'}
-                </span>
-                <button
-                  type="button"
-                  aria-label={`Remove ${name}`}
-                  className="text-base leading-none opacity-60 hover:opacity-100 min-h-[24px] min-w-[20px] shrink-0"
-                  onClick={() => {
-                    removeComponent(d.slot, d.component.id);
-                    if (d.component.id.startsWith('user-peripheral-')) removeCustomPeripheral(d.component.id);
-                  }}
-                >
-                  ×
-                </button>
               </li>
             );
           })}

@@ -169,7 +169,7 @@ export function ScheduleEditor() {
                       type="button"
                       onClick={() => addWorkload(w.id)}
                       title={w.description}
-                      className="inline-flex items-center gap-1 rounded-full border border-gray-300 dark:border-gray-700 px-2.5 py-1 min-h-[32px] text-xs font-semibold text-gray-700 dark:text-gray-300 hover:border-brand-dark hover:text-brand-dark transition-colors"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-gray-300 dark:border-gray-700 px-3 py-1.5 min-h-[40px] text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-brand-dark hover:text-brand-dark transition-colors"
                     >
                       + {w.name}
                     </button>

@@ -19,13 +19,21 @@ async function pickDevice(user: ReturnType<typeof userEvent.setup>, query: strin
 }
 
 describe('BuildPicker — devices cart', () => {
-  test('renders the picker, filter chips, and the default build chip', () => {
+  test('renders the picker, selects, and the default build chip', () => {
     render(<BuildPicker />);
     expect(screen.getByRole('heading', { name: /Your Systems/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Add device' })).toBeInTheDocument();
-    expect(screen.getByRole('group', { name: /Filter catalog by category/i })).toBeInTheDocument();
+    expect(screen.getByLabelText('Filter parts by category')).toBeInTheDocument();
+    expect(screen.getByLabelText('System type')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /My build/i })).toBeInTheDocument();
     expect(screen.getByText(/No devices yet/i)).toBeInTheDocument();
+  });
+
+  test('the System type select updates the build category', async () => {
+    const user = userEvent.setup();
+    render(<BuildPicker />);
+    await user.selectOptions(screen.getByLabelText('System type'), 'workstation');
+    expect(useBuildStore.getState().builds[0].category).toBe('workstation');
   });
 
   test('adding a CPU via the searchable picker lands in the store and the list', async () => {
@@ -97,22 +105,18 @@ describe('BuildPicker — devices cart', () => {
     expect(screen.getByText(/Custom Desk lamp/)).toBeInTheDocument();
   });
 
-  test('category filter chips narrow the option pool', async () => {
+  test('the category filter select narrows the option pool', async () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
+    await user.selectOptions(screen.getByLabelText('Filter parts by category'), 'cpu');
     await user.click(screen.getByRole('button', { name: 'Add device' }));
     await user.type(screen.getByRole('searchbox'), 'ryzen 7');
-    const withAll = screen.getAllByRole('option').length;
-    expect(withAll).toBeGreaterThan(0);
-    // Clicking outside the listbox (the chip) closes it — reopen afterwards.
-    await user.click(screen.getByRole('button', { name: 'CPU' }));
-    await user.click(screen.getByRole('button', { name: 'Add device' }));
-    await user.type(screen.getByRole('searchbox'), 'ryzen 7');
-    const withCpu = screen.getAllByRole('option').length;
-    expect(withCpu).toBeGreaterThan(0);
-    expect(withCpu).toBeLessThanOrEqual(withAll);
-    // CPU filter excludes the Ryzen-brand GPUs/boards that 'All' matched.
-    const labels = screen.getAllByRole('option').map((o) => o.textContent ?? '');
+    // Scope to the listbox — the native selects' own <option> children also
+    // expose the `option` role.
+    const options = within(screen.getByRole('listbox')).getAllByRole('option');
+    expect(options.length).toBeGreaterThan(0);
+    // CPU filter excludes the Ryzen-brand GPUs/boards that 'All' would match.
+    const labels = options.map((o) => o.textContent ?? '');
     expect(labels.every((l) => l.includes('CPU'))).toBe(true);
   });
 });
