@@ -1,14 +1,20 @@
 /// <reference types="vitest/globals" />
 /// <reference types="@testing-library/jest-dom/vitest" />
 import { describe, expect, test, beforeEach, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ExportMenu } from '@/components/calculator/ExportMenu';
 import { useBuildStore } from '@/store/buildStore';
+import { exportPdf, type PdfReport } from '@/lib/export/pdf';
+
+// jsPDF rendering is browser-heavy; the wiring test only asserts the report
+// ExportMenu assembles before handing it to the generator.
+vi.mock('@/lib/export/pdf', () => ({ exportPdf: vi.fn().mockResolvedValue(undefined) }));
 
 beforeEach(() => {
   localStorage.clear();
   useBuildStore.getState().resetAll();
+  vi.mocked(exportPdf).mockClear();
   // Vitest ships a partial URL.createObjectURL / revokeObjectURL polyfill that
   // breaks for our Blob in jsdom. Replace it with a no-op pair so the download
   // path in downloadExportHtml doesn't throw while tests still observe calls.
@@ -23,13 +29,22 @@ describe('ExportMenu', () => {
     expect(screen.getByRole('button', { name: /Export HTML/i })).toBeInTheDocument();
   });
 
-  test('clicking Export PDF calls window.print()', async () => {
+  test('Export PDF generates a report with device quantities and totals', async () => {
     const user = userEvent.setup();
-    const printSpy = vi.spyOn(window, 'print').mockImplementation(() => undefined);
+    useBuildStore.getState().addComponent('ram', 'ram-corsair-vengeance-32gb-ddr5-5600');
+    useBuildStore.getState().setQty('ram-corsair-vengeance-32gb-ddr5-5600', 4);
     render(<ExportMenu />);
     await user.click(screen.getByRole('button', { name: /Export PDF/i }));
-    expect(printSpy).toHaveBeenCalledTimes(1);
-    printSpy.mockRestore();
+    await waitFor(() => expect(exportPdf).toHaveBeenCalledTimes(1));
+    const report = vi.mocked(exportPdf).mock.calls[0][0] as PdfReport;
+    expect(report.buildName).toBe('My build');
+    const ram = report.devices.find((d) => d.name.includes('Vengeance 32GB'));
+    expect(ram?.qty).toBe(4);
+    expect(ram?.totalW).toBe((ram?.unitW ?? 0) * 4);
+    expect(report.totals.yearly.kwh).toBeGreaterThan(0);
+    expect(report.schedule.length).toBeGreaterThan(0);
+    expect(report.peakWallDrawW).toBeGreaterThan(0);
+    expect(report.recommendedPsuW).toBeGreaterThan(0);
   });
 
   test('clicking Export HTML triggers a download via createObjectURL', async () => {

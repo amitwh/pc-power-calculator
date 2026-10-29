@@ -101,7 +101,9 @@ export function useCalc(): CalcResult {
 
     const componentsPowerW: Record<string, number> = {};
     for (const c of resolved) {
-      componentsPowerW[c.id] = componentPowerW(c, 0.7);
+      // Units repeat in `resolved` (qty ×N) — accumulate so the chart shows
+      // the combined draw per distinct component.
+      componentsPowerW[c.id] = (componentsPowerW[c.id] ?? 0) + componentPowerW(c, 0.7);
     }
 
     // PSU sizing: everything flat-out at 100%, measured at the wall.

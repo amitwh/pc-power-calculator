@@ -128,6 +128,46 @@ describe('resolveBuildComponents — overclock + case fans', () => {
   });
 });
 
+describe('component quantities (unit multipliers)', () => {
+  test('qty ×2 repeats the component in the resolved list', () => {
+    const out = resolveBuildComponents({ ...build, quantities: { 'gpu-nvidia-rtx-4070': 2 } });
+    expect(out.filter((c) => c.id === 'gpu-nvidia-rtx-4070')).toHaveLength(2);
+    // Untouched parts stay singular.
+    expect(out.filter((c) => c.category === 'cpu')).toHaveLength(1);
+  });
+
+  test('missing quantities default to one unit', () => {
+    const out = resolveBuildComponents(build);
+    expect(out.filter((c) => c.id === 'gpu-nvidia-rtx-4070')).toHaveLength(1);
+  });
+
+  test('qty < 1 clamps to one unit', () => {
+    const out = resolveBuildComponents({ ...build, quantities: { 'gpu-nvidia-rtx-4070': 0 } });
+    expect(out.filter((c) => c.id === 'gpu-nvidia-rtx-4070')).toHaveLength(1);
+  });
+
+  test('computeEnergy scales with the unit count (2× GPU draws more at the wall)', () => {
+    const single = computeEnergy(build, workloads, 'day').total.kwh;
+    const dual = computeEnergy(
+      { ...build, quantities: { 'gpu-nvidia-rtx-4070': 2 } },
+      workloads,
+      'day',
+    ).total.kwh;
+    expect(dual).toBeGreaterThan(single);
+  });
+
+  test('TDP override applies to every unit of the same component', () => {
+    const out = resolveBuildComponents({
+      ...build,
+      quantities: { 'gpu-nvidia-rtx-4070': 2 },
+      tdpOverrides: { 'gpu-nvidia-rtx-4070': 100 },
+    });
+    const gpus = out.filter((c) => c.id === 'gpu-nvidia-rtx-4070');
+    expect(gpus).toHaveLength(2);
+    for (const g of gpus) expect(g.tdp_w).toBe(100);
+  });
+});
+
 describe('tariff resolution', () => {
   // Same hardware as `build`, but no manual rate override — the engine must
   // fall back to the bundled tariff schedule for the build's location.

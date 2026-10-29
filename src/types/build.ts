@@ -33,6 +33,12 @@ export interface Overclock {
   gpu_pct: number;
 }
 
+/**
+ * Unit count per selected component id (e.g. 2× the same GPU, 4× one RAM
+ * stick). Ids absent from the map count as 1. Values are clamped to 1–999.
+ */
+export type ComponentQuantities = Record<string, number>;
+
 export interface BuildConfig {
   id: string;
   name: string;
@@ -40,6 +46,8 @@ export interface BuildConfig {
   category?: BuildCategory;
   components: BuildComponents;
   tdpOverrides: TdpOverrides;
+  /** Per-component unit multipliers; see {@link ComponentQuantities}. */
+  quantities?: ComponentQuantities;
   /** CPU/GPU overclock percentages (0 = stock). Optional for pre-v2 persisted builds. */
   overclock?: Overclock;
   /** Case fan count (each modeled as a constant 2 W draw). */

@@ -35,65 +35,75 @@ export function LocationPicker() {
   const isManual = manualOverride != null;
 
   return (
-    <Card>
-      <CardTitle>2. Location &amp; Tariff</CardTitle>
-      <div className="space-y-3">
-        <Select
-          aria-label="Country"
-          value={countryIso2}
-          options={countries.map((c) => ({ value: c.iso2, label: `${c.name} (${c.iso2})` }))}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-        {subdivisions.length > 0 && (
+    <Card className="p-3">
+      <CardTitle className="text-base">Location &amp; Tariff</CardTitle>
+      <div className="grid gap-2">
+        <div className="grid grid-cols-2 gap-2 [&_select]:!min-h-[36px] [&_select]:!text-sm">
+          <Select
+            aria-label="Country"
+            value={countryIso2}
+            options={countries.map((c) => ({ value: c.iso2, label: `${c.name} (${c.iso2})` }))}
+            onChange={(e) => setLocation(e.target.value)}
+          />
           <Select
             aria-label="State / Province"
             value={subdivisionCode ?? ''}
-            options={[{ value: '', label: '— Country default —' }, ...subdivisions.map((s) => ({ value: s.code, label: s.name }))]}
+            options={[
+              { value: '', label: '— Country default —' },
+              ...subdivisions.map((s) => ({ value: s.code, label: s.name })),
+            ]}
             onChange={(e) => setLocation(countryIso2, e.target.value || undefined)}
+            disabled={subdivisions.length === 0}
           />
-        )}
-        <div className="text-sm font-numeric tabular-nums">
-          Tariff: <span className="font-semibold">{currency.symbol}{rate.toFixed(2)}/kWh</span>
-          <span className="ml-2 text-xs text-gray-500">
-            {isManual ? 'manual override' : tariffRate.slabs ? 'tiered slabs, billed monthly' : 'bundled rate'} · FX as of {snapshot.date} {isLive ? '(live)' : '(bundled)'}
+        </div>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm">
+          <span className="font-numeric tabular-nums">
+            <span className="font-semibold">{currency.symbol}{rate.toFixed(2)}</span>/kWh
+            <span className="ml-1.5 text-xs text-gray-500">
+              {isManual ? 'manual' : tariffRate.slabs ? 'tiered, monthly' : 'bundled'} · FX {snapshot.date} {isLive ? '(live)' : ''}
+            </span>
+          </span>
+          <span className="flex items-center gap-1.5">
+            <label htmlFor="manual-rate" className="text-xs text-gray-600 dark:text-gray-400">
+              Override {currency.code}/kWh
+            </label>
+            <input
+              id="manual-rate"
+              type="number"
+              inputMode="decimal"
+              min={0}
+              step="0.01"
+              value={manualOverride ?? ''}
+              placeholder={rate.toFixed(2)}
+              onChange={(e) => {
+                if (e.target.value === '') return setManualRate(null);
+                const n = Number(e.target.value);
+                setManualRate(Number.isFinite(n) ? Math.max(0, n) : null);
+              }}
+              className="w-20 min-h-[36px] px-2 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
+            />
+            <Button size="sm" variant="secondary" onClick={detect} disabled={loading} title="Detect location from IP">
+              {loading ? '…' : 'Detect ↻'}
+            </Button>
           </span>
         </div>
-        {taxes.length > 0 && !isManual && (
-          <div className="text-xs text-gray-500">
-            Includes {taxes.map((t) => `${t.name} ${t.rate_pct}%`).join(', ')}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+          <div className="flex-1 min-w-[200px] [&_select]:!min-h-[36px] [&_select]:!text-sm">
+            <Select
+              aria-label="Currency"
+              value={currencyOverride}
+              options={[
+                { value: '', label: `Currency: Auto (${currency.code})` },
+                ...listCurrencies().map((c) => ({ value: c.code, label: `${c.code} — ${c.name}` })),
+              ]}
+              onChange={(e) => setCurrency(e.target.value)}
+            />
           </div>
-        )}
-        <div className="flex gap-2 items-center">
-          <label htmlFor="manual-rate" className="text-sm">Override {currency.code}/kWh:</label>
-          <input
-            id="manual-rate"
-            type="number"
-            inputMode="decimal"
-            min={0}
-            step="0.01"
-            value={manualOverride ?? ''}
-            placeholder={rate.toFixed(2)}
-            onChange={(e) => {
-              if (e.target.value === '') return setManualRate(null);
-              const n = Number(e.target.value);
-              setManualRate(Number.isFinite(n) ? Math.max(0, n) : null);
-            }}
-            className="min-h-[44px] px-3 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 w-32 font-numeric tabular-nums"
-          />
-          <Button variant="secondary" onClick={detect} disabled={loading}>
-            {loading ? 'Detecting…' : 'Detect from IP ↻'}
-          </Button>
+          <span className="text-xs text-gray-500">
+            {taxes.length > 0 && !isManual && `Incl. ${taxes.map((t) => `${t.name} ${t.rate_pct}%`).join(', ')}. `}
+            Tariffs updated {tariffsLastUpdated()}
+          </span>
         </div>
-        <Select
-          aria-label="Currency"
-          value={currencyOverride}
-          options={[
-            { value: '', label: `Auto (${currency.code} — from location)` },
-            ...listCurrencies().map((c) => ({ value: c.code, label: `${c.code} — ${c.name}` })),
-          ]}
-          onChange={(e) => setCurrency(e.target.value)}
-        />
-        <div className="text-xs text-gray-500">Tariff data last updated {tariffsLastUpdated()}</div>
       </div>
     </Card>
   );

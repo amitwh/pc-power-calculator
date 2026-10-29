@@ -9,6 +9,20 @@ const generateId = (): string =>
     ? crypto.randomUUID()
     : Math.random().toString(36).slice(2) + Date.now().toString(36);
 
+/** Slots that hold several distinct components, each with its own unit count. */
+const MULTI_SLOTS = new Set(['ram', 'storage', 'monitors', 'add_in_cards', 'optical_drives', 'peripherals', 'fans']);
+
+/** Keep only finite integer unit counts ≥ 2 (1 is the implicit default). */
+const sanitizeQuantities = (raw: unknown): Record<string, number> => {
+  const out: Record<string, number> = {};
+  if (!raw || typeof raw !== 'object') return out;
+  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) {
+    const n = Math.round(Number(v));
+    if (Number.isFinite(n) && n > 1) out[k] = Math.min(999, n);
+  }
+  return out;
+};
+
 const defaultBuild = (): BuildConfig => ({
   id: generateId(),
   name: 'My build',
@@ -51,10 +65,12 @@ interface BuildStore {
 
   // Active-build mutations
   setComponent: (slot: ComponentSlot, id: string | null) => void;
-  /** Append a component id to an array slot (idempotent — no duplicates). */
+  /** Add a component to a slot — or, if it's already selected, bump its unit count. */
   addComponent: (slot: ComponentSlot, id: string) => void;
-  /** Remove a component id from an array slot. */
+  /** Remove a component (and its unit count) from a slot. */
   removeComponent: (slot: ComponentSlot, id: string) => void;
+  /** Set how many units of a selected component the build has (1–999; ≤1 clears). */
+  setQty: (id: string, qty: number) => void;
   setSchedule: (schedule: WorkloadSchedule[]) => void;
   setLocation: (country: string, subdivision?: string) => void;
   setCurrency: (currency: string) => void;
@@ -163,9 +179,25 @@ export const useBuildStore = create<BuildStore>()(
             : slot === 'peripheral' ? 'peripherals'
             : slot;
           const arrKey = key as keyof typeof b.components;
-          const existing = (b.components[arrKey] as unknown as string[] | undefined) ?? [];
-          if (existing.includes(id)) return b; // idempotent
-          return { ...b, components: { ...b.components, [arrKey]: [...existing, id] } };
+          const quantities = { ...(b.quantities ?? {}) };
+          const bump = () => {
+            quantities[id] = Math.min(999, (quantities[id] ?? 1) + 1);
+            return { ...b, quantities };
+          };
+          const isMultiSlot = Array.isArray(b.components[arrKey]) || MULTI_SLOTS.has(arrKey as string);
+          if (isMultiSlot) {
+            const existing = (b.components[arrKey] as unknown as string[] | undefined) ?? [];
+            // Re-picking an already-selected device adds another unit of it.
+            if (existing.includes(id)) return bump();
+            return { ...b, components: { ...b.components, [arrKey]: [...existing, id] }, quantities };
+          }
+          // Single-instance slot: re-picking the same part bumps its unit
+          // count (dual-socket / multi-GPU rigs); a different part replaces
+          // it and resets the count to 1.
+          const current = b.components[arrKey] as unknown as string | undefined;
+          if (current === id) return bump();
+          if (current) delete quantities[current];
+          return { ...b, components: { ...b.components, [arrKey]: id }, quantities };
         }),
 
       removeComponent: (slot, id) =>
@@ -179,7 +211,18 @@ export const useBuildStore = create<BuildStore>()(
           const existing = (b.components[arrKey] as unknown as string[] | undefined) ?? [];
           const next = existing.filter((x) => x !== id);
           if (next.length === existing.length) return b;
-          return { ...b, components: { ...b.components, [arrKey]: next } };
+          const quantities = { ...(b.quantities ?? {}) };
+          delete quantities[id];
+          return { ...b, components: { ...b.components, [arrKey]: next }, quantities };
+        }),
+
+      setQty: (id, qty) =>
+        updateActive(set, (b) => {
+          const n = Math.round(qty);
+          const quantities = { ...(b.quantities ?? {}) };
+          if (!Number.isFinite(n) || n <= 1) delete quantities[id];
+          else quantities[id] = Math.min(999, n);
+          return { ...b, quantities };
         }),
 
       setSchedule: (schedule) =>
@@ -287,6 +330,7 @@ export const useBuildStore = create<BuildStore>()(
             ...parsed.build,
             id: generateId(),
             tdpOverrides: parsed.build.tdpOverrides ?? {},
+            quantities: sanitizeQuantities(parsed.build.quantities),
             category: parsed.build.category ?? 'general',
           };
           set((s) => {

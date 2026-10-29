@@ -72,13 +72,8 @@ export function ScheduleEditor() {
 
   return (
     <Card>
-      <CardTitle>
-        <span>
-          <span className="inline-flex items-center justify-center w-6 h-6 mr-2 rounded-full bg-brand-dark text-white text-sm font-bold">
-            3
-          </span>
-          Usage schedule
-        </span>
+      <CardTitle className="text-base">
+        <span>Usage Schedule</span>
         <span className="font-body text-sm font-normal text-gray-500">
           Total: {totalHours.toFixed(1)} h/day avg
         </span>
@@ -123,7 +118,7 @@ export function ScheduleEditor() {
                   </button>
                 </span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <input
                   type="range"
                   min={0}
@@ -132,7 +127,7 @@ export function ScheduleEditor() {
                   value={s.hours_per_day}
                   onChange={(e) => update(s.workload_id, { hours_per_day: Number(e.target.value) })}
                   aria-label={`Hours per day for ${wl.name}`}
-                  className="flex-1 accent-brand min-h-[32px]"
+                  className="flex-1 min-w-[140px] accent-brand min-h-[32px]"
                 />
                 <span className="font-numeric tabular-nums text-gray-500 text-sm w-14 text-right shrink-0">
                   {s.hours_per_day} h/d

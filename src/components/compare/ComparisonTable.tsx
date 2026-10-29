@@ -104,7 +104,7 @@ export function ComparisonTable({ builds, currency }: Props) {
                 <td key={`${b.id}-yk`} className="p-2">
                   {formatKwh(t.kwh, 0)}
                 </td>,
-                <td key={`${b.id}-yc`} className="p-2 text-brand">
+                <td key={`${b.id}-yc`} className="p-2 text-brand-text">
                   {formatCost(t.cost, resolvedCurrency)}
                 </td>,
                 <td key={`${b.id}-yp`} className="p-2 text-gray-500">—</td>,

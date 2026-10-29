@@ -154,6 +154,65 @@ describe('buildStore — TDP overrides (customisation)', () => {
   });
 });
 
+describe('buildStore — component quantities', () => {
+  test('setQty stores a unit count; ≤1 clears it', () => {
+    useBuildStore.getState().addComponent('ram', 'ram-corsair-vengeance-32gb-ddr5-5600');
+    useBuildStore.getState().setQty('ram-corsair-vengeance-32gb-ddr5-5600', 4);
+    expect(active()!.quantities?.['ram-corsair-vengeance-32gb-ddr5-5600']).toBe(4);
+    useBuildStore.getState().setQty('ram-corsair-vengeance-32gb-ddr5-5600', 1);
+    expect(active()!.quantities?.['ram-corsair-vengeance-32gb-ddr5-5600']).toBeUndefined();
+  });
+
+  test('setQty clamps to 1–999 and rounds', () => {
+    useBuildStore.getState().addComponent('gpu', 'gpu-nvidia-rtx-4070');
+    useBuildStore.getState().setQty('gpu-nvidia-rtx-4070', 5000);
+    expect(active()!.quantities?.['gpu-nvidia-rtx-4070']).toBe(999);
+    useBuildStore.getState().setQty('gpu-nvidia-rtx-4070', 2.6);
+    expect(active()!.quantities?.['gpu-nvidia-rtx-4070']).toBe(3);
+  });
+
+  test('re-adding an already-selected multi-slot component bumps its quantity', () => {
+    useBuildStore.getState().addComponent('ram', 'ram-corsair-vengeance-32gb-ddr5-5600');
+    useBuildStore.getState().addComponent('ram', 'ram-corsair-vengeance-32gb-ddr5-5600');
+    expect(active()!.components.ram).toEqual(['ram-corsair-vengeance-32gb-ddr5-5600']);
+    expect(active()!.quantities?.['ram-corsair-vengeance-32gb-ddr5-5600']).toBe(2);
+  });
+
+  test('re-picking the same single-slot part bumps its quantity instead of ignoring', () => {
+    useBuildStore.getState().setComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
+    expect(active()!.components.cpu).toBe('cpu-amd-ryzen-7-7800x3d');
+    expect(active()!.quantities?.['cpu-amd-ryzen-7-7800x3d']).toBe(2);
+  });
+
+  test('picking a different single-slot part replaces it and resets the old count', () => {
+    useBuildStore.getState().setComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-9-9950x');
+    expect(active()!.components.cpu).toBe('cpu-amd-ryzen-9-9950x');
+    expect(active()!.quantities?.['cpu-amd-ryzen-7-7800x3d']).toBeUndefined();
+    expect(active()!.quantities?.['cpu-amd-ryzen-9-9950x']).toBeUndefined();
+  });
+
+  test('removeComponent also clears the quantity', () => {
+    useBuildStore.getState().addComponent('storage', 'storage-samsung-980-1tb');
+    useBuildStore.getState().setQty('storage-samsung-980-1tb', 3);
+    useBuildStore.getState().removeComponent('storage', 'storage-samsung-980-1tb');
+    expect(active()!.components.storage ?? []).not.toContain('storage-samsung-980-1tb');
+    expect(active()!.quantities?.['storage-samsung-980-1tb']).toBeUndefined();
+  });
+
+  test('quantities are per-build', () => {
+    useBuildStore.getState().addComponent('ram', 'ram-corsair-vengeance-32gb-ddr5-5600');
+    useBuildStore.getState().setQty('ram-corsair-vengeance-32gb-ddr5-5600', 2);
+    const original = useBuildStore.getState().activeBuildId;
+    useBuildStore.getState().addBuild('Other');
+    expect(active()!.quantities).toBeUndefined();
+    useBuildStore.getState().setActiveBuild(original);
+    expect(active()!.quantities?.['ram-corsair-vengeance-32gb-ddr5-5600']).toBe(2);
+  });
+});
+
 describe('buildStore — custom peripherals (round-trip)', () => {
   test('addCustomPeripheral adds an entry under components.peripherals', () => {
     const id = useBuildStore.getState().addCustomPeripheral({

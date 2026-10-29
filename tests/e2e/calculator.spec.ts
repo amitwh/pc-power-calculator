@@ -3,29 +3,43 @@ import { test, expect } from '@playwright/test';
 // The app uses hash-based routing (#/), so `page.goto('/')` lands on the Home
 // route. All e2e specs in this directory rely on the same convention.
 
-test('home page shows the build picker and results panel', async ({ page }) => {
+test('home page shows the devices picker and results panel', async ({ page }) => {
   await page.goto('/');
-  // The "Your Systems" heading is rendered as both the picker title (h2) and
-  // the "All your systems at a glance" summary card (h3) — anchor on the h2.
   await expect(page.getByRole('heading', { name: /Your Systems/i }).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: /Results/i }).first()).toBeVisible();
 });
 
-test('pick a CPU via the searchable combobox and see it in results', async ({ page }) => {
+test('pick a CPU via the device picker and see it in the list', async ({ page }) => {
   await page.goto('/');
-  // The catalog has 900+ CPUs and the listbox caps rendered options, so search
-  // first — the same way a real user narrows the list.
-  await page.getByRole('button', { name: /Select CPU/i }).click();
+  // The catalog has 1,900+ parts and the listbox caps rendered options, so
+  // search first — the same way a real user narrows the list.
+  await page.getByRole('button', { name: 'Add device' }).click();
   await page.getByRole('searchbox').fill('7800x3d');
   await page.getByRole('option', { name: /Ryzen 7 7800X3D/i }).first().click();
   await expect(page.getByText(/Ryzen 7 7800X3D/i).first()).toBeVisible();
 });
 
+test('picking the same device twice multiplies its units', async ({ page }) => {
+  await page.goto('/');
+  const add = page.getByRole('button', { name: 'Add device' });
+  await add.click();
+  await page.getByRole('searchbox').fill('vengeance 32gb ddr5-5600');
+  await page.getByRole('option', { name: /Vengeance 32GB DDR5-5600/i }).first().click();
+  await add.click();
+  await page.getByRole('searchbox').fill('vengeance 32gb ddr5-5600');
+  await page.getByRole('option', { name: /Vengeance 32GB DDR5-5600/i }).first().click();
+  await expect(
+    page.getByRole('spinbutton', { name: 'Quantity for Corsair Vengeance 32GB DDR5-5600' }),
+  ).toHaveValue('2');
+});
+
 test('results show PSU recommendation and overclock slider adjusts peak draw', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: /Select CPU/i }).click();
+  await page.getByRole('button', { name: 'Add device' }).click();
   await page.getByRole('searchbox').fill('7800x3d');
   await page.getByRole('option', { name: /Ryzen 7 7800X3D/i }).first().click();
+
+  await page.getByText('Overclocking & chassis fans').click();
 
   const peakText = () =>
     page

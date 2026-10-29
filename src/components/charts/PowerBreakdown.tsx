@@ -4,12 +4,17 @@ import type { Component } from '@/types/component';
 interface Props {
   components: Component[];
   drawWByComponentId: Record<string, number>;
+  /** Unit counts per component id — labels get a ×N suffix for multi-unit parts. */
+  qtyById?: Record<string, number>;
 }
 
 const PALETTE = ['#e5461f', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
 
-export function PowerBreakdown({ components, drawWByComponentId }: Props) {
-  const labels = components.map((c) => `${c.brand} ${c.model}`);
+export function PowerBreakdown({ components, drawWByComponentId, qtyById = {} }: Props) {
+  const labels = components.map((c) => {
+    const qty = qtyById[c.id] ?? 1;
+    return `${c.brand} ${c.model}${qty > 1 ? ` ×${qty}` : ''}`;
+  });
   const series = components.map((c) => Math.round(drawWByComponentId[c.id] ?? 0));
 
   return (

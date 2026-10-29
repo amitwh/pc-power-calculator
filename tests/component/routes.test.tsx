@@ -10,10 +10,11 @@ test('renders Home on /', () => {
       <Routes />
     </MemoryRouter>,
   );
-  // BuildPicker's heading is "1 Your Systems" (step badge + title); the multi-system
-  // summary card in ResultsPanel also contains "your systems", so anchor exactly.
-  expect(screen.getByRole('heading', { name: /^1\s*Your Systems$/i })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /Select CPU/i })).toBeInTheDocument();
+  // BuildPicker's heading is "Your Systems" (+ a device-count span); the
+  // multi-system summary card in ResultsPanel also contains "your systems",
+  // so anchor on the title prefix.
+  expect(screen.getByRole('heading', { name: /^Your Systems/i })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Add device' })).toBeInTheDocument();
 });
 
 test('renders Compare on /compare', () => {

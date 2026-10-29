@@ -11,73 +11,113 @@ beforeEach(() => {
   useBuildStore.getState().resetAll();
 });
 
-describe('BuildPicker', () => {
-  test('renders the default build and slot pickers', () => {
+/** Open the one device picker and pick an option by (partial) name. */
+async function pickDevice(user: ReturnType<typeof userEvent.setup>, query: string, name: RegExp) {
+  await user.click(screen.getByRole('button', { name: 'Add device' }));
+  await user.type(screen.getByRole('searchbox'), query);
+  await user.click(screen.getAllByRole('option', { name })[0]);
+}
+
+describe('BuildPicker — devices cart', () => {
+  test('renders the picker, filter chips, and the default build chip', () => {
     render(<BuildPicker />);
     expect(screen.getByRole('heading', { name: /Your Systems/i })).toBeInTheDocument();
-    // Single-slot pickers now use SearchableSelect when category has >12 options
-    // (CPU 358, GPU 111, motherboard 36, psu 30, cooler 15). Multi-slots
-    // (RAM/storage/monitor) use a button + chips; we just verify the pickers render.
-    expect(screen.getByRole('button', { name: /Select CPU/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Select GPU/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Select Motherboard/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Select PSU/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Select Cooler/i })).toBeInTheDocument();
-    // Multi-slot "Add" buttons (aria-label is "Add RAM" etc; "+" is shown in the trigger text)
-    expect(screen.getByRole('button', { name: /^Add RAM/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /^Add Storage/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /^Add Monitor/i })).toBeInTheDocument();
-    // Build chip switch button
+    expect(screen.getByRole('button', { name: 'Add device' })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: /Filter catalog by category/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /My build/i })).toBeInTheDocument();
+    expect(screen.getByText(/No devices yet/i)).toBeInTheDocument();
   });
 
-  test('shows "Not selected" once per single-slot component (CPU/GPU/MB/PSU/Cooler/UPS)', () => {
-    render(<BuildPicker />);
-    // 6 single-slot ComponentCards × 1 "Not selected" each.
-    expect(screen.getAllByText('Not selected')).toHaveLength(6);
-  });
-
-  test('adding RAM to multi-slot updates store', async () => {
+  test('adding a CPU via the searchable picker lands in the store and the list', async () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
-    await user.click(screen.getByRole('button', { name: /^Add RAM/i }));
-    await user.click(screen.getByRole('option', { name: /Corsair Vengeance 32GB DDR5-5600/ }));
-    expect(useBuildStore.getState().builds[0].components.ram).toContain('ram-corsair-vengeance-32gb-ddr5-5600');
+    await pickDevice(user, '7800x3d', /Ryzen 7 7800X3D/);
+    expect(useBuildStore.getState().builds[0].components.cpu).toBe('cpu-amd-ryzen-7-7800x3d');
+    expect(screen.getByText(/AMD Ryzen 7 7800X3D/)).toBeInTheDocument();
+    expect(screen.getByLabelText('Quantity for AMD Ryzen 7 7800X3D')).toHaveValue(1);
   });
 
-  test('removing a selected storage chip clears it', async () => {
+  test('picking the same device again multiplies its units (qty 2)', async () => {
+    const user = userEvent.setup();
+    render(<BuildPicker />);
+    await pickDevice(user, '7800x3d', /Ryzen 7 7800X3D/);
+    await pickDevice(user, '7800x3d', /Ryzen 7 7800X3D/);
+    expect(useBuildStore.getState().builds[0].quantities?.['cpu-amd-ryzen-7-7800x3d']).toBe(2);
+    expect(screen.getByLabelText('Quantity for AMD Ryzen 7 7800X3D')).toHaveValue(2);
+  });
+
+  test('adding RAM twice bumps its quantity instead of blocking the pick', async () => {
+    const user = userEvent.setup();
+    render(<BuildPicker />);
+    await pickDevice(user, 'vengeance 32gb ddr5-5600', /Corsair Vengeance 32GB DDR5-5600/);
+    await pickDevice(user, 'vengeance 32gb ddr5-5600', /Corsair Vengeance 32GB DDR5-5600/);
+    const b = useBuildStore.getState().builds[0];
+    expect(b.components.ram).toEqual(['ram-corsair-vengeance-32gb-ddr5-5600']);
+    expect(b.quantities?.['ram-corsair-vengeance-32gb-ddr5-5600']).toBe(2);
+  });
+
+  test('the + stepper raises the unit count, − lowers it, × removes the row', async () => {
     const user = userEvent.setup();
     useBuildStore.getState().addComponent('storage', 'storage-samsung-980-1tb');
     render(<BuildPicker />);
-    expect(screen.getByText(/Samsung 980 1TB/)).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: /Remove Samsung 980 1TB/i }));
+    const name = 'Samsung 980 1TB';
+    await user.click(screen.getByRole('button', { name: `Increase quantity for ${name}` }));
+    expect(useBuildStore.getState().builds[0].quantities?.['storage-samsung-980-1tb']).toBe(2);
+    await user.click(screen.getByRole('button', { name: `Decrease quantity for ${name}` }));
+    expect(useBuildStore.getState().builds[0].quantities?.['storage-samsung-980-1tb']).toBeUndefined();
+    await user.click(screen.getByRole('button', { name: `Remove ${name}` }));
     expect(useBuildStore.getState().builds[0].components.storage ?? []).not.toContain('storage-samsung-980-1tb');
+    expect(screen.getByText(/No devices yet/i)).toBeInTheDocument();
   });
 
-  test('selecting a CPU via the searchable picker updates the card and store', async () => {
+  test('editing the watts field records a TDP override; reset clears it', async () => {
+    const user = userEvent.setup();
+    useBuildStore.getState().addComponent('gpu', 'gpu-nvidia-rtx-4070');
+    render(<BuildPicker />);
+    const watts = screen.getByLabelText('Rated watts for NVIDIA GeForce RTX 4070');
+    await user.clear(watts);
+    await user.type(watts, '180');
+    await user.tab();
+    expect(useBuildStore.getState().builds[0].tdpOverrides['gpu-nvidia-rtx-4070']).toBe(180);
+    await user.click(screen.getByRole('button', { name: 'Reset wattage for NVIDIA GeForce RTX 4070' }));
+    expect(useBuildStore.getState().builds[0].tdpOverrides['gpu-nvidia-rtx-4070']).toBeUndefined();
+  });
+
+  test('custom devices add a peripheral row with the entered wattage', async () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
-    // The catalog has 900+ CPUs and the listbox caps rendered options at 200,
-    // so narrow by search first — the same way a real user would.
-    await user.click(screen.getByRole('button', { name: /Select CPU/i }));
-    await user.type(screen.getByRole('searchbox'), '7800x3d');
-    await user.click(screen.getByRole('option', { name: /AMD Ryzen 7 7800X3D/i }));
-    const card = screen.getByText('CPU').parentElement!;
-    expect(within(card).getByText(/AMD Ryzen 7 7800X3D/i)).toBeInTheDocument();
-    expect(within(card).getByText(/120 W/)).toBeInTheDocument();
-    expect(useBuildStore.getState().builds[0].components.cpu).toBe('cpu-amd-ryzen-7-7800x3d');
+    await user.type(screen.getByLabelText('Custom device name'), 'Desk lamp');
+    await user.type(screen.getByLabelText('Custom device wattage'), '9');
+    await user.click(screen.getByRole('button', { name: 'Add' }));
+    const b = useBuildStore.getState().builds[0];
+    const id = b.components.peripherals?.[0];
+    expect(id).toBeTruthy();
+    const peripheral = useBuildStore.getState().customPeripherals.find((p) => p.id === id);
+    expect(peripheral?.tdp_w).toBe(9);
+    expect(screen.getByText(/Custom Desk lamp/)).toBeInTheDocument();
   });
 
-  test('searchable CPU picker lets you search for a CPU by name', async () => {
+  test('category filter chips narrow the option pool', async () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
-    await user.click(screen.getByRole('button', { name: /Select CPU/i }));
-    await user.type(screen.getByRole('searchbox'), 'threadripper');
-    // 7800X3D should be filtered out; at least one Threadripper should appear.
-    expect(screen.queryByRole('option', { name: /Ryzen 7 7800X3D/i })).not.toBeInTheDocument();
-    expect(screen.getAllByRole('option').length).toBeGreaterThan(0);
+    await user.click(screen.getByRole('button', { name: 'Add device' }));
+    await user.type(screen.getByRole('searchbox'), 'ryzen 7');
+    const withAll = screen.getAllByRole('option').length;
+    expect(withAll).toBeGreaterThan(0);
+    // Clicking outside the listbox (the chip) closes it — reopen afterwards.
+    await user.click(screen.getByRole('button', { name: 'CPU' }));
+    await user.click(screen.getByRole('button', { name: 'Add device' }));
+    await user.type(screen.getByRole('searchbox'), 'ryzen 7');
+    const withCpu = screen.getAllByRole('option').length;
+    expect(withCpu).toBeGreaterThan(0);
+    expect(withCpu).toBeLessThanOrEqual(withAll);
+    // CPU filter excludes the Ryzen-brand GPUs/boards that 'All' matched.
+    const labels = screen.getAllByRole('option').map((o) => o.textContent ?? '');
+    expect(labels.every((l) => l.includes('CPU'))).toBe(true);
   });
+});
 
+describe('BuildPicker — systems', () => {
   test('add system creates a new build and makes it active', async () => {
     const user = userEvent.setup();
     render(<BuildPicker />);

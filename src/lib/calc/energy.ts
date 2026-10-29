@@ -50,7 +50,8 @@ export const CASE_FANS_ID = 'case-fans';
 /**
  * Resolve every component id in a build to a Component, applying TDP overrides
  * (keyed by component id for peripherals, by slot name for single-instance parts)
- * and the build's CPU/GPU overclock. Appends a synthetic constant-draw component
+ * and the build's CPU/GPU overclock. Each component appears once per selected
+ * unit (see `build.quantities`). Appends a synthetic constant-draw component
  * for the build's case fans. Drops any id that can't be resolved.
  */
 export function resolveBuildComponents(
@@ -72,7 +73,10 @@ export function resolveBuildComponents(
       const raw = customById.get(id) ?? findComponent(id);
       if (!raw) continue;
       const override = overrides[id] ?? overrides[slot.key];
-      out.push(override != null ? { ...raw, tdp_w: override } : raw);
+      const qty = Math.max(1, Math.min(999, Math.round(build.quantities?.[id] ?? 1)));
+      for (let i = 0; i < qty; i++) {
+        out.push(override != null ? { ...raw, tdp_w: override } : raw);
+      }
     }
   }
 

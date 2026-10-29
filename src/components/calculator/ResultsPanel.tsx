@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { formatCost, formatKwh } from '@/lib/calc/format';
 import { ExportMenu } from './ExportMenu';
 import { emojiFor } from '@/lib/buildCategory';
+import type { Component } from '@/types/component';
 import type { Workload } from '@/types/workload';
 
 // ApexCharts is heavy — defer the chart bundle until the ResultsPanel actually
@@ -39,6 +40,22 @@ export function ResultsPanel() {
   const { build, components, componentsPowerW, daily, monthly, yearly, allYearly, allDaily, allMonthly, psuWattage, peakWallDrawW, recommendedPsuW, currency } = useCalc();
 
   const workloadMap = useMemo(() => new Map(listWorkloads().map((w) => [w.id, w])), []);
+
+  // `components` repeats each unit (qty ×N) — the chart wants one slice per
+  // distinct device with the combined draw and a ×N label.
+  const { chartComponents, qtyById } = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const c of components) counts.set(c.id, (counts.get(c.id) ?? 0) + 1);
+    const seen = new Set<string>();
+    const unique: Component[] = [];
+    for (const c of components) {
+      if (!seen.has(c.id)) {
+        seen.add(c.id);
+        unique.push(c);
+      }
+    }
+    return { chartComponents: unique, qtyById: Object.fromEntries(counts) };
+  }, [components]);
 
   /** Closest catalog PSU at or above the recommendation (Generic first). */
   const pickRecommendedPsu = () => {
@@ -74,13 +91,9 @@ export function ResultsPanel() {
 
   return (
     <Card>
-      <CardTitle>
-        <span>
-          <span className="inline-flex items-center justify-center w-6 h-6 mr-2 rounded-full bg-brand-dark text-white text-sm font-bold">
-            4
-          </span>
-          Results — {build.name}
-        </span>
+      <CardTitle className="text-base">
+        <span className="truncate">Results — {build.name}</span>
+        <ExportMenu />
       </CardTitle>
 
       {/* Daily / Monthly / Yearly totals */}
@@ -153,7 +166,7 @@ export function ResultsPanel() {
           Power draw breakdown (typical 70% load)
         </div>
         <Suspense fallback={<div className="h-[260px] flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">Loading chart...</div>}>
-          <PowerBreakdown components={components} drawWByComponentId={componentsPowerW} />
+          <PowerBreakdown components={chartComponents} drawWByComponentId={componentsPowerW} qtyById={qtyById} />
         </Suspense>
       </div>
 
@@ -198,9 +211,6 @@ export function ResultsPanel() {
           <p className="text-sm text-gray-500">Add workloads in the schedule above to see per-task numbers.</p>
         )}
       </div>
-
-      {/* Export menu — PDF (window.print) and HTML (re-importable) */}
-      <ExportMenu />
 
       {/* Multi-system summary */}
       {summary.length > 0 && (
