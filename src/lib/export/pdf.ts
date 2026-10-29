@@ -1,6 +1,11 @@
 import type { ComponentCategory } from '@/types/component';
 import type { CurrencyInfo } from '@/types/currency';
 import { formatCost } from '@/lib/calc/format';
+import { categoryColor } from '@/lib/categoryColors';
+
+export const PDF_AUTHOR = 'Amit Haridas';
+export const PDF_SOURCE_URL = 'https://pcpower.concreteinfo.co.in';
+export const PDF_GITHUB_URL = 'https://github.com/amitwh/pc-power-calculator';
 
 /** One row in the report's device table (a distinct component + unit count). */
 export interface PdfDeviceRow {
@@ -105,6 +110,12 @@ export async function exportPdf(report: PdfReport): Promise<void> {
   ]);
 
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+  doc.setProperties({
+    title: pdfText(`${report.buildName} - PC Power Calculator report`),
+    author: PDF_AUTHOR,
+    creator: 'PC Power Calculator',
+    subject: pdfText('PC energy and electricity cost estimate'),
+  });
   const pageW = doc.internal.pageSize.getWidth();
   const date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
@@ -185,6 +196,14 @@ export async function exportPdf(report: PdfReport): Promise<void> {
       2: { cellWidth: 36, halign: 'right' },
       3: { cellWidth: 56, halign: 'right' },
       4: { cellWidth: 56, halign: 'right' },
+    },
+    // Category names render in the same color shade the app UI uses, so the
+    // report matches the on-screen device list at a glance.
+    didParseCell: (data) => {
+      if (data.section === 'body' && data.column.index === 1) {
+        const cat = report.devices[data.row.index]?.category;
+        if (cat) data.cell.styles.textColor = categoryColor(cat).pdf;
+      }
     },
     margin: { left: 40, right: 40 },
   });
@@ -284,17 +303,24 @@ export async function exportPdf(report: PdfReport): Promise<void> {
     const pageH = doc.internal.pageSize.getHeight();
     doc.setDrawColor(0xe5, 0xe7, 0xeb);
     doc.setLineWidth(0.5);
-    doc.line(40, pageH - 40, pageW - 40, pageH - 40);
+    doc.line(40, pageH - 44, pageW - 40, pageH - 44);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(8);
     doc.setTextColor(...MUTED);
     doc.text(
       pdfText('Estimates use manufacturer TDP ratings with workload utilization profiles; PSU efficiency and a 35% sizing margin are modeled.'),
       40,
-      pageH - 28,
+      pageH - 32,
     );
-    doc.text('pcpower.concreteinfo.co.in', 40, pageH - 17);
-    doc.text(`Page ${p} of ${pageCount}`, pageW - 40, pageH - 17, { align: 'right' });
+    doc.text(pdfText(`Created by ${PDF_AUTHOR} · `), 40, pageH - 20);
+    const creditEnd = 40 + doc.getTextWidth(pdfText(`Created by ${PDF_AUTHOR} · `));
+    doc.setTextColor(...BRAND);
+    doc.textWithLink('github.com/amitwh/pc-power-calculator', creditEnd, pageH - 20, {
+      url: PDF_GITHUB_URL,
+    });
+    doc.setTextColor(...MUTED);
+    doc.text(pdfText(`· ${PDF_SOURCE_URL.replace('https://', '')}`), creditEnd + doc.getTextWidth('github.com/amitwh/pc-power-calculator'), pageH - 20);
+    doc.text(`Page ${p} of ${pageCount}`, pageW - 40, pageH - 20, { align: 'right' });
   }
 
   doc.save(`pc-power-${slugify(report.buildName)}-${new Date().toISOString().slice(0, 10)}.pdf`);

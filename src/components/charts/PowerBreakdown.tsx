@@ -6,11 +6,13 @@ interface Props {
   drawWByComponentId: Record<string, number>;
   /** Unit counts per component id — labels get a ×N suffix for multi-unit parts. */
   qtyById?: Record<string, number>;
+  /** One color per slice (category shades); falls back to a generic palette. */
+  colors?: string[];
 }
 
 const PALETTE = ['#e5461f', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
 
-export function PowerBreakdown({ components, drawWByComponentId, qtyById = {} }: Props) {
+export function PowerBreakdown({ components, drawWByComponentId, qtyById = {}, colors }: Props) {
   const labels = components.map((c) => {
     const qty = qtyById[c.id] ?? 1;
     return `${c.brand} ${c.model}${qty > 1 ? ` ×${qty}` : ''}`;
@@ -25,7 +27,7 @@ export function PowerBreakdown({ components, drawWByComponentId, qtyById = {} }:
       options={{
         chart: { background: 'transparent', fontFamily: 'Plus Jakarta Sans, sans-serif' },
         labels,
-        colors: PALETTE,
+        colors: colors ?? PALETTE,
         legend: { position: 'bottom' },
         dataLabels: { enabled: false },
         plotOptions: { pie: { donut: { size: '65%' } } },

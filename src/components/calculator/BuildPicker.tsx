@@ -6,6 +6,7 @@ import { SearchableSelect } from '@/components/ui/SearchableSelect';
 import { Button } from '@/components/ui/Button';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { CATEGORY_EMOJI, CATEGORY_LABEL } from '@/lib/buildCategory';
+import { categoryColor } from '@/lib/categoryColors';
 import type { BuildCategory, ComponentSlot } from '@/types/build';
 import type { ComponentCategory, Component } from '@/types/component';
 
@@ -288,13 +289,14 @@ export function BuildPicker() {
             const w = effectiveW(d);
             const overridden = activeBuild.tdpOverrides[d.component.id] != null
               || activeBuild.tdpOverrides[d.slot] != null;
+            const col = categoryColor(d.component.category);
             return (
-              <li key={`${d.slot}:${d.component.id}`} className="py-2 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm">
+              <li key={`${d.slot}:${d.component.id}`} className={`py-2 pl-1.5 border-l-[3px] ${col.bar} flex flex-wrap items-center gap-x-2 gap-y-1.5 text-sm`}>
                 <span className="flex items-center gap-2 min-w-0 flex-1 basis-full sm:basis-auto">
                   <span
                     aria-hidden
                     title={SLOT_LABEL_BY_KEY.get(d.slot)}
-                    className="w-6 text-center shrink-0"
+                    className={`flex w-7 h-7 items-center justify-center rounded-lg text-sm shrink-0 ${col.badge}`}
                   >
                     {d.component.category === 'cpu' ? '🧠'
                       : d.component.category === 'gpu' ? '🎮'
@@ -309,7 +311,9 @@ export function BuildPicker() {
                     <span className="block truncate font-medium text-gray-900 dark:text-gray-50" title={name}>
                       {name}
                     </span>
-                    <span className="block text-xs text-gray-500">{SLOT_LABEL_BY_KEY.get(d.slot)}</span>
+                    <span className={`block text-xs font-semibold ${col.badge.split(' ').filter((c) => c.startsWith('text-')).join(' ')}`}>
+                      {SLOT_LABEL_BY_KEY.get(d.slot)}
+                    </span>
                   </span>
                 </span>
                 <span className="flex items-center gap-2 ml-auto">

@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/Button';
 import { formatCost, formatKwh } from '@/lib/calc/format';
 import { ExportMenu } from './ExportMenu';
 import { emojiFor } from '@/lib/buildCategory';
+import { categoryColor } from '@/lib/categoryColors';
+import { CASE_FANS_ID } from '@/lib/calc/energy';
 import type { Component } from '@/types/component';
 import type { Workload } from '@/types/workload';
 
@@ -43,7 +45,7 @@ export function ResultsPanel() {
 
   // `components` repeats each unit (qty ×N) — the chart wants one slice per
   // distinct device with the combined draw and a ×N label.
-  const { chartComponents, qtyById } = useMemo(() => {
+  const { chartComponents, qtyById, chartColors } = useMemo(() => {
     const counts = new Map<string, number>();
     for (const c of components) counts.set(c.id, (counts.get(c.id) ?? 0) + 1);
     const seen = new Set<string>();
@@ -54,7 +56,14 @@ export function ResultsPanel() {
         unique.push(c);
       }
     }
-    return { chartComponents: unique, qtyById: Object.fromEntries(counts) };
+    return {
+      chartComponents: unique,
+      qtyById: Object.fromEntries(counts),
+      // The synthetic case-fans aggregate reads as a fan, not a peripheral.
+      chartColors: unique.map((c) =>
+        categoryColor(c.id === CASE_FANS_ID ? 'fan' : c.category).hex,
+      ),
+    };
   }, [components]);
 
   /** Closest catalog PSU at or above the recommendation (Generic first). */
@@ -166,7 +175,7 @@ export function ResultsPanel() {
           Power draw breakdown (typical 70% load)
         </div>
         <Suspense fallback={<div className="h-[260px] flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">Loading chart...</div>}>
-          <PowerBreakdown components={chartComponents} drawWByComponentId={componentsPowerW} qtyById={qtyById} />
+          <PowerBreakdown components={chartComponents} drawWByComponentId={componentsPowerW} qtyById={qtyById} colors={chartColors} />
         </Suspense>
       </div>
 
