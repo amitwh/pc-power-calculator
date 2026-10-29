@@ -1,17 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { detectLocation } from '@/lib/api/geolocation';
 import { useBuildStore } from '@/store/buildStore';
 
+const GEO_FLAG = 'pc-power-geo-detected';
+
 /**
- * Manual geolocation helper.
+ * Geolocation helper.
  *
- * Geolocation auto-fires on mount would mean every visitor triggers a
- * third-party IP lookup the moment the app loads, without their consent.
- * This hook intentionally does NOT auto-fire. The caller (e.g. the
- * LocationPicker's "Detect from IP ↻" button) must invoke `detect()`
- * explicitly in response to a user action.
+ * `detect()` runs on explicit user action (the "Detect from IP ↻" button).
+ * `autoDetectOnce()` resolves the location a single time per browser — on the
+ * visitor's first load only (flag in localStorage), never on subsequent
+ * visits, and never when the browser signals Do Not Track or Global Privacy
+ * Control. It exists so the default tariff matches the visitor's region
+ * without them having to find the picker; any further third-party lookup
+ * still requires the button.
  */
-export function useGeolocation(): { loading: boolean; detect: () => Promise<void> } {
+export function useGeolocation(): {
+  loading: boolean;
+  detect: () => Promise<void>;
+  autoDetectOnce: () => void;
+} {
   const [loading, setLoading] = useState(false);
   const setLocation = useBuildStore((s) => s.setLocation);
 
@@ -20,11 +28,31 @@ export function useGeolocation(): { loading: boolean; detect: () => Promise<void
     setLoading(true);
     try {
       const r = await detectLocation();
-      if (r) setLocation(r.country_iso2, r.subdivision);
+      if (r) {
+        setLocation(r.country_iso2, r.subdivision);
+        try { localStorage.setItem(GEO_FLAG, '1'); } catch { /* private mode */ }
+      }
     } finally {
       setLoading(false);
     }
   }
 
-  return { loading, detect };
+  function autoDetectOnce(): void {
+    try {
+      if (localStorage.getItem(GEO_FLAG)) return;
+      const dnt = navigator.doNotTrack === '1' || (window as { doNotTrack?: string }).doNotTrack === '1';
+      const gpc = (navigator as { globalPrivacyControl?: boolean }).globalPrivacyControl === true;
+      if (dnt || gpc) return;
+    } catch { /* storage unavailable — skip auto-detect */ return; }
+    void detect();
+  }
+
+  // Auto-resolve once per browser so the default tariff matches the visitor's
+  // region; the effect runs on mount and is a no-op afterwards.
+  useEffect(() => {
+    autoDetectOnce();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return { loading, detect, autoDetectOnce };
 }

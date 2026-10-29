@@ -115,13 +115,13 @@ describe('tariff resolution', () => {
     expect(r.total.cost).toBeCloseTo(r.total.kwh * 6.5 * 1.08, 5);
   });
 
-  test('country taxes apply (GB: £0.30 + 5% VAT)', () => {
+  test('country rates apply as bundled (GB: 26p/kWh Ofgem cap, VAT included)', () => {
     const r = computeEnergy({ ...buildNoRate, location: { country_iso2: 'GB' } }, workloads, 'day');
-    expect(r.total.cost).toBeCloseTo(r.total.kwh * 0.30 * 1.05, 5);
+    expect(r.total.cost).toBeCloseTo(r.total.kwh * 0.26, 5);
   });
 
   test('monthly slabs walk on the monthly-equivalent consumption (Kerala)', () => {
-    // Kerala: first 50 kWh/month at ₹3.50, plus the country's 8% duty. A
+    // Kerala KSEB 2025-27: first 50 kWh/month at ₹2.90, plus the country's 8% duty. A
     // low-draw build whose monthly use stays under 50 kWh bills entirely at
     // the first slab rate.
     const r = computeEnergy(
@@ -130,7 +130,7 @@ describe('tariff resolution', () => {
       'month',
     );
     expect(r.total.kwh).toBeLessThan(50);
-    expect(r.total.cost).toBeCloseTo(r.total.kwh * 3.5 * 1.08, 5);
+    expect(r.total.cost).toBeCloseTo(r.total.kwh * 2.9 * 1.08, 5);
   });
 
   test('heavier usage crosses into higher slabs (Kerala)', () => {
@@ -153,8 +153,8 @@ describe('tariff resolution', () => {
     const r = computeEnergy(heavy, [wl], 'month');
     const effective = r.total.cost / r.total.kwh;
     expect(r.total.kwh).toBeGreaterThan(50);
-    expect(effective).toBeGreaterThan(3.5 * 1.08);
-    expect(effective).toBeLessThan(7.5 * 1.08); // slab average, never the top rate alone
+    expect(effective).toBeGreaterThan(2.9 * 1.08);
+    expect(effective).toBeLessThan(7.7 * 1.08); // slab average, never the top rate alone
   });
 
   test('manual override still wins over the bundled tariff', () => {
@@ -168,6 +168,6 @@ describe('tariff resolution', () => {
   });
 
   test('resolveRatePerKwh returns the flat rate directly', () => {
-    expect(resolveRatePerKwh({ ...buildNoRate, location: { country_iso2: 'US' } }, 100, 'month')).toBe(0.16);
+    expect(resolveRatePerKwh({ ...buildNoRate, location: { country_iso2: 'US' } }, 100, 'month')).toBe(0.18);
   });
 });

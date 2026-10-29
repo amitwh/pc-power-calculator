@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 import catalogData from '@/data/components.json';
 import { __setCatalogForTests } from '@/lib/data/components';
 
@@ -11,3 +12,8 @@ __setCatalogForTests(
     lastUpdated: string;
   },
 );
+
+// Deterministic, network-free default: IP-geolocation lookups fail fast in
+// tests instead of hitting ipapi.co from jsdom. Individual tests that exercise
+// the geo client stub their own fetch.
+vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(null, { status: 503 })));

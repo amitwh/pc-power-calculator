@@ -5,7 +5,7 @@ import { useFx } from '@/hooks/useFx';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
-import { effectiveRate } from '@/lib/calc/cost';
+import { computeCost } from '@/lib/calc/cost';
 
 export function LocationPicker() {
   const { loading, detect } = useGeolocation();
@@ -26,7 +26,9 @@ export function LocationPicker() {
   // (₹ for India, $ for US, …) — matches what the calc engine charges with.
   const currency = currencyForLocation(countryIso2, subdivisionCode, build?.currency_override);
   const { rate: tariffRate, taxes } = resolveLocationTariff(countryIso2, subdivisionCode);
-  const rate = manualOverride ?? effectiveRate(200, tariffRate);
+  // Display the effective rate INCLUDING taxes at a typical 200 kWh month —
+  // the same basis the engine charges with (manual overrides are tax-free).
+  const rate = manualOverride ?? computeCost(200, tariffRate, taxes).total / 200;
   const isManual = manualOverride != null;
 
   return (
