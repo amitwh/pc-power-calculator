@@ -26,12 +26,15 @@ export function componentPowerW(component: Component, utilPct: number): number {
     return idle + (component.tdp_w - idle) * u;
   }
   if (component.category === 'ram') {
-    const r = idleRatios.ram_stick;
-    return (r.idle_w ?? 2) + ((r.active_w ?? 5) - (r.idle_w ?? 2)) * u;
+    // DDR1/DDR2 sticks ran at higher voltages than DDR3+; use era profiles.
+    const gen = String(component.specs.generation ?? '');
+    const r = gen === 'DDR' ? idleRatios.ddr1_stick : gen === 'DDR2' ? idleRatios.ddr2_stick : idleRatios.ram_stick;
+    const idleW = r.idle_w ?? 2;
+    return idleW + ((r.active_w ?? 5) - idleW) * u;
   }
   if (component.category === 'storage') {
     const t = String(component.specs.type ?? 'nvme');
-    const key = t === 'HDD' ? 'hdd_7200' : t === 'SATA-SSD' ? 'sata_ssd' : 'nvme_ssd';
+    const key = t === 'HDD' ? 'hdd_7200' : t === 'IDE-HDD' ? 'ide_hdd' : t === 'SATA-SSD' ? 'sata_ssd' : 'nvme_ssd';
     const r = idleRatios[key];
     return (r.idle_w ?? 0) + ((r.active_w ?? 0) - (r.idle_w ?? 0)) * u;
   }
@@ -41,7 +44,11 @@ export function componentPowerW(component: Component, utilPct: number): number {
   }
   if (component.category === 'monitor') {
     // Constant draw; utilPct ignored.
-    return Number(component.specs.panel_w ?? 0);
+    return Number(component.specs.panel_w ?? component.tdp_w ?? 0);
+  }
+  if (component.category === 'cooler') {
+    // tdp_w is the fan/pump draw (cooling capacity lives in specs.tdp_rating_w).
+    return component.tdp_w;
   }
   // Fallback: linear between 10% idle and TDP.
   return 0.10 * component.tdp_w + (component.tdp_w - 0.10 * component.tdp_w) * u;

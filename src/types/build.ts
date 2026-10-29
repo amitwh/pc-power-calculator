@@ -25,6 +25,12 @@ export interface BuildComponents {
  */
 export type TdpOverrides = Record<string, number>;
 
+/** CPU/GPU overclock, modeled as extra TDP on top of the part's rated power. */
+export interface Overclock {
+  cpu_pct: number;
+  gpu_pct: number;
+}
+
 export interface BuildConfig {
   id: string;
   name: string;
@@ -32,6 +38,10 @@ export interface BuildConfig {
   category?: BuildCategory;
   components: BuildComponents;
   tdpOverrides: TdpOverrides;
+  /** CPU/GPU overclock percentages (0 = stock). Optional for pre-v2 persisted builds. */
+  overclock?: Overclock;
+  /** Case fan count (each modeled as a constant 2 W draw). */
+  case_fans?: number;
   schedule: WorkloadSchedule[];
   location: { country_iso2: string; subdivision_code?: string; manual_rate_override?: number };
   currency_override?: string;

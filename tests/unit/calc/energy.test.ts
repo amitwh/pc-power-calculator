@@ -1,6 +1,6 @@
 /// <reference types="vitest/globals" />
 import { describe, expect, test } from 'vitest';
-import { computeEnergy } from '@/lib/calc/energy';
+import { CASE_FANS_ID, CASE_FAN_WATTS, computeEnergy, resolveBuildComponents } from '@/lib/calc/energy';
 import type { BuildConfig } from '@/types/build';
 import type { Workload } from '@/types/workload';
 
@@ -59,5 +59,47 @@ describe('computeEnergy', () => {
     );
     const gamingRow = r.perWorkload.find((x) => x.workload_id === 'gaming_1080p');
     expect(gamingRow?.perfMetrics.length).toBeGreaterThan(0);
+  });
+});
+
+describe('resolveBuildComponents — overclock + case fans', () => {
+  test('no overclock/case_fans fields → stock TDPs, no fan component', () => {
+    const out = resolveBuildComponents(build);
+    const cpu = out.find((c) => c.category === 'cpu');
+    expect(cpu?.tdp_w).toBe(120); // 7800X3D rated TDP
+    expect(out.find((c) => c.id === CASE_FANS_ID)).toBeUndefined();
+  });
+
+  test('CPU overclock scales the CPU TDP only', () => {
+    const out = resolveBuildComponents({ ...build, overclock: { cpu_pct: 20, gpu_pct: 0 } });
+    const cpu = out.find((c) => c.category === 'cpu');
+    const gpu = out.find((c) => c.category === 'gpu');
+    expect(cpu?.tdp_w).toBeCloseTo(144, 5); // 120 × 1.2
+    expect(gpu?.tdp_w).toBe(200); // RTX 4070 untouched
+  });
+
+  test('GPU overclock scales the GPU TDP only', () => {
+    const out = resolveBuildComponents({ ...build, overclock: { cpu_pct: 0, gpu_pct: 10 } });
+    expect(out.find((c) => c.category === 'cpu')?.tdp_w).toBe(120);
+    expect(out.find((c) => c.category === 'gpu')?.tdp_w).toBeCloseTo(220, 5); // 200 × 1.1
+  });
+
+  test('overclock does not mutate the catalog entry', () => {
+    const before = resolveBuildComponents(build).find((c) => c.category === 'cpu')?.tdp_w;
+    resolveBuildComponents({ ...build, overclock: { cpu_pct: 50, gpu_pct: 50 } });
+    const after = resolveBuildComponents(build).find((c) => c.category === 'cpu')?.tdp_w;
+    expect(after).toBe(before);
+  });
+
+  test('case fans synthesize a constant-draw peripheral', () => {
+    const out = resolveBuildComponents({ ...build, case_fans: 4 });
+    const fans = out.find((c) => c.id === CASE_FANS_ID);
+    expect(fans).toBeDefined();
+    expect(fans?.tdp_w).toBe(4 * CASE_FAN_WATTS);
+  });
+
+  test('negative/undefined case_fans is clamped or omitted', () => {
+    expect(resolveBuildComponents({ ...build, case_fans: -3 }).find((c) => c.id === CASE_FANS_ID)).toBeUndefined();
+    expect(resolveBuildComponents(build).find((c) => c.id === CASE_FANS_ID)).toBeUndefined();
   });
 });

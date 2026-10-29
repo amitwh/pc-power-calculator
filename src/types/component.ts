@@ -3,8 +3,9 @@ export type ComponentCategory =
   | 'psu' | 'monitor' | 'cooler' | 'add_in_card'
   | 'optical_drive' | 'ups' | 'peripheral';
 
+/** 'none' = pre-80 PLUS generic units (typical for early-2000s supplies). */
 export type PsuEfficiencyRating =
-  | '80-plus' | 'bronze' | 'silver' | 'gold' | 'platinum' | 'titanium';
+  | 'none' | '80-plus' | 'bronze' | 'silver' | 'gold' | 'platinum' | 'titanium';
 
 export interface Component {
   id: string;

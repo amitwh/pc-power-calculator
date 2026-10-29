@@ -15,6 +15,8 @@ const defaultBuild = (): BuildConfig => ({
   category: 'gaming',
   components: {},
   tdpOverrides: {},
+  overclock: { cpu_pct: 0, gpu_pct: 0 },
+  case_fans: 2,
   schedule: [
     { workload_id: 'gaming_1080p', hours_per_day: 0 },
     { workload_id: 'office', hours_per_day: 8 },
@@ -58,6 +60,10 @@ interface BuildStore {
   setCurrency: (currency: string) => void;
   setManualRate: (rate: number | null) => void;
   setTdpOverride: (slot: string, watts: number | null) => void;
+  /** Set CPU or GPU overclock percentage (0–50). */
+  setOverclock: (part: 'cpu' | 'gpu', pct: number) => void;
+  /** Set the case-fan count (0–20). */
+  setCaseFans: (count: number) => void;
 
   // Custom peripherals (user-defined)
   addCustomPeripheral: (input: AddCustomPeripheralInput) => string;
@@ -204,6 +210,18 @@ export const useBuildStore = create<BuildStore>()(
           }
           return { ...b, tdpOverrides };
         }),
+
+      setOverclock: (part, pct) =>
+        updateActive(set, (b) => ({
+          ...b,
+          overclock: {
+            cpu_pct: part === 'cpu' ? pct : b.overclock?.cpu_pct ?? 0,
+            gpu_pct: part === 'gpu' ? pct : b.overclock?.gpu_pct ?? 0,
+          },
+        })),
+
+      setCaseFans: (count) =>
+        updateActive(set, (b) => ({ ...b, case_fans: Math.max(0, Math.min(20, Math.round(count))) })),
 
       addCustomPeripheral: (input) => {
         const id = `user-peripheral-${generateId()}`;

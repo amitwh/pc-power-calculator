@@ -39,3 +39,36 @@ describe('systemPowerW', () => {
     expect(w.wallDrawW).toBe(w.componentDrawW);
   });
 });
+
+describe('era-specific component profiles', () => {
+  const part = (category: Component['category'], tdp: number | null, specs: Component['specs']): Component => ({
+    id: `test-${category}`, category, brand: 'X', model: 'X', releaseYear: 2005,
+    tdp_w: tdp, specs, source: 'manual', addedAt: '2026-10-29',
+  });
+
+  test('cooler draws its rated fan/pump power constantly', () => {
+    const cooler = part('cooler', 10, { type: 'aio', fan_count: 2, tdp_rating_w: 280 });
+    expect(componentPowerW(cooler, 0)).toBe(10);
+    expect(componentPowerW(cooler, 1)).toBe(10);
+  });
+
+  test('IDE HDD uses the higher-draw profile', () => {
+    const ide = part('storage', 10, { type: 'IDE-HDD' });
+    expect(componentPowerW(ide, 0)).toBe(6); // ide_hdd idle
+    expect(componentPowerW(ide, 1)).toBe(10); // ide_hdd active
+  });
+
+  test('DDR1 sticks draw more than modern DDR5', () => {
+    const ddr1 = part('ram', 7, { generation: 'DDR' });
+    const ddr2 = part('ram', 5, { generation: 'DDR2' });
+    const ddr5 = part('ram', 5, { generation: 'DDR5' });
+    expect(componentPowerW(ddr1, 0)).toBe(4);
+    expect(componentPowerW(ddr2, 0)).toBe(3);
+    expect(componentPowerW(ddr5, 0)).toBe(2);
+  });
+
+  test('monitor falls back to tdp_w when panel_w is absent', () => {
+    const crt = part('monitor', 80, { type: 'CRT' });
+    expect(componentPowerW(crt, 0.5)).toBe(80);
+  });
+});

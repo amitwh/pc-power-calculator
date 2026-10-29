@@ -5,7 +5,8 @@ import type { Component, PsuEfficiencyRating } from '@/types/component';
 import type { BuildConfig } from '@/types/build';
 import type { Workload } from '@/types/workload';
 import { computeEnergy, resolveBuildComponents, type PerWorkloadEnergy } from '@/lib/calc/energy';
-import { componentPowerW } from '@/lib/calc/power';
+import { componentPowerW, systemPowerW } from '@/lib/calc/power';
+import { coercePsuRating, psuWattageFromSpecs, recommendPsuW } from '@/lib/calc/psu';
 import { listWorkloads } from '@/lib/data/workloads';
 
 /** A component with its effective `tdp_w` after any per-build override. */
@@ -38,28 +39,15 @@ export interface CalcResult extends CalcInputs {
   yearly: PeriodEnergy;
   /** Component → typical 70% load wattage (for the power-breakdown chart). */
   componentsPowerW: Record<string, number>;
+  /** Wall-side draw with every component at 100% utilization. */
+  peakWallDrawW: number;
+  /** Recommended PSU size for the peak draw (headroom included). */
+  recommendedPsuW: number;
   /** Combined energy across ALL systems in the store. */
   allDaily: PeriodEnergy;
   allMonthly: PeriodEnergy;
   allYearly: PeriodEnergy;
 }
-
-const PSU_RATINGS: ReadonlyArray<PsuEfficiencyRating> = [
-  '80-plus',
-  'bronze',
-  'silver',
-  'gold',
-  'platinum',
-  'titanium',
-];
-
-const coercePsuRating = (s: string | undefined): PsuEfficiencyRating | null =>
-  s && (PSU_RATINGS as readonly string[]).includes(s) ? (s as PsuEfficiencyRating) : null;
-
-const coercePsuWattage = (specs: Component['specs']): number | null => {
-  const w = Number(specs.wattage ?? specs.watts ?? NaN);
-  return Number.isFinite(w) && w > 0 ? w : null;
-};
 
 const EMPTY_BUILD: BuildConfig = {
   id: '',
@@ -97,7 +85,7 @@ export function useCalc(): CalcResult {
     const psuRating = psuComponent
       ? coercePsuRating(String(psuComponent.specs.rating ?? psuComponent.specs.efficiency ?? ''))
       : null;
-    const psuWattage = psuComponent ? coercePsuWattage(psuComponent.specs) : null;
+    const psuWattage = psuComponent ? psuWattageFromSpecs(psuComponent.specs) : null;
 
     const totalEffectiveTdpW = resolved.reduce((acc, c) => acc + (c.effective_tdp_w ?? 0), 0);
 
@@ -110,6 +98,15 @@ export function useCalc(): CalcResult {
     for (const c of resolved) {
       componentsPowerW[c.id] = componentPowerW(c, 0.7);
     }
+
+    // PSU sizing: everything flat-out at 100%, measured at the wall.
+    const { wallDrawW: peakWallDrawW } = systemPowerW(
+      resolvedRaw,
+      { cpu: 1, gpu: 1, ram: 1, storage: 1 },
+      psuRating,
+      psuWattage ?? 650,
+    );
+    const recommendedPsuW = recommendPsuW(peakWallDrawW);
 
     // Multi-system: sum energy across every build.
     let allDaily = { kwh: 0, cost: 0 };
@@ -142,6 +139,8 @@ export function useCalc(): CalcResult {
       monthly: { ...monthly.total, perWorkload: monthly.perWorkload },
       yearly: { ...yearly.total, perWorkload: yearly.perWorkload },
       componentsPowerW,
+      peakWallDrawW,
+      recommendedPsuW,
       allDaily,
       allMonthly,
       allYearly,

@@ -1,16 +1,20 @@
 {
-  "version": "2026-09-21",
+  "version": "2026-10-29",
   "idleRatios": {
     "desktop_cpu": { "idle_fraction_of_tdp": 0.15 },
     "desktop_gpu": { "idle_fraction_of_tdp": 0.10 },
     "ram_stick":    { "idle_w": 2, "active_w": 5 },
+    "ddr1_stick":   { "idle_w": 4, "active_w": 7 },
+    "ddr2_stick":   { "idle_w": 3, "active_w": 5 },
     "nvme_ssd":     { "idle_w": 0.1, "active_w": 5 },
     "sata_ssd":     { "idle_w": 0.5, "active_w": 3 },
     "hdd_7200":     { "idle_w": 5, "active_w": 8 },
+    "ide_hdd":      { "idle_w": 6, "active_w": 10 },
     "monitor":      { "idle_w": 0, "active_w": 0 },
     "peripheral":   { "idle_w": 0, "active_w": 0 }
   },
   "psuCurves": {
+    "none":     [{ "load_pct": 10, "efficiency": 0.68 }, { "load_pct": 20, "efficiency": 0.72 }, { "load_pct": 50, "efficiency": 0.74 }, { "load_pct": 100, "efficiency": 0.70 }],
     "80-plus":  [{ "load_pct": 10, "efficiency": 0.80 }, { "load_pct": 20, "efficiency": 0.82 }, { "load_pct": 50, "efficiency": 0.85 }, { "load_pct": 100, "efficiency": 0.82 }],
     "bronze":   [{ "load_pct": 10, "efficiency": 0.81 }, { "load_pct": 20, "efficiency": 0.85 }, { "load_pct": 50, "efficiency": 0.88 }, { "load_pct": 100, "efficiency": 0.85 }],
     "silver":   [{ "load_pct": 10, "efficiency": 0.83 }, { "load_pct": 20, "efficiency": 0.87 }, { "load_pct": 50, "efficiency": 0.89 }, { "load_pct": 100, "efficiency": 0.86 }],
@@ -19,8 +23,22 @@
     "titanium": [{ "load_pct": 10, "efficiency": 0.90 }, { "load_pct": 20, "efficiency": 0.94 }, { "load_pct": 50, "efficiency": 0.96 }, { "load_pct": 100, "efficiency": 0.94 }]
   },
   "motherboardChipsetPowerW": {
-    "X670": 10, "B650": 7, "X870": 10, "B840": 7, "A620": 6,
-    "Z790": 10, "B760": 7, "Z690": 10, "B660": 7,
-    "X299": 12, "TRX50": 15
+    "865PE": 14, "875P": 16, "915P": 14, "945P": 14, "975X": 16, "965": 12,
+    "P35": 13, "X38": 15, "X48": 15, "P45": 13, "G45": 13,
+    "X58": 20, "P55": 14, "X79": 18, "Z68": 13, "P67": 13, "H61": 8, "B75": 9,
+    "Z77": 12, "H77": 10, "Z87": 12, "B85": 8, "H81": 8, "H87": 10,
+    "Z97": 12, "H97": 10, "X99": 16, "H110": 8, "B150": 9, "H170": 9,
+    "Z170": 11, "X299": 12, "B250": 9, "H270": 9, "Z270": 11,
+    "H310": 8, "B360": 8, "H370": 9, "Z370": 11, "Z390": 11,
+    "H410": 8, "B460": 8, "Z490": 11, "B560": 8, "H510": 8, "Z590": 12,
+    "H610": 6, "B660": 7, "H770": 8, "Z690": 10, "B760": 7, "Z790": 10,
+    "Z890": 12, "B860": 8, "W680": 10, "C246": 10, "C422": 12, "C621": 14, "C741": 15,
+    "770": 12, "790FX": 15, "790GX": 13, "790X": 13, "870": 12, "890FX": 15, "890GX": 13,
+    "970": 12, "990FX": 14, "990X": 13,
+    "A75": 10, "A85X": 10, "A88X": 10, "A78": 9,
+    "A320": 6, "B350": 8, "X370": 10, "B450": 8, "X470": 10, "X570": 12, "A520": 6, "B550": 8,
+    "A620": 6, "B650": 7, "B650E": 8, "X670": 10, "X670E": 11,
+    "B840": 7, "B850": 8, "X870": 10, "X870E": 11,
+    "TRX40": 15, "TRX50": 15, "WRX80": 18, "WRX90": 18
   }
 }

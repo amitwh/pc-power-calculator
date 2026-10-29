@@ -1,8 +1,9 @@
 import type { BuildConfig } from '@/types/build';
-import type { Component, PsuEfficiencyRating } from '@/types/component';
+import type { Component } from '@/types/component';
 import type { BenchmarkEntry, Workload, WorkloadId } from '@/types/workload';
 import { findComponent } from '@/lib/data/components';
 import { lookupBenchmark } from '@/lib/data/benchmarks';
+import { coercePsuRating, psuWattageFromSpecs } from './psu';
 import { systemPowerW } from './power';
 
 export interface PerWorkloadEnergy {
@@ -16,23 +17,6 @@ export interface PerWorkloadEnergy {
 
 const DAYS_IN_MONTH = 30.44;
 const DAYS_IN_YEAR = 365.25;
-
-const PSU_RATINGS: ReadonlyArray<PsuEfficiencyRating> = [
-  '80-plus',
-  'bronze',
-  'silver',
-  'gold',
-  'platinum',
-  'titanium',
-];
-
-const coerceRating = (s: string | undefined): PsuEfficiencyRating | null =>
-  s && (PSU_RATINGS as readonly string[]).includes(s) ? (s as PsuEfficiencyRating) : null;
-
-const coercePsuWattage = (specs: Component['specs']): number | null => {
-  const w = Number(specs.wattage ?? specs.watts ?? NaN);
-  return Number.isFinite(w) && w > 0 ? w : null;
-};
 
 interface SlotDef {
   key: keyof BuildConfig['components'];
@@ -54,10 +38,17 @@ const SLOT_DEFS: SlotDef[] = [
   { key: 'peripherals', isArray: true },
 ];
 
+/** Modeled draw of one 120/140 mm case fan at normal PWM. */
+export const CASE_FAN_WATTS = 2;
+
+/** Synthetic id for the case-fan aggregate component. */
+export const CASE_FANS_ID = 'case-fans';
+
 /**
  * Resolve every component id in a build to a Component, applying TDP overrides
- * (keyed by component id for peripherals, by slot name for single-instance parts).
- * Drops any id that can't be resolved.
+ * (keyed by component id for peripherals, by slot name for single-instance parts)
+ * and the build's CPU/GPU overclock. Appends a synthetic constant-draw component
+ * for the build's case fans. Drops any id that can't be resolved.
  */
 export function resolveBuildComponents(
   build: BuildConfig,
@@ -81,6 +72,44 @@ export function resolveBuildComponents(
       out.push(override != null ? { ...raw, tdp_w: override } : raw);
     }
   }
+
+  // Overclock: extra TDP on top of the part's rated power.
+  const oc = build.overclock;
+  if (oc) {
+    if (oc.cpu_pct > 0) {
+      for (let i = 0; i < out.length; i++) {
+        const c = out[i];
+        if (c.category === 'cpu' && c.tdp_w != null) {
+          out[i] = { ...c, tdp_w: c.tdp_w * (1 + oc.cpu_pct / 100) };
+        }
+      }
+    }
+    if (oc.gpu_pct > 0) {
+      for (let i = 0; i < out.length; i++) {
+        const c = out[i];
+        if (c.category === 'gpu' && c.tdp_w != null) {
+          out[i] = { ...c, tdp_w: c.tdp_w * (1 + oc.gpu_pct / 100) };
+        }
+      }
+    }
+  }
+
+  // Case fans: one aggregate constant-draw component.
+  const fans = Math.max(0, Math.round(build.case_fans ?? 0));
+  if (fans > 0) {
+    const watts = Math.round(fans * CASE_FAN_WATTS * 10) / 10;
+    out.push({
+      id: CASE_FANS_ID,
+      category: 'peripheral',
+      brand: 'Generic',
+      model: `Case fans ×${fans}`,
+      releaseYear: new Date().getFullYear(),
+      tdp_w: watts,
+      specs: { type: 'case-fans', watts },
+      source: 'derived',
+      addedAt: '2026-10-29',
+    });
+  }
   return out;
 }
 
@@ -95,8 +124,10 @@ export function computeEnergy(
 
   const comps = resolveBuildComponents(build, customPeripherals);
   const psu = comps.find((c) => c.category === 'psu');
-  const rating = psu ? coerceRating(String(psu.specs.rating ?? psu.specs.efficiency ?? '')) : null;
-  const psuWattage = psu ? coercePsuWattage(psu.specs) ?? 650 : 650;
+  const rating = psu
+    ? coercePsuRating(psu.specs.rating ?? psu.specs.efficiency)
+    : null;
+  const psuWattage = psu ? psuWattageFromSpecs(psu.specs) ?? 650 : 650;
 
   const rows: PerWorkloadEnergy[] = [];
   let totalKwh = 0;
