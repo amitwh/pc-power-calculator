@@ -17,6 +17,9 @@ export interface SearchableSelectProps {
   emptyMessage?: string;
 }
 
+/** Max options rendered at once — keeps the DOM small for 1000+ entry catalogs. */
+const MAX_RENDERED = 200;
+
 /**
  * Searchable combobox — replaces native <select> for long option lists (CPUs / GPUs).
  * Mobile-first: ≥44px trigger, scrollable list with brand chips + free-text filter.
@@ -159,35 +162,42 @@ export function SearchableSelect({
             )}
           </div>
 
-          {/* Scrollable option list */}
+          {/* Scrollable option list (capped — refine the search to narrow it) */}
           <ul className="overflow-y-auto py-1 flex-1">
             {filtered.length === 0 ? (
               <li className="px-3 py-4 text-sm text-gray-500">{emptyMessage}</li>
             ) : (
-              filtered.map((o) => (
-                <li
-                  key={o.value}
-                  role="option"
-                  aria-selected={o.value === value}
-                  tabIndex={0}
-                  onClick={() => {
-                    onChange(o.value);
-                    setOpen(false);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
+              <>
+                {filtered.slice(0, MAX_RENDERED).map((o) => (
+                  <li
+                    key={o.value}
+                    role="option"
+                    aria-selected={o.value === value}
+                    tabIndex={0}
+                    onClick={() => {
                       onChange(o.value);
                       setOpen(false);
-                    }
-                  }}
-                  className={`px-3 py-2 cursor-pointer hover:bg-brand/10 focus:bg-brand/10 focus:outline-none ${
-                    o.value === value ? 'bg-brand/10 font-semibold' : ''
-                  }`}
-                >
-                  {o.label}
-                </li>
-              ))
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        onChange(o.value);
+                        setOpen(false);
+                      }
+                    }}
+                    className={`px-3 py-2 cursor-pointer hover:bg-brand/10 focus:bg-brand/10 focus:outline-none ${
+                      o.value === value ? 'bg-brand/10 font-semibold' : ''
+                    }`}
+                  >
+                    {o.label}
+                  </li>
+                ))}
+                {filtered.length > MAX_RENDERED && (
+                  <li className="px-3 py-2 text-xs text-gray-500" aria-live="polite">
+                    Showing first {MAX_RENDERED} of {filtered.length} matches — refine your search
+                  </li>
+                )}
+              </>
             )}
           </ul>
         </div>

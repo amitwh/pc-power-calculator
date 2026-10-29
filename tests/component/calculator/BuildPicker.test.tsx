@@ -31,10 +31,10 @@ describe('BuildPicker', () => {
     expect(screen.getByRole('button', { name: /My build/i })).toBeInTheDocument();
   });
 
-  test('shows "Not selected" once per single-slot component (CPU/GPU/MB/PSU/Cooler)', () => {
+  test('shows "Not selected" once per single-slot component (CPU/GPU/MB/PSU/Cooler/UPS)', () => {
     render(<BuildPicker />);
-    // 5 single-slot ComponentCards × 1 "Not selected" each.
-    expect(screen.getAllByText('Not selected')).toHaveLength(5);
+    // 6 single-slot ComponentCards × 1 "Not selected" each.
+    expect(screen.getAllByText('Not selected')).toHaveLength(6);
   });
 
   test('adding RAM to multi-slot updates store', async () => {
@@ -57,8 +57,10 @@ describe('BuildPicker', () => {
   test('selecting a CPU via the searchable picker updates the card and store', async () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
-    // Open the CPU searchable picker, then click the option directly (no need to search for known SKU).
+    // The catalog has 900+ CPUs and the listbox caps rendered options at 200,
+    // so narrow by search first — the same way a real user would.
     await user.click(screen.getByRole('button', { name: /Select CPU/i }));
+    await user.type(screen.getByRole('searchbox'), '7800x3d');
     await user.click(screen.getByRole('option', { name: /AMD Ryzen 7 7800X3D/i }));
     const card = screen.getByText('CPU').parentElement!;
     expect(within(card).getByText(/AMD Ryzen 7 7800X3D/i)).toBeInTheDocument();

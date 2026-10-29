@@ -21,7 +21,15 @@
     <title>PC Power Calculator</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Boot splash — replaced when React renders after the catalog chunk loads -->
+      <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;color:#6b7682;background:#fafbfc">
+        <div style="text-align:center">
+          <div style="font-size:2rem">⚡</div>
+          <div style="margin-top:.5rem;font-weight:600">Loading PC Power Calculator…</div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

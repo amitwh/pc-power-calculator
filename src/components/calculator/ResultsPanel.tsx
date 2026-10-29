@@ -35,7 +35,7 @@ function buildMeta(
 
 export function ResultsPanel() {
   const builds = useBuildStore((s) => s.builds);
-  const { build, components, componentsPowerW, daily, monthly, yearly, allYearly, allDaily, allMonthly } = useCalc();
+  const { build, components, componentsPowerW, daily, monthly, yearly, allYearly, allDaily, allMonthly, psuWattage, peakWallDrawW, recommendedPsuW } = useCalc();
 
   const summary = useMemo(() => {
     const workloads = listWorkloads();
@@ -90,6 +90,36 @@ export function ResultsPanel() {
             <div className={`text-xs mt-1 ${row.primary ? 'text-white/85' : 'text-gray-500'}`}>{row.sub}</div>
           </div>
         ))}
+      </div>
+
+      {/* PSU sizing guidance */}
+      <div className="mt-5 border rounded-8 p-3 border-gray-200 dark:border-gray-800">
+        <div className="text-xs uppercase text-gray-500 mb-2 font-semibold">PSU recommendation</div>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-1 font-numeric tabular-nums text-sm">
+          <span>
+            Peak draw (all components at 100%):{' '}
+            <strong className="font-display">{Math.round(peakWallDrawW)} W</strong>
+          </span>
+          <span>
+            Recommended PSU: <strong className="font-display text-brand-text">{recommendedPsuW} W</strong>
+          </span>
+          {psuWattage != null && (
+            <span
+              className={
+                psuWattage >= recommendedPsuW
+                  ? 'text-green-700 dark:text-green-400 font-semibold'
+                  : 'text-red-600 dark:text-red-400 font-semibold'
+              }
+            >
+              {psuWattage >= recommendedPsuW
+                ? `✓ Your ${psuWattage} W PSU has enough headroom`
+                : `⚠ Your ${psuWattage} W PSU is undersized`}
+            </span>
+          )}
+          {psuWattage == null && (
+            <span className="text-gray-500">Pick a PSU above to check headroom (35% safety margin included)</span>
+          )}
+        </div>
       </div>
 
       {/* Power draw breakdown */}

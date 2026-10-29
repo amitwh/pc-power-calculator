@@ -27,6 +27,10 @@ const slots: SlotDef[] = [
   { key: 'ram', label: 'RAM', category: 'ram', multi: true },
   { key: 'storage', label: 'Storage', category: 'storage', multi: true },
   { key: 'monitor', label: 'Monitor', category: 'monitor', multi: true },
+  { key: 'add_in_cards', label: 'Add-in cards', category: 'add_in_card', multi: true },
+  { key: 'optical_drives', label: 'Optical drives', category: 'optical_drive', multi: true },
+  { key: 'ups', label: 'UPS', category: 'ups' },
+  { key: 'peripherals', label: 'Peripherals', category: 'peripheral', multi: true },
 ];
 
 const CATEGORIES: BuildCategory[] = ['gaming', 'workstation', 'nas', 'ai', 'general'];
@@ -34,10 +38,15 @@ const CATEGORIES: BuildCategory[] = ['gaming', 'workstation', 'nas', 'ai', 'gene
 export function BuildPicker() {
   const builds = useBuildStore((s) => s.builds);
   const activeBuildId = useBuildStore((s) => s.activeBuildId);
+  const customPeripherals = useBuildStore((s) => s.customPeripherals);
   const setComponent = useBuildStore((s) => s.setComponent);
   const addComponent = useBuildStore((s) => s.addComponent);
   const removeComponent = useBuildStore((s) => s.removeComponent);
   const setTdpOverride = useBuildStore((s) => s.setTdpOverride);
+  const setOverclock = useBuildStore((s) => s.setOverclock);
+  const setCaseFans = useBuildStore((s) => s.setCaseFans);
+  const addCustomPeripheral = useBuildStore((s) => s.addCustomPeripheral);
+  const removeCustomPeripheral = useBuildStore((s) => s.removeCustomPeripheral);
   const addBuild = useBuildStore((s) => s.addBuild);
   const removeBuild = useBuildStore((s) => s.removeBuild);
   const setActiveBuild = useBuildStore((s) => s.setActiveBuild);
@@ -87,7 +96,7 @@ export function BuildPicker() {
 
     if (isMulti) {
       const selectedComps: Component[] = selectedIds
-        .map((id) => findComponent(id))
+        .map((id) => findComponent(id) ?? customPeripherals.find((p) => p.id === id))
         .filter((c): c is Component => !!c);
       return (
         <div key={slot.key} className="space-y-2">
@@ -312,6 +321,145 @@ export function BuildPicker() {
 
       {/* Slot pickers */}
       <div className="space-y-4">{slots.map(renderSlot)}</div>
+
+      {/* Performance + chassis extras */}
+      <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-800">
+        <div className="text-xs uppercase tracking-wide text-gray-500 font-semibold mb-3">
+          Overclocking &amp; fans
+        </div>
+        <div className="space-y-1">
+          {([
+            { part: 'cpu' as const, label: 'CPU OC' },
+            { part: 'gpu' as const, label: 'GPU OC' },
+          ]).map(({ part, label }) => {
+            const value = activeBuild.overclock?.[`${part}_pct` as 'cpu_pct' | 'gpu_pct'] ?? 0;
+            const id = `oc-${part}-${activeBuild.id}`;
+            return (
+              <div key={part} className="flex items-center gap-3">
+                <label htmlFor={id} className="text-sm text-gray-600 dark:text-gray-400 w-20 shrink-0">
+                  {label}
+                </label>
+                <input
+                  id={id}
+                  type="range"
+                  min={0}
+                  max={50}
+                  step={5}
+                  value={value}
+                  onChange={(e) => setOverclock(part, Number(e.target.value))}
+                  className="flex-1 min-h-[44px] accent-[#e5461f]"
+                />
+                <span className="font-numeric tabular-nums text-sm font-semibold w-12 text-right">
+                  {value}%
+                </span>
+              </div>
+            );
+          })}
+          {(() => {
+            const fans = activeBuild.case_fans ?? 0;
+            const id = `case-fans-${activeBuild.id}`;
+            return (
+              <div className="flex items-center gap-3">
+                <label htmlFor={id} className="text-sm text-gray-600 dark:text-gray-400 w-20 shrink-0">
+                  Case fans
+                </label>
+                <input
+                  id={id}
+                  type="range"
+                  min={0}
+                  max={12}
+                  step={1}
+                  value={Math.min(fans, 12)}
+                  onChange={(e) => setCaseFans(Number(e.target.value))}
+                  className="flex-1 min-h-[44px] accent-[#e5461f]"
+                />
+                <span className="font-numeric tabular-nums text-sm font-semibold w-12 text-right">
+                  {fans}
+                </span>
+              </div>
+            );
+          })()}
+        </div>
+        <p className="text-xs text-gray-500 mt-2">
+          Overclock adds extra heat on top of the rated TDP; each fan ≈ 2 W.
+        </p>
+      </div>
+
+      {/* Custom device — anything not in the catalog */}
+      <CustomDeviceForm onAdd={(model, watts) => addCustomPeripheral({ brand: 'Custom', model, watts })} />
+      {activeBuild.components.peripherals?.some((id) => id.startsWith('user-peripheral-')) && (
+        <div className="flex flex-wrap gap-2">
+          {activeBuild.components.peripherals
+            .filter((id) => id.startsWith('user-peripheral-'))
+            .map((id) => {
+              const p = customPeripherals.find((x) => x.id === id);
+              if (!p) return null;
+              return (
+                <span
+                  key={id}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-gray-400 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-1.5 min-h-[36px] text-sm"
+                >
+                  <span className="font-semibold truncate max-w-[220px]">{p.model}</span>
+                  <span className="font-numeric tabular-nums text-gray-500">{p.tdp_w} W</span>
+                  <button
+                    type="button"
+                    aria-label={`Remove ${p.model}`}
+                    className="text-base leading-none opacity-70 hover:opacity-100"
+                    onClick={() => removeCustomPeripheral(id)}
+                  >
+                    ×
+                  </button>
+                </span>
+              );
+            })}
+        </div>
+      )}
     </Card>
+  );
+}
+
+function CustomDeviceForm({ onAdd }: { onAdd: (model: string, watts: number) => void }) {
+  const [model, setModel] = useState('');
+  const [watts, setWatts] = useState('');
+
+  const submit = () => {
+    const w = Number(watts);
+    const name = model.trim();
+    if (!name || !Number.isFinite(w) || w <= 0) return;
+    onAdd(name, w);
+    setModel('');
+    setWatts('');
+  };
+
+  return (
+    <div className="mt-4 p-3 border border-dashed border-gray-300 dark:border-gray-700 rounded-8">
+      <div className="text-xs uppercase tracking-wide text-gray-500 font-semibold mb-2">
+        Add a custom device
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <input
+          type="text"
+          value={model}
+          onChange={(e) => setModel(e.target.value)}
+          placeholder="Device name (e.g. Desk lamp)"
+          aria-label="Custom device name"
+          className="flex-1 min-w-[160px] min-h-[44px] px-3 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-body"
+        />
+        <input
+          type="number"
+          inputMode="decimal"
+          min={0}
+          step={0.5}
+          value={watts}
+          onChange={(e) => setWatts(e.target.value)}
+          placeholder="Watts"
+          aria-label="Custom device wattage"
+          className="w-24 min-h-[44px] px-3 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums"
+        />
+        <Button onClick={submit} disabled={!model.trim() || !(Number(watts) > 0)}>
+          Add device
+        </Button>
+      </div>
+    </div>
   );
 }
