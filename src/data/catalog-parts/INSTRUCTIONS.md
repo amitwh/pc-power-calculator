@@ -88,6 +88,12 @@ Field rules:
 ### motherboard
 - specs: `{ socket, chipset, form_factor, ram_type, max_ram_gb?, sata_ports?,
   m2_slots?, pcie_version? }`. Include era-appropriate fields only.
+- `chipset` MUST match a key in `power_profiles.json` ->
+  `motherboardChipsetPowerW` (the app models board draw from it). For boards
+  whose exact chipset is unknown, use the GENERIC chipset keys instead of
+  inventing one: `generic-modern` (2017+, 8 W), `generic-modern-itx` (7 W),
+  `generic-2010s` (11 W), `generic-2010s-itx` (10 W), `generic-2000s` (15 W),
+  `generic-hedt` (18 W), `generic-server` (20 W).
 - tdp_w: typical board idle-ish base draw the app models via chipset table —
   set `tdp_w` to a reasonable estimate: 2000s boards 10-20 (more chips on
   board), 2010s 7-12, modern 6-12, HEDT/server 15-25.

@@ -25008,6 +25008,149 @@
    "addedAt": "2026-10-29"
   },
   {
+   "id": "mb-generic-2000s-desktop",
+   "category": "motherboard",
+   "brand": "Generic",
+   "model": "Early-2000s Desktop Motherboard (DDR/DDR2 era)",
+   "releaseYear": 2003,
+   "tdp_w": 15,
+   "specs": {
+    "socket": "varies (Socket 478/423/939/940/AM2, LGA775)",
+    "chipset": "generic-2000s",
+    "form_factor": "ATX",
+    "ram_type": "DDR",
+    "max_ram_gb": 4,
+    "sata_ports": 2,
+    "wifi": false
+   },
+   "source": "estimate",
+   "addedAt": "2026-10-29"
+  },
+  {
+   "id": "mb-generic-2010s-desktop",
+   "category": "motherboard",
+   "brand": "Generic",
+   "model": "2010s Desktop Motherboard (DDR3 era)",
+   "releaseYear": 2012,
+   "tdp_w": 11,
+   "specs": {
+    "socket": "varies (AM3+/FM2/LGA1155/LGA1150/LGA1151)",
+    "chipset": "generic-2010s",
+    "form_factor": "ATX",
+    "ram_type": "DDR3",
+    "max_ram_gb": 32,
+    "sata_ports": 6,
+    "pcie_version": "3.0",
+    "wifi": false
+   },
+   "source": "estimate",
+   "addedAt": "2026-10-29"
+  },
+  {
+   "id": "mb-generic-2010s-itx",
+   "category": "motherboard",
+   "brand": "Generic",
+   "model": "2010s Mini-ITX Motherboard (DDR3 era)",
+   "releaseYear": 2012,
+   "tdp_w": 10,
+   "specs": {
+    "socket": "varies (AM3+/FM2/LGA1155/LGA1150)",
+    "chipset": "generic-2010s-itx",
+    "form_factor": "ITX",
+    "ram_type": "DDR3",
+    "max_ram_gb": 16,
+    "sata_ports": 4,
+    "pcie_version": "3.0",
+    "wifi": true
+   },
+   "source": "estimate",
+   "addedAt": "2026-10-29"
+  },
+  {
+   "id": "mb-generic-hedt",
+   "category": "motherboard",
+   "brand": "Generic",
+   "model": "HEDT / Enthusiast Motherboard (X58-X299/TRX class)",
+   "releaseYear": 2014,
+   "tdp_w": 18,
+   "specs": {
+    "socket": "varies (LGA1366/LGA2011/LGA2066/sTR4/sTRX4)",
+    "chipset": "generic-hedt",
+    "form_factor": "ATX",
+    "ram_type": "DDR4",
+    "max_ram_gb": 256,
+    "sata_ports": 8,
+    "m2_slots": 3,
+    "pcie_version": "3.0",
+    "wifi": false
+   },
+   "source": "estimate",
+   "addedAt": "2026-10-29"
+  },
+  {
+   "id": "mb-generic-server",
+   "category": "motherboard",
+   "brand": "Generic",
+   "model": "Server / Workstation Motherboard (IPMI class)",
+   "releaseYear": 2016,
+   "tdp_w": 20,
+   "specs": {
+    "socket": "varies (LGA2011/LGA3647/SP3/SP5)",
+    "chipset": "generic-server",
+    "form_factor": "EATX",
+    "ram_type": "DDR4",
+    "max_ram_gb": 512,
+    "sata_ports": 8,
+    "m2_slots": 1,
+    "pcie_version": "3.0",
+    "wifi": false
+   },
+   "source": "estimate",
+   "addedAt": "2026-10-29"
+  },
+  {
+   "id": "mb-generic-modern-desktop",
+   "category": "motherboard",
+   "brand": "Generic",
+   "model": "Modern Desktop Motherboard (DDR4/DDR5, 2017+)",
+   "releaseYear": 2018,
+   "tdp_w": 8,
+   "specs": {
+    "socket": "varies (AM4/AM5/LGA1151/LGA1200/LGA1700)",
+    "chipset": "generic-modern",
+    "form_factor": "ATX",
+    "ram_type": "DDR4",
+    "max_ram_gb": 128,
+    "sata_ports": 6,
+    "m2_slots": 2,
+    "pcie_version": "4.0",
+    "wifi": false
+   },
+   "source": "estimate",
+   "addedAt": "2026-10-29"
+  },
+  {
+   "id": "mb-generic-modern-itx",
+   "category": "motherboard",
+   "brand": "Generic",
+   "model": "Modern Mini-ITX Motherboard (2017+)",
+   "releaseYear": 2018,
+   "tdp_w": 7,
+   "specs": {
+    "socket": "varies (AM4/AM5/LGA1151/LGA1200/LGA1700)",
+    "chipset": "generic-modern-itx",
+    "form_factor": "ITX",
+    "ram_type": "DDR4",
+    "max_ram_gb": 64,
+    "sata_ports": 4,
+    "m2_slots": 1,
+    "pcie_version": "4.0",
+    "wifi": true
+   },
+   "source": "estimate",
+   "addedAt": "2026-10-29"
+  },
+  {
    "id": "mb-gigabyte-ga-965p-ds3",
    "category": "motherboard",
    "brand": "Gigabyte",
