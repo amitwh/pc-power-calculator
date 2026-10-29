@@ -1,0 +1,1441 @@
+[
+  {
+    "id": "mb-asus-p4b266",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P4B266",
+    "releaseYear": 2002,
+    "tdp_w": 14,
+    "specs": {
+      "socket": "Socket 478",
+      "chipset": "845E",
+      "form_factor": "ATX",
+      "ram_type": "DDR",
+      "max_ram_gb": 2,
+      "sata_ports": 0,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-abit-ic7-g",
+    "category": "motherboard",
+    "brand": "ABIT",
+    "model": "IC7-G",
+    "releaseYear": 2003,
+    "tdp_w": 16,
+    "specs": {
+      "socket": "Socket 478",
+      "chipset": "875P",
+      "form_factor": "ATX",
+      "ram_type": "DDR",
+      "max_ram_gb": 4,
+      "sata_ports": 4,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p4p800-e-deluxe",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P4P800-E Deluxe",
+    "releaseYear": 2004,
+    "tdp_w": 15,
+    "specs": {
+      "socket": "Socket 478",
+      "chipset": "865PE",
+      "form_factor": "ATX",
+      "ram_type": "DDR",
+      "max_ram_gb": 4,
+      "sata_ports": 4,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-intel-d865perl",
+    "category": "motherboard",
+    "brand": "Intel",
+    "model": "D865PERL",
+    "releaseYear": 2003,
+    "tdp_w": 13,
+    "specs": {
+      "socket": "Socket 478",
+      "chipset": "865PE",
+      "form_factor": "ATX",
+      "ram_type": "DDR",
+      "max_ram_gb": 4,
+      "sata_ports": 2,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-intel-d865gbf",
+    "category": "motherboard",
+    "brand": "Intel",
+    "model": "D865GBF",
+    "releaseYear": 2003,
+    "tdp_w": 13,
+    "specs": {
+      "socket": "Socket 478",
+      "chipset": "865G",
+      "form_factor": "ATX",
+      "ram_type": "DDR",
+      "max_ram_gb": 4,
+      "sata_ports": 2,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-intel-d915pbl",
+    "category": "motherboard",
+    "brand": "Intel",
+    "model": "D915PBL",
+    "releaseYear": 2004,
+    "tdp_w": 14,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "915P",
+      "form_factor": "ATX",
+      "ram_type": "DDR",
+      "max_ram_gb": 4,
+      "sata_ports": 4,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-intel-d915gag",
+    "category": "motherboard",
+    "brand": "Intel",
+    "model": "D915GAG",
+    "releaseYear": 2004,
+    "tdp_w": 13,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "915G",
+      "form_factor": "mATX",
+      "ram_type": "DDR",
+      "max_ram_gb": 4,
+      "sata_ports": 4,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-intel-d945psn",
+    "category": "motherboard",
+    "brand": "Intel",
+    "model": "D945PSN",
+    "releaseYear": 2005,
+    "tdp_w": 13,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "945P",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 4,
+      "sata_ports": 4,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-intel-d945gnt",
+    "category": "motherboard",
+    "brand": "Intel",
+    "model": "D945GNT",
+    "releaseYear": 2005,
+    "tdp_w": 13,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "945G",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 4,
+      "sata_ports": 4,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p5wd2-premium",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P5WD2 Premium",
+    "releaseYear": 2005,
+    "tdp_w": 18,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "955X",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 8,
+      "sata_ports": 6,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p5wd2-e-premium",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P5WD2-E Premium",
+    "releaseYear": 2006,
+    "tdp_w": 18,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "975X",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 8,
+      "sata_ports": 6,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-intel-d975xbx2-bad-axe-2",
+    "category": "motherboard",
+    "brand": "Intel",
+    "model": "D975XBX2 Bad Axe 2",
+    "releaseYear": 2006,
+    "tdp_w": 16,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "975X",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 8,
+      "sata_ports": 6,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p5b-deluxe",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P5B Deluxe",
+    "releaseYear": 2006,
+    "tdp_w": 16,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "965",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 8,
+      "sata_ports": 6,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-p35-ds3l",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-P35-DS3L",
+    "releaseYear": 2007,
+    "tdp_w": 13,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "P35",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 8,
+      "sata_ports": 4,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p5k",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P5K",
+    "releaseYear": 2007,
+    "tdp_w": 14,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "P35",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 8,
+      "sata_ports": 6,
+      "wifi": false
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-maximus-formula",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "Maximus Formula",
+    "releaseYear": 2007,
+    "tdp_w": 18,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "X38",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 8,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-x48-dq6",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-X48-DQ6",
+    "releaseYear": 2008,
+    "tdp_w": 20,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "X48",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 16,
+      "sata_ports": 10,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p5q-pro",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P5Q Pro",
+    "releaseYear": 2008,
+    "tdp_w": 15,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "P45",
+      "form_factor": "ATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 16,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-dfi-lanparty-jr-p45-t2rs",
+    "category": "motherboard",
+    "brand": "DFI",
+    "model": "LANParty JR P45-T2RS",
+    "releaseYear": 2008,
+    "tdp_w": 14,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "P45",
+      "form_factor": "mATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 8,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-intel-dg45fc",
+    "category": "motherboard",
+    "brand": "Intel",
+    "model": "DG45FC",
+    "releaseYear": 2008,
+    "tdp_w": 12,
+    "specs": {
+      "socket": "LGA775",
+      "chipset": "G45",
+      "form_factor": "mATX",
+      "ram_type": "DDR2",
+      "max_ram_gb": 8,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-rampage-ii-gene",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "Rampage II Gene",
+    "releaseYear": 2009,
+    "tdp_w": 18,
+    "specs": {
+      "socket": "LGA1366",
+      "chipset": "X58",
+      "form_factor": "mATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 12,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-evga-x58-sli-le",
+    "category": "motherboard",
+    "brand": "EVGA",
+    "model": "X58 SLI LE",
+    "releaseYear": 2009,
+    "tdp_w": 18,
+    "specs": {
+      "socket": "LGA1366",
+      "chipset": "X58",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 12,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-x58a-ud3r",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-X58A-UD3R",
+    "releaseYear": 2010,
+    "tdp_w": 18,
+    "specs": {
+      "socket": "LGA1366",
+      "chipset": "X58",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 24,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p7p55d-deluxe",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P7P55D Deluxe",
+    "releaseYear": 2009,
+    "tdp_w": 14,
+    "specs": {
+      "socket": "LGA1156",
+      "chipset": "P55",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-h55m-usb3",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-H55M-USB3",
+    "releaseYear": 2010,
+    "tdp_w": 10,
+    "specs": {
+      "socket": "LGA1156",
+      "chipset": "H55",
+      "form_factor": "mATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-zotac-h55-itx-wifi",
+    "category": "motherboard",
+    "brand": "Zotac",
+    "model": "H55-ITX WiFi",
+    "releaseYear": 2010,
+    "tdp_w": 9,
+    "specs": {
+      "socket": "LGA1156",
+      "chipset": "H55",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 8,
+      "sata_ports": 4,
+      "wifi": true,
+      "pcie_version": "2.0"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-rampage-iv-gene",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "Rampage IV Gene",
+    "releaseYear": 2012,
+    "tdp_w": 20,
+    "specs": {
+      "socket": "LGA2011",
+      "chipset": "X79",
+      "form_factor": "mATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-intel-dx79si",
+    "category": "motherboard",
+    "brand": "Intel",
+    "model": "DX79SI",
+    "releaseYear": 2011,
+    "tdp_w": 20,
+    "specs": {
+      "socket": "LGA2011",
+      "chipset": "X79",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p9x79",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P9X79",
+    "releaseYear": 2011,
+    "tdp_w": 18,
+    "specs": {
+      "socket": "LGA2011",
+      "chipset": "X79",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 64,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-msi-big-bang-xpower-ii",
+    "category": "motherboard",
+    "brand": "MSI",
+    "model": "Big Bang-XPower II",
+    "releaseYear": 2011,
+    "tdp_w": 25,
+    "specs": {
+      "socket": "LGA2011",
+      "chipset": "X79",
+      "form_factor": "EATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 64,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p8z68-v-pro",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P8Z68-V PRO",
+    "releaseYear": 2011,
+    "tdp_w": 12,
+    "specs": {
+      "socket": "LGA1155",
+      "chipset": "Z68",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-z68x-ud3h-b3",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-Z68X-UD3H-B3",
+    "releaseYear": 2011,
+    "tdp_w": 11,
+    "specs": {
+      "socket": "LGA1155",
+      "chipset": "Z68",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-intel-dz77bh-55k",
+    "category": "motherboard",
+    "brand": "Intel",
+    "model": "DZ77BH-55K",
+    "releaseYear": 2012,
+    "tdp_w": 10,
+    "specs": {
+      "socket": "LGA1155",
+      "chipset": "Z77",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p8z77-i-deluxe",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P8Z77-I Deluxe",
+    "releaseYear": 2012,
+    "tdp_w": 9,
+    "specs": {
+      "socket": "LGA1155",
+      "chipset": "Z77",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 4,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-z77n-wifi",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-Z77N-WiFi",
+    "releaseYear": 2012,
+    "tdp_w": 9,
+    "specs": {
+      "socket": "LGA1155",
+      "chipset": "Z77",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 4,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p8h77-i",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P8H77-I",
+    "releaseYear": 2012,
+    "tdp_w": 8,
+    "specs": {
+      "socket": "LGA1155",
+      "chipset": "H77",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p8b75-m",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P8B75-M",
+    "releaseYear": 2012,
+    "tdp_w": 9,
+    "specs": {
+      "socket": "LGA1155",
+      "chipset": "B75",
+      "form_factor": "mATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 5,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-p8h61-i",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "P8H61-I",
+    "releaseYear": 2011,
+    "tdp_w": 8,
+    "specs": {
+      "socket": "LGA1155",
+      "chipset": "H61",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 2,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-maximus-vi-impact",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "Maximus VI Impact",
+    "releaseYear": 2013,
+    "tdp_w": 10,
+    "specs": {
+      "socket": "LGA1150",
+      "chipset": "Z87",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "m2_slots": 1,
+      "sata_ports": 6,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-z87n-wifi",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-Z87N-WiFi",
+    "releaseYear": 2013,
+    "tdp_w": 9,
+    "specs": {
+      "socket": "LGA1150",
+      "chipset": "Z87",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "m2_slots": 1,
+      "sata_ports": 6,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-h87i-plus",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "H87I-Plus",
+    "releaseYear": 2013,
+    "tdp_w": 8,
+    "specs": {
+      "socket": "LGA1150",
+      "chipset": "H87",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 4,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-msi-b85m-g43",
+    "category": "motherboard",
+    "brand": "MSI",
+    "model": "B85M-G43",
+    "releaseYear": 2013,
+    "tdp_w": 8,
+    "specs": {
+      "socket": "LGA1150",
+      "chipset": "B85",
+      "form_factor": "mATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-h81m-a",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "H81M-A",
+    "releaseYear": 2013,
+    "tdp_w": 7,
+    "specs": {
+      "socket": "LGA1150",
+      "chipset": "H81",
+      "form_factor": "mATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 4,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-maximus-vii-ranger",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "Maximus VII Ranger",
+    "releaseYear": 2014,
+    "tdp_w": 11,
+    "specs": {
+      "socket": "LGA1150",
+      "chipset": "Z97",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "m2_slots": 1,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-maximus-vii-impact",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "Maximus VII Impact",
+    "releaseYear": 2014,
+    "tdp_w": 10,
+    "specs": {
+      "socket": "LGA1150",
+      "chipset": "Z97",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "m2_slots": 1,
+      "sata_ports": 6,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-z97n-gaming-5",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-Z97N-Gaming 5",
+    "releaseYear": 2014,
+    "tdp_w": 9,
+    "specs": {
+      "socket": "LGA1150",
+      "chipset": "Z97",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "m2_slots": 1,
+      "sata_ports": 4,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-msi-z97m-gaming",
+    "category": "motherboard",
+    "brand": "MSI",
+    "model": "Z97M Gaming",
+    "releaseYear": 2014,
+    "tdp_w": 10,
+    "specs": {
+      "socket": "LGA1150",
+      "chipset": "Z97",
+      "form_factor": "mATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-h97n-wifi",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-H97N-WiFi",
+    "releaseYear": 2014,
+    "tdp_w": 8,
+    "specs": {
+      "socket": "LGA1150",
+      "chipset": "H97",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "m2_slots": 1,
+      "sata_ports": 4,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-x99-m-ws",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "X99-M WS",
+    "releaseYear": 2014,
+    "tdp_w": 20,
+    "specs": {
+      "socket": "LGA2011-3",
+      "chipset": "X99",
+      "form_factor": "mATX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 64,
+      "m2_slots": 1,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-x99-a",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "X99-A",
+    "releaseYear": 2014,
+    "tdp_w": 20,
+    "specs": {
+      "socket": "LGA2011-3",
+      "chipset": "X99",
+      "form_factor": "ATX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 64,
+      "m2_slots": 1,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-msi-x99a-gaming-pro-carbon",
+    "category": "motherboard",
+    "brand": "MSI",
+    "model": "X99A Gaming Pro Carbon",
+    "releaseYear": 2016,
+    "tdp_w": 22,
+    "specs": {
+      "socket": "LGA2011-3",
+      "chipset": "X99",
+      "form_factor": "ATX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 128,
+      "m2_slots": 1,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asrock-x99e-itx-ac",
+    "category": "motherboard",
+    "brand": "ASRock",
+    "model": "X99E-ITX/ac",
+    "releaseYear": 2016,
+    "tdp_w": 18,
+    "specs": {
+      "socket": "LGA2011-3",
+      "chipset": "X99",
+      "form_factor": "ITX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 32,
+      "m2_slots": 1,
+      "sata_ports": 8,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-maximus-viii-impact",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "Maximus VIII Impact",
+    "releaseYear": 2015,
+    "tdp_w": 11,
+    "specs": {
+      "socket": "LGA1151",
+      "chipset": "Z170",
+      "form_factor": "ITX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 32,
+      "m2_slots": 1,
+      "sata_ports": 6,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-z170n-gaming-5",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-Z170N-Gaming 5",
+    "releaseYear": 2015,
+    "tdp_w": 10,
+    "specs": {
+      "socket": "LGA1151",
+      "chipset": "Z170",
+      "form_factor": "ITX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 32,
+      "m2_slots": 1,
+      "sata_ports": 4,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asrock-fatal1ty-z170-gaming-itx-ac",
+    "category": "motherboard",
+    "brand": "ASRock",
+    "model": "Fatal1ty Z170 Gaming-ITX/ac",
+    "releaseYear": 2015,
+    "tdp_w": 10,
+    "specs": {
+      "socket": "LGA1151",
+      "chipset": "Z170",
+      "form_factor": "ITX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 32,
+      "m2_slots": 1,
+      "sata_ports": 4,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-msi-z170m-mortar",
+    "category": "motherboard",
+    "brand": "MSI",
+    "model": "Z170M Mortar",
+    "releaseYear": 2015,
+    "tdp_w": 10,
+    "specs": {
+      "socket": "LGA1151",
+      "chipset": "Z170",
+      "form_factor": "mATX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 64,
+      "m2_slots": 1,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-h170m-plus",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "H170M-Plus",
+    "releaseYear": 2015,
+    "tdp_w": 8,
+    "specs": {
+      "socket": "LGA1151",
+      "chipset": "H170",
+      "form_factor": "mATX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 64,
+      "m2_slots": 1,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-h110m-a",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-H110M-A",
+    "releaseYear": 2015,
+    "tdp_w": 7,
+    "specs": {
+      "socket": "LGA1151",
+      "chipset": "H110",
+      "form_factor": "mATX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 32,
+      "sata_ports": 4,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-msi-b150m-mortar",
+    "category": "motherboard",
+    "brand": "MSI",
+    "model": "B150M Mortar",
+    "releaseYear": 2015,
+    "tdp_w": 8,
+    "specs": {
+      "socket": "LGA1151",
+      "chipset": "B150",
+      "form_factor": "mATX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 64,
+      "m2_slots": 1,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-evga-z170-ftw",
+    "category": "motherboard",
+    "brand": "EVGA",
+    "model": "Z170 FTW",
+    "releaseYear": 2015,
+    "tdp_w": 12,
+    "specs": {
+      "socket": "LGA1151",
+      "chipset": "Z170",
+      "form_factor": "ATX",
+      "ram_type": "DDR4",
+      "max_ram_gb": 64,
+      "m2_slots": 1,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-ma790gpt-ud3h",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-MA790GPT-UD3H",
+    "releaseYear": 2009,
+    "tdp_w": 13,
+    "specs": {
+      "socket": "AM3",
+      "chipset": "790GX",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-m4a79xtd-evo",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "M4A79XTD EVO",
+    "releaseYear": 2009,
+    "tdp_w": 12,
+    "specs": {
+      "socket": "AM3",
+      "chipset": "790X",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-890fxa-ud5",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-890FXA-UD5",
+    "releaseYear": 2010,
+    "tdp_w": 14,
+    "specs": {
+      "socket": "AM3",
+      "chipset": "890FX",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-890gpa-ud3h",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-890GPA-UD3H",
+    "releaseYear": 2010,
+    "tdp_w": 13,
+    "specs": {
+      "socket": "AM3",
+      "chipset": "890GX",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-870a-ud3",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-870A-UD3",
+    "releaseYear": 2010,
+    "tdp_w": 12,
+    "specs": {
+      "socket": "AM3",
+      "chipset": "870",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 16,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-m5a99x-evo",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "M5A99X EVO",
+    "releaseYear": 2011,
+    "tdp_w": 12,
+    "specs": {
+      "socket": "AM3+",
+      "chipset": "990X",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asrock-970-extreme4",
+    "category": "motherboard",
+    "brand": "ASRock",
+    "model": "970 Extreme4",
+    "releaseYear": 2011,
+    "tdp_w": 11,
+    "specs": {
+      "socket": "AM3+",
+      "chipset": "970",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 5,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-msi-990fxa-gd80",
+    "category": "motherboard",
+    "brand": "MSI",
+    "model": "990FXA-GD80",
+    "releaseYear": 2011,
+    "tdp_w": 13,
+    "specs": {
+      "socket": "AM3+",
+      "chipset": "990FX",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-asus-f2a85-v-pro",
+    "category": "motherboard",
+    "brand": "ASUS",
+    "model": "F2A85-V Pro",
+    "releaseYear": 2012,
+    "tdp_w": 10,
+    "specs": {
+      "socket": "FM2",
+      "chipset": "A85X",
+      "form_factor": "ATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 8,
+      "wifi": false,
+      "pcie_version": "2.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-f2a88xm-d3h",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-F2A88XM-D3H",
+    "releaseYear": 2014,
+    "tdp_w": 9,
+    "specs": {
+      "socket": "FM2+",
+      "chipset": "A88X",
+      "form_factor": "mATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 64,
+      "sata_ports": 6,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-f2a88xn-wifi",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-F2A88XN-WiFi",
+    "releaseYear": 2014,
+    "tdp_w": 8,
+    "specs": {
+      "socket": "FM2+",
+      "chipset": "A88X",
+      "form_factor": "ITX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 4,
+      "wifi": true,
+      "pcie_version": "3.0"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "mb-gigabyte-ga-f2a78m-hd2",
+    "category": "motherboard",
+    "brand": "Gigabyte",
+    "model": "GA-F2A78M-HD2",
+    "releaseYear": 2014,
+    "tdp_w": 8,
+    "specs": {
+      "socket": "FM2+",
+      "chipset": "A78",
+      "form_factor": "mATX",
+      "ram_type": "DDR3",
+      "max_ram_gb": 32,
+      "sata_ports": 4,
+      "wifi": false,
+      "pcie_version": "3.0"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  }
+]
