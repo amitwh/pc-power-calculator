@@ -11,14 +11,34 @@ test('home page shows the build picker and results panel', async ({ page }) => {
   await expect(page.getByRole('heading', { name: /Results/i }).first()).toBeVisible();
 });
 
-test('pick a CPU and see the component reflected in results', async ({ page }) => {
+test('pick a CPU via the searchable combobox and see it in results', async ({ page }) => {
   await page.goto('/');
-  await page.getByLabel(/Select CPU/i).selectOption('cpu-amd-ryzen-7-7800x3d');
-  // The selected model also appears as the <option> label of the <select>,
-  // which is closed/hidden. The visible ComponentCard renders the same text
-  // in a <span>, which is the second text node containing the model.
-  const matches = page.getByText(/Ryzen 7 7800X3D/i);
-  await expect(matches.nth(1)).toBeVisible();
+  // The catalog has 900+ CPUs and the listbox caps rendered options, so search
+  // first — the same way a real user narrows the list.
+  await page.getByRole('button', { name: /Select CPU/i }).click();
+  await page.getByRole('searchbox').fill('7800x3d');
+  await page.getByRole('option', { name: /Ryzen 7 7800X3D/i }).first().click();
+  await expect(page.getByText(/Ryzen 7 7800X3D/i).first()).toBeVisible();
+});
+
+test('results show PSU recommendation and overclock slider adjusts peak draw', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: /Select CPU/i }).click();
+  await page.getByRole('searchbox').fill('7800x3d');
+  await page.getByRole('option', { name: /Ryzen 7 7800X3D/i }).first().click();
+
+  const peakText = () =>
+    page
+      .getByText(/Peak draw \(all components at 100%\):/i)
+      .textContent()
+      .then((s) => Number(s?.match(/(\d+(?:\.\d+)?)\s*W\s*$/)?.[1]));
+
+  await expect(page.getByText(/Recommended PSU:/i)).toBeVisible();
+  const before = await peakText();
+  await page.getByLabel(/^CPU OC/i).fill('20');
+  await expect
+    .poll(peakText, { timeout: 5000 })
+    .toBeGreaterThan(before);
 });
 
 test('navigate to all five routes', async ({ page }) => {
@@ -33,6 +53,7 @@ test('navigate to all five routes', async ({ page }) => {
 
   await page.goto('/#/data');
   await expect(page.getByRole('heading', { name: /Data/i }).first()).toBeVisible();
+  await expect(page.getByText(/parts \(2000–2026\)/i)).toBeVisible();
 
   await page.goto('/#/about');
   await expect(page.getByRole('heading', { name: /About/i }).first()).toBeVisible();

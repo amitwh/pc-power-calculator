@@ -25,7 +25,7 @@ export default function About() {
       </Card>
       <Card>
         <CardTitle>Contribute</CardTitle>
-        <p className="text-sm">PRs welcome on <a className="text-brand" href="https://github.com/amitwh/pc-power-calculator">github.com/amitwh/pc-power-calculator</a>. Especially: new countries / states / components.</p>
+        <p className="text-sm">PRs welcome on <a className="text-brand-text underline underline-offset-2" href="https://github.com/amitwh/pc-power-calculator">github.com/amitwh/pc-power-calculator</a>. Especially: new countries / states / components.</p>
       </Card>
     </div>
   );

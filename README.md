@@ -69,7 +69,7 @@ npm run dev
 npm test                  # vitest unit + component
 npm run test:e2e          # playwright e2e (calculator + 5 routes)
 npm run test:a11y         # axe-core a11y scan of all routes
-npm run lighthouse        # lighthouse CI (perf >= 0.9, a11y >= 0.95, PWA >= 0.9)
+npm run lighthouse        # lighthouse assertions (perf >= 0.6, a11y >= 0.95)
 
 # build for production
 npm run build
@@ -82,17 +82,17 @@ Open http://localhost:5173 (dev) or http://localhost:4173 (preview) in your brow
 
 ---
 
-### CI thresholds (Lighthouse)
+### Lighthouse thresholds (local)
 
-The CI workflow runs `lhci autorun` against a local `npm run preview` server. The assertion thresholds in `.lighthouserc.json` are tuned for that constrained environment:
+`npm run lighthouse` runs `lhci autorun` against a local `npm run preview` server. The assertion thresholds in `.lighthouserc.json` are tuned for that constrained environment:
 
-| Category        | CI-local minScore | Production target (design spec §9.1) | Why |
+| Category        | Local minScore    | Production target (design spec §9.1) | Why |
 |-----------------|-------------------|---------------------------------------|-----|
-| Accessibility   | **0.95**          | 0.95                                  | Strict — enforced on every PR. |
-| Performance     | **0.6**           | 0.9                                   | CI headless Chrome runs under Lighthouse's "Slow 4G + 4x CPU throttling" which materially underestimates the real Cloudflare-served score. 0.6 is a smoke floor that catches regressions (oversized bundles, leaked images, blocking JS) without blocking on noise. |
+| Accessibility   | **0.95**          | 0.95                                  | Strict — the axe e2e suite enforces zero violations too. |
+| Performance     | **0.6**           | 0.9                                   | Headless Chrome runs under Lighthouse's "Slow 4G + 4x CPU throttling" which materially underestimates the real Cloudflare-served score. 0.6 is a smoke floor that catches regressions (oversized bundles, leaked images, blocking JS) without blocking on noise. |
 | PWA             | (not asserted)    | 0.9                                   | Lighthouse's PWA category audits require HTTPS; they don't run against `http://localhost`. Verify PWA score against the deployed URL with PageSpeed Insights or `npx lighthouse https://pcpower.concreteinfo.co.in --only-categories=pwa`. |
 
-If you raise the production performance target, also bump the CI smoke floor in `.lighthouserc.json`.
+If you raise the production performance target, also bump the local smoke floor in `.lighthouserc.json`.
 
 ---
 
@@ -108,7 +108,7 @@ The build is a pure static SPA — no server-side runtime, just `dist/` served b
 2. On every push to `main`, Coolify pulls the commit, runs the build (`npm ci && npm run build`), and rolls the new `dist/` out to the live container. Health check (`/`) must respond 200 within the timeout or the deploy rolls back.
 3. Cloudflare caches and serves the static assets at the edge. No origin pull happens for cache hits.
 
-> No GitHub Actions deploy job is required — Coolify does the build + deploy itself. The CI workflow at `.github/workflows/ci.yml` only validates (typecheck, unit, a11y, Lighthouse, build) on PRs and `main`.
+> There is no GitHub Actions workflow in this repo — Coolify does the build + deploy itself. Validation is local: `npm run typecheck`, `npm test`, `npm run test:e2e`, `npm run lighthouse`.
 
 ### Manual redeploy (current commit)
 
