@@ -1,0 +1,2345 @@
+[
+  {
+    "id": "cpu-amd-athlon-1000",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 1000",
+    "releaseYear": 2000,
+    "tdp_w": 54,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.0,
+      "boost_clock_ghz": null,
+      "socket": "Slot A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-1200",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 1200",
+    "releaseYear": 2000,
+    "tdp_w": 66,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-1400",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 1400",
+    "releaseYear": 2001,
+    "tdp_w": 72,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-duron-600",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Duron 600",
+    "releaseYear": 2000,
+    "tdp_w": 31,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 0.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-duron-800",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Duron 800",
+    "releaseYear": 2000,
+    "tdp_w": 33,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 0.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-duron-1000",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Duron 1000",
+    "releaseYear": 2001,
+    "tdp_w": 38,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-duron-1600",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Duron 1600",
+    "releaseYear": 2003,
+    "tdp_w": 57,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-duron-1800",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Duron 1800",
+    "releaseYear": 2003,
+    "tdp_w": 57,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-xp-1500+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon XP 1500+",
+    "releaseYear": 2001,
+    "tdp_w": 60,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.333,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-xp-1700+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon XP 1700+",
+    "releaseYear": 2001,
+    "tdp_w": 64,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.467,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-xp-1800+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon XP 1800+",
+    "releaseYear": 2001,
+    "tdp_w": 66,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.533,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-xp-2000+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon XP 2000+",
+    "releaseYear": 2002,
+    "tdp_w": 70,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.667,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-xp-2100+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon XP 2100+",
+    "releaseYear": 2002,
+    "tdp_w": 72,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.733,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-xp-2600+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon XP 2600+",
+    "releaseYear": 2002,
+    "tdp_w": 68,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.133,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-xp-2500+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon XP 2500+",
+    "releaseYear": 2003,
+    "tdp_w": 68,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.833,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-xp-3000+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon XP 3000+",
+    "releaseYear": 2003,
+    "tdp_w": 74,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.167,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-xp-3200+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon XP 3200+",
+    "releaseYear": 2003,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-athlon-xp-m-2500+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon XP-M 2500+",
+    "releaseYear": 2004,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.867,
+      "boost_clock_ghz": null,
+      "socket": "Socket A",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-sempron-2200+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Sempron 2200+",
+    "releaseYear": 2004,
+    "tdp_w": 62,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.5,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-sempron-2500+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Sempron 2500+",
+    "releaseYear": 2005,
+    "tdp_w": 62,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.75,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-sempron-3000+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Sempron 3000+",
+    "releaseYear": 2005,
+    "tdp_w": 62,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket A"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-sempron-64-3100+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Sempron 64 3100+",
+    "releaseYear": 2004,
+    "tdp_w": 62,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-sempron-64-3400+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Sempron 64 3400+",
+    "releaseYear": 2005,
+    "tdp_w": 62,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-sempron-64-3600+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Sempron 64 3600+",
+    "releaseYear": 2007,
+    "tdp_w": 62,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM2"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-sempron-le-1150",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Sempron LE-1150",
+    "releaseYear": 2007,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM2"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-mobile-sempron-3000+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Mobile Sempron 3000+",
+    "releaseYear": 2004,
+    "tdp_w": 25,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-mobile-sempron-3400+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Mobile Sempron 3400+",
+    "releaseYear": 2006,
+    "tdp_w": 25,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket S1",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-mobile-sempron-3600+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Mobile Sempron 3600+",
+    "releaseYear": 2007,
+    "tdp_w": 25,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket S1",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-2800+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 2800+",
+    "releaseYear": 2004,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-3200+-(clawhammer)",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 3200+ (ClawHammer)",
+    "releaseYear": 2003,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-3400+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 3400+",
+    "releaseYear": 2004,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-3000+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 3000+",
+    "releaseYear": 2005,
+    "tdp_w": 67,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-3200+-(venice)",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 3200+ (Venice)",
+    "releaseYear": 2005,
+    "tdp_w": 67,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-3500+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 3500+",
+    "releaseYear": 2004,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-3700+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 3700+",
+    "releaseYear": 2005,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-3800+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 3800+",
+    "releaseYear": 2005,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-4000+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 4000+",
+    "releaseYear": 2005,
+    "tdp_w": 104,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-mobile-athlon-64-2800+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Mobile Athlon 64 2800+",
+    "releaseYear": 2004,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-mobile-athlon-64-3400+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Mobile Athlon 64 3400+",
+    "releaseYear": 2004,
+    "tdp_w": 62,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-fx-51",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 FX-51",
+    "releaseYear": 2003,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 940"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-fx-55",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 FX-55",
+    "releaseYear": 2004,
+    "tdp_w": 104,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-fx-57",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 FX-57",
+    "releaseYear": 2005,
+    "tdp_w": 104,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-fx-60",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 FX-60",
+    "releaseYear": 2006,
+    "tdp_w": 110,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-fx-62",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 FX-62",
+    "releaseYear": 2006,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM2"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-fx-74",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 FX-74",
+    "releaseYear": 2007,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket 1207"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-x2-3600+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 X2 3600+",
+    "releaseYear": 2007,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 1.9,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM2"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-x2-4400+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 X2 4400+",
+    "releaseYear": 2005,
+    "tdp_w": 110,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-x2-4800+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 X2 4800+",
+    "releaseYear": 2005,
+    "tdp_w": 110,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-x2-5600+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 X2 5600+",
+    "releaseYear": 2006,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM2"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-64-x2-6400+",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 64 X2 6400+",
+    "releaseYear": 2007,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM2"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-x3-8400",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom X3 8400",
+    "releaseYear": 2008,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 3,
+      "threads": 3,
+      "base_clock_ghz": 2.1,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM2+"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-x3-8750",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom X3 8750",
+    "releaseYear": 2008,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 3,
+      "threads": 3,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM2+"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-x4-9550",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom X4 9550",
+    "releaseYear": 2008,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM2+"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-x4-9750",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom X4 9750",
+    "releaseYear": 2008,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM2+"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x2-550",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X2 550",
+    "releaseYear": 2009,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.1,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x2-555",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X2 555",
+    "releaseYear": 2010,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x3-720",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X3 720",
+    "releaseYear": 2009,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 3,
+      "threads": 3,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x4-810",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X4 810",
+    "releaseYear": 2009,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x4-900e",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X4 900e",
+    "releaseYear": 2009,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x4-925",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X4 925",
+    "releaseYear": 2009,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x4-945",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X4 945",
+    "releaseYear": 2009,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x4-970",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X4 970",
+    "releaseYear": 2011,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.5,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x4-975",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X4 975",
+    "releaseYear": 2011,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x6-1035t",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X6 1035T",
+    "releaseYear": 2010,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 6,
+      "threads": 6,
+      "base_clock_ghz": 2.6,
+      "boost_clock_ghz": 3.1,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x6-1075t",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X6 1075T",
+    "releaseYear": 2010,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 6,
+      "threads": 6,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": 3.5,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-phenom-ii-x6-1090t",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Phenom II X6 1090T",
+    "releaseYear": 2010,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 6,
+      "threads": 6,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": 3.6,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-ii-x2-240",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon II X2 240",
+    "releaseYear": 2009,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-ii-x2-250",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon II X2 250",
+    "releaseYear": 2009,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-ii-x3-425",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon II X3 425",
+    "releaseYear": 2009,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 3,
+      "threads": 3,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-ii-x4-600e",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon II X4 600e",
+    "releaseYear": 2010,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-ii-x4-635",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon II X4 635",
+    "releaseYear": 2010,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.9,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-ii-x4-645",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon II X4 645",
+    "releaseYear": 2010,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.1,
+      "boost_clock_ghz": null,
+      "socket": "Socket AM3"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-ii-x4-651",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon II X4 651",
+    "releaseYear": 2011,
+    "tdp_w": 100,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "FM1"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-ii-x4-740",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon II X4 740",
+    "releaseYear": 2012,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "FM2"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-ii-x4-750k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon II X4 750K",
+    "releaseYear": 2012,
+    "tdp_w": 100,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": 4.0,
+      "socket": "FM2"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-ii-x4-760k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon II X4 760K",
+    "releaseYear": 2013,
+    "tdp_w": 100,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.8,
+      "boost_clock_ghz": 4.1,
+      "socket": "FM2"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-5350",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 5350",
+    "releaseYear": 2014,
+    "tdp_w": 25,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.05,
+      "boost_clock_ghz": null,
+      "socket": "AM1",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-athlon-5370",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Athlon 5370",
+    "releaseYear": 2014,
+    "tdp_w": 25,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "AM1",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-fx-4170",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "FX-4170",
+    "releaseYear": 2012,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 4.2,
+      "boost_clock_ghz": 4.3,
+      "socket": "Socket AM3+"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-fx-4300",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "FX-4300",
+    "releaseYear": 2012,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.8,
+      "boost_clock_ghz": 4.0,
+      "socket": "Socket AM3+"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-fx-4350",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "FX-4350",
+    "releaseYear": 2013,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 4.0,
+      "boost_clock_ghz": 4.3,
+      "socket": "Socket AM3+"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-fx-6300",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "FX-6300",
+    "releaseYear": 2012,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 6,
+      "threads": 6,
+      "base_clock_ghz": 3.5,
+      "boost_clock_ghz": 4.1,
+      "socket": "Socket AM3+"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-fx-8300",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "FX-8300",
+    "releaseYear": 2013,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 8,
+      "threads": 8,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": 4.0,
+      "socket": "Socket AM3+"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-fx-8370",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "FX-8370",
+    "releaseYear": 2014,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 8,
+      "threads": 8,
+      "base_clock_ghz": 4.0,
+      "boost_clock_ghz": 4.3,
+      "socket": "Socket AM3+"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-fx-9370",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "FX-9370",
+    "releaseYear": 2013,
+    "tdp_w": 220,
+    "specs": {
+      "cores": 8,
+      "threads": 8,
+      "base_clock_ghz": 4.4,
+      "boost_clock_ghz": 4.7,
+      "socket": "Socket AM3+"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a4-3300",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A4-3300",
+    "releaseYear": 2011,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": null,
+      "socket": "FM1",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a6-3650",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A6-3650",
+    "releaseYear": 2011,
+    "tdp_w": 100,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.6,
+      "boost_clock_ghz": null,
+      "socket": "FM1",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a8-3800",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A8-3800",
+    "releaseYear": 2011,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 2.7,
+      "socket": "FM1",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a8-3850",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A8-3850",
+    "releaseYear": 2011,
+    "tdp_w": 100,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.9,
+      "boost_clock_ghz": null,
+      "socket": "FM1",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-e2-3200",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "E2-3200",
+    "releaseYear": 2011,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "FM1",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a4-5300",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A4-5300",
+    "releaseYear": 2012,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": 3.6,
+      "socket": "FM2",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a6-5400k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A6-5400K",
+    "releaseYear": 2012,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.6,
+      "boost_clock_ghz": 3.8,
+      "socket": "FM2",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a6-6400k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A6-6400K",
+    "releaseYear": 2013,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.9,
+      "boost_clock_ghz": 4.1,
+      "socket": "FM2",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a6-7400k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A6-7400K",
+    "releaseYear": 2015,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.5,
+      "boost_clock_ghz": 3.9,
+      "socket": "FM2+",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a8-5500",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A8-5500",
+    "releaseYear": 2012,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": 3.7,
+      "socket": "FM2",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a8-6600k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A8-6600K",
+    "releaseYear": 2013,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.9,
+      "boost_clock_ghz": 4.2,
+      "socket": "FM2",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a8-7600",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A8-7600",
+    "releaseYear": 2014,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.1,
+      "boost_clock_ghz": 3.8,
+      "socket": "FM2+",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a10-5800k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A10-5800K",
+    "releaseYear": 2012,
+    "tdp_w": 100,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.8,
+      "boost_clock_ghz": 4.2,
+      "socket": "FM2",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a10-7850k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A10-7850K",
+    "releaseYear": 2014,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.7,
+      "boost_clock_ghz": 4.0,
+      "socket": "FM2+",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a10-7860k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A10-7860K",
+    "releaseYear": 2016,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.6,
+      "boost_clock_ghz": 4.0,
+      "socket": "FM2+",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a10-7870k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A10-7870K",
+    "releaseYear": 2015,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.9,
+      "boost_clock_ghz": 4.1,
+      "socket": "FM2+",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-a10-7890k",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "A10-7890K",
+    "releaseYear": 2016,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 4.1,
+      "boost_clock_ghz": 4.3,
+      "socket": "FM2+",
+      "igpu": true
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-turion-64-mt-32",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Turion 64 MT-32",
+    "releaseYear": 2005,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754",
+      "form_factor": "mobile"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-turion-64-mt-40",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Turion 64 MT-40",
+    "releaseYear": 2005,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754",
+      "form_factor": "mobile"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-turion-64-ml-40",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Turion 64 ML-40",
+    "releaseYear": 2005,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 754",
+      "form_factor": "mobile"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-turion-64-x2-tl-56",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Turion 64 X2 TL-56",
+    "releaseYear": 2006,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket S1",
+      "form_factor": "mobile"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-turion-64-x2-tl-60",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Turion 64 X2 TL-60",
+    "releaseYear": 2006,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket S1",
+      "form_factor": "mobile"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-amd-turion-x2-ultra-zm-86",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Turion X2 Ultra ZM-86",
+    "releaseYear": 2008,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket S1",
+      "form_factor": "mobile"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-144",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 144",
+    "releaseYear": 2004,
+    "tdp_w": 85,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 940"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-165",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 165",
+    "releaseYear": 2005,
+    "tdp_w": 110,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 939"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-244",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 244",
+    "releaseYear": 2003,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 940"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-248",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 248",
+    "releaseYear": 2004,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 940"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-252",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 252",
+    "releaseYear": 2005,
+    "tdp_w": 92,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket 940"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-842",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 842",
+    "releaseYear": 2003,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket 940"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-844",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 844",
+    "releaseYear": 2003,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 940"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-848",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 848",
+    "releaseYear": 2004,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket 940"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-1210",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 1210",
+    "releaseYear": 2006,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket F"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-1218",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 1218",
+    "releaseYear": 2006,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket F"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-1222",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 1222",
+    "releaseYear": 2007,
+    "tdp_w": 103,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket F"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-2427",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 2427",
+    "releaseYear": 2009,
+    "tdp_w": 75,
+    "specs": {
+      "cores": 6,
+      "threads": 6,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket F"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-2431",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 2431",
+    "releaseYear": 2009,
+    "tdp_w": 75,
+    "specs": {
+      "cores": 6,
+      "threads": 6,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket F"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-2439-se",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 2439 SE",
+    "releaseYear": 2009,
+    "tdp_w": 105,
+    "specs": {
+      "cores": 6,
+      "threads": 6,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket F"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-6128",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 6128",
+    "releaseYear": 2010,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 8,
+      "threads": 8,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket G34"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-6168",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 6168",
+    "releaseYear": 2010,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 12,
+      "threads": 12,
+      "base_clock_ghz": 1.9,
+      "boost_clock_ghz": null,
+      "socket": "Socket G34"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-6176",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 6176",
+    "releaseYear": 2010,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 12,
+      "threads": 12,
+      "base_clock_ghz": 2.3,
+      "boost_clock_ghz": null,
+      "socket": "Socket G34"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-6180-se",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 6180 SE",
+    "releaseYear": 2010,
+    "tdp_w": 140,
+    "specs": {
+      "cores": 12,
+      "threads": 12,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": null,
+      "socket": "Socket G34"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-6272",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 6272",
+    "releaseYear": 2011,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 16,
+      "threads": 16,
+      "base_clock_ghz": 2.1,
+      "boost_clock_ghz": null,
+      "socket": "Socket G34"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-6276",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 6276",
+    "releaseYear": 2011,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 16,
+      "threads": 16,
+      "base_clock_ghz": 2.3,
+      "boost_clock_ghz": null,
+      "socket": "Socket G34"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-6282-se",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 6282 SE",
+    "releaseYear": 2012,
+    "tdp_w": 140,
+    "specs": {
+      "cores": 16,
+      "threads": 16,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket G34"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-3250-he",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 3250 HE",
+    "releaseYear": 2012,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": 3.5,
+      "socket": "Socket AM3+"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-3260-he",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 3260 HE",
+    "releaseYear": 2012,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": 3.7,
+      "socket": "Socket AM3+"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-3280",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 3280",
+    "releaseYear": 2012,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 8,
+      "threads": 8,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 2.7,
+      "socket": "Socket AM3+"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-6328",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 6328",
+    "releaseYear": 2012,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 8,
+      "threads": 8,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket G34"
+    },
+    "source": "amd.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-6348",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 6348",
+    "releaseYear": 2013,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 12,
+      "threads": 12,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket G34"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-4308",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 4308",
+    "releaseYear": 2012,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": 3.7,
+      "socket": "Socket C32"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-amd-opteron-4310-ee",
+    "category": "cpu",
+    "brand": "AMD",
+    "model": "Opteron 4310 EE",
+    "releaseYear": 2012,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": 3.0,
+      "socket": "Socket C32"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  }
+]

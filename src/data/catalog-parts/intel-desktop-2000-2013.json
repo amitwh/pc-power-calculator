@@ -1,0 +1,2011 @@
+[
+  {
+    "id": "cpu-intel-pentium-iii-933",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium III 933",
+    "releaseYear": 2000,
+    "tdp_w": 26,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 0.93,
+      "boost_clock_ghz": null,
+      "socket": "Socket 370"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-iii-1000",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium III 1000",
+    "releaseYear": 2000,
+    "tdp_w": 33,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket 370"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-1-5",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 1.5",
+    "releaseYear": 2000,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.5,
+      "boost_clock_ghz": null,
+      "socket": "Socket 423"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-1-7",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 1.7",
+    "releaseYear": 2001,
+    "tdp_w": 64,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.7,
+      "boost_clock_ghz": null,
+      "socket": "Socket 423"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-18a",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 1.8A",
+    "releaseYear": 2002,
+    "tdp_w": 49,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-20a",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 2.0A",
+    "releaseYear": 2002,
+    "tdp_w": 53,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-24b",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 2.4B",
+    "releaseYear": 2002,
+    "tdp_w": 59,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-24c",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 2.4C",
+    "releaseYear": 2003,
+    "tdp_w": 69.7,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-28c",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 2.8C",
+    "releaseYear": 2003,
+    "tdp_w": 69.7,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-30c",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 3.0C",
+    "releaseYear": 2003,
+    "tdp_w": 81.9,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-32c",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 3.2C",
+    "releaseYear": 2003,
+    "tdp_w": 82,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-24a",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 2.4A",
+    "releaseYear": 2004,
+    "tdp_w": 84,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-28e",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 2.8E",
+    "releaseYear": 2004,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-30e",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 3.0E",
+    "releaseYear": 2004,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-32e",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 3.2E",
+    "releaseYear": 2004,
+    "tdp_w": 103,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-34e",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 3.4E",
+    "releaseYear": 2004,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-530",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 530",
+    "releaseYear": 2004,
+    "tdp_w": 84,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-540",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 540",
+    "releaseYear": 2004,
+    "tdp_w": 84,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-550",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 550",
+    "releaseYear": 2004,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-560",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 560",
+    "releaseYear": 2004,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.6,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-570",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 570",
+    "releaseYear": 2004,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.8,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-630",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 630",
+    "releaseYear": 2005,
+    "tdp_w": 84,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-640",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 640",
+    "releaseYear": 2005,
+    "tdp_w": 84,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-650",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 650",
+    "releaseYear": 2005,
+    "tdp_w": 84,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-660",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 660",
+    "releaseYear": 2005,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.6,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-670",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 670",
+    "releaseYear": 2005,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.8,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-631",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 631",
+    "releaseYear": 2006,
+    "tdp_w": 86,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-4-651",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4 651",
+    "releaseYear": 2006,
+    "tdp_w": 86,
+    "specs": {
+      "cores": 1,
+      "threads": 2,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-d-805",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium D 805",
+    "releaseYear": 2005,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.66,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-d-820",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium D 820",
+    "releaseYear": 2005,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-d-830",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium D 830",
+    "releaseYear": 2005,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-d-840",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium D 840",
+    "releaseYear": 2005,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-d-915",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium D 915",
+    "releaseYear": 2006,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-d-920",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium D 920",
+    "releaseYear": 2006,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-d-930",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium D 930",
+    "releaseYear": 2006,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-d-940",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium D 940",
+    "releaseYear": 2006,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-d-950",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium D 950",
+    "releaseYear": 2006,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-d-960",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium D 960",
+    "releaseYear": 2006,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.6,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-extreme-edition-840",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium Extreme Edition 840",
+    "releaseYear": 2005,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-pentium-extreme-edition-965",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium Extreme Edition 965",
+    "releaseYear": 2006,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.73,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-700",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron 700",
+    "releaseYear": 2000,
+    "tdp_w": 19,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 0.7,
+      "boost_clock_ghz": null,
+      "socket": "Socket 370"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-1-7",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron 1.7",
+    "releaseYear": 2002,
+    "tdp_w": 63,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.7,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-2-4",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron 2.4",
+    "releaseYear": 2003,
+    "tdp_w": 68,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-2-8",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron 2.8",
+    "releaseYear": 2004,
+    "tdp_w": 69,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-d-330",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron D 330",
+    "releaseYear": 2004,
+    "tdp_w": 73,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.66,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-d-336",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron D 336",
+    "releaseYear": 2005,
+    "tdp_w": 73,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-d-346",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron D 346",
+    "releaseYear": 2005,
+    "tdp_w": 73,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 3.06,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "techpowerup",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-d-352",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron D 352",
+    "releaseYear": 2006,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-d-356",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron D 356",
+    "releaseYear": 2006,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 3.33,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-420",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron 420",
+    "releaseYear": 2006,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-430",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron 430",
+    "releaseYear": 2007,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-440",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron 440",
+    "releaseYear": 2007,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-450",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron 450",
+    "releaseYear": 2008,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-e1200",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron E1200",
+    "releaseYear": 2008,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-e1400",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron E1400",
+    "releaseYear": 2008,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-e3200",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron E3200",
+    "releaseYear": 2009,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-e3300",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron E3300",
+    "releaseYear": 2009,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-celeron-e3400",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron E3400",
+    "releaseYear": 2010,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.6,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2duo-e4300",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo E4300",
+    "releaseYear": 2007,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2duo-e4400",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo E4400",
+    "releaseYear": 2007,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2duo-e4500",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo E4500",
+    "releaseYear": 2007,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2duo-e6750",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo E6750",
+    "releaseYear": 2007,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.66,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2duo-e6850",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo E6850",
+    "releaseYear": 2007,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2duo-e7200",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo E7200",
+    "releaseYear": 2008,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.53,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2duo-e7400",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo E7400",
+    "releaseYear": 2008,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2duo-e7500",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo E7500",
+    "releaseYear": 2009,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.93,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2duo-e8200",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo E8200",
+    "releaseYear": 2008,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.66,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2duo-e8300",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo E8300",
+    "releaseYear": 2008,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.83,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2quad-q9400",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Quad Q9400",
+    "releaseYear": 2008,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.66,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2quad-q9450",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Quad Q9450",
+    "releaseYear": 2008,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.66,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2extreme-qx6700",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Extreme QX6700",
+    "releaseYear": 2006,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.66,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2extreme-qx6850",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Extreme QX6850",
+    "releaseYear": 2007,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2extreme-qx9650",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Extreme QX9650",
+    "releaseYear": 2007,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-core2extreme-x6800",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Extreme X6800",
+    "releaseYear": 2006,
+    "tdp_w": 75,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.93,
+      "boost_clock_ghz": null,
+      "socket": "LGA775"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-930",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-930",
+    "releaseYear": 2010,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": 3.06,
+      "socket": "LGA1366"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-940",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-940",
+    "releaseYear": 2008,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.93,
+      "boost_clock_ghz": 3.2,
+      "socket": "LGA1366"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-975",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-975",
+    "releaseYear": 2010,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 3.33,
+      "boost_clock_ghz": 3.6,
+      "socket": "LGA1366"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-980x",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-980X",
+    "releaseYear": 2010,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock_ghz": 3.33,
+      "boost_clock_ghz": 3.6,
+      "socket": "LGA1366"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-990x",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-990X",
+    "releaseYear": 2011,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock_ghz": 3.46,
+      "boost_clock_ghz": 3.73,
+      "socket": "LGA1366"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-650",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-650",
+    "releaseYear": 2010,
+    "tdp_w": 73,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": 3.46,
+      "socket": "LGA1156",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-655k",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-655K",
+    "releaseYear": 2010,
+    "tdp_w": 73,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": 3.46,
+      "socket": "LGA1156",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-660",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-660",
+    "releaseYear": 2010,
+    "tdp_w": 73,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.33,
+      "boost_clock_ghz": 3.6,
+      "socket": "LGA1156",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-661",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-661",
+    "releaseYear": 2010,
+    "tdp_w": 73,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.33,
+      "boost_clock_ghz": 3.6,
+      "socket": "LGA1156",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-670",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-670",
+    "releaseYear": 2010,
+    "tdp_w": 73,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.47,
+      "boost_clock_ghz": 3.73,
+      "socket": "LGA1156",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-760",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-760",
+    "releaseYear": 2010,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": 3.46,
+      "socket": "LGA1156",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-860",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-860",
+    "releaseYear": 2009,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": 3.46,
+      "socket": "LGA1156",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i3-2100",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i3-2100",
+    "releaseYear": 2011,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.1,
+      "boost_clock_ghz": null,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i3-2105",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i3-2105",
+    "releaseYear": 2011,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.1,
+      "boost_clock_ghz": null,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i3-2120",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i3-2120",
+    "releaseYear": 2011,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": null,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i3-2125",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i3-2125",
+    "releaseYear": 2012,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": null,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-2300",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2300",
+    "releaseYear": 2011,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": 3.1,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-2310",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2310",
+    "releaseYear": 2011,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.9,
+      "boost_clock_ghz": 3.2,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-2320",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2320",
+    "releaseYear": 2011,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": 3.3,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-2390t",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2390T",
+    "releaseYear": 2012,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": 3.5,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-2400s",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2400S",
+    "releaseYear": 2011,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": 3.3,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-2405s",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2405S",
+    "releaseYear": 2011,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": 3.3,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-2450p",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2450P",
+    "releaseYear": 2012,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.1,
+      "boost_clock_ghz": 3.4,
+      "socket": "LGA1155",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-2500",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2500",
+    "releaseYear": 2011,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": 3.7,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-2550k",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2550K",
+    "releaseYear": 2012,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": 3.8,
+      "socket": "LGA1155",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-2600",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-2600",
+    "releaseYear": 2011,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": 3.8,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-3820",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-3820",
+    "releaseYear": 2012,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 3.6,
+      "boost_clock_ghz": 3.9,
+      "socket": "LGA2011",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-3930k",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-3930K",
+    "releaseYear": 2011,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock_ghz": 3.2,
+      "boost_clock_ghz": 3.8,
+      "socket": "LGA2011",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-3960x",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-3960X",
+    "releaseYear": 2011,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": 3.9,
+      "socket": "LGA2011",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-3970x",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-3970X",
+    "releaseYear": 2012,
+    "tdp_w": 150,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock_ghz": 3.5,
+      "boost_clock_ghz": 4.0,
+      "socket": "LGA2011",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i3-3225",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i3-3225",
+    "releaseYear": 2012,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": null,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i3-3240",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i3-3240",
+    "releaseYear": 2012,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": null,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-3330",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-3330",
+    "releaseYear": 2012,
+    "tdp_w": 77,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.0,
+      "boost_clock_ghz": 3.2,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-3350p",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-3350P",
+    "releaseYear": 2013,
+    "tdp_w": 69,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.1,
+      "boost_clock_ghz": 3.4,
+      "socket": "LGA1155",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-3450",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-3450",
+    "releaseYear": 2012,
+    "tdp_w": 77,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.1,
+      "boost_clock_ghz": 3.5,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-3550",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-3550",
+    "releaseYear": 2012,
+    "tdp_w": 77,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": 3.7,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i5-3570",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-3570",
+    "releaseYear": 2012,
+    "tdp_w": 77,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": 3.8,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-3770",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-3770",
+    "releaseYear": 2012,
+    "tdp_w": 77,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": 3.9,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-3770s",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-3770S",
+    "releaseYear": 2012,
+    "tdp_w": 65,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 3.1,
+      "boost_clock_ghz": 3.9,
+      "socket": "LGA1155",
+      "igpu": true
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-4820k",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-4820K",
+    "releaseYear": 2013,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 3.7,
+      "boost_clock_ghz": 3.9,
+      "socket": "LGA2011",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-4930k",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-4930K",
+    "releaseYear": 2013,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock_ghz": 3.4,
+      "boost_clock_ghz": 3.9,
+      "socket": "LGA2011",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-intel-i7-4960x",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-4960X",
+    "releaseYear": 2013,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock_ghz": 3.6,
+      "boost_clock_ghz": 4.0,
+      "socket": "LGA2011",
+      "igpu": false
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  }
+]

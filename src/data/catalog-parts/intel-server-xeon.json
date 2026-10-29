@@ -1,0 +1,1155 @@
+[
+  {
+    "id": "cpu-server-intel-xeon-2-4-ghz",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon 2.4 GHz",
+    "releaseYear": 2002,
+    "tdp_w": 76,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "socket": "Socket 603",
+      "segment": "server"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-3-06-ghz",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon 3.06 GHz",
+    "releaseYear": 2003,
+    "tdp_w": 81,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "socket": "Socket 603",
+      "segment": "server"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-mp-3-0-ghz",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon MP 3.0 GHz",
+    "releaseYear": 2004,
+    "tdp_w": 92,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "socket": "Socket 603",
+      "segment": "server"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-2-8-ghz",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon 2.8 GHz",
+    "releaseYear": 2004,
+    "tdp_w": 89,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "socket": "Socket 604",
+      "segment": "server"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-mp-7340",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon MP 7340",
+    "releaseYear": 2007,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "socket": "Socket 604",
+      "segment": "server"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-5160",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon 5160",
+    "releaseYear": 2006,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "socket": "LGA771",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-5310",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon 5310",
+    "releaseYear": 2006,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "socket": "LGA771",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5345",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5345",
+    "releaseYear": 2007,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "socket": "LGA771",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-x5365",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon X5365",
+    "releaseYear": 2007,
+    "tdp_w": 120,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "socket": "LGA771",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5420",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5420",
+    "releaseYear": 2007,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "socket": "LGA771",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-x5460",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon X5460",
+    "releaseYear": 2008,
+    "tdp_w": 120,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "socket": "LGA771",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5520",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5520",
+    "releaseYear": 2009,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "socket": "LGA1366",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-x5570",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon X5570",
+    "releaseYear": 2010,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "socket": "LGA1366",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5645",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5645",
+    "releaseYear": 2011,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "socket": "LGA1366",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-x5650",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon X5650",
+    "releaseYear": 2010,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "socket": "LGA1366",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-x5670",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon X5670",
+    "releaseYear": 2010,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "socket": "LGA1366",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-w3520",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon W3520",
+    "releaseYear": 2009,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "socket": "LGA1366",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-w3690",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon W3690",
+    "releaseYear": 2011,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "socket": "LGA1366",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2620",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2620",
+    "releaseYear": 2012,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2650",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2650",
+    "releaseYear": 2012,
+    "tdp_w": 95,
+    "specs": {
+      "cores": 8,
+      "threads": 16,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2670",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2670",
+    "releaseYear": 2012,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 8,
+      "threads": 16,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2680",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2680",
+    "releaseYear": 2012,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 8,
+      "threads": 16,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-e5-1650",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-1650",
+    "releaseYear": 2012,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "socket": "LGA2011",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-e5-1650v2",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-1650V2",
+    "releaseYear": 2013,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "socket": "LGA2011",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2620v2",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2620V2",
+    "releaseYear": 2013,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2680v2",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2680V2",
+    "releaseYear": 2013,
+    "tdp_w": 115,
+    "specs": {
+      "cores": 10,
+      "threads": 20,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2690v2",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2690V2",
+    "releaseYear": 2013,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 10,
+      "threads": 20,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2697v2",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2697V2",
+    "releaseYear": 2013,
+    "tdp_w": 130,
+    "specs": {
+      "cores": 12,
+      "threads": 24,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-e5-1650v3",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-1650V3",
+    "releaseYear": 2014,
+    "tdp_w": 140,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "socket": "LGA2011",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2630v3",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2630V3",
+    "releaseYear": 2014,
+    "tdp_w": 85,
+    "specs": {
+      "cores": 8,
+      "threads": 16,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2650v3",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2650V3",
+    "releaseYear": 2014,
+    "tdp_w": 105,
+    "specs": {
+      "cores": 10,
+      "threads": 20,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2680v3",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2680V3",
+    "releaseYear": 2014,
+    "tdp_w": 120,
+    "specs": {
+      "cores": 12,
+      "threads": 24,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2683v3",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2683V3",
+    "releaseYear": 2014,
+    "tdp_w": 120,
+    "specs": {
+      "cores": 14,
+      "threads": 28,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2699v3",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2699V3",
+    "releaseYear": 2014,
+    "tdp_w": 145,
+    "specs": {
+      "cores": 18,
+      "threads": 36,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2650v4",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2650V4",
+    "releaseYear": 2016,
+    "tdp_w": 105,
+    "specs": {
+      "cores": 12,
+      "threads": 24,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2680v4",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2680V4",
+    "releaseYear": 2016,
+    "tdp_w": 120,
+    "specs": {
+      "cores": 14,
+      "threads": 28,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2683v4",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2683V4",
+    "releaseYear": 2016,
+    "tdp_w": 120,
+    "specs": {
+      "cores": 16,
+      "threads": 32,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e5-2699v4",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E5-2699V4",
+    "releaseYear": 2016,
+    "tdp_w": 145,
+    "specs": {
+      "cores": 22,
+      "threads": 44,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e7-4820v2",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E7-4820V2",
+    "releaseYear": 2014,
+    "tdp_w": 105,
+    "specs": {
+      "cores": 8,
+      "threads": 16,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e7-8890v3",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E7-8890V3",
+    "releaseYear": 2015,
+    "tdp_w": 165,
+    "specs": {
+      "cores": 18,
+      "threads": 36,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-e7-8890v4",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E7-8890V4",
+    "releaseYear": 2016,
+    "tdp_w": 165,
+    "specs": {
+      "cores": 24,
+      "threads": 48,
+      "socket": "LGA2011",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-gold-6138",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Gold 6138",
+    "releaseYear": 2017,
+    "tdp_w": 125,
+    "specs": {
+      "cores": 20,
+      "threads": 40,
+      "socket": "LGA3647",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-silver-4110",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Silver 4110",
+    "releaseYear": 2017,
+    "tdp_w": 85,
+    "specs": {
+      "cores": 8,
+      "threads": 16,
+      "socket": "LGA3647",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-bronze-3104",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Bronze 3104",
+    "releaseYear": 2017,
+    "tdp_w": 85,
+    "specs": {
+      "cores": 6,
+      "threads": 6,
+      "socket": "LGA3647",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-platinum-8280",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Platinum 8280",
+    "releaseYear": 2019,
+    "tdp_w": 205,
+    "specs": {
+      "cores": 28,
+      "threads": 56,
+      "socket": "LGA3647",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-gold-6240",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Gold 6240",
+    "releaseYear": 2019,
+    "tdp_w": 150,
+    "specs": {
+      "cores": 18,
+      "threads": 36,
+      "socket": "LGA3647",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-gold-6248",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Gold 6248",
+    "releaseYear": 2019,
+    "tdp_w": 150,
+    "specs": {
+      "cores": 20,
+      "threads": 40,
+      "socket": "LGA3647",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-silver-4210",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Silver 4210",
+    "releaseYear": 2019,
+    "tdp_w": 85,
+    "specs": {
+      "cores": 10,
+      "threads": 20,
+      "socket": "LGA3647",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-platinum-8380",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Platinum 8380",
+    "releaseYear": 2021,
+    "tdp_w": 270,
+    "specs": {
+      "cores": 40,
+      "threads": 80,
+      "socket": "LGA4189",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-gold-6314u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Gold 6314U",
+    "releaseYear": 2021,
+    "tdp_w": 185,
+    "specs": {
+      "cores": 16,
+      "threads": 32,
+      "socket": "LGA4189",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-gold-6338",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Gold 6338",
+    "releaseYear": 2021,
+    "tdp_w": 185,
+    "specs": {
+      "cores": 32,
+      "threads": 64,
+      "socket": "LGA4189",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-silver-4310",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Silver 4310",
+    "releaseYear": 2021,
+    "tdp_w": 120,
+    "specs": {
+      "cores": 12,
+      "threads": 24,
+      "socket": "LGA4189",
+      "segment": "server"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-platinum-8468",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Platinum 8468",
+    "releaseYear": 2023,
+    "tdp_w": 330,
+    "specs": {
+      "cores": 48,
+      "threads": 96,
+      "socket": "LGA4677",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-platinum-8470",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Platinum 8470",
+    "releaseYear": 2023,
+    "tdp_w": 350,
+    "specs": {
+      "cores": 52,
+      "threads": 104,
+      "socket": "LGA4677",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-platinum-8480-plus",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Platinum 8480+",
+    "releaseYear": 2023,
+    "tdp_w": 350,
+    "specs": {
+      "cores": 56,
+      "threads": 112,
+      "socket": "LGA4677",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-gold-6426y",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Gold 6426Y",
+    "releaseYear": 2023,
+    "tdp_w": 200,
+    "specs": {
+      "cores": 24,
+      "threads": 48,
+      "socket": "LGA4677",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-gold-5416s",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Gold 5416S",
+    "releaseYear": 2023,
+    "tdp_w": 150,
+    "specs": {
+      "cores": 16,
+      "threads": 32,
+      "socket": "LGA4677",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-platinum-8568y-plus",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Platinum 8568Y+",
+    "releaseYear": 2023,
+    "tdp_w": 350,
+    "specs": {
+      "cores": 48,
+      "threads": 96,
+      "socket": "LGA4677",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-platinum-8592y-plus",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon Platinum 8592Y+",
+    "releaseYear": 2023,
+    "tdp_w": 350,
+    "specs": {
+      "cores": 64,
+      "threads": 128,
+      "socket": "LGA4677",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-6548y-plus",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon 6548Y+",
+    "releaseYear": 2024,
+    "tdp_w": 350,
+    "specs": {
+      "cores": 16,
+      "threads": 32,
+      "socket": "LGA4710",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-6732p",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon 6732P",
+    "releaseYear": 2024,
+    "tdp_w": 205,
+    "specs": {
+      "cores": 32,
+      "threads": 64,
+      "socket": "LGA4710",
+      "segment": "server"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-server-intel-xeon-6780e",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon 6780E",
+    "releaseYear": 2024,
+    "tdp_w": 400,
+    "specs": {
+      "cores": 144,
+      "threads": 144,
+      "socket": "LGA4710",
+      "segment": "server"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-w-2195",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon W-2195",
+    "releaseYear": 2017,
+    "tdp_w": 140,
+    "specs": {
+      "cores": 18,
+      "threads": 36,
+      "socket": "LGA2066",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-w-3365",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon W-3365",
+    "releaseYear": 2021,
+    "tdp_w": 250,
+    "specs": {
+      "cores": 24,
+      "threads": 48,
+      "socket": "LGA4189",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-w-2425",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon W-2425",
+    "releaseYear": 2023,
+    "tdp_w": 110,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "socket": "LGA4677",
+      "segment": "workstation"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-w-3475x",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon W-3475X",
+    "releaseYear": 2023,
+    "tdp_w": 300,
+    "specs": {
+      "cores": 36,
+      "threads": 72,
+      "socket": "LGA4677",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-w-3495x",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon W-3495X",
+    "releaseYear": 2023,
+    "tdp_w": 350,
+    "specs": {
+      "cores": 56,
+      "threads": 112,
+      "socket": "LGA4677",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-e3-1231v3",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E3-1231V3",
+    "releaseYear": 2014,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "socket": "LGA1150",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-e3-1270v3",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E3-1270V3",
+    "releaseYear": 2013,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "socket": "LGA1150",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-e3-1275v4",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E3-1275V4",
+    "releaseYear": 2015,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "socket": "LGA1150",
+      "segment": "workstation",
+      "igpu": true
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-e3-1230v5",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E3-1230V5",
+    "releaseYear": 2015,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "socket": "LGA1151",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-ws-intel-xeon-e3-1230v6",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Xeon E3-1230V6",
+    "releaseYear": 2017,
+    "tdp_w": 80,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "socket": "LGA1151",
+      "segment": "workstation"
+    },
+    "source": "ark.intel.com",
+    "addedAt": "2026-10-29"
+  }
+]

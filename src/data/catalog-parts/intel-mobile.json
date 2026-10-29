@@ -1,0 +1,1658 @@
+[
+  {
+    "id": "cpu-mobile-intel-pentium-iii-750",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Mobile Pentium III 750",
+    "releaseYear": 2000,
+    "tdp_w": 20,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 0.75,
+      "boost_clock_ghz": null,
+      "socket": "Socket 495",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-pentium-iii-1000",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Mobile Pentium III 1000",
+    "releaseYear": 2001,
+    "tdp_w": 28,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket 495",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-pentium-4-m-1-7-ghz",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium 4-M 1.7 GHz",
+    "releaseYear": 2002,
+    "tdp_w": 32,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.7,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-pentium-4-2-8-ghz",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Mobile Pentium 4 2.8 GHz",
+    "releaseYear": 2003,
+    "tdp_w": 66,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-celeron-700",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Mobile Celeron 700",
+    "releaseYear": 2001,
+    "tdp_w": 18,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 0.7,
+      "boost_clock_ghz": null,
+      "socket": "Socket 495",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-celeron-2-4-ghz",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Mobile Celeron 2.4 GHz",
+    "releaseYear": 2003,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket 478",
+      "form_factor": "mobile"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-pentium-m-715",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium M 715",
+    "releaseYear": 2003,
+    "tdp_w": 24.5,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.5,
+      "boost_clock_ghz": null,
+      "socket": "Socket 479",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-pentium-m-725",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium M 725",
+    "releaseYear": 2003,
+    "tdp_w": 24.5,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket 479",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-pentium-m-770",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium M 770",
+    "releaseYear": 2005,
+    "tdp_w": 27,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.13,
+      "boost_clock_ghz": null,
+      "socket": "Socket 479",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-pentium-m-780",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Pentium M 780",
+    "releaseYear": 2005,
+    "tdp_w": 27,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.26,
+      "boost_clock_ghz": null,
+      "socket": "Socket 479",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-celeron-m-420",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron M 420",
+    "releaseYear": 2006,
+    "tdp_w": 30,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket M",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-celeron-m-540",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron M 540",
+    "releaseYear": 2007,
+    "tdp_w": 30,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.86,
+      "boost_clock_ghz": null,
+      "socket": "Socket P",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-celeron-m-550",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Celeron M 550",
+    "releaseYear": 2007,
+    "tdp_w": 30,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket P",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-coreduo-t2050",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Duo T2050",
+    "releaseYear": 2006,
+    "tdp_w": 31,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": null,
+      "socket": "Socket M",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-coreduo-t2300",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Duo T2300",
+    "releaseYear": 2006,
+    "tdp_w": 31,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 1.66,
+      "boost_clock_ghz": null,
+      "socket": "Socket M",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-coreduo-t2500",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Duo T2500",
+    "releaseYear": 2006,
+    "tdp_w": 31,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket M",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-coresolo-t1300",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Solo T1300",
+    "releaseYear": 2006,
+    "tdp_w": 27,
+    "specs": {
+      "cores": 1,
+      "threads": 1,
+      "base_clock_ghz": 1.66,
+      "boost_clock_ghz": null,
+      "socket": "Socket M",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core2duo-t5500",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo T5500",
+    "releaseYear": 2006,
+    "tdp_w": 34,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 1.66,
+      "boost_clock_ghz": null,
+      "socket": "Socket P",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core2duo-t7200",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo T7200",
+    "releaseYear": 2006,
+    "tdp_w": 34,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": null,
+      "socket": "Socket P",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core2duo-t7400",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo T7400",
+    "releaseYear": 2006,
+    "tdp_w": 34,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.16,
+      "boost_clock_ghz": null,
+      "socket": "Socket P",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core2duo-p8400",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo P8400",
+    "releaseYear": 2008,
+    "tdp_w": 25,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.26,
+      "boost_clock_ghz": null,
+      "socket": "Socket P",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core2duo-p8600",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo P8600",
+    "releaseYear": 2008,
+    "tdp_w": 25,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": null,
+      "socket": "Socket P",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core2duo-p9500",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo P9500",
+    "releaseYear": 2008,
+    "tdp_w": 25,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.53,
+      "boost_clock_ghz": null,
+      "socket": "Socket P",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core2duo-p9700",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core 2 Duo P9700",
+    "releaseYear": 2009,
+    "tdp_w": 28,
+    "specs": {
+      "cores": 2,
+      "threads": 2,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": null,
+      "socket": "Socket P",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-720qm",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-720QM",
+    "releaseYear": 2009,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": 2.8,
+      "socket": "Socket G1",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-920xm",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-920XM",
+    "releaseYear": 2009,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": 3.2,
+      "socket": "Socket G1",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-2410m",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2410M",
+    "releaseYear": 2011,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 2.3,
+      "boost_clock_ghz": 2.9,
+      "socket": "FCPGA988",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-2450m",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-2450M",
+    "releaseYear": 2011,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": 3.1,
+      "socket": "FCPGA988",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-2620m",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-2620M",
+    "releaseYear": 2011,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": 3.4,
+      "socket": "FCPGA988",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-2670qm",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-2670QM",
+    "releaseYear": 2011,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": 3.1,
+      "socket": "FCPGA988",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-2920xm",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-2920XM",
+    "releaseYear": 2011,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": 3.5,
+      "socket": "FCPGA988",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-3210m",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-3210M",
+    "releaseYear": 2012,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": 3.1,
+      "socket": "FCPGA988",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-3317u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-3317U",
+    "releaseYear": 2012,
+    "tdp_w": 17,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 1.7,
+      "boost_clock_ghz": 2.6,
+      "socket": "BGA1023",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-3630qm",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-3630QM",
+    "releaseYear": 2012,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 3.4,
+      "socket": "FCPGA988",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-3632qm",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-3632QM",
+    "releaseYear": 2012,
+    "tdp_w": 35,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": 3.2,
+      "socket": "FCPGA988",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-3920xm",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-3920XM",
+    "releaseYear": 2012,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": 3.7,
+      "socket": "FCPGA988",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-4200u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-4200U",
+    "releaseYear": 2013,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": 2.6,
+      "socket": "BGA1168",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-4300u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-4300U",
+    "releaseYear": 2013,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 1.9,
+      "boost_clock_ghz": 2.9,
+      "socket": "BGA1168",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-4500u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-4500U",
+    "releaseYear": 2013,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": 3.0,
+      "socket": "BGA1168",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-4700hq",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-4700HQ",
+    "releaseYear": 2013,
+    "tdp_w": 47,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 3.4,
+      "socket": "BGA1168",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-4910mq",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-4910MQ",
+    "releaseYear": 2014,
+    "tdp_w": 47,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.9,
+      "boost_clock_ghz": 3.9,
+      "socket": "FCPGA946",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-5200u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-5200U",
+    "releaseYear": 2015,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 2.2,
+      "boost_clock_ghz": 2.7,
+      "socket": "BGA1168",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-5500u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-5500U",
+    "releaseYear": 2015,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 3.0,
+      "socket": "BGA1168",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-5700hq",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-5700HQ",
+    "releaseYear": 2015,
+    "tdp_w": 47,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": 3.5,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-6200u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-6200U",
+    "releaseYear": 2015,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 2.3,
+      "boost_clock_ghz": 2.8,
+      "socket": "BGA1356",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-6300hq",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-6300HQ",
+    "releaseYear": 2015,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.3,
+      "boost_clock_ghz": 3.2,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-6820hk",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-6820HK",
+    "releaseYear": 2015,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": 3.6,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-7200u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-7200U",
+    "releaseYear": 2016,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 2,
+      "threads": 4,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": 3.1,
+      "socket": "BGA1356",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-7300hq",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-7300HQ",
+    "releaseYear": 2017,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 4,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": 3.5,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-7820hk",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-7820HK",
+    "releaseYear": 2017,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.9,
+      "boost_clock_ghz": 3.9,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-8250u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-8250U",
+    "releaseYear": 2017,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": 3.4,
+      "socket": "BGA1528",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-8550u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-8550U",
+    "releaseYear": 2017,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": 4.0,
+      "socket": "BGA1528",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-8265u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-8265U",
+    "releaseYear": 2018,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": 3.9,
+      "socket": "BGA1528",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-8565u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-8565U",
+    "releaseYear": 2018,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": 4.6,
+      "socket": "BGA1528",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-8300h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-8300H",
+    "releaseYear": 2018,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.3,
+      "boost_clock_ghz": 4.0,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-9300h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-9300H",
+    "releaseYear": 2019,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 4.1,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-9750h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-9750H",
+    "releaseYear": 2019,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock_ghz": 2.6,
+      "boost_clock_ghz": 4.5,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i9-9880h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i9-9880H",
+    "releaseYear": 2019,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 8,
+      "threads": 16,
+      "base_clock_ghz": 2.3,
+      "boost_clock_ghz": 4.8,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-1035g1",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-1035G1",
+    "releaseYear": 2019,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 1.0,
+      "boost_clock_ghz": 3.6,
+      "socket": "BGA1526",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-1065g7",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-1065G7",
+    "releaseYear": 2019,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 1.3,
+      "boost_clock_ghz": 3.9,
+      "socket": "BGA1526",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-10510u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-10510U",
+    "releaseYear": 2019,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 1.8,
+      "boost_clock_ghz": 4.9,
+      "socket": "BGA1528",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-10850h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-10850H",
+    "releaseYear": 2020,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 6,
+      "threads": 12,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": 5.1,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-10875h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-10875H",
+    "releaseYear": 2020,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 8,
+      "threads": 16,
+      "base_clock_ghz": 2.3,
+      "boost_clock_ghz": 5.1,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i9-10980hk",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i9-10980HK",
+    "releaseYear": 2020,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 8,
+      "threads": 16,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 5.3,
+      "socket": "BGA1440",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-1135g7",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-1135G7",
+    "releaseYear": 2020,
+    "tdp_w": 28,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 4.2,
+      "socket": "BGA1449",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-1165g7",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-1165G7",
+    "releaseYear": 2020,
+    "tdp_w": 28,
+    "specs": {
+      "cores": 4,
+      "threads": 8,
+      "base_clock_ghz": 2.8,
+      "boost_clock_ghz": 4.7,
+      "socket": "BGA1449",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i9-11980hk",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i9-11980HK",
+    "releaseYear": 2021,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 8,
+      "threads": 16,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": 5.0,
+      "socket": "BGA1787",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-1235u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-1235U",
+    "releaseYear": 2022,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 10,
+      "threads": 12,
+      "base_clock_ghz": 1.3,
+      "boost_clock_ghz": 4.4,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-12450h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-12450H",
+    "releaseYear": 2022,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 8,
+      "threads": 12,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": 4.4,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-1255u",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-1255U",
+    "releaseYear": 2022,
+    "tdp_w": 15,
+    "specs": {
+      "cores": 10,
+      "threads": 12,
+      "base_clock_ghz": 1.7,
+      "boost_clock_ghz": 4.7,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-12650h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-12650H",
+    "releaseYear": 2022,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 10,
+      "threads": 16,
+      "base_clock_ghz": 2.3,
+      "boost_clock_ghz": 4.7,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-12800hx",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-12800HX",
+    "releaseYear": 2022,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 16,
+      "threads": 24,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": 4.8,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i9-12900hk",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i9-12900HK",
+    "releaseYear": 2022,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 14,
+      "threads": 20,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": 5.0,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i9-12950hx",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i9-12950HX",
+    "releaseYear": 2022,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 16,
+      "threads": 24,
+      "base_clock_ghz": 2.3,
+      "boost_clock_ghz": 5.0,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-13420h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-13420H",
+    "releaseYear": 2023,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 8,
+      "threads": 12,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 4.6,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i5-13620h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i5-13620H",
+    "releaseYear": 2023,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 10,
+      "threads": 16,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 4.9,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-13650hx",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-13650HX",
+    "releaseYear": 2023,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 14,
+      "threads": 20,
+      "base_clock_ghz": 2.6,
+      "boost_clock_ghz": 4.9,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-13700hx",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-13700HX",
+    "releaseYear": 2023,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 16,
+      "threads": 24,
+      "base_clock_ghz": 2.1,
+      "boost_clock_ghz": 5.0,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-13800h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-13800H",
+    "releaseYear": 2023,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 14,
+      "threads": 20,
+      "base_clock_ghz": 2.5,
+      "boost_clock_ghz": 5.2,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i9-13980hx",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i9-13980HX",
+    "releaseYear": 2023,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 24,
+      "threads": 32,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": 5.6,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i7-14700hx",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i7-14700HX",
+    "releaseYear": 2024,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 20,
+      "threads": 28,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": 5.5,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-i9-14900hx",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core i9-14900HX",
+    "releaseYear": 2024,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 24,
+      "threads": 32,
+      "base_clock_ghz": 1.6,
+      "boost_clock_ghz": 5.8,
+      "socket": "BGA1744",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core-ultra-5-135h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Ultra 5 135H",
+    "releaseYear": 2023,
+    "tdp_w": 28,
+    "specs": {
+      "cores": 14,
+      "threads": 18,
+      "base_clock_ghz": 1.7,
+      "boost_clock_ghz": 4.6,
+      "socket": "BGA2049",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core-ultra-7-165h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Ultra 7 165H",
+    "releaseYear": 2024,
+    "tdp_w": 28,
+    "specs": {
+      "cores": 16,
+      "threads": 22,
+      "base_clock_ghz": 3.6,
+      "boost_clock_ghz": 5.1,
+      "socket": "BGA2049",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core-ultra-5-228v",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Ultra 5 228V",
+    "releaseYear": 2024,
+    "tdp_w": 17,
+    "specs": {
+      "cores": 8,
+      "threads": 8,
+      "base_clock_ghz": 3.1,
+      "boost_clock_ghz": 4.5,
+      "socket": "BGA1923",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core-ultra-7-258v",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Ultra 7 258V",
+    "releaseYear": 2024,
+    "tdp_w": 17,
+    "specs": {
+      "cores": 8,
+      "threads": 8,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": 4.8,
+      "socket": "BGA1923",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core-ultra-7-268v",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Ultra 7 268V",
+    "releaseYear": 2024,
+    "tdp_w": 17,
+    "specs": {
+      "cores": 8,
+      "threads": 8,
+      "base_clock_ghz": 3.3,
+      "boost_clock_ghz": 5.0,
+      "socket": "BGA1923",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core-ultra-7-265hx",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Ultra 7 265HX",
+    "releaseYear": 2025,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 20,
+      "threads": 28,
+      "base_clock_ghz": 2.4,
+      "boost_clock_ghz": 5.4,
+      "socket": "BGA1964",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core-ultra-9-275hx",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Ultra 9 275HX",
+    "releaseYear": 2025,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 24,
+      "threads": 24,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": 5.4,
+      "socket": "BGA1964",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core-ultra-9-285hx",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Ultra 9 285HX",
+    "releaseYear": 2025,
+    "tdp_w": 55,
+    "specs": {
+      "cores": 24,
+      "threads": 24,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": 5.5,
+      "socket": "BGA1964",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core-ultra-7-255h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Ultra 7 255H",
+    "releaseYear": 2025,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 16,
+      "threads": 16,
+      "base_clock_ghz": 2.0,
+      "boost_clock_ghz": 5.1,
+      "socket": "BGA1964",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cpu-mobile-intel-core-ultra-9-285h",
+    "category": "cpu",
+    "brand": "Intel",
+    "model": "Core Ultra 9 285H",
+    "releaseYear": 2025,
+    "tdp_w": 45,
+    "specs": {
+      "cores": 16,
+      "threads": 16,
+      "base_clock_ghz": 2.7,
+      "boost_clock_ghz": 5.4,
+      "socket": "BGA1964",
+      "form_factor": "mobile"
+    },
+    "source": "intel-ark",
+    "addedAt": "2026-10-29"
+  }
+]

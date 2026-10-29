@@ -183,6 +183,16 @@ Open items tracked in the spec (license selection, server-workload scope refinem
 
 ---
 
+## 🖥️ Hardware catalog
+
+`src/data/components.json` holds **1,800+ parts spanning 2000–2026**: desktop / mobile / workstation / server CPUs (Pentium 4 through Core Ultra, Athlon XP through Ryzen 9000 / EPYC 9005), GPUs (GeForce 2 through RTX 50, Radeon 7000 through RX 9000, Intel Arc + iGPUs), motherboards, RAM (DDR–DDR5), storage (IDE→PCIe 5.0 NVMe), PSUs (incl. pre-80 PLUS generic units), coolers, monitors (CRT→OLED), UPS, optical drives, add-in cards and peripherals.
+
+- The catalog ships as its own code-split chunk loaded after first paint, and is precached by the service worker for offline use.
+- TDPs come from vendor spec sheets; estimates are marked `"source": "estimate"` in the entry.
+- To extend it, drop a JSON array file into `src/data/catalog-parts/` (see the instructions there) and run `node scripts/merge-catalog.mjs` — it validates the schema, dedupes by id and normalized `(category, brand, model)`, and rewrites `components.json`.
+
+---
+
 ## 🤝 Contributing
 
 Once the implementation lands, contributions are welcome — especially for:

@@ -1,0 +1,1672 @@
+[
+  {
+    "id": "psu-generic-atx-250w-2002",
+    "category": "psu",
+    "brand": "Generic",
+    "model": "ATX 250W (2002)",
+    "releaseYear": 2002,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 250,
+      "efficiency": "none",
+      "modular": "non-modular"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-generic-atx-300w-2004",
+    "category": "psu",
+    "brand": "Generic",
+    "model": "ATX 300W (2004)",
+    "releaseYear": 2004,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 300,
+      "efficiency": "none",
+      "modular": "non-modular"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-generic-atx-350w-2006",
+    "category": "psu",
+    "brand": "Generic",
+    "model": "ATX 350W (2006)",
+    "releaseYear": 2006,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 350,
+      "efficiency": "none",
+      "modular": "non-modular"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-generic-atx-400w-2008",
+    "category": "psu",
+    "brand": "Generic",
+    "model": "ATX 400W (2008)",
+    "releaseYear": 2008,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 400,
+      "efficiency": "none",
+      "modular": "non-modular"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-antec-truepower-430w",
+    "category": "psu",
+    "brand": "Antec",
+    "model": "TruePower 430W",
+    "releaseYear": 2003,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 430,
+      "efficiency": "none",
+      "modular": "non-modular"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-antec-neohe-500w",
+    "category": "psu",
+    "brand": "Antec",
+    "model": "NeoHE 500W",
+    "releaseYear": 2006,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 500,
+      "efficiency": "80-plus",
+      "modular": "semi"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-seasonic-s12-500w",
+    "category": "psu",
+    "brand": "Seasonic",
+    "model": "S12 500W",
+    "releaseYear": 2005,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 500,
+      "efficiency": "80-plus",
+      "modular": "non-modular"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-seasonic-m12ii-620-bronze",
+    "category": "psu",
+    "brand": "Seasonic",
+    "model": "M12II 620 Bronze",
+    "releaseYear": 2009,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 620,
+      "efficiency": "Bronze",
+      "modular": "semi"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-corsair-tx650-2008",
+    "category": "psu",
+    "brand": "Corsair",
+    "model": "TX650",
+    "releaseYear": 2008,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 650,
+      "efficiency": "80-plus",
+      "modular": "non-modular"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-corsair-tx750-v2",
+    "category": "psu",
+    "brand": "Corsair",
+    "model": "TX750 V2",
+    "releaseYear": 2011,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 750,
+      "efficiency": "Bronze",
+      "modular": "non-modular"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-corsair-cx500-2011",
+    "category": "psu",
+    "brand": "Corsair",
+    "model": "CX500",
+    "releaseYear": 2011,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 500,
+      "efficiency": "Bronze",
+      "modular": "non-modular"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-corsair-cx750-2017",
+    "category": "psu",
+    "brand": "Corsair",
+    "model": "CX750",
+    "releaseYear": 2017,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 750,
+      "efficiency": "Bronze",
+      "modular": "non-modular"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-corsair-rm650x-2018",
+    "category": "psu",
+    "brand": "Corsair",
+    "model": "RM650x (2018)",
+    "releaseYear": 2018,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 650,
+      "efficiency": "Gold",
+      "modular": "full"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-corsair-rm750x-2018",
+    "category": "psu",
+    "brand": "Corsair",
+    "model": "RM750x (2018)",
+    "releaseYear": 2018,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 750,
+      "efficiency": "Gold",
+      "modular": "full"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-corsair-rm850x-2018",
+    "category": "psu",
+    "brand": "Corsair",
+    "model": "RM850x (2018)",
+    "releaseYear": 2018,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 850,
+      "efficiency": "Gold",
+      "modular": "full"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-corsair-rm1000x-2018",
+    "category": "psu",
+    "brand": "Corsair",
+    "model": "RM1000x (2018)",
+    "releaseYear": 2018,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 1000,
+      "efficiency": "Gold",
+      "modular": "full"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-corsair-hx1000i-2022",
+    "category": "psu",
+    "brand": "Corsair",
+    "model": "HX1000i (2022)",
+    "releaseYear": 2022,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 1000,
+      "efficiency": "Platinum",
+      "modular": "full"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-corsair-sf750-2018",
+    "category": "psu",
+    "brand": "Corsair",
+    "model": "SF750",
+    "releaseYear": 2018,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 750,
+      "efficiency": "Platinum",
+      "modular": "full"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-seasonic-focus-gx-750",
+    "category": "psu",
+    "brand": "Seasonic",
+    "model": "Focus GX-750",
+    "releaseYear": 2019,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 750,
+      "efficiency": "Gold",
+      "modular": "full"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-bequiet-pure-power-11-600w",
+    "category": "psu",
+    "brand": "be quiet!",
+    "model": "Pure Power 11 600W",
+    "releaseYear": 2018,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 600,
+      "efficiency": "Gold",
+      "modular": "non-modular"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-evga-supernova-750-g2",
+    "category": "psu",
+    "brand": "EVGA",
+    "model": "SuperNOVA 750 G2",
+    "releaseYear": 2014,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 750,
+      "efficiency": "Gold",
+      "modular": "full"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-evga-600b",
+    "category": "psu",
+    "brand": "EVGA",
+    "model": "600B",
+    "releaseYear": 2015,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 600,
+      "efficiency": "Bronze",
+      "modular": "non-modular"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-superflower-leadex-iii-850w",
+    "category": "psu",
+    "brand": "Super Flower",
+    "model": "Leadex III 850W",
+    "releaseYear": 2021,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 850,
+      "efficiency": "Gold",
+      "modular": "full"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-coolermaster-mwe-650-white-v2",
+    "category": "psu",
+    "brand": "Cooler Master",
+    "model": "MWE 650 White V2",
+    "releaseYear": 2020,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 650,
+      "efficiency": "80-plus",
+      "modular": "non-modular"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "psu-fsp-dagger-pro-650w-sfx",
+    "category": "psu",
+    "brand": "FSP",
+    "model": "Dagger Pro 650W SFX",
+    "releaseYear": 2021,
+    "tdp_w": 0,
+    "specs": {
+      "wattage_w": 650,
+      "efficiency": "Gold"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-generic-intel-lga775-stock",
+    "category": "cooler",
+    "brand": "Generic",
+    "model": "Intel LGA775 Stock Cooler",
+    "releaseYear": 2004,
+    "tdp_w": 2,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 95
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-generic-amd-athlon-64-stock",
+    "category": "cooler",
+    "brand": "Generic",
+    "model": "AMD Athlon 64 Stock Cooler",
+    "releaseYear": 2004,
+    "tdp_w": 2,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 89
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-generic-intel-lga115x-stock",
+    "category": "cooler",
+    "brand": "Generic",
+    "model": "Intel LGA115x Stock Cooler",
+    "releaseYear": 2009,
+    "tdp_w": 2,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 84
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-amd-wraith-stealth",
+    "category": "cooler",
+    "brand": "AMD",
+    "model": "Wraith Stealth",
+    "releaseYear": 2016,
+    "tdp_w": 3,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 65
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-thermalright-xp-90",
+    "category": "cooler",
+    "brand": "Thermalright",
+    "model": "XP-90",
+    "releaseYear": 2004,
+    "tdp_w": 3,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 115
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-thermalright-ultra-120-extreme",
+    "category": "cooler",
+    "brand": "Thermalright",
+    "model": "Ultra-120 eXtreme",
+    "releaseYear": 2007,
+    "tdp_w": 3,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 160
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-thermalright-peerless-assassin-120-se",
+    "category": "cooler",
+    "brand": "Thermalright",
+    "model": "Peerless Assassin 120 SE",
+    "releaseYear": 2022,
+    "tdp_w": 6,
+    "specs": {
+      "type": "air",
+      "fan_count": 2,
+      "tdp_rating_w": 245
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-coolermaster-hyper-212",
+    "category": "cooler",
+    "brand": "Cooler Master",
+    "model": "Hyper 212",
+    "releaseYear": 2009,
+    "tdp_w": 3,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 150
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-coolermaster-hyper-212-evo",
+    "category": "cooler",
+    "brand": "Cooler Master",
+    "model": "Hyper 212 EVO",
+    "releaseYear": 2011,
+    "tdp_w": 3,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 180
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-coolermaster-hyper-212-black",
+    "category": "cooler",
+    "brand": "Cooler Master",
+    "model": "Hyper 212 Black Edition",
+    "releaseYear": 2019,
+    "tdp_w": 3,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 175
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-noctua-nh-u12s",
+    "category": "cooler",
+    "brand": "Noctua",
+    "model": "NH-U12S",
+    "releaseYear": 2013,
+    "tdp_w": 3,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 180
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-noctua-nh-d14",
+    "category": "cooler",
+    "brand": "Noctua",
+    "model": "NH-D14",
+    "releaseYear": 2009,
+    "tdp_w": 6,
+    "specs": {
+      "type": "air",
+      "fan_count": 2,
+      "tdp_rating_w": 165
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-noctua-nh-l9i",
+    "category": "cooler",
+    "brand": "Noctua",
+    "model": "NH-L9i",
+    "releaseYear": 2013,
+    "tdp_w": 2,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 65
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-arctic-freezer-7-pro",
+    "category": "cooler",
+    "brand": "Arctic",
+    "model": "Freezer 7 Pro",
+    "releaseYear": 2007,
+    "tdp_w": 3,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 95
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-arctic-freezer-34-esports",
+    "category": "cooler",
+    "brand": "Arctic",
+    "model": "Freezer 34 eSports",
+    "releaseYear": 2018,
+    "tdp_w": 3,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 210
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-deepcool-ak400",
+    "category": "cooler",
+    "brand": "Deepcool",
+    "model": "AK400",
+    "releaseYear": 2022,
+    "tdp_w": 3,
+    "specs": {
+      "type": "air",
+      "fan_count": 1,
+      "tdp_rating_w": 220
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-deepcool-ak620",
+    "category": "cooler",
+    "brand": "Deepcool",
+    "model": "AK620",
+    "releaseYear": 2022,
+    "tdp_w": 6,
+    "specs": {
+      "type": "air",
+      "fan_count": 2,
+      "tdp_rating_w": 260
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-corsair-h60",
+    "category": "cooler",
+    "brand": "Corsair",
+    "model": "H60",
+    "releaseYear": 2011,
+    "tdp_w": 10,
+    "specs": {
+      "type": "aio",
+      "fan_count": 1,
+      "tdp_rating_w": 150
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-corsair-h80i-gt",
+    "category": "cooler",
+    "brand": "Corsair",
+    "model": "H80i GT",
+    "releaseYear": 2015,
+    "tdp_w": 10,
+    "specs": {
+      "type": "aio",
+      "fan_count": 1,
+      "tdp_rating_w": 200
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-corsair-h100i",
+    "category": "cooler",
+    "brand": "Corsair",
+    "model": "H100i",
+    "releaseYear": 2012,
+    "tdp_w": 13,
+    "specs": {
+      "type": "aio",
+      "fan_count": 2,
+      "tdp_rating_w": 250
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-corsair-h115i",
+    "category": "cooler",
+    "brand": "Corsair",
+    "model": "H115i",
+    "releaseYear": 2016,
+    "tdp_w": 13,
+    "specs": {
+      "type": "aio",
+      "fan_count": 2,
+      "tdp_rating_w": 280
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-nzxt-kraken-x53",
+    "category": "cooler",
+    "brand": "NZXT",
+    "model": "Kraken X53",
+    "releaseYear": 2020,
+    "tdp_w": 10,
+    "specs": {
+      "type": "aio",
+      "fan_count": 1,
+      "tdp_rating_w": 200
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-nzxt-kraken-x63",
+    "category": "cooler",
+    "brand": "NZXT",
+    "model": "Kraken X63",
+    "releaseYear": 2020,
+    "tdp_w": 13,
+    "specs": {
+      "type": "aio",
+      "fan_count": 2,
+      "tdp_rating_w": 250
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-nzxt-kraken-z73",
+    "category": "cooler",
+    "brand": "NZXT",
+    "model": "Kraken Z73",
+    "releaseYear": 2020,
+    "tdp_w": 16,
+    "specs": {
+      "type": "aio",
+      "fan_count": 3,
+      "tdp_rating_w": 250
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-arctic-liquid-freezer-ii-240",
+    "category": "cooler",
+    "brand": "Arctic",
+    "model": "Liquid Freezer II 240",
+    "releaseYear": 2019,
+    "tdp_w": 13,
+    "specs": {
+      "type": "aio",
+      "fan_count": 2,
+      "tdp_rating_w": 250
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "cooler-arctic-liquid-freezer-ii-360",
+    "category": "cooler",
+    "brand": "Arctic",
+    "model": "Liquid Freezer II 360",
+    "releaseYear": 2019,
+    "tdp_w": 16,
+    "specs": {
+      "type": "aio",
+      "fan_count": 3,
+      "tdp_rating_w": 350
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-sony-trinitron-g220r",
+    "category": "monitor",
+    "brand": "Sony",
+    "model": "Trinitron G220R",
+    "releaseYear": 2002,
+    "tdp_w": 70,
+    "specs": {
+      "type": "CRT",
+      "size_in": 17,
+      "resolution": "1024x768",
+      "refresh_hz": 85,
+      "panel_w": 70,
+      "panel_type": "CRT"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-lg-flatron-795ft-plus",
+    "category": "monitor",
+    "brand": "LG",
+    "model": "Flatron 795FT Plus",
+    "releaseYear": 2001,
+    "tdp_w": 70,
+    "specs": {
+      "type": "CRT",
+      "size_in": 17,
+      "resolution": "1024x768",
+      "refresh_hz": 85,
+      "panel_w": 70,
+      "panel_type": "CRT"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-samsung-syncmaster-793df",
+    "category": "monitor",
+    "brand": "Samsung",
+    "model": "SyncMaster 793DF",
+    "releaseYear": 2003,
+    "tdp_w": 70,
+    "specs": {
+      "type": "CRT",
+      "size_in": 17,
+      "resolution": "1024x768",
+      "refresh_hz": 85,
+      "panel_w": 70,
+      "panel_type": "CRT"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-sony-gdm-fw900",
+    "category": "monitor",
+    "brand": "Sony",
+    "model": "GDM-FW900",
+    "releaseYear": 2001,
+    "tdp_w": 120,
+    "specs": {
+      "type": "CRT",
+      "size_in": 24,
+      "resolution": "1920x1200",
+      "refresh_hz": 96,
+      "panel_w": 120,
+      "panel_type": "CRT"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-dell-ultrasharp-1703fp",
+    "category": "monitor",
+    "brand": "Dell",
+    "model": "UltraSharp 1703FP",
+    "releaseYear": 2003,
+    "tdp_w": 30,
+    "specs": {
+      "type": "LCD",
+      "size_in": 17,
+      "resolution": "1280x1024",
+      "refresh_hz": 60,
+      "panel_w": 30
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-dell-ultrasharp-1905fp",
+    "category": "monitor",
+    "brand": "Dell",
+    "model": "UltraSharp 1905FP",
+    "releaseYear": 2004,
+    "tdp_w": 35,
+    "specs": {
+      "type": "LCD",
+      "size_in": 19,
+      "resolution": "1280x1024",
+      "refresh_hz": 60,
+      "panel_w": 35
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-samsung-syncmaster-940bw",
+    "category": "monitor",
+    "brand": "Samsung",
+    "model": "SyncMaster 940BW",
+    "releaseYear": 2006,
+    "tdp_w": 35,
+    "specs": {
+      "type": "LCD",
+      "size_in": 19,
+      "resolution": "1440x900",
+      "refresh_hz": 60,
+      "panel_w": 35,
+      "panel_type": "TN"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-hp-w2207",
+    "category": "monitor",
+    "brand": "HP",
+    "model": "w2207",
+    "releaseYear": 2007,
+    "tdp_w": 45,
+    "specs": {
+      "type": "LCD",
+      "size_in": 22,
+      "resolution": "1680x1050",
+      "refresh_hz": 60,
+      "panel_w": 45,
+      "panel_type": "TN"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-samsung-syncmaster-226bw",
+    "category": "monitor",
+    "brand": "Samsung",
+    "model": "SyncMaster 226BW",
+    "releaseYear": 2007,
+    "tdp_w": 45,
+    "specs": {
+      "type": "LCD",
+      "size_in": 22,
+      "resolution": "1680x1050",
+      "refresh_hz": 60,
+      "panel_w": 45,
+      "panel_type": "TN"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-dell-ultrasharp-2407wfp",
+    "category": "monitor",
+    "brand": "Dell",
+    "model": "UltraSharp 2407WFP",
+    "releaseYear": 2006,
+    "tdp_w": 55,
+    "specs": {
+      "type": "LCD",
+      "size_in": 24,
+      "resolution": "1920x1200",
+      "refresh_hz": 60,
+      "panel_w": 55
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-dell-ultrasharp-u2410",
+    "category": "monitor",
+    "brand": "Dell",
+    "model": "UltraSharp U2410",
+    "releaseYear": 2009,
+    "tdp_w": 45,
+    "specs": {
+      "type": "LCD",
+      "size_in": 24,
+      "resolution": "1920x1200",
+      "refresh_hz": 60,
+      "panel_w": 45,
+      "panel_type": "IPS"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-asus-vg248qe",
+    "category": "monitor",
+    "brand": "ASUS",
+    "model": "VG248QE",
+    "releaseYear": 2013,
+    "tdp_w": 45,
+    "specs": {
+      "type": "LCD",
+      "size_in": 24,
+      "resolution": "1920x1080",
+      "refresh_hz": 144,
+      "panel_w": 45,
+      "panel_type": "TN"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-asus-pb278q",
+    "category": "monitor",
+    "brand": "ASUS",
+    "model": "PB278Q",
+    "releaseYear": 2013,
+    "tdp_w": 40,
+    "specs": {
+      "type": "LCD",
+      "size_in": 27,
+      "resolution": "2560x1440",
+      "refresh_hz": 60,
+      "panel_w": 40,
+      "panel_type": "PLS"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-dell-ultrasharp-u2515h",
+    "category": "monitor",
+    "brand": "Dell",
+    "model": "UltraSharp U2515H",
+    "releaseYear": 2015,
+    "tdp_w": 35,
+    "specs": {
+      "type": "LCD",
+      "size_in": 25,
+      "resolution": "2560x1440",
+      "refresh_hz": 60,
+      "panel_w": 35,
+      "panel_type": "IPS"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-lg-27gl850-b",
+    "category": "monitor",
+    "brand": "LG",
+    "model": "27GL850-B UltraGear",
+    "releaseYear": 2019,
+    "tdp_w": 35,
+    "specs": {
+      "type": "LCD",
+      "size_in": 27,
+      "resolution": "2560x1440",
+      "refresh_hz": 144,
+      "panel_w": 35,
+      "panel_type": "IPS"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-asus-rog-swift-pg279q",
+    "category": "monitor",
+    "brand": "ASUS",
+    "model": "ROG Swift PG279Q",
+    "releaseYear": 2015,
+    "tdp_w": 50,
+    "specs": {
+      "type": "LCD",
+      "size_in": 27,
+      "resolution": "2560x1440",
+      "refresh_hz": 165,
+      "panel_w": 50,
+      "panel_type": "IPS"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-samsung-odyssey-g7-c27g75t",
+    "category": "monitor",
+    "brand": "Samsung",
+    "model": "Odyssey G7 C27G75T",
+    "releaseYear": 2020,
+    "tdp_w": 55,
+    "specs": {
+      "type": "LCD",
+      "size_in": 27,
+      "resolution": "2560x1440",
+      "refresh_hz": 240,
+      "panel_w": 55,
+      "panel_type": "VA"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-gigabyte-m28u",
+    "category": "monitor",
+    "brand": "Gigabyte",
+    "model": "M28U",
+    "releaseYear": 2021,
+    "tdp_w": 50,
+    "specs": {
+      "type": "LCD",
+      "size_in": 28,
+      "resolution": "3840x2160",
+      "refresh_hz": 144,
+      "panel_w": 50,
+      "panel_type": "IPS"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-dell-ultrasharp-u3415w",
+    "category": "monitor",
+    "brand": "Dell",
+    "model": "UltraSharp U3415W",
+    "releaseYear": 2015,
+    "tdp_w": 55,
+    "specs": {
+      "type": "LCD",
+      "size_in": 34,
+      "resolution": "3440x1440",
+      "refresh_hz": 60,
+      "panel_w": 55,
+      "panel_type": "IPS"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-alienware-aw3423dwf",
+    "category": "monitor",
+    "brand": "Alienware",
+    "model": "AW3423DWF",
+    "releaseYear": 2023,
+    "tdp_w": 60,
+    "specs": {
+      "type": "LCD",
+      "size_in": 34,
+      "resolution": "3440x1440",
+      "refresh_hz": 165,
+      "panel_w": 60,
+      "panel_type": "QD-OLED"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-samsung-odyssey-oled-g9",
+    "category": "monitor",
+    "brand": "Samsung",
+    "model": "Odyssey OLED G9 G95SC",
+    "releaseYear": 2023,
+    "tdp_w": 90,
+    "specs": {
+      "type": "LCD",
+      "size_in": 49,
+      "resolution": "5120x1440",
+      "refresh_hz": 240,
+      "panel_w": 90,
+      "panel_type": "QD-OLED"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "monitor-lg-c2-42-oled",
+    "category": "monitor",
+    "brand": "LG",
+    "model": "C2 42\" OLED",
+    "releaseYear": 2022,
+    "tdp_w": 100,
+    "specs": {
+      "type": "LCD",
+      "size_in": 42,
+      "resolution": "3840x2160",
+      "refresh_hz": 120,
+      "panel_w": 100,
+      "panel_type": "OLED"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "ups-cyberpower-cp685avr",
+    "category": "ups",
+    "brand": "CyberPower",
+    "model": "CP685AVR",
+    "releaseYear": 2010,
+    "tdp_w": 0,
+    "specs": {
+      "capacity_va": 685,
+      "capacity_w": 390
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "ups-cyberpower-cp1500pfclcd",
+    "category": "ups",
+    "brand": "CyberPower",
+    "model": "CP1500PFCLCD",
+    "releaseYear": 2013,
+    "tdp_w": 0,
+    "specs": {
+      "capacity_va": 1500,
+      "capacity_w": 1000
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "ups-eaton-5s-700",
+    "category": "ups",
+    "brand": "Eaton",
+    "model": "5S 700",
+    "releaseYear": 2015,
+    "tdp_w": 0,
+    "specs": {
+      "capacity_va": 700,
+      "capacity_w": 420
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "ups-apc-back-ups-es-725",
+    "category": "ups",
+    "brand": "APC",
+    "model": "Back-UPS ES 725",
+    "releaseYear": 2005,
+    "tdp_w": 0,
+    "specs": {
+      "capacity_va": 725,
+      "capacity_w": 450
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "ups-apc-smart-ups-sua750",
+    "category": "ups",
+    "brand": "APC",
+    "model": "Smart-UPS SUA750",
+    "releaseYear": 2004,
+    "tdp_w": 0,
+    "specs": {
+      "capacity_va": 750,
+      "capacity_w": 500
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "optical-lg-gce-8520b",
+    "category": "optical_drive",
+    "brand": "LG",
+    "model": "GCE-8520B 52x CD-RW",
+    "releaseYear": 2003,
+    "tdp_w": 10,
+    "specs": {
+      "type": "cd-rw"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "optical-sony-dru-510a",
+    "category": "optical_drive",
+    "brand": "Sony",
+    "model": "DRU-510A DVD±RW",
+    "releaseYear": 2003,
+    "tdp_w": 12,
+    "specs": {
+      "type": "dvd-rw"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "optical-pioneer-dvr-111d",
+    "category": "optical_drive",
+    "brand": "Pioneer",
+    "model": "DVR-111D DVD±RW",
+    "releaseYear": 2006,
+    "tdp_w": 12,
+    "specs": {
+      "type": "dvd-rw"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "optical-lg-gdr-8162b",
+    "category": "optical_drive",
+    "brand": "LG",
+    "model": "GDR-8162B 16x DVD-ROM",
+    "releaseYear": 2004,
+    "tdp_w": 10,
+    "specs": {
+      "type": "dvd"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "optical-samsung-sh-s223",
+    "category": "optical_drive",
+    "brand": "Samsung",
+    "model": "SH-S223 22x DVD±RW",
+    "releaseYear": 2009,
+    "tdp_w": 8,
+    "specs": {
+      "type": "dvd-rw"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-usrobotics-sportster-56k",
+    "category": "add_in_card",
+    "brand": "USRobotics",
+    "model": "Sportster 56K PCI",
+    "releaseYear": 2000,
+    "tdp_w": 3,
+    "specs": {
+      "interface": "PCI",
+      "function": "modem"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-realtek-rtl8139",
+    "category": "add_in_card",
+    "brand": "Realtek",
+    "model": "RTL8139 10/100 PCI",
+    "releaseYear": 2001,
+    "tdp_w": 2,
+    "specs": {
+      "interface": "PCI",
+      "function": "nic"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-intel-pro-1000-gt",
+    "category": "add_in_card",
+    "brand": "Intel",
+    "model": "PRO/1000 GT PCI",
+    "releaseYear": 2004,
+    "tdp_w": 3,
+    "specs": {
+      "interface": "PCI",
+      "function": "nic"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-tp-link-tl-wn851n",
+    "category": "add_in_card",
+    "brand": "TP-Link",
+    "model": "TL-WN851N",
+    "releaseYear": 2009,
+    "tdp_w": 3,
+    "specs": {
+      "interface": "PCI",
+      "function": "wifi-card"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-intel-wireless-ac-7260",
+    "category": "add_in_card",
+    "brand": "Intel",
+    "model": "Wireless-AC 7260",
+    "releaseYear": 2013,
+    "tdp_w": 4,
+    "specs": {
+      "interface": "PCIe-x1",
+      "function": "wifi-card"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-intel-wi-fi-6-ax200",
+    "category": "add_in_card",
+    "brand": "Intel",
+    "model": "Wi-Fi 6 AX200",
+    "releaseYear": 2019,
+    "tdp_w": 3,
+    "specs": {
+      "interface": "M.2-2230",
+      "function": "wifi-card"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-creative-sound-blaster-live",
+    "category": "add_in_card",
+    "brand": "Creative",
+    "model": "Sound Blaster Live!",
+    "releaseYear": 2000,
+    "tdp_w": 5,
+    "specs": {
+      "interface": "PCI",
+      "function": "sound-card"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-creative-sound-blaster-audigy-2-zs",
+    "category": "add_in_card",
+    "brand": "Creative",
+    "model": "Sound Blaster Audigy 2 ZS",
+    "releaseYear": 2003,
+    "tdp_w": 7,
+    "specs": {
+      "interface": "PCI",
+      "function": "sound-card"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-creative-sound-blaster-x-fi-xtremegamer",
+    "category": "add_in_card",
+    "brand": "Creative",
+    "model": "Sound Blaster X-Fi XtremeGamer",
+    "releaseYear": 2007,
+    "tdp_w": 8,
+    "specs": {
+      "interface": "PCI",
+      "function": "sound-card"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-hauppauge-wintv-hvr-1600",
+    "category": "add_in_card",
+    "brand": "Hauppauge",
+    "model": "WinTV-HVR-1600",
+    "releaseYear": 2008,
+    "tdp_w": 8,
+    "specs": {
+      "interface": "PCIe-x1",
+      "function": "tv-tuner"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-startech-4-port-usb3-pcie",
+    "category": "add_in_card",
+    "brand": "StarTech",
+    "model": "4-Port USB 3.0 PCIe",
+    "releaseYear": 2012,
+    "tdp_w": 4,
+    "specs": {
+      "interface": "PCIe-x1",
+      "function": "usb-card"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-lacie-firewire-400-pci",
+    "category": "add_in_card",
+    "brand": "LaCie",
+    "model": "FireWire 400 PCI",
+    "releaseYear": 2003,
+    "tdp_w": 3,
+    "specs": {
+      "interface": "PCI",
+      "function": "firewire-card"
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-lsi-megaraid-9260-8i",
+    "category": "add_in_card",
+    "brand": "LSI",
+    "model": "MegaRAID SAS 9260-8i",
+    "releaseYear": 2010,
+    "tdp_w": 18,
+    "specs": {
+      "interface": "PCIe-x8",
+      "function": "raid-card"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-avermedia-live-gamer-duo",
+    "category": "add_in_card",
+    "brand": "AVerMedia",
+    "model": "Live Gamer Duo",
+    "releaseYear": 2020,
+    "tdp_w": 10,
+    "specs": {
+      "interface": "PCIe-x1",
+      "function": "capture-card"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "addon-adaptec-scsi-card-29160",
+    "category": "add_in_card",
+    "brand": "Adaptec",
+    "model": "SCSI Card 29160",
+    "releaseYear": 2000,
+    "tdp_w": 5,
+    "specs": {
+      "interface": "PCI",
+      "function": "scsi-hba"
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-logitech-z-2300",
+    "category": "peripheral",
+    "brand": "Logitech",
+    "model": "Z-2300 2.1 Speakers",
+    "releaseYear": 2005,
+    "tdp_w": 50,
+    "specs": {
+      "type": "speakers",
+      "watts": 50
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-logitech-z313",
+    "category": "peripheral",
+    "brand": "Logitech",
+    "model": "Z313 2.1 Speakers",
+    "releaseYear": 2010,
+    "tdp_w": 30,
+    "specs": {
+      "type": "speakers",
+      "watts": 30
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-logitech-z906",
+    "category": "peripheral",
+    "brand": "Logitech",
+    "model": "Z906 5.1 Speakers",
+    "releaseYear": 2011,
+    "tdp_w": 60,
+    "specs": {
+      "type": "speakers",
+      "watts": 60
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-logitech-c920",
+    "category": "peripheral",
+    "brand": "Logitech",
+    "model": "C920 HD Pro Webcam",
+    "releaseYear": 2012,
+    "tdp_w": 5,
+    "specs": {
+      "type": "webcam",
+      "watts": 5
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-hp-laserjet-1320",
+    "category": "peripheral",
+    "brand": "HP",
+    "model": "LaserJet 1320",
+    "releaseYear": 2004,
+    "tdp_w": 50,
+    "specs": {
+      "type": "printer",
+      "watts": 50
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-canon-canoscan-lide-300",
+    "category": "peripheral",
+    "brand": "Canon",
+    "model": "CanoScan LiDE 300",
+    "releaseYear": 2019,
+    "tdp_w": 3,
+    "specs": {
+      "type": "scanner",
+      "watts": 3
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-microsoft-xbox-360-controller",
+    "category": "peripheral",
+    "brand": "Microsoft",
+    "model": "Xbox 360 Controller for Windows",
+    "releaseYear": 2005,
+    "tdp_w": 2,
+    "specs": {
+      "type": "gamepad",
+      "watts": 2
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-microsoft-xbox-one-controller",
+    "category": "peripheral",
+    "brand": "Microsoft",
+    "model": "Xbox One Controller",
+    "releaseYear": 2013,
+    "tdp_w": 3,
+    "specs": {
+      "type": "gamepad",
+      "watts": 3
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-wacom-intuos-s",
+    "category": "peripheral",
+    "brand": "Wacom",
+    "model": "Intuos S",
+    "releaseYear": 2019,
+    "tdp_w": 2,
+    "specs": {
+      "type": "drawing-tablet",
+      "watts": 2
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-generic-powered-usb-hub",
+    "category": "peripheral",
+    "brand": "Generic",
+    "model": "USB Hub (Powered)",
+    "releaseYear": 2005,
+    "tdp_w": 5,
+    "specs": {
+      "type": "usb-hub",
+      "watts": 5
+    },
+    "source": "estimate",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-wd-my-book-4tb",
+    "category": "peripheral",
+    "brand": "WD",
+    "model": "My Book 4TB",
+    "releaseYear": 2016,
+    "tdp_w": 8,
+    "specs": {
+      "type": "external-hdd",
+      "watts": 8
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  },
+  {
+    "id": "peripheral-logitech-g35",
+    "category": "peripheral",
+    "brand": "Logitech",
+    "model": "G35 Headset",
+    "releaseYear": 2009,
+    "tdp_w": 3,
+    "specs": {
+      "type": "headset",
+      "watts": 3
+    },
+    "source": "vendor-spec",
+    "addedAt": "2026-10-29"
+  }
+]
