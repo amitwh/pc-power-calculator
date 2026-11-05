@@ -21,4 +21,5 @@ test('renders brand link and nav items', () => {
   expect(screen.getAllByRole('link', { name: /Suggest/i }).length).toBeGreaterThanOrEqual(1);
   expect(screen.getAllByRole('link', { name: /Data/i }).length).toBeGreaterThanOrEqual(1);
   expect(screen.getAllByRole('link', { name: /About/i }).length).toBeGreaterThanOrEqual(1);
+  expect(screen.getAllByRole('link', { name: /Privacy/i }).length).toBeGreaterThanOrEqual(1);
 });

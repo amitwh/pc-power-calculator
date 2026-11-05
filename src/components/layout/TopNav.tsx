@@ -6,6 +6,7 @@ const items = [
   { to: '/suggestions', label: 'Suggest' },
   { to: '/data', label: 'Data' },
   { to: '/about', label: 'About' },
+  { to: '/privacy', label: 'Privacy' },
 ];
 
 export default function TopNav() {

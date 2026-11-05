@@ -6,6 +6,7 @@ import { usePageView } from '@/hooks/usePageView';
 import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
 import { CookieBanner } from '@/components/CookieBanner';
 import { PrivacyLink } from '@/components/PrivacyLink';
+import { AdSlot } from '@/components/ads/AdSlot';
 
 export default function Layout({ children }: { children: ReactNode }) {
   // Track meaningful user interactions so the install prompt only fires after
@@ -22,6 +23,9 @@ export default function Layout({ children }: { children: ReactNode }) {
             app. The branded logo in <TopNav /> remains the visible identity. */}
         <h1 className="sr-only">PC Power Calculator</h1>
         {children}
+        {/* Consent-gated ad placeholder — renders nothing until the deployment
+            sets VITE_ADSENSE_CLIENT and the user opts in. */}
+        <AdSlot className="mx-4 md:mx-8 mb-4" />
       </main>
       <MobileNav />
       <PWAInstallPrompt />

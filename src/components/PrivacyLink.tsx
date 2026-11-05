@@ -1,12 +1,15 @@
 import { GA4_ENABLED } from '@/lib/analytics/gtag';
+import { ADS_ENABLED } from '@/lib/analytics/adsense';
 import { getConsent } from '@/lib/analytics/consent';
 
-// Tiny floating "Privacy" link at the bottom of every page so users who
-// declined analytics can change their mind without a hidden settings route.
-// GDPR-aware — when GA is fully disabled (VITE_GA4_MEASUREMENT_ID unset),
-// the link is meaningless, so we render nothing.
+// Tiny floating "Manage privacy" link at the bottom of every page so users who
+// declined analytics/ads can change their mind without a hidden settings route.
+// The full privacy policy itself lives at #/privacy (linked from both navs and
+// the About page); this button exists to reopen the consent banner. When the
+// deployment enables neither GA4 nor AdSense, it is meaningless and renders
+// nothing.
 export function PrivacyLink() {
-  if (!GA4_ENABLED) return null;
+  if (!GA4_ENABLED && !ADS_ENABLED) return null;
 
   const reopenBanner = () => {
     localStorage.removeItem('pc-power-consent');

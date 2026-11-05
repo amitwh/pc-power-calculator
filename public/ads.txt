@@ -1,0 +1,8 @@
+# ads.txt — IAB Authorized Digital Sellers file for Google AdSense.
+#
+# After AdSense approval, uncomment the line below and replace
+# pub-0000000000000000 with your publisher ID (found in AdSense under
+# Account → Settings → Account information), then commit, push and redeploy.
+# Google's crawler must be able to fetch https://pcpower.concreteinfo.co.in/ads.txt
+#
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

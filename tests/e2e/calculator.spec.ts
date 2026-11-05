@@ -77,7 +77,7 @@ test('results show PSU recommendation and overclock slider adjusts peak draw', a
     .toBeGreaterThan(before);
 });
 
-test('navigate to all five routes', async ({ page }) => {
+test('navigate to all six routes', async ({ page }) => {
   await page.goto('/');
   await expect(page).toHaveURL(/\/$|#\/$/);
 
@@ -93,4 +93,8 @@ test('navigate to all five routes', async ({ page }) => {
 
   await page.goto('/#/about');
   await expect(page.getByRole('heading', { name: /About/i }).first()).toBeVisible();
+
+  await page.goto('/#/privacy');
+  await expect(page.getByRole('heading', { name: /Privacy Policy/i })).toBeVisible();
+  await expect(page.getByText(/Last updated/i)).toBeVisible();
 });

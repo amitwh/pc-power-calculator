@@ -5,6 +5,7 @@ import Compare from '@/pages/Compare';
 import Suggestions from '@/pages/Suggestions';
 import DataFreshness from '@/pages/DataFreshness';
 import About from '@/pages/About';
+import Privacy from '@/pages/Privacy';
 
 // Route tree only — no router wrapper. App.tsx wraps this in <HashRouter>
 // so the app uses hash URLs (#/compare) for static-host friendliness.
@@ -17,6 +18,7 @@ export default function AppRoutes() {
       <Route path="/suggestions" element={<Layout><Suggestions /></Layout>} />
       <Route path="/data" element={<Layout><DataFreshness /></Layout>} />
       <Route path="/about" element={<Layout><About /></Layout>} />
+      <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
     </Routes>
   );
 }

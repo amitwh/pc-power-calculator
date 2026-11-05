@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Card, CardTitle } from '@/components/ui/Card';
 
 export default function About() {
@@ -21,7 +22,37 @@ export default function About() {
       </Card>
       <Card>
         <CardTitle>Disclaimer</CardTitle>
-        <p className="text-sm">Numbers are estimates. Your actual electricity bill is the ground truth. Tariffs change frequently — always verify with your utility.</p>
+        <p className="text-sm">
+          All figures on this site — power draw, energy use, running cost, PSU sizing — are{' '}
+          <strong>estimates for information only</strong> and are not professional, electrical or
+          financial advice. Spec values are compiled from public sources and may be incomplete,
+          rounded or out of date; always verify against the manufacturer's datasheet before
+          purchase. For electrical work, UPS/inverter sizing or wiring decisions, consult a
+          qualified electrician. Tariff and FX data change frequently — your actual electricity
+          bill is always the ground truth. The service is provided “as is”, without warranty of any
+          kind.
+        </p>
+      </Card>
+      <Card>
+        <CardTitle>Trademarks</CardTitle>
+        <p className="text-sm">
+          All product names, logos, brands and trademarks (Intel, AMD, NVIDIA, Corsair, and every
+          other manufacturer mentioned) are the property of their respective owners. They are used
+          on this site solely to identify hardware components. PC Power Calculator is an
+          independent project and is <strong>not affiliated with, sponsored, or endorsed by</strong>{' '}
+          any hardware manufacturer or utility.
+        </p>
+      </Card>
+      <Card>
+        <CardTitle>Privacy</CardTitle>
+        <p className="text-sm">
+          Builds live only in your browser's local storage — nothing is uploaded. Details on
+          analytics, ads and your choices:{' '}
+          <Link to="/privacy" className="text-brand-text underline underline-offset-2">
+            Privacy policy
+          </Link>
+          .
+        </p>
       </Card>
       <Card>
         <CardTitle>Contribute</CardTitle>

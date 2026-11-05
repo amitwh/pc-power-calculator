@@ -308,7 +308,7 @@ export async function exportPdf(report: PdfReport): Promise<void> {
     doc.setFontSize(8);
     doc.setTextColor(...MUTED);
     doc.text(
-      pdfText('Estimates use manufacturer TDP ratings with workload utilization profiles; PSU efficiency and a 35% sizing margin are modeled.'),
+      pdfText('Estimates for information only — not electrical or financial advice; verify specs with manufacturers. PSU sizing includes a 35% safety margin.'),
       40,
       pageH - 32,
     );
