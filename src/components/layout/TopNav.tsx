@@ -4,6 +4,7 @@ const items = [
   { to: '/', label: 'Calculator', end: true },
   { to: '/compare', label: 'Compare' },
   { to: '/suggestions', label: 'Suggest' },
+  { to: '/guides', label: 'Guides' },
   { to: '/data', label: 'Data' },
   { to: '/about', label: 'About' },
   { to: '/privacy', label: 'Privacy' },

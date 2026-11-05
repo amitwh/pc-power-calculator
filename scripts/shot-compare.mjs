@@ -19,7 +19,7 @@ await page.getByLabel('System type').selectOption('workstation');
 await add('i3-12100', /Core i3-12100/);
 await page.getByLabel('Country').selectOption('US');
 
-await page.goto('http://localhost:4173/#/compare');
+await page.goto('http://localhost:4173/compare');
 await page.waitForLoadState('networkidle');
 await page.waitForTimeout(1200);
 await page.screenshot({ path: '/tmp/ui-compare.png', fullPage: true });

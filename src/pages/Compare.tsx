@@ -3,6 +3,7 @@ import { BuildSelector } from '@/components/compare/BuildSelector';
 import { ComparisonTable } from '@/components/compare/ComparisonTable';
 import { CompareVerdict } from '@/components/compare/CompareVerdict';
 import { Card, CardTitle } from '@/components/ui/Card';
+import { DeferInView } from '@/components/ui/DeferInView';
 import { useBuildStore } from '@/store/buildStore';
 import { currencyForLocation } from '@/lib/data/tariffs';
 import { computeEnergy } from '@/lib/calc/energy';
@@ -21,15 +22,15 @@ const ComparisonBars = lazy(() =>
 let importHandled = false;
 
 /**
- * Parse `#/compare?builds=<base64 json>` (the link embedded in exported HTML
- * files), add the build to the store, and return its id. Runs once, before
- * first render, so BuildSelector sees the imported build; wipes the query
- * from the URL so a reload can't duplicate the import.
+ * Parse `?builds=<base64 json>` (the link embedded in exported HTML files),
+ * add the build to the store, and return its id. Runs once, before first
+ * render, so BuildSelector sees the imported build; wipes the query from the
+ * URL so a reload can't duplicate the import.
  */
 function importBuildFromQuery(): string | null {
   if (importHandled) return null;
-  const hash = window.location.hash ?? '';
-  const m = hash.match(/[?&]builds=([^&]+)/);
+  const query = window.location.search ?? '';
+  const m = query.match(/[?&]builds=([^&]+)/);
   if (!m) return null;
   importHandled = true;
   try {
@@ -40,7 +41,7 @@ function importBuildFromQuery(): string | null {
     const before = new Set(useBuildStore.getState().builds.map((b) => b.id));
     useBuildStore.getState().importBuild(json);
     const added = useBuildStore.getState().builds.find((b) => !before.has(b.id));
-    window.history.replaceState(null, '', '#/compare');
+    window.history.replaceState(null, '', '/compare');
     return added?.id ?? null;
   } catch {
     return null;
@@ -96,9 +97,13 @@ export default function Compare() {
           <CompareVerdict builds={builds} displayCurrency={currency} fxSnapshot={snapshot} />
           <Card>
             <CardTitle>Yearly energy side by side</CardTitle>
-            <Suspense fallback={<div className="h-[280px] flex items-center justify-center text-sm text-gray-400">Loading chart...</div>}>
-              <ComparisonBars builds={yearlyKwh} />
-            </Suspense>
+            {/* Below the verdict tiles — defer the 900 KB chart bundle until
+                a visitor scrolls near it. */}
+            <DeferInView placeholder={<div className="h-[280px] flex items-center justify-center text-sm text-gray-400">Scroll to load chart…</div>}>
+              <Suspense fallback={<div className="h-[280px] flex items-center justify-center text-sm text-gray-400">Loading chart...</div>}>
+                <ComparisonBars builds={yearlyKwh} />
+              </Suspense>
+            </DeferInView>
           </Card>
           <Card>
             <CardTitle>

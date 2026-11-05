@@ -21,7 +21,7 @@ test('renders Compare on /compare', () => {
   expect(screen.getByRole('heading', { name: /Compare/i })).toBeInTheDocument();
 });
 
-describe('imported-build link (#/compare?builds=…)', () => {
+describe('imported-build link (/compare?builds=…)', () => {
   test('imports the build from the exported-HTML link and pre-selects it', () => {
     // Arrange a JSON payload exactly like buildExportHtml embeds.
     const build = {
@@ -36,7 +36,7 @@ describe('imported-build link (#/compare?builds=…)', () => {
     };
     const json = JSON.stringify({ version: 1, build });
     const b64 = btoa(json);
-    window.history.replaceState(null, '', `#/compare?builds=${encodeURIComponent(b64)}`);
+    window.history.replaceState(null, '', `/compare?builds=${encodeURIComponent(b64)}`);
 
     render(
       <MemoryRouter initialEntries={['/compare']}>
@@ -57,11 +57,11 @@ describe('imported-build link (#/compare?builds=…)', () => {
     expect(selectorB.value).toBe(imported!.id);
 
     // The query was wiped so a reload can't duplicate the import.
-    expect(window.location.hash).not.toContain('builds=');
+    expect(window.location.search).not.toContain('builds=');
   });
 
   test('malformed payload is ignored without breaking the page', () => {
-    window.history.replaceState(null, '', '#/compare?builds=!!!not-base64!!!');
+    window.history.replaceState(null, '', '/compare?builds=!!!not-base64!!!');
     render(
       <MemoryRouter initialEntries={['/compare']}>
         <Compare />

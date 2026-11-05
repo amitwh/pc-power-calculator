@@ -35,3 +35,25 @@ test('renders Privacy policy on /privacy', () => {
   expect(screen.getByRole('heading', { name: /Privacy Policy/i })).toBeInTheDocument();
   expect(screen.getByText(/Last updated/i)).toBeInTheDocument();
 });
+
+test('renders the guides hub on /guides', () => {
+  render(
+    <MemoryRouter initialEntries={['/guides']}>
+      <Routes />
+    </MemoryRouter>,
+  );
+  expect(screen.getByRole('heading', { name: /Guides & explainers/i })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /PSU sizing explained/i })).toBeInTheDocument();
+});
+
+test('renders a guide article on /guides/:slug', () => {
+  render(
+    <MemoryRouter initialEntries={['/guides/india-tariff']}>
+      <Routes />
+    </MemoryRouter>,
+  );
+  expect(
+    screen.getByRole('heading', { name: /Understanding your electricity bill in India/i }),
+  ).toBeInTheDocument();
+  expect(screen.getByText(/min read/i)).toBeInTheDocument();
+});

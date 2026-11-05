@@ -64,12 +64,12 @@ try {
   console.log('OK: custom device chip renders');
 
   // 6. Data freshness page shows catalog stats.
-  await page.goto(`${BASE}/#/data`);
+  await page.goto(`${BASE}/data`);
   await page.getByText(/parts \(2000–2026\)/i).waitFor({ timeout: 5000 });
   console.log('OK: data page shows catalog counts');
 
   // 7. Other routes render.
-  for (const [path, name] of [['/#/compare', /Compare/i], ['/#/suggestions', /Suggestions/i], ['/#/about', /About/i]]) {
+  for (const [path, name] of [['/compare', /Compare/i], ['/suggestions', /Suggestions/i], ['/about', /About/i]]) {
     await page.goto(`${BASE}${path}`);
     await page.getByRole('heading', { name }).first().waitFor({ timeout: 5000 });
   }

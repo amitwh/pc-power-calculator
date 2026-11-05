@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { getConsent, setConsent } from '@/lib/analytics/consent';
 import { grantAnalyticsConsent, denyAnalyticsConsent, loadGtag, GA4_ENABLED } from '@/lib/analytics/gtag';
@@ -24,7 +25,7 @@ export function CookieBanner() {
         data, no tracking across sites.
         {ADS_ENABLED && (
           <> Ads load only after you allow, and are served non-personalized. See the{' '}
-            <a className="underline underline-offset-2" href="#/privacy">privacy policy</a>.</>
+            <Link className="underline underline-offset-2" to="/privacy">privacy policy</Link>.</>
         )}
       </div>
       <div className="flex gap-2 mt-2">

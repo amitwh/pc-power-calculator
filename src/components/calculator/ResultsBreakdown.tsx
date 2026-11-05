@@ -4,6 +4,7 @@ import { listWorkloads } from '@/lib/data/workloads';
 import { categoryColor } from '@/lib/categoryColors';
 import { CASE_FANS_ID } from '@/lib/calc/energy';
 import { Card, CardTitle } from '@/components/ui/Card';
+import { DeferInView } from '@/components/ui/DeferInView';
 import type { Component } from '@/types/component';
 
 // ApexCharts is heavy — defer the chart bundle until this card actually
@@ -48,9 +49,13 @@ export function ResultsBreakdown() {
         <p className="text-xs text-gray-500 -mt-1 mb-1">
           Typical 70% load, per device — colors match the device list.
         </p>
-        <Suspense fallback={<div className="h-[260px] flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">Loading chart...</div>}>
-          <PowerBreakdown components={chartComponents} drawWByComponentId={componentsPowerW} qtyById={qtyById} colors={chartColors} />
-        </Suspense>
+        {/* Below the fold on most screens — DeferInView keeps the ~900 KB
+            chart chunk from loading until the visitor scrolls near it. */}
+        <DeferInView>
+          <Suspense fallback={<div className="h-[260px] flex items-center justify-center text-sm text-gray-600 dark:text-gray-400">Loading chart...</div>}>
+            <PowerBreakdown components={chartComponents} drawWByComponentId={componentsPowerW} qtyById={qtyById} colors={chartColors} />
+          </Suspense>
+        </DeferInView>
       </Card>
 
       <Card>

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-// The app uses hash-based routing (#/), so `page.goto('/')` lands on the Home
-// route. All e2e specs in this directory rely on the same convention.
+// The app uses BrowserRouter with real paths (vite preview and nginx both
+// fall back to the SPA shell). All e2e specs in this directory rely on that.
 
 test('home page shows the devices picker and results panel', async ({ page }) => {
   await page.goto('/');
@@ -77,24 +77,33 @@ test('results show PSU recommendation and overclock slider adjusts peak draw', a
     .toBeGreaterThan(before);
 });
 
-test('navigate to all six routes', async ({ page }) => {
+test('navigate to all routes', async ({ page }) => {
   await page.goto('/');
-  await expect(page).toHaveURL(/\/$|#\/$/);
+  await expect(page).toHaveURL(/\/$/);
 
-  await page.goto('/#/compare');
+  await page.goto('/compare');
   await expect(page.getByRole('heading', { name: /Compare/i }).first()).toBeVisible();
 
-  await page.goto('/#/suggestions');
+  await page.goto('/suggestions');
   await expect(page.getByRole('heading', { name: /Suggestions/i }).first()).toBeVisible();
 
-  await page.goto('/#/data');
+  await page.goto('/data');
   await expect(page.getByRole('heading', { name: /Data/i }).first()).toBeVisible();
   await expect(page.getByText(/parts \(2000–2026\)/i)).toBeVisible();
 
-  await page.goto('/#/about');
+  await page.goto('/about');
   await expect(page.getByRole('heading', { name: /About/i }).first()).toBeVisible();
 
-  await page.goto('/#/privacy');
+  await page.goto('/privacy');
   await expect(page.getByRole('heading', { name: /Privacy Policy/i })).toBeVisible();
   await expect(page.getByText(/Last updated/i)).toBeVisible();
+
+  await page.goto('/guides');
+  await expect(page.getByRole('heading', { name: /Guides/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /How much power does a gaming PC/i })).toBeVisible();
+
+  // Deep link renders the article, and links back to the calculator exist.
+  await page.goto('/guides/psu-sizing');
+  await expect(page.getByRole('heading', { name: /PSU sizing explained/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /^calculator$/i }).first()).toBeVisible();
 });

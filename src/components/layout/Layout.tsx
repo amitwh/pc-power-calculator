@@ -7,6 +7,7 @@ import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
 import { CookieBanner } from '@/components/CookieBanner';
 import { PrivacyLink } from '@/components/PrivacyLink';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { usePageMeta } from '@/hooks/usePageMeta';
 
 export default function Layout({ children }: { children: ReactNode }) {
   // Track meaningful user interactions so the install prompt only fires after
@@ -14,6 +15,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   useInteractionCounter('pc-power-install-prompt-count');
   // GA4 page_view tracker — gated by Consent Mode v2, no-op when consent is denied.
   usePageView();
+  // Per-route <title> + canonical link for crawlers that render JS.
+  usePageMeta();
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50">
       <TopNav />

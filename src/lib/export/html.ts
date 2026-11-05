@@ -90,7 +90,7 @@ export function buildExportHtml(
     <tr><td>Yearly</td><td>${formatKwh(results.yearly.total.kwh)}</td><td>${formatCost(results.yearly.total.cost, currency)}</td></tr>
   </tbody>
 </table>
-<a class="reimport" href="https://pcpower.concreteinfo.co.in/#/compare?builds=${encodeURIComponent(utf8ToBase64(json))}">Open in PC Power Calculator</a>
+<a class="reimport" href="https://pcpower.concreteinfo.co.in/compare?builds=${encodeURIComponent(utf8ToBase64(json))}">Open in PC Power Calculator</a>
 <script type="application/json" id="build-config">${safeJson}</script>
 </body>
 </html>`;

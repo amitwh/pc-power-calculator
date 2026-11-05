@@ -22,6 +22,10 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,json,svg,png,ico,webmanifest}'],
+        // BrowserRouter deep links (e.g. /compare) must serve the SPA shell
+        // offline too; ads.txt is a real crawl file and must never fall back.
+        navigateFallback: 'index.html',
+        navigateFallbackDenylist: [/^\/ads\.txt$/],
         runtimeCaching: [
           { urlPattern: /^https:\/\/ipapi\.co\//, handler: 'NetworkFirst', options: { cacheName: 'geo', networkTimeoutSeconds: 3 } },
         ],
