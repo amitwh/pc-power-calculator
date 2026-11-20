@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { GUIDES } from '@/pages/Guides';
 import { findComponent } from '@/lib/data/components';
+import { listTariffPages } from '@/lib/data/tariffPages';
 
 const SITE = 'https://pcpower.concreteinfo.co.in';
 
@@ -33,9 +34,11 @@ export function usePageMeta(): void {
       partId = undefined;
     }
     const part = partId ? findComponent(partId) : undefined;
+    const tariff = listTariffPages().find((ref) => ref.path === pathname);
     const title =
       guide?.title ??
       (part ? `${part.brand} ${part.model} power consumption & yearly cost` : undefined) ??
+      (tariff ? `Electricity cost of running a PC in ${tariff.label}` : undefined) ??
       TITLES.find(([re]) => re.test(pathname))?.[1] ??
       'PC Power Calculator';
     document.title = title;

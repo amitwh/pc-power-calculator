@@ -4,6 +4,10 @@ import AppRoutes from '@/routes';
 import { GUIDES } from '@/pages/Guides';
 import { initCatalog } from '@/lib/data/components';
 import { indexableParts } from '@/lib/data/partPages';
+import { listTariffPages } from '@/lib/data/tariffPages';
+import { resolveLocationTariff } from '@/lib/data/tariffs';
+import { findCurrency } from '@/lib/data/currencies';
+import { describeTariffRate } from '@/lib/calc/format';
 
 export const SITE = 'https://pcpower.concreteinfo.co.in';
 
@@ -198,7 +202,21 @@ export async function getRoutes(): Promise<RouteMeta[]> {
     };
   });
 
-  return [...ROUTES, ...partRoutes];
+  const tariffRoutes: RouteMeta[] = listTariffPages().map((ref) => {
+    const { rate } = resolveLocationTariff(ref.iso2, ref.subdivisionCode);
+    const currency = findCurrency(rate.currency) ?? findCurrency('USD')!;
+    return {
+      path: ref.path,
+      title: `Electricity cost of running a PC in ${ref.label}`,
+      description: `Electricity rates in ${ref.label}: ${describeTariffRate(rate, currency)}. What a 150 W, 350 W and 600 W PC costs per month at 4 h/day, with taxes.`,
+      ogType: 'website',
+      priority: 0.7,
+      changefreq: 'monthly',
+      jsonLd: [breadcrumbList([HOME_CRUMB, { name: ref.label, path: ref.path }])],
+    };
+  });
+
+  return [...ROUTES, ...partRoutes, ...tariffRoutes];
 }
 
 /**

@@ -19,6 +19,8 @@ export interface TariffDivision {
   code: string;
   name: string;
   rate: TariffRate;
+  /** Caveat specific to this subdivision, e.g. the DISCOM order it came from. */
+  notes?: string;
 }
 
 export interface TariffSchedule {

@@ -8,6 +8,7 @@ import About from '@/pages/About';
 import Privacy from '@/pages/Privacy';
 import Guides from '@/pages/Guides';
 import Part from '@/pages/Part';
+import Cost from '@/pages/Cost';
 
 // Route tree only — App.tsx wraps this in <BrowserRouter> (real paths like
 // /compare work thanks to the nginx SPA fallback + PWA navigateFallback;
@@ -25,6 +26,8 @@ export default function AppRoutes() {
       <Route path="/guides" element={<Layout><Guides /></Layout>} />
       <Route path="/guides/:slug" element={<Layout><Guides /></Layout>} />
       <Route path="/parts/:id" element={<Layout><Part /></Layout>} />
+      <Route path="/cost/:country" element={<Layout><Cost /></Layout>} />
+      <Route path="/cost/:country/:state" element={<Layout><Cost /></Layout>} />
     </Routes>
   );
 }

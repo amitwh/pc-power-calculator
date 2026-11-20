@@ -44,6 +44,20 @@ export function tariffsLastUpdated(): string {
   return (data as { lastUpdated: string }).lastUpdated;
 }
 
+/**
+ * The caveat attached to a location: the subdivision's own note when it has
+ * one (e.g. the MSEDCL slab caveat for Maharashtra), otherwise the country's.
+ */
+export function tariffNotes(iso2: string, subdivisionCode?: string): string | undefined {
+  const c = list.find((x) => x.country_iso2 === iso2);
+  if (!c) return undefined;
+  if (subdivisionCode) {
+    const sub = c.subdivisions?.find((s) => s.code === subdivisionCode);
+    if (sub?.notes) return sub.notes;
+  }
+  return c.notes;
+}
+
 /** Bundled fallback when a country has no schedule entry. */
 export const FALLBACK_TARIFF: TariffRate = { currency: 'USD', flat: 0.10 };
 
