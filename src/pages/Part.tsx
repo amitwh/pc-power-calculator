@@ -9,6 +9,8 @@ import { computeEnergy } from '@/lib/calc/energy';
 import { componentPowerW } from '@/lib/calc/power';
 import { formatCost, formatKwh } from '@/lib/calc/format';
 import { Card, CardTitle } from '@/components/ui/Card';
+import { AdSlot } from '@/components/ads/AdSlot';
+import { AD_SLOTS } from '@/lib/analytics/adsense';
 
 /** Catalog category → the build slot that holds one part of that category. */
 const SLOT_FOR_CATEGORY: Partial<Record<ComponentCategory, keyof BuildComponents>> = {
@@ -243,6 +245,9 @@ export default function Part() {
           </p>
         </Card>
       )}
+
+      {/* Below the cost table: the reader already has their answer. */}
+      <AdSlot slot={AD_SLOTS.partPage} />
 
       {specs.length > 0 && (
         <Card>

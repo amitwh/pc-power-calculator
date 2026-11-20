@@ -12,6 +12,8 @@ import {
 import { computeCost } from '@/lib/calc/cost';
 import { describeTariffRate, formatCost, formatKwh } from '@/lib/calc/format';
 import { Card, CardTitle } from '@/components/ui/Card';
+import { AdSlot } from '@/components/ads/AdSlot';
+import { AD_SLOTS } from '@/lib/analytics/adsense';
 
 /** Worked-example systems, sized at the wall. */
 const EXAMPLE_WATTS = [150, 350, 600] as const;
@@ -232,6 +234,9 @@ export default function Cost() {
           and its slab position depends on the rest of the household's use.
         </p>
       </Card>
+
+      {/* Below the worked examples: the reader already has their answer. */}
+      <AdSlot slot={AD_SLOTS.tariffPage} />
 
       <Card>
         <Link to="/" className="text-brand-text underline underline-offset-2 font-medium">

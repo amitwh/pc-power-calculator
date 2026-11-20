@@ -40,6 +40,14 @@ describe('AdSlot (deployment with VITE_ADSENSE_CLIENT set)', () => {
     expect(mockAdsense.loadAdsense).not.toHaveBeenCalled();
   });
 
+  test('renders nothing for a placement with no ad-unit id, even with consent', () => {
+    setConsent('granted');
+    render(<AdSlot />);
+    // An <ins> without data-ad-slot is an unfillable request, not a placeholder.
+    expect(document.querySelector('ins.adsbygoogle')).toBeNull();
+    expect(mockAdsense.loadAdsense).not.toHaveBeenCalled();
+  });
+
   test('with granted consent: injects the ad unit and queues the push', async () => {
     setConsent('granted');
     render(<AdSlot slot="1234567" />);

@@ -7,6 +7,7 @@ import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
 import { CookieBanner } from '@/components/CookieBanner';
 import { PrivacyLink } from '@/components/PrivacyLink';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { AD_SLOTS } from '@/lib/analytics/adsense';
 import { usePageMeta } from '@/hooks/usePageMeta';
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -28,7 +29,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         {children}
         {/* Consent-gated ad placeholder — renders nothing until the deployment
             sets VITE_ADSENSE_CLIENT and the user opts in. */}
-        <AdSlot className="mx-4 md:mx-8 mb-4" />
+        <AdSlot slot={AD_SLOTS.appShell} className="mx-4 md:mx-8 mb-4" />
       </main>
       <MobileNav />
       <PWAInstallPrompt />

@@ -7,6 +7,18 @@ export const ADSENSE_CLIENT: string =
   (import.meta as any).env?.VITE_ADSENSE_CLIENT ?? '';
 export const ADS_ENABLED = Boolean(ADSENSE_CLIENT);
 
+/**
+ * Ad-unit ids (data-ad-slot) per placement. Each is empty until the deployment
+ * sets the matching build-time env var, and an empty slot renders nothing —
+ * an <ins> with no unit id is a broken request, not a placeholder.
+ */
+export const AD_SLOTS = {
+  appShell: (import.meta as any).env?.VITE_ADSENSE_SLOT_SHELL ?? '',
+  guideInline: (import.meta as any).env?.VITE_ADSENSE_SLOT_GUIDE ?? '',
+  partPage: (import.meta as any).env?.VITE_ADSENSE_SLOT_PART ?? '',
+  tariffPage: (import.meta as any).env?.VITE_ADSENSE_SLOT_TARIFF ?? '',
+} as const;
+
 interface AdsbygoogleArray extends Array<Record<string, unknown>> {
   requestNonPersonalizedAds?: number;
 }

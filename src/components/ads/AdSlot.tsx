@@ -20,6 +20,7 @@ export function AdSlot({ slot, className }: AdSlotProps) {
 
   useEffect(() => {
     if (!ADS_ENABLED) return;
+    if (!slot) return;
     if (getConsent() !== 'granted') return;
     let cancelled = false;
     loadAdsense().then(() => {
@@ -36,6 +37,9 @@ export function AdSlot({ slot, className }: AdSlotProps) {
   }, [slot]);
 
   if (!ADS_ENABLED) return null;
+  // No unit id configured for this placement: render nothing rather than an
+  // <ins> AdSense cannot fill.
+  if (!slot) return null;
   if (getConsent() !== 'granted') return null;
 
   return (
