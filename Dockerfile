@@ -20,6 +20,9 @@ RUN npm ci --include=optional --no-audit --no-fund
 COPY tsconfig.json tsconfig.node.json vite.config.ts tailwind.config.js postcss.config.js index.html ./
 COPY public/ ./public/
 COPY src/ ./src/
+# scripts/prerender.mjs runs as the last step of `npm run build`; without it
+# the build fails with MODULE_NOT_FOUND inside the image.
+COPY scripts/ ./scripts/
 RUN npm run build
 
 # ---------- Runtime stage ----------
