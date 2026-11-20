@@ -151,10 +151,11 @@ async function main() {
     );
   }
 
-  const { ROUTES, render } = ssr;
-  if (!Array.isArray(ROUTES) || typeof render !== 'function') {
-    throw new Error('SSR bundle must export ROUTES and render(url)');
+  const { getRoutes, render } = ssr;
+  if (typeof getRoutes !== 'function' || typeof render !== 'function') {
+    throw new Error('SSR bundle must export getRoutes() and render(url)');
   }
+  const ROUTES = await getRoutes();
 
   // Render every route before touching dist, so a failure leaves no partial set.
   const pages = [];

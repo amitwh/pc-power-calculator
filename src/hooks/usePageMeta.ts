@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { GUIDES } from '@/pages/Guides';
+import { findComponent } from '@/lib/data/components';
 
 const SITE = 'https://pcpower.concreteinfo.co.in';
 
@@ -24,8 +25,19 @@ export function usePageMeta(): void {
 
   useEffect(() => {
     const guide = GUIDES.find((g) => pathname === `/guides/${g.slug}`);
+    const partMatch = pathname.match(/^\/parts\/([^/]+)$/);
+    let partId: string | undefined;
+    try {
+      partId = partMatch ? decodeURIComponent(partMatch[1]) : undefined;
+    } catch {
+      partId = undefined;
+    }
+    const part = partId ? findComponent(partId) : undefined;
     const title =
-      guide?.title ?? TITLES.find(([re]) => re.test(pathname))?.[1] ?? 'PC Power Calculator';
+      guide?.title ??
+      (part ? `${part.brand} ${part.model} power consumption & yearly cost` : undefined) ??
+      TITLES.find(([re]) => re.test(pathname))?.[1] ??
+      'PC Power Calculator';
     document.title = title;
 
     let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');

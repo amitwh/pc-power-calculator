@@ -45,3 +45,34 @@ describe('Home shared-build link', () => {
     expect(window.location.search).not.toContain('builds=');
   });
 });
+
+describe('Home ?part= seeding', () => {
+  test('selects the part in its slot and strips the query', async () => {
+    window.history.replaceState(null, '', '/?part=cpu-amd-ryzen-7-7800x3d');
+
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Home />
+      </MemoryRouter>,
+    );
+
+    await waitFor(() =>
+      expect(useBuildStore.getState().builds[0].components.cpu).toBe('cpu-amd-ryzen-7-7800x3d'),
+    );
+    expect(window.location.search).not.toContain('part=');
+  });
+
+  test('ignores an unknown part id without throwing', () => {
+    window.history.replaceState(null, '', '/?part=bogus-part-id');
+
+    expect(() =>
+      render(
+        <MemoryRouter initialEntries={['/']}>
+          <Home />
+        </MemoryRouter>,
+      ),
+    ).not.toThrow();
+
+    expect(useBuildStore.getState().builds[0].components).toEqual({});
+  });
+});

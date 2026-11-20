@@ -3,6 +3,7 @@ import { StaticRouter } from 'react-router';
 import AppRoutes from '@/routes';
 import { GUIDES } from '@/pages/Guides';
 import { initCatalog } from '@/lib/data/components';
+import { indexableParts } from '@/lib/data/partPages';
 
 export const SITE = 'https://pcpower.concreteinfo.co.in';
 
@@ -173,6 +174,32 @@ export const ROUTES: RouteMeta[] = [
   },
   ...guideRoutes,
 ];
+
+/**
+ * Full prerender manifest: the static routes plus one `/parts/:id` page per
+ * part in the current tranche. Awaits the catalog because the part list is
+ * loaded from the code-split JSON chunk.
+ */
+export async function getRoutes(): Promise<RouteMeta[]> {
+  await initCatalog();
+
+  const partRoutes: RouteMeta[] = indexableParts().map((part) => {
+    const path = `/parts/${encodeURIComponent(part.id)}`;
+    const name = `${part.brand} ${part.model}`;
+    const categoryLabel = part.category === 'gpu' ? 'graphics card' : 'processor';
+    return {
+      path,
+      title: `${name} power consumption & yearly cost`,
+      description: `Rated ${part.tdp_w} W ${categoryLabel}: modelled idle and full-load draw, yearly kWh and running cost on an Indian tariff, plus lower-power alternatives.`,
+      ogType: 'website',
+      priority: 0.6,
+      changefreq: 'monthly',
+      jsonLd: [breadcrumbList([HOME_CRUMB, { name, path }])],
+    };
+  });
+
+  return [...ROUTES, ...partRoutes];
+}
 
 /**
  * Build-time entry: awaits the catalog (every sync component accessor depends
