@@ -106,14 +106,16 @@ export function useCalc(): CalcResult {
       componentsPowerW[c.id] = (componentsPowerW[c.id] ?? 0) + componentPowerW(c, 0.7);
     }
 
-    // PSU sizing: everything flat-out at 100%, measured at the wall.
-    const { wallDrawW: peakWallDrawW } = systemPowerW(
+    // PSU sizing: size from the PSU-side component draw at 100% — monitors are
+    // wall-powered and must not inflate the recommendation. `peakWallDrawW`
+    // stays the full wall total (used for the "Peak draw … at the wall" display).
+    const { componentDrawW: peakComponentDrawW, wallDrawW: peakWallDrawW } = systemPowerW(
       resolvedRaw,
       { cpu: 1, gpu: 1, ram: 1, storage: 1 },
       psuRating,
       psuWattage ?? 650,
     );
-    const recommendedPsuW = recommendPsuW(peakWallDrawW);
+    const recommendedPsuW = recommendPsuW(peakComponentDrawW);
 
     // Multi-system: sum energy across every build (each build auto-resolves
     // its own tariff unless it has a manual rate override).

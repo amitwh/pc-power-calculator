@@ -41,7 +41,14 @@ function buildStats(b: BuildConfig, displayCurrency: CurrencyInfo, fxSnapshot: F
   const psu = comps.find((c) => c.category === 'psu');
   const rating = psu ? coercePsuRating(String(psu.specs.rating ?? psu.specs.efficiency ?? '')) : null;
   const wattage = psu ? psuWattageFromSpecs(psu.specs) ?? 650 : 650;
-  const { wallDrawW: peak } = systemPowerW(comps, { cpu: 1, gpu: 1, ram: 1, storage: 1 }, rating, wattage);
+  // Size the PSU from PSU-side draw only — monitors are wall-powered and must
+  // not inflate the recommendation (same rule as useCalc).
+  const { componentDrawW: peakComponentDrawW, wallDrawW: peak } = systemPowerW(
+    comps,
+    { cpu: 1, gpu: 1, ram: 1, storage: 1 },
+    rating,
+    wattage,
+  );
 
   const own = currencyForLocation(b.location.country_iso2, b.location.subdivision_code, b.currency_override);
   const converted = own.code !== displayCurrency.code;
@@ -57,7 +64,7 @@ function buildStats(b: BuildConfig, displayCurrency: CurrencyInfo, fxSnapshot: F
     costYear: convertedCost ?? total.cost,
     converted: converted && convertedCost != null,
     peakWallDrawW: peak,
-    recommendedPsuW: recommendPsuW(peak),
+    recommendedPsuW: recommendPsuW(peakComponentDrawW),
     installedPsuW: psu ? psuWattageFromSpecs(psu.specs) : null,
     deviceCount: distinct.size,
   };

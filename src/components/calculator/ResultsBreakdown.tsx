@@ -1,6 +1,6 @@
 import { lazy, Suspense, useMemo } from 'react';
 import { useCalc } from '@/hooks/useCalc';
-import { listWorkloads } from '@/lib/data/workloads';
+import { workloadLabel } from '@/lib/data/workloads';
 import { categoryColor } from '@/lib/categoryColors';
 import { CASE_FANS_ID } from '@/lib/calc/energy';
 import { Card, CardTitle } from '@/components/ui/Card';
@@ -16,8 +16,6 @@ const PowerBreakdown = lazy(() =>
 /** Full-width row: per-device draw chart + per-workload usage/cost table. */
 export function ResultsBreakdown() {
   const { build, components, componentsPowerW, daily, currency } = useCalc();
-
-  const workloadMap = useMemo(() => new Map(listWorkloads().map((w) => [w.id, w])), []);
 
   // `components` repeats each unit (qty ×N) — the chart wants one slice per
   // distinct device with the combined draw and a ×N label.
@@ -76,14 +74,17 @@ export function ResultsBreakdown() {
               </thead>
               <tbody>
                 {daily.perWorkload.map((row) => {
-                  const wl = workloadMap.get(row.workload_id);
                   const sched = build.schedule.find((s) => s.workload_id === row.workload_id);
                   const days = sched?.days_per_week ?? 7;
                   return (
                     <tr key={row.workload_id} className="border-b border-gray-100 dark:border-gray-800 last:border-b-0">
-                      <td className="py-1.5 pr-3 font-body">{wl?.name ?? row.workload_id}</td>
+                      <td className="py-1.5 pr-3 font-body">{workloadLabel(row.workload_id)}</td>
                       <td className="py-1.5 pr-3 text-gray-600 dark:text-gray-400">
-                        {sched ? `${sched.hours_per_day} h/d · ${days} d/wk` : '—'}
+                        {sched
+                          ? `${sched.hours_per_day} h/d · ${days} d/wk`
+                          : row.workload_id === 'idle'
+                            ? `${row.hours_per_day} h/d · every day`
+                            : '—'}
                       </td>
                       <td className="py-1.5 pr-3">{Math.round(row.draw_w)} W</td>
                       <td className="py-1.5 pr-3">

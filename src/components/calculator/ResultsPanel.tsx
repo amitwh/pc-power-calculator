@@ -1,16 +1,55 @@
+import { useEffect, useRef, useState } from 'react';
 import { useBuildStore } from '@/store/buildStore';
 import { useCalc } from '@/hooks/useCalc';
 import { listComponents } from '@/lib/data/components';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { formatCost, formatKwh } from '@/lib/calc/format';
+import { shareBuild } from '@/lib/share/buildLink';
 import { ExportMenu } from './ExportMenu';
 
-/** Compact results summary — period totals, PSU sizing, export. Lives in the
- *  sticky sidebar; the chart and per-task tables are in `ResultsBreakdown`. */
+type ShareStatus = 'idle' | 'copied' | 'failed';
+
+/** Compact results summary — period totals, PSU sizing, share, export. Lives in
+ *  the sticky sidebar; the chart and per-task tables are in `ResultsBreakdown`. */
 export function ResultsPanel() {
   const setComponent = useBuildStore((s) => s.setComponent);
   const { build, daily, monthly, yearly, psuWattage, peakWallDrawW, recommendedPsuW, currency } = useCalc();
+  const [shareStatus, setShareStatus] = useState<ShareStatus>('idle');
+  const clearStatusTimer = useRef<number | null>(null);
+
+  // Drop the "Link copied" confirmation after a few seconds, and never leave
+  // the timer running past unmount.
+  useEffect(
+    () => () => {
+      if (clearStatusTimer.current != null) window.clearTimeout(clearStatusTimer.current);
+    },
+    [],
+  );
+
+  const onShare = async () => {
+    const result = await shareBuild(useBuildStore.getState().exportBuild());
+    if (clearStatusTimer.current != null) {
+      window.clearTimeout(clearStatusTimer.current);
+      clearStatusTimer.current = null;
+    }
+    if (result === 'copied') {
+      setShareStatus('copied');
+      clearStatusTimer.current = window.setTimeout(() => setShareStatus('idle'), 3000);
+    } else if (result === 'failed') {
+      // Over the URL cap or no share/clipboard path — point at the export.
+      setShareStatus('failed');
+    } else {
+      setShareStatus('idle');
+    }
+  };
+
+  const shareMessage =
+    shareStatus === 'copied'
+      ? 'Link copied'
+      : shareStatus === 'failed'
+        ? 'Link too long — use Export instead'
+        : '';
 
   /** Closest catalog PSU at or above the recommendation (Generic first). */
   const pickRecommendedPsu = () => {
@@ -31,8 +70,23 @@ export function ResultsPanel() {
     <Card>
       <CardTitle className="text-base">
         <span className="truncate">Results — {build.name}</span>
-        <ExportMenu />
+        <span className="flex items-center gap-2 shrink-0">
+          <Button size="sm" variant="secondary" onClick={onShare} aria-label="Share build">
+            Share
+          </Button>
+          <ExportMenu />
+        </span>
       </CardTitle>
+
+      {/* Status line lives outside the heading so the heading's accessible name
+          stays stable; min-height reserves space (no layout shift). */}
+      <p
+        role="status"
+        aria-live="polite"
+        className="text-xs text-gray-500 -mt-1 mb-2 min-h-[1rem]"
+      >
+        {shareMessage}
+      </p>
 
       {/* Daily / Monthly / Yearly totals */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-numeric tabular-nums">

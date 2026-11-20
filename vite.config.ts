@@ -4,33 +4,56 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import path from 'node:path';
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [
     react(),
-    VitePWA({
-      registerType: 'autoUpdate',
-      includeAssets: ['icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable.png'],
-      manifest: {
-        name: 'PC Power Calculator',
-        short_name: 'PC Power',
-        description: "Estimate your PC's power consumption and electricity cost in any currency.",
-        theme_color: '#e5461f',
-        background_color: '#0d0b09',
-        display: 'standalone',
-        orientation: 'any',
-        start_url: '/',
+    // The PWA/service-worker plugin only belongs in the client build; the SSR
+    // bundle (dist-ssr) must not emit a manifest or registration scripts.
+    ...(isSsrBuild
+      ? []
+      : [
+          VitePWA({
+            registerType: 'autoUpdate',
+            includeAssets: ['icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable.png'],
+            manifest: {
+              name: 'PC Power Calculator',
+              short_name: 'PC Power',
+              description: "Estimate your PC's power consumption and electricity cost in any currency.",
+              theme_color: '#e5461f',
+              background_color: '#0d0b09',
+              display: 'standalone',
+              orientation: 'any',
+              start_url: '/',
+            },
+            workbox: {
+              globPatterns: ['**/*.{js,css,html,json,svg,png,ico,webmanifest}'],
+              // BrowserRouter deep links (e.g. /compare) must serve the SPA shell
+              // offline too; ads.txt is a real crawl file and must never fall back.
+              navigateFallback: 'index.html',
+              navigateFallbackDenylist: [/^\/ads\.txt$/],
+              runtimeCaching: [
+                { urlPattern: /^https:\/\/ipapi\.co\//, handler: 'NetworkFirst', options: { cacheName: 'geo', networkTimeoutSeconds: 3 } },
+              ],
+            },
+          }),
+        ]),
+    // `vite preview` serves the SPA fallback before directory indexes, so a
+    // prerendered route like /compare would resolve to dist/index.html. nginx
+    // in production uses `try_files $uri $uri/ /index.html`, which serves the
+    // per-route index.html; mirror that here so `npm run preview` shows the
+    // actual prerendered pages.
+    {
+      name: 'preview-directory-index',
+      configurePreviewServer(server) {
+        server.middlewares.use((req, _res, next) => {
+          const [pathname, query] = (req.url ?? '').split('?');
+          if (pathname && !pathname.endsWith('/') && !path.extname(pathname)) {
+            req.url = `${pathname}/${query !== undefined ? `?${query}` : ''}`;
+          }
+          next();
+        });
       },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,json,svg,png,ico,webmanifest}'],
-        // BrowserRouter deep links (e.g. /compare) must serve the SPA shell
-        // offline too; ads.txt is a real crawl file and must never fall back.
-        navigateFallback: 'index.html',
-        navigateFallbackDenylist: [/^\/ads\.txt$/],
-        runtimeCaching: [
-          { urlPattern: /^https:\/\/ipapi\.co\//, handler: 'NetworkFirst', options: { cacheName: 'geo', networkTimeoutSeconds: 3 } },
-        ],
-      },
-    }),
+    },
   ],
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
@@ -42,4 +65,4 @@ export default defineConfig({
     include: ['tests/unit/**/*.test.{ts,tsx}', 'tests/component/**/*.test.{ts,tsx}'],
     exclude: ['tests/e2e/**', 'node_modules/**', 'dist/**'],
   },
-});
+}));

@@ -72,6 +72,8 @@ interface BuildStore {
   /** Set how many units of a selected component the build has (1–999; ≤1 clears). */
   setQty: (id: string, qty: number) => void;
   setSchedule: (schedule: WorkloadSchedule[]) => void;
+  /** Set daily hours powered on but idle (clamped 0–24). */
+  setIdleHoursPerDay: (hours: number) => void;
   setLocation: (country: string, subdivision?: string) => void;
   setCurrency: (currency: string) => void;
   setManualRate: (rate: number | null) => void;
@@ -234,6 +236,12 @@ export const useBuildStore = create<BuildStore>()(
 
       setSchedule: (schedule) =>
         updateActive(set, (b) => ({ ...b, schedule: schedule.slice() as WorkloadSchedule[] })),
+
+      setIdleHoursPerDay: (hours) =>
+        updateActive(set, (b) => ({
+          ...b,
+          idle_hours_per_day: Math.max(0, Math.min(24, hours)),
+        })),
 
       setLocation: (country, subdivision) =>
         updateActive(set, (b) => ({

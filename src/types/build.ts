@@ -52,6 +52,11 @@ export interface BuildConfig {
   overclock?: Overclock;
   /** Case fan count (each modeled as a constant 2 W draw). */
   case_fans?: number;
+  /**
+   * Hours per day the machine is powered on but not running a scheduled
+   * workload. Clipped to the day's remaining hours. Absent → 0.
+   */
+  idle_hours_per_day?: number;
   schedule: WorkloadSchedule[];
   location: { country_iso2: string; subdivision_code?: string; manual_rate_override?: number };
   currency_override?: string;

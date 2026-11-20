@@ -112,3 +112,23 @@ describe('ScheduleEditor — 24-hour budget', () => {
     expect(row?.hours_per_day).toBe(1);
   });
 });
+
+describe('ScheduleEditor — idle baseline', () => {
+  test('the idle slider updates the build and its readout', () => {
+    render(<ScheduleEditor />);
+    const slider = screen.getByLabelText('Hours per day on but idle') as HTMLInputElement;
+    expect(slider.value).toBe('0');
+    fireEvent.change(slider, { target: { value: '3' } });
+    expect(useBuildStore.getState().builds[0].idle_hours_per_day).toBe(3);
+    expect(screen.getByText('3 h/d')).toBeInTheDocument();
+  });
+
+  test('idle hours count against the 24 h budget', () => {
+    useBuildStore.getState().setIdleHoursPerDay(4);
+    render(<ScheduleEditor />);
+    // Default schedule 12 h + 4 h idle = 16 h booked, 8 h free.
+    expect(screen.getByText(/16\.0 of 24 h\/day booked · 8\.0 h free/)).toBeInTheDocument();
+    const idleSlider = screen.getByLabelText('Hours per day on but idle') as HTMLInputElement;
+    expect(Number(idleSlider.max)).toBeCloseTo(12, 5); // 4 idle + 8 free
+  });
+});

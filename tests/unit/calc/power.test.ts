@@ -1,6 +1,7 @@
 /// <reference types="vitest/globals" />
 import { describe, expect, test } from 'vitest';
 import { componentPowerW, systemPowerW } from '@/lib/calc/power';
+import { psuEfficiency } from '@/lib/calc/psu';
 import type { Component } from '@/types/component';
 
 const cpu: Component = {
@@ -37,6 +38,37 @@ describe('systemPowerW', () => {
     // psuRating=null → wallDrawW equals componentDrawW.
     expect(w.componentDrawW).toBeCloseTo(100 + (20 + (200 - 20) * 0.5), 5);
     expect(w.wallDrawW).toBe(w.componentDrawW);
+  });
+});
+
+describe('systemPowerW — wall-side components', () => {
+  const monitor: Component = {
+    id: 'mon-test', category: 'monitor', brand: 'X', model: 'X', releaseYear: 2024,
+    tdp_w: 60, specs: { panel_w: 60 }, source: 'manual', addedAt: '2026-09-21',
+  };
+  const util = { cpu: 1, gpu: 0, ram: 0, storage: 0 };
+
+  test('a monitor is summed into wallDirectW, not componentDrawW', () => {
+    const w = systemPowerW([cpu, monitor], util, null);
+    expect(w.componentDrawW).toBeCloseTo(100, 5); // CPU at 100%, monitor excluded
+    expect(w.wallDirectW).toBe(60);
+    expect(w.wallDrawW).toBeCloseTo(160, 5); // no PSU → no loss
+  });
+
+  test('with 80 PLUS Gold, the efficiency loss applies only to the PSU-side load', () => {
+    const w = systemPowerW([cpu, monitor], util, 'gold', 650);
+    const eff = psuEfficiency('gold', Math.min(100, (w.componentDrawW / 650) * 100));
+    // Excess over the raw sum comes from PSU loss on componentDrawW only.
+    expect(w.wallDrawW).toBeCloseTo(w.componentDrawW / eff + w.wallDirectW, 5);
+    expect(w.wallDrawW).toBeGreaterThan(w.componentDrawW + w.wallDirectW);
+    expect(w.wallDrawW - w.wallDirectW).toBeCloseTo(w.componentDrawW / eff, 5);
+  });
+
+  test('{ includeMonitors: false } drops the monitor from wallDirectW', () => {
+    const w = systemPowerW([cpu, monitor], util, null, 650, { includeMonitors: false });
+    expect(w.wallDirectW).toBe(0);
+    expect(w.componentDrawW).toBeCloseTo(100, 5);
+    expect(w.wallDrawW).toBeCloseTo(100, 5);
   });
 });
 

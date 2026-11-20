@@ -4,7 +4,7 @@ import { useCalc } from '@/hooks/useCalc';
 import { buildExportHtml, downloadExportHtml } from '@/lib/export';
 import { exportPdf, type PdfReport, type PdfDeviceRow, type PdfScheduleRow } from '@/lib/export/pdf';
 import { listCountries, listSubdivisions, resolveLocationTariff } from '@/lib/data/tariffs';
-import { listWorkloads } from '@/lib/data/workloads';
+import { workloadLabel } from '@/lib/data/workloads';
 import { computeCost } from '@/lib/calc/cost';
 import { getConsent } from '@/lib/analytics/consent';
 import { event } from '@/lib/analytics/gtag';
@@ -48,9 +48,8 @@ export function ExportMenu() {
         byId.set(c.id, row);
       }
 
-      const workloadNames = new Map(listWorkloads().map((w) => [w.id, w.name]));
       const schedule: PdfScheduleRow[] = (yearly.perWorkload ?? []).map((r) => ({
-        name: workloadNames.get(r.workload_id) ?? r.workload_id,
+        name: workloadLabel(r.workload_id),
         hoursPerDay: r.hours_per_day,
         daysPerWeek: build.schedule.find((s) => s.workload_id === r.workload_id)?.days_per_week ?? 7,
         drawW: r.draw_w,

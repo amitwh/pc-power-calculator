@@ -86,6 +86,50 @@ describe('computeEnergy', () => {
   });
 });
 
+describe('computeEnergy — idle baseline', () => {
+  test('absent idle_hours_per_day leaves totals identical to an idle-free build', () => {
+    const absent = computeEnergy({ ...build }, workloads, 'year');
+    const zero = computeEnergy({ ...build, idle_hours_per_day: 0 }, workloads, 'year');
+    expect(absent.total).toEqual(zero.total);
+    expect(absent.perWorkload.some((r) => r.workload_id === 'idle')).toBe(false);
+  });
+
+  test('idle_hours_per_day: 4 adds exactly one idle row for 4 h', () => {
+    const r = computeEnergy({ ...build, idle_hours_per_day: 4 }, workloads, 'day');
+    const idle = r.perWorkload.filter((x) => x.workload_id === 'idle');
+    expect(idle).toHaveLength(1);
+    expect(idle[0].hours_per_day).toBe(4);
+  });
+
+  test('idle hours are clipped by the 24 h budget', () => {
+    const r = computeEnergy(
+      { ...build, idle_hours_per_day: 10, schedule: [{ workload_id: 'office', hours_per_day: 20 }] },
+      workloads,
+      'day',
+    );
+    const idle = r.perWorkload.find((x) => x.workload_id === 'idle');
+    expect(idle?.hours_per_day).toBe(4); // 24 - 20 scheduled
+  });
+
+  test('the idle row draws less than a scheduled workload', () => {
+    const r = computeEnergy({ ...build, idle_hours_per_day: 4 }, workloads, 'day');
+    const idle = r.perWorkload.find((x) => x.workload_id === 'idle');
+    const office = r.perWorkload.find((x) => x.workload_id === 'office');
+    expect(idle).toBeDefined();
+    expect(office).toBeDefined();
+    expect(idle!.draw_w).toBeLessThan(office!.draw_w);
+  });
+
+  test('idle cost is included in total.cost', () => {
+    const withIdle = computeEnergy({ ...build, idle_hours_per_day: 4 }, workloads, 'day');
+    const noIdle = computeEnergy(build, workloads, 'day');
+    const idle = withIdle.perWorkload.find((x) => x.workload_id === 'idle');
+    expect(idle).toBeDefined();
+    expect(idle!.cost).toBeGreaterThan(0);
+    expect(withIdle.total.cost).toBeCloseTo(noIdle.total.cost + idle!.cost, 5);
+  });
+});
+
 describe('resolveBuildComponents — overclock + case fans', () => {
   test('no overclock/case_fans fields → stock TDPs, no fan component', () => {
     const out = resolveBuildComponents(build);

@@ -16,6 +16,9 @@ export type WorkloadId =
   | 'server_light'
   | 'server_heavy';
 
+/** A row in the energy breakdown: a scheduled workload, or the idle baseline. */
+export type EnergyRowId = WorkloadId | 'idle';
+
 export interface WorkloadSchedule {
   workload_id: WorkloadId;
   hours_per_day: number;

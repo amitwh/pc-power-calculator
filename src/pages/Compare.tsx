@@ -9,6 +9,7 @@ import { currencyForLocation } from '@/lib/data/tariffs';
 import { computeEnergy } from '@/lib/calc/energy';
 import { listWorkloads } from '@/lib/data/workloads';
 import { useFx } from '@/hooks/useFx';
+import { importBuildFromSearch } from '@/lib/share/buildLink';
 import type { BuildConfig } from '@/types/build';
 import type { CurrencyInfo } from '@/types/currency';
 
@@ -18,36 +19,6 @@ const ComparisonBars = lazy(() =>
   import('@/components/charts/ComparisonBars').then((m) => ({ default: m.ComparisonBars })),
 );
 
-/** Session guard: an exported-builds link imports exactly once per load. */
-let importHandled = false;
-
-/**
- * Parse `?builds=<base64 json>` (the link embedded in exported HTML files),
- * add the build to the store, and return its id. Runs once, before first
- * render, so BuildSelector sees the imported build; wipes the query from the
- * URL so a reload can't duplicate the import.
- */
-function importBuildFromQuery(): string | null {
-  if (importHandled) return null;
-  const query = window.location.search ?? '';
-  const m = query.match(/[?&]builds=([^&]+)/);
-  if (!m) return null;
-  importHandled = true;
-  try {
-    const bin = atob(decodeURIComponent(m[1]));
-    const json = new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
-    const parsed = JSON.parse(json) as { build?: unknown };
-    if (!parsed?.build) return null;
-    const before = new Set(useBuildStore.getState().builds.map((b) => b.id));
-    useBuildStore.getState().importBuild(json);
-    const added = useBuildStore.getState().builds.find((b) => !before.has(b.id));
-    window.history.replaceState(null, '', '/compare');
-    return added?.id ?? null;
-  } catch {
-    return null;
-  }
-}
-
 export default function Compare() {
   // Start comparing the first two store builds immediately — no click gate.
   // (If an exported-builds link was just imported, BuildSelector puts it in
@@ -55,7 +26,11 @@ export default function Compare() {
   const [builds, setBuilds] = useState<BuildConfig[] | null>(() =>
     useBuildStore.getState().builds.slice(0, 2),
   );
-  const [importedId] = useState(importBuildFromQuery);
+  // `window` is unavailable during the build-time prerender; there is no query
+  // string to import there anyway, so the SSR pass starts with null.
+  const [importedId] = useState(() =>
+    typeof window === 'undefined' ? null : importBuildFromSearch(window.location.search, '/compare'),
+  );
   const activeBuildId = useBuildStore((s) => s.activeBuildId);
   const storeBuilds = useBuildStore((s) => s.builds);
   const { snapshot } = useFx();

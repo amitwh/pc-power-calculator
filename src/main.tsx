@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import App from './App';
 import { initCatalog } from './lib/data/components';
 import './lib/export/print.css';
@@ -10,9 +10,18 @@ import './lib/export/print.css';
 initCatalog()
   .catch((err) => console.error('Failed to load the hardware catalog:', err))
   .finally(() => {
-    ReactDOM.createRoot(document.getElementById('root')!).render(
+    const root = document.getElementById('root')!;
+    const app = (
       <React.StrictMode>
         <App />
-      </React.StrictMode>,
+      </React.StrictMode>
     );
+    // `data-prerendered` is set by scripts/prerender.mjs on every route it
+    // builds; the dev server shell (boot splash) lacks it, so dev keeps using
+    // createRoot and never tries to hydrate markup React did not produce.
+    if (root.dataset.prerendered === 'true') {
+      hydrateRoot(root, app);
+    } else {
+      createRoot(root).render(app);
+    }
   });

@@ -1,15 +1,15 @@
 import type { BuildConfig } from '@/types/build';
 import type { Component } from '@/types/component';
-import type { BenchmarkEntry, Workload, WorkloadId } from '@/types/workload';
+import type { BenchmarkEntry, EnergyRowId, Workload } from '@/types/workload';
 import { findComponent } from '@/lib/data/components';
 import { lookupBenchmark } from '@/lib/data/benchmarks';
 import { resolveLocationTariff } from '@/lib/data/tariffs';
 import { coercePsuRating, psuWattageFromSpecs } from './psu';
 import { computeCost } from './cost';
-import { systemPowerW } from './power';
+import { IDLE_UTILIZATION, systemPowerW } from './power';
 
 export interface PerWorkloadEnergy {
-  workload_id: WorkloadId;
+  workload_id: EnergyRowId;
   hours_per_day: number;
   draw_w: number;
   kwh: number;
@@ -172,11 +172,13 @@ export function computeEnergy(
 
   const rows: PerWorkloadEnergy[] = [];
   let totalKwh = 0;
+  let scheduledHours = 0;
 
   for (const s of build.schedule) {
     if (s.hours_per_day <= 0) continue;
     const wl = workloads.find((w) => w.id === s.workload_id);
     if (!wl) continue;
+    scheduledHours += s.hours_per_day;
 
     const { wallDrawW } = systemPowerW(
       comps,
@@ -206,6 +208,34 @@ export function computeEnergy(
       kwh: periodKwh,
       cost: 0, // filled in below once the period total (and thus slab rate) is known
       perfMetrics: perf,
+    });
+    totalKwh += periodKwh;
+  }
+
+  // Idle baseline: the machine is on but running no workload. Clipped to the
+  // hours the schedule leaves in the day; runs every day (no days_per_week
+  // scaling). Monitors sleep while the PC idles, so they are excluded.
+  const idleHours = Math.max(
+    0,
+    Math.min(build.idle_hours_per_day ?? 0, Math.max(0, 24 - scheduledHours)),
+  );
+  if (idleHours > 0) {
+    const { wallDrawW: idleWallDrawW } = systemPowerW(
+      comps,
+      IDLE_UTILIZATION,
+      rating,
+      psuWattage,
+      { includeMonitors: false },
+    );
+    const dailyKwh = (idleWallDrawW * idleHours) / 1000;
+    const periodKwh = dailyKwh * factor;
+    rows.push({
+      workload_id: 'idle',
+      hours_per_day: idleHours,
+      draw_w: idleWallDrawW,
+      kwh: periodKwh,
+      cost: 0, // filled in below once the period total (and thus slab rate) is known
+      perfMetrics: [],
     });
     totalKwh += periodKwh;
   }

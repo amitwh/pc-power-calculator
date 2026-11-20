@@ -30,12 +30,14 @@ export function ScheduleEditor() {
   const buildId = useBuildStore((s) => s.activeBuildId);
   const builds = useBuildStore((s) => s.builds);
   const setSchedule = useBuildStore((s) => s.setSchedule);
+  const setIdleHoursPerDay = useBuildStore((s) => s.setIdleHoursPerDay);
   const { currency } = useCalc();
   const [addOpen, setAddOpen] = useState(false);
   const workloads = useMemo(() => listWorkloads(), []);
   const workloadMap = useMemo(() => new Map(workloads.map((w) => [w.id, w])), [workloads]);
   const build = builds.find((b) => b.id === buildId);
   const schedule = build?.schedule ?? [];
+  const idleHours = build?.idle_hours_per_day ?? 0;
   const scheduledIds = new Set(schedule.map((s) => s.workload_id));
 
   const totalHours = schedule.reduce(
@@ -44,8 +46,10 @@ export function ScheduleEditor() {
   );
   // The 24-hour budget is per calendar DAY: workload hours are additive
   // energy blocks, so the sum of hours_per_day cannot exceed 24 no matter
-  // how many days a week each runs. `remaining` caps every slider.
-  const dailyHours = schedule.reduce((acc: number, s: WorkloadSchedule) => acc + s.hours_per_day, 0);
+  // how many days a week each runs. Idle hours share the same budget.
+  // `remaining` caps every slider.
+  const dailyHours =
+    schedule.reduce((acc: number, s: WorkloadSchedule) => acc + s.hours_per_day, idleHours);
   const avgHours = totalHours;
   const overBudget = dailyHours > 24 + 1e-9;
   const remaining = Math.max(0, 24 - dailyHours);
@@ -58,6 +62,8 @@ export function ScheduleEditor() {
       computeEnergy(build, workloads, 'year').perWorkload.map((r) => [r.workload_id, r]),
     );
   }, [build, workloads]);
+
+  const idleRow = yearlyByWorkload['idle'];
 
   const update = (id: string, patch: Partial<WorkloadSchedule>) => {
     setSchedule(schedule.map((s) => (s.workload_id === id ? { ...s, ...patch } : s)));
@@ -181,6 +187,42 @@ export function ScheduleEditor() {
             </div>
           );
         })}
+      </div>
+
+      {/* Idle baseline — always on, shares the 24 h budget with the workloads. */}
+      <div className="py-2 border-b border-gray-100 dark:border-gray-800">
+        <div className="flex justify-between items-center text-sm mb-1.5 gap-2">
+          <span className="font-body font-semibold text-gray-900 dark:text-gray-50 flex items-center gap-1.5 min-w-0">
+            <span aria-hidden>💤</span>
+            <span className="truncate">On but idle (desktop / browsing)</span>
+          </span>
+          <span className="flex items-center gap-2 shrink-0">
+            {idleRow && idleRow.kwh > 0 && (
+              <span className="font-numeric tabular-nums text-xs text-gray-500">
+                ≈ {formatKwh(idleRow.kwh, 0)}/yr · {formatCost(idleRow.cost, currency)}
+              </span>
+            )}
+          </span>
+        </div>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <input
+            type="range"
+            min={0}
+            max={idleHours + remaining}
+            step={0.5}
+            value={idleHours}
+            onChange={(e) => setIdleHoursPerDay(Number(e.target.value))}
+            aria-label="Hours per day on but idle"
+            title={`Up to ${(idleHours + remaining).toFixed(1)} h — 24 h daily budget`}
+            className="flex-1 min-w-[140px] accent-brand min-h-[32px]"
+          />
+          <span className="font-numeric tabular-nums text-gray-500 text-sm w-14 text-right shrink-0">
+            {idleHours} h/d
+          </span>
+        </div>
+        <p className="text-xs text-gray-500 mt-1">
+          The machine is on but not running a workload — this is the biggest hidden cost.
+        </p>
       </div>
 
       {/* Add workload */}

@@ -58,14 +58,41 @@ export function componentPowerW(component: Component, utilPct: number): number {
   return 0.10 * component.tdp_w + (component.tdp_w - 0.10 * component.tdp_w) * u;
 }
 
+/**
+ * Components powered straight from the wall, bypassing the PSU. Their draw is
+ * never divided by PSU efficiency.
+ */
+const WALL_SIDE_CATEGORIES = new Set(['monitor']);
+
+/** Utilization for a machine that is powered on but running no workload. */
+export const IDLE_UTILIZATION = { cpu: 0, gpu: 0, ram: 0, storage: 0 };
+
+/**
+ * Power split between the PSU and the wall.
+ *
+ * `componentDrawW` is the PSU-side load only (monitors excluded). `wallDirectW`
+ * is the constant draw of wall-side parts (monitors). `wallDrawW` is the total
+ * at the wall: the PSU-side load divided by efficiency at its own load
+ * percentage, plus `wallDirectW`.
+ *
+ * `includeMonitors: false` skips wall-side parts entirely (they sleep while the
+ * PC idles).
+ */
 export function systemPowerW(
   components: Component[],
   utilization: { cpu: number; gpu: number; ram: number; storage: number },
   psuRating: PsuEfficiencyRating | null,
   psuWattage: number = 650,
-): { componentDrawW: number; wallDrawW: number } {
+  options: { includeMonitors?: boolean } = {},
+): { componentDrawW: number; wallDirectW: number; wallDrawW: number } {
+  const includeMonitors = options.includeMonitors ?? true;
   let total = 0;
+  let wallDirect = 0;
   for (const c of components) {
+    if (WALL_SIDE_CATEGORIES.has(c.category)) {
+      if (includeMonitors) wallDirect += componentPowerW(c, 1);
+      continue;
+    }
     if (c.category === 'cpu') total += componentPowerW(c, utilization.cpu);
     else if (c.category === 'gpu') total += componentPowerW(c, utilization.gpu);
     else if (c.category === 'ram') total += componentPowerW(c, utilization.ram);
@@ -74,8 +101,8 @@ export function systemPowerW(
     else if (c.category === 'peripheral' || c.category === 'add_in_card' || c.category === 'optical_drive') total += componentPowerW(c, 1);
     else total += componentPowerW(c, 0);
   }
-  const psu = psuRating
+  const psuSideWallW = psuRating
     ? wallDrawW(total, psuRating, Math.min(100, (total / psuWattage) * 100))
     : total;
-  return { componentDrawW: total, wallDrawW: psu };
+  return { componentDrawW: total, wallDirectW: wallDirect, wallDrawW: psuSideWallW + wallDirect };
 }

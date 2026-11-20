@@ -1,11 +1,20 @@
+import { useEffect } from 'react';
 import { BuildPicker } from '@/components/calculator/BuildPicker';
 import { ScheduleEditor } from '@/components/calculator/ScheduleEditor';
 import { ResultsPanel } from '@/components/calculator/ResultsPanel';
 import { ResultsBreakdown } from '@/components/calculator/ResultsBreakdown';
 import { AllSystemsSummary } from '@/components/calculator/AllSystemsSummary';
 import { LocationPicker } from '@/components/calculator/LocationPicker';
+import { importBuildFromSearch } from '@/lib/share/buildLink';
 
 export default function Home() {
+  // A shared `?builds=` link works on the calculator too: import it once on
+  // mount. importBuild makes the imported build active; a bad token is a
+  // silent no-op, leaving the default build in place.
+  useEffect(() => {
+    importBuildFromSearch(window.location.search, '/');
+  }, []);
+
   return (
     <div className="p-3 md:p-6 max-w-7xl mx-auto grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_400px]">
       <div className="grid grid-cols-1 gap-3 min-w-0">
