@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 const LINKS = [
   { to: '/suggest', label: 'Suggest a part' },
+  { to: '/feedback', label: 'Feedback' },
   { to: '/data', label: 'Data freshness' },
   { to: '/guides', label: 'Guides' },
   { to: '/privacy', label: 'Privacy' },

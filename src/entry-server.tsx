@@ -163,11 +163,21 @@ export const ROUTES: RouteMeta[] = [
     path: '/suggest',
     title: 'Suggest a part or correction · PC Power Calculator',
     description:
-      'Send corrections, missing components, new countries or tariff data to the public issue tracker so the calculator catalog stays accurate.',
+      'Send corrections, missing components, new countries or tariff data to the team so the calculator catalog stays accurate.',
     ogType: 'website',
     priority: 0.5,
     changefreq: 'monthly',
     jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Suggest a part', path: '/suggest' }])],
+  },
+  {
+    path: '/feedback',
+    title: 'Feedback · PC Power Calculator',
+    description:
+      'Report a bug, suggest a feature, or tell us about a content problem in the PC power and electricity cost calculator.',
+    ogType: 'website',
+    priority: 0.4,
+    changefreq: 'monthly',
+    jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Feedback', path: '/feedback' }])],
   },
   {
     path: '/data',

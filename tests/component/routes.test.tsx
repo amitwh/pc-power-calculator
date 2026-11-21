@@ -32,6 +32,15 @@ test('renders the suggest form on /suggest', () => {
   expect(screen.getByRole('heading', { name: /Suggest a part or correction/i })).toBeInTheDocument();
 });
 
+test('renders the feedback form on /feedback', () => {
+  render(
+    <MemoryRouter initialEntries={['/feedback']}>
+      <Routes />
+    </MemoryRouter>,
+  );
+  expect(screen.getByRole('heading', { name: /Send feedback/i })).toBeInTheDocument();
+});
+
 test('renders Privacy policy on /privacy', () => {
   render(
     <MemoryRouter initialEntries={['/privacy']}>

@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 // The app uses BrowserRouter with real paths (nginx + vite preview serve the
 // SPA shell for unknown paths). Guides articles share the Guides component.
-const ROUTES = ['/', '/compare', '/suggestions', '/suggest', '/data', '/about', '/privacy', '/guides', '/guides/psu-sizing'];
+const ROUTES = ['/', '/compare', '/suggestions', '/suggest', '/feedback', '/data', '/about', '/privacy', '/guides', '/guides/psu-sizing'];
 
 for (const path of ROUTES) {
   test(`a11y ${path} has no violations`, async ({ page }) => {

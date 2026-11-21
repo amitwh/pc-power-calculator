@@ -45,10 +45,14 @@ RUN npm run build \
 
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
+# Same-origin mail API (server/mail.mjs) run by the entrypoint below.
+COPY server/ ./server/
+RUN chmod +x /app/server/start.sh
+
 EXPOSE 80
 
 # node's fetch is the only HTTP client guaranteed present in this image.
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
   CMD node -e "fetch('http://127.0.0.1/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/app/server/start.sh"]

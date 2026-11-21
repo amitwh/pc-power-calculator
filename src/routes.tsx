@@ -4,6 +4,7 @@ import Home from '@/pages/Home';
 import Compare from '@/pages/Compare';
 import Suggestions from '@/pages/Suggestions';
 import Suggest from '@/pages/Suggest';
+import Feedback from '@/pages/Feedback';
 import DataFreshness from '@/pages/DataFreshness';
 import About from '@/pages/About';
 import Privacy from '@/pages/Privacy';
@@ -27,6 +28,7 @@ export default function AppRoutes() {
       <Route path="/compare" element={<Layout><Compare /></Layout>} />
       <Route path="/suggestions" element={<Layout><Suggestions /></Layout>} />
       <Route path="/suggest" element={<Layout><Suggest /></Layout>} />
+      <Route path="/feedback" element={<Layout><Feedback /></Layout>} />
       <Route path="/data" element={<Layout><DataFreshness /></Layout>} />
       <Route path="/about" element={<Layout><About /></Layout>} />
       <Route path="/privacy" element={<Layout><Privacy /></Layout>} />

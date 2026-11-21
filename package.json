@@ -25,6 +25,7 @@
     "@tanstack/react-table": "^9.2.4",
     "apexcharts": "^8.9.1",
     "lucide-react": "^1.77.0",
+    "nodemailer": "10.6.1",
     "qrcode": "^1.5.4",
     "react": "^19.2.8",
     "react-apexcharts": "^2.2.1",

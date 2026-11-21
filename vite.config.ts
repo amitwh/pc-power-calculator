@@ -91,6 +91,13 @@ export default defineConfig(({ isSsrBuild }) => ({
       },
     },
   ],
+  // `npm run dev` proxies the mail API to the locally running
+  // `node server/mail.mjs`, mirroring nginx in production.
+  server: {
+    proxy: {
+      '/api': { target: 'http://127.0.0.1:3001', changeOrigin: false },
+    },
+  },
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
   },

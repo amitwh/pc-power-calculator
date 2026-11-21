@@ -14,6 +14,7 @@ const STATIC_TITLES: Record<string, string> = {
   '/compare': 'Compare systems · PC Power Calculator',
   '/suggestions': 'PSU & UPS suggestions · PC Power Calculator',
   '/suggest': 'Suggest a part or correction · PC Power Calculator',
+  '/feedback': 'Feedback · PC Power Calculator',
   '/data': 'Data freshness · PC Power Calculator',
   '/about': 'About & methodology · PC Power Calculator',
   '/privacy': 'Privacy policy · PC Power Calculator',
