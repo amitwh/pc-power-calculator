@@ -93,6 +93,12 @@ test('exports the report with reconciled totals, brand content and a QR permalin
 
   // Running footer proves pagination rendered.
   expect(text).toContain('Page 1 of');
+  // The faint brand watermark is in the text layer (raw extraction, because
+  // its overlap with table rows splits the phrase in -layout mode).
+  const rawText = execFileSync('pdftotext', [pdfPath, '-'], { encoding: 'utf8' });
+  expect(rawText.replace(/\s+/g, '')).toContain(
+    'ConcreteInfoPCPowerConsumptionCalculator',
+  );
   // The hero total and the schedule prose must agree, with a real rupee glyph
   // (the retired jsPDF renderer could only print "Rs.").
   expect(text).toContain('₹10,436.26');

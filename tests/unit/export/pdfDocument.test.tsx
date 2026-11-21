@@ -119,6 +119,29 @@ describe('ReportDocument', () => {
     },
   );
 
+  test.skipIf(!hasBinary('pdftotext') || !hasBinary('pdfinfo'))(
+    'prints the faint ConcreteInfo watermark once per page',
+    async () => {
+      const buffer = await renderToBuffer(<ReportDocument report={gamingReport} />);
+      const pdfPath = writePdf(buffer);
+      const pages = pdfPageCount(pdfPath);
+      expect(pages).toBeGreaterThanOrEqual(2);
+
+      for (let page = 1; page <= pages; page++) {
+        // Per-page extraction: the watermark overlaps table rows, so strip
+        // whitespace instead of relying on a single -layout line.
+        const pageText = execFileSync(
+          'pdftotext',
+          ['-f', String(page), '-l', String(page), pdfPath, '-'],
+          { encoding: 'utf8' },
+        );
+        expect(pageText.replace(/\s+/g, '')).toContain(
+          'ConcreteInfoPCPowerConsumptionCalculator',
+        );
+      }
+    },
+  );
+
   test.skipIf(!hasBinary('pdfinfo'))('the gaming report is 2–3 dense pages', async () => {
     const buffer = await renderToBuffer(<ReportDocument report={gamingReport} />);
     const pages = pdfPageCount(writePdf(buffer));

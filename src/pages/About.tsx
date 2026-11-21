@@ -131,14 +131,14 @@ export default function About() {
       <Section title="Contribute">
         <p className={BODY}>
           Corrections and additions are welcome through{' '}
-          <Link className={LINK} to="/suggestions">
+          <Link className={LINK} to="/suggest">
             the suggestions form
           </Link>{' '}
           — especially new countries, states and components.
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-4">
           <Link
-            to="/suggestions"
+            to="/suggest"
             className="bg-brand-dark text-white hover:bg-brand rounded-8 min-h-11 px-4 inline-flex items-center text-sm font-semibold"
           >
             Suggest a component

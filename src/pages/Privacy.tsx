@@ -109,7 +109,7 @@ export default function Privacy() {
         <h2 className="text-base font-semibold">Contact</h2>
         <p className={BODY}>
           Questions, corrections or data requests:{' '}
-          <Link className={LINK} to="/suggestions">use the suggestions form</Link>.
+          <Link className={LINK} to="/suggest">use the suggestions form</Link>.
         </p>
       </section>
 

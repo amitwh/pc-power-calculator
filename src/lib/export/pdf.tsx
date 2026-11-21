@@ -84,6 +84,23 @@ const styles = StyleSheet.create({
     color: INK,
     lineHeight: 1.35,
   },
+  /**
+   * Faint, fixed brand watermark. Absolute + fixed keeps it out of the flow,
+   * so it repeats on every page without changing pagination. react-pdf's
+   * style types do not expose rotation, so the text stays horizontal.
+   */
+  watermark: {
+    position: 'absolute',
+    top: '44%',
+    left: 20,
+    right: 20,
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 700,
+    letterSpacing: 1.2,
+    color: BRAND,
+    opacity: 0.06,
+  },
   /** The logo's own 2.985:1 ratio, set at a 20 pt print height. */
   headerLogo: {
     position: 'absolute',
@@ -671,6 +688,9 @@ export function ReportDocument({
       keywords="PC power, electricity cost, energy audit, PSU sizing, carbon footprint"
     >
       <Page size="A4" style={styles.page}>
+        <Text fixed style={styles.watermark}>
+          ConcreteInfo PC Power Consumption Calculator
+        </Text>
         {/* One fixed header on every page: the logo on white, the page-1
             identity, the build identity on later pages, and the brand rule.
             The logo and the metadata are separate fixed elements on purpose:

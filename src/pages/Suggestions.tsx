@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { useBuildStore } from '@/store/buildStore';
 import { useCalc } from '@/hooks/useCalc';
 import { listComponents } from '@/lib/data/components';
@@ -63,6 +64,12 @@ export default function Suggestions() {
           ))}
         </div>
       )}
+
+      <p className="mt-4 text-sm">
+        <Link to="/suggest" className="text-brand-text font-semibold underline underline-offset-2">
+          Can&apos;t find a part in the catalog? Suggest it for inclusion →
+        </Link>
+      </p>
     </div>
   );
 }

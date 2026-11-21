@@ -94,6 +94,25 @@ describe('buildExportHtml — document shape', () => {
     expect(doc.querySelector('.gauge-marker')).not.toBeNull();
   });
 
+  test('prints the faint ConcreteInfo watermark before the report page', () => {
+    const out = html();
+    expect(out).toContain('ConcreteInfo PC Power Consumption Calculator');
+
+    const doc = new DOMParser().parseFromString(out, 'text/html');
+    const watermark = doc.querySelector('body > .watermark');
+    expect(watermark).not.toBeNull();
+    expect(watermark?.getAttribute('aria-hidden')).toBe('true');
+    expect(watermark?.querySelector('span')?.textContent).toBe(
+      'ConcreteInfo PC Power Consumption Calculator',
+    );
+    // The watermark precedes the report page in the DOM and cannot take clicks.
+    expect(doc.querySelector('body > .page')).not.toBeNull();
+    expect(watermark?.nextElementSibling?.classList.contains('page')).toBe(true);
+    expect(out).toContain('pointer-events: none');
+    expect(out).toContain('opacity: .05');
+    expect(out).toContain('position: fixed');
+  });
+
   test('renders all nine report sections in order', () => {
     const out = html();
     const headings = [

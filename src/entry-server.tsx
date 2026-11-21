@@ -160,6 +160,16 @@ export const ROUTES: RouteMeta[] = [
     jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Suggestions', path: '/suggestions' }])],
   },
   {
+    path: '/suggest',
+    title: 'Suggest a part or correction · PC Power Calculator',
+    description:
+      'Send corrections, missing components, new countries or tariff data to the public issue tracker so the calculator catalog stays accurate.',
+    ogType: 'website',
+    priority: 0.5,
+    changefreq: 'monthly',
+    jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Suggest a part', path: '/suggest' }])],
+  },
+  {
     path: '/data',
     title: 'Data freshness · PC Power Calculator',
     description:

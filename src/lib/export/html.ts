@@ -667,6 +667,19 @@ ${measuredBody}
     }
   }
 
+  /* Faint brand watermark. Fixed so it repeats on every printed page, and
+     pointer-events:none so it never intercepts clicks on the report. */
+  .watermark {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .watermark span {
+    transform: rotate(-30deg);
+    font-size: clamp(28px, 6vw, 72px);
+    font-weight: 800; letter-spacing: .08em;
+    color: #e5461f; opacity: .05; white-space: nowrap;
+  }
   @media (max-width: 560px) {
     .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .meta-cell:nth-child(-n+4) { border-top: 1px solid #e5e7eb; }
@@ -677,6 +690,7 @@ ${measuredBody}
 </style>
 </head>
 <body>
+<div class="watermark" aria-hidden="true"><span>ConcreteInfo PC Power Consumption Calculator</span></div>
 <div class="page">
   <header class="brandbar">
     <span class="brand">PC POWER CALCULATOR</span>

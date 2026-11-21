@@ -32,7 +32,7 @@ test('secondary destinations and the disclaimer live in the footer', () => {
 
   expect(screen.getByRole('link', { name: /^Suggest a part$/i })).toHaveAttribute(
     'href',
-    '/suggestions',
+    '/suggest',
   );
   expect(screen.getByRole('link', { name: /^Data freshness$/i })).toHaveAttribute('href', '/data');
   expect(screen.getByRole('link', { name: /^Privacy$/i })).toHaveAttribute('href', '/privacy');

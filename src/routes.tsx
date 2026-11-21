@@ -3,6 +3,7 @@ import Layout from '@/components/layout/Layout';
 import Home from '@/pages/Home';
 import Compare from '@/pages/Compare';
 import Suggestions from '@/pages/Suggestions';
+import Suggest from '@/pages/Suggest';
 import DataFreshness from '@/pages/DataFreshness';
 import About from '@/pages/About';
 import Privacy from '@/pages/Privacy';
@@ -25,6 +26,7 @@ export default function AppRoutes() {
       <Route path="/build/:token" element={<Layout><Home /></Layout>} />
       <Route path="/compare" element={<Layout><Compare /></Layout>} />
       <Route path="/suggestions" element={<Layout><Suggestions /></Layout>} />
+      <Route path="/suggest" element={<Layout><Suggest /></Layout>} />
       <Route path="/data" element={<Layout><DataFreshness /></Layout>} />
       <Route path="/about" element={<Layout><About /></Layout>} />
       <Route path="/privacy" element={<Layout><Privacy /></Layout>} />

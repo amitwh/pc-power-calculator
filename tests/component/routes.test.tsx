@@ -23,6 +23,15 @@ test('renders Compare on /compare', () => {
   expect(screen.getByRole('heading', { name: /Compare/i })).toBeInTheDocument();
 });
 
+test('renders the suggest form on /suggest', () => {
+  render(
+    <MemoryRouter initialEntries={['/suggest']}>
+      <Routes />
+    </MemoryRouter>,
+  );
+  expect(screen.getByRole('heading', { name: /Suggest a part or correction/i })).toBeInTheDocument();
+});
+
 test('renders Privacy policy on /privacy', () => {
   render(
     <MemoryRouter initialEntries={['/privacy']}>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 const LINKS = [
-  { to: '/suggestions', label: 'Suggest a part' },
+  { to: '/suggest', label: 'Suggest a part' },
   { to: '/data', label: 'Data freshness' },
   { to: '/guides', label: 'Guides' },
   { to: '/privacy', label: 'Privacy' },
