@@ -351,14 +351,14 @@ git push origin main
 
 **Files:**
 - Create: `src/lib/export/brandAssets.ts` (browser helpers; must NOT import react-pdf)
+- Create: `public/brand/logo-report.png` (downscaled for print; keeps the PDF small)
 - Modify: `src/lib/export/pdfDocument.tsx`
-- Modify: `src/components/calculator/ExportMenu.tsx` (asset loading only; the call stays on the old renderer until Task 7)
 - Test: `tests/unit/export/pdfDocument.test.tsx` (extend)
 
 **Interfaces:**
 - Produces:
   - `ReportDocument` accepts `qrDataUrl`, `shareUrl`, `logoDataUrl`, `iconDataUrl` (Task 3 signature extended)
-  - `loadBrandLogo(): Promise<string | null>` — in `brandAssets.ts`; fetches `/brand/logo.png`, returns a data URL or null
+  - `loadBrandLogo(): Promise<string | null>` — in `brandAssets.ts`; fetches `/brand/logo-report.png` (then `/brand/logo.png`), returns a data URL or null
   - `loadBrandIcon(): Promise<string | null>` — fetches `/icons/pwa-192x192.png`, returns a data URL or null
   - `makeQrDataUrl(url: string): Promise<string>` — browser-only, dynamic `import('qrcode')`, `toDataURL(url, { margin: 1, width: 512 })`
 
@@ -428,12 +428,14 @@ git push origin main
 
 ```ts
 expect(text).toContain('Page 1 of');
-expect(text).toContain('₹10,413.14');
-expect(text).toContain('The schedule totals ₹10,413.14');
+expect(text).toContain('₹10,436.26');            // the seeded build's computed total
+expect(text).toContain('The schedule totals ₹10,436.26');
 expect(text).toContain('Gaming PC');
 expect(text).toContain('Case fan');
 expect(text).toContain('CO₂e');
 expect(text).toContain('Scan to open this build');
+expect(text).toContain('/build/…');               // shortened caption
+expect(text).toMatch(/Gaming build · PCP-/);      // continuation header
 ```
 
 - [ ] **Step 2: Run it to verify it fails**
@@ -485,3 +487,24 @@ git push origin main
 - Task 2 keeps the old renderer compiling by leaving its private `pdfText`/`pdfMoney` in place; Task 7 removes the whole module.
 - The new renderer is never in the app bundle until Task 7, so each intermediate push keeps the live PDF unchanged.
 - `ReportDocument` stays pure (no fetch, no fonts registration) so Node tests can render it; browser I/O lives in `exportPdf` and `ExportMenu`.
+
+## Post-implementation notes (2026-11-21)
+
+Delivered as planned, with these implementation facts worth keeping:
+
+- **CSP:** react-pdf required `'wasm-unsafe-eval'` (Yoga WASM), `font-src data:`,
+  `connect-src data:` and `worker-src blob:` in the meta tag, nginx and
+  `_headers`. No `'unsafe-eval'`; the GTM inline hash is unchanged.
+- **Fixed elements:** a fixed View containing both an image and text drops the
+  text. Fixed text (`<Text fixed render=…>`) and fixed images are separate
+  elements in the continuation header.
+- **QR caption:** prints a shortened URL; the QR carries the full build token.
+  This keeps the report at three pages.
+- **e2e total:** the seeded build computes ₹10,436.26 (India default tariff),
+  not the synthetic ₹10,413.14 used in the unit fixtures. The e2e asserts the
+  real computed value and pins `pc-power-geo-detected` so IP geolocation cannot
+  rewrite the tariff mid-test.
+- **Gauge:** iterates every `CONSUMPTION_TIERS` band (six today).
+- **Bundle:** react-pdf is a lazy chunk (~437 KB gzip); the entry stays ~154 KB.
+- **Five-year carbon:** corrected to `annual × 5 / 1000` in both legacy
+  renderers as well.

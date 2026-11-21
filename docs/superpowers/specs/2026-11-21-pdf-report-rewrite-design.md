@@ -81,6 +81,10 @@ embedding and links, which removes that whole defect class instead of patching i
 - **Brand assets are arriving separately.** The owner will add a logo and a
   webicon to the repo. The renderer must ship without them (text fallback) and
   pick them up without code changes once the files exist.
+- **CSP must allow the client-side renderer.** react-pdf compiles its Yoga layout
+  with WebAssembly and loads font/asset blobs from `data:` URLs, so all three
+  synced policies need `script-src 'wasm-unsafe-eval'`, `font-src 'self' data:`,
+  `connect-src … data:` and `worker-src 'self' blob:`. No `'unsafe-eval'`.
 
 ## Approaches considered
 
@@ -150,8 +154,10 @@ block on the last page, so nothing is ever truncated.
 When it returns a URL, `qrcode.toDataURL()` produces a PNG data URL at export
 time (browser only) and `exportPdf` places it as a closing block on the last page
 — the cover is already full and the last page has the whitespace — with the
-caption "Scan to open this build". When the URL exceeds the 6 KB cap, no QR is
-drawn and the site URL is linked instead — no silent truncation.
+caption "Scan to open this build". The caption prints a shortened URL (origin +
+`/build/…` + the token's last 8 characters); the QR itself carries the full URL,
+so a long token cannot wrap the card over a page. When the URL exceeds the 6 KB
+cap, no QR is drawn and the site URL is linked instead — no silent truncation.
 
 ### Money consistency
 
@@ -272,6 +278,7 @@ optional inputs with a working fallback, so the rewrite can ship before they lan
 | Node-side tests need canvas for QR | QR is computed in `ExportMenu` (browser) and passed in as an optional data URL. |
 | Font licence/precache weight | OFL files committed; subset; added to the precache glob. |
 | Logo/webicon arrive late or in an unsupported format | Renderer ships with a text fallback; prefer PNG @2x; validate SVG in the spike before depending on it. |
+| react-pdf drops text from a fixed View that also contains an image | Keep fixed text and fixed images as separate elements; verified in the continuation header. |
 
 ## Rollout
 
