@@ -3,9 +3,12 @@ import { Button } from '@/components/ui/Button';
 import { useCalc } from '@/hooks/useCalc';
 import { buildExportHtml, downloadExportHtml } from '@/lib/export';
 import { exportPdf, type PdfReport, type PdfDeviceRow, type PdfScheduleRow } from '@/lib/export/pdf';
-import { listCountries, listSubdivisions, resolveLocationTariff } from '@/lib/data/tariffs';
+import { listCountries, listSubdivisions, resolveLocationTariff, tariffsLastUpdated } from '@/lib/data/tariffs';
 import { workloadLabel } from '@/lib/data/workloads';
 import { computeCost } from '@/lib/calc/cost';
+import { findComponent } from '@/lib/data/components';
+import { psuEfficiency } from '@/lib/calc/psu';
+import { basisFor, certificationLabel } from '@/lib/export/pdf';
 import { getConsent } from '@/lib/analytics/consent';
 import { event } from '@/lib/analytics/gtag';
 
@@ -25,7 +28,7 @@ export function ExportMenu({
   // useCalc() already resolves the active build (multi-system store),
   // pre-computes daily / monthly / yearly totals, and resolves the display
   // currency (explicit override, else the build location's tariff currency).
-  const { build, components, daily, monthly, yearly, peakWallDrawW, recommendedPsuW, psuWattage, currency } = useCalc();
+  const { build, components, daily, monthly, yearly, peakWallDrawW, idleDrawW, recommendedPsuW, psuWattage, psuRating, totalEffectiveTdpW, currency } = useCalc();
   const [generating, setGenerating] = useState(false);
 
   // GA4 export tracking — gated by Consent Mode v2 so denied users keep full
@@ -46,6 +49,8 @@ export function ExportMenu({
           qty: 0,
           unitW: c.effective_tdp_w,
           totalW: 0,
+          basis: basisFor(findComponent(c.id)?.source),
+          source: findComponent(c.id)?.source,
         };
         row.qty += 1;
         row.totalW = row.unitW != null ? row.unitW * row.qty : 0;
@@ -70,6 +75,15 @@ export function ExportMenu({
         ? `Manual override — ${manualRate.toFixed(2)} ${currency.code}/kWh`
         : `≈ ${(computeCost(200, rate, taxes).total / 200).toFixed(2)} ${currency.code}/kWh incl. ${taxes.map((t) => t.name).join(' + ') || 'no regional taxes'}`;
 
+      const psuName =
+        components.find((c) => c.category === 'psu')?.model ?? null;
+      // Efficiency at the machine's own operating load, not a nominal 90%.
+      const loadPct =
+        psuWattage && psuWattage > 0 ? (totalEffectiveTdpW / psuWattage) * 100 : 50;
+      const efficiencyAtLoad = psuRating
+        ? psuEfficiency(psuRating, Math.min(100, Math.max(10, loadPct)))
+        : null;
+
       const report: PdfReport = {
         buildName: build.name,
         buildCategory: build.category,
@@ -77,9 +91,24 @@ export function ExportMenu({
         tariffLabel,
         currency,
         devices: [...byId.values()],
-        peakWallDrawW,
-        recommendedPsuW,
-        installedPsuW: psuWattage,
+        typicalComponentW: totalEffectiveTdpW,
+        idleWallW: idleDrawW,
+        psu: {
+          name: psuName,
+          ratedW: psuWattage,
+          certification: certificationLabel(psuRating),
+          efficiencyAtLoad,
+          recommendedW: recommendedPsuW,
+          peakComponentW: totalEffectiveTdpW,
+          peakWallW: peakWallDrawW,
+        },
+        measured: build.measured,
+        tariffVerifiedAt: tariffsLastUpdated(),
+        // The oldest catalogued part is the weakest link in the build's data.
+        catalogVerifiedAt: [...byId.keys()]
+          .map((id) => findComponent(id)?.addedAt)
+          .filter((d): d is string => Boolean(d))
+          .sort()[0],
         schedule,
         totals: {
           daily: { kwh: daily.kwh, cost: daily.cost },

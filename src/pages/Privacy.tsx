@@ -108,8 +108,8 @@ export default function Privacy() {
       <section className={SECTION}>
         <h2 className="text-base font-semibold">Contact</h2>
         <p className={BODY}>
-          Questions about this policy:{' '}
-          <a className={LINK} href="https://github.com/amitwh/pc-power-calculator">github.com/amitwh/pc-power-calculator</a>.
+          Questions, corrections or data requests:{' '}
+          <Link className={LINK} to="/suggestions">use the suggestions form</Link>.
         </p>
       </section>
 

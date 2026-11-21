@@ -75,11 +75,9 @@ export default function About() {
       <section className={SECTION}>
         <h2 className="text-base font-semibold">Contribute</h2>
         <p className={BODY}>
-          PRs welcome on{' '}
-          <a className={LINK} href="https://github.com/amitwh/pc-power-calculator">
-            github.com/amitwh/pc-power-calculator
-          </a>
-          . Especially: new countries / states / components.
+          Corrections and additions are welcome through{' '}
+          <Link className={LINK} to="/suggestions">the suggestions form</Link> — especially new
+          countries, states and components.
         </p>
       </section>
     </div>

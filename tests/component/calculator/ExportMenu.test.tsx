@@ -9,7 +9,12 @@ import { exportPdf, type PdfReport } from '@/lib/export/pdf';
 
 // jsPDF rendering is browser-heavy; the wiring test only asserts the report
 // ExportMenu assembles before handing it to the generator.
-vi.mock('@/lib/export/pdf', () => ({ exportPdf: vi.fn().mockResolvedValue(undefined) }));
+// Only the generator is stubbed; the pure helpers (basisFor, certificationLabel)
+// must behave for real so the test can assert what the report carries.
+vi.mock('@/lib/export/pdf', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/lib/export/pdf')>();
+  return { ...actual, exportPdf: vi.fn().mockResolvedValue(undefined) };
+});
 
 beforeEach(() => {
   localStorage.clear();
@@ -43,8 +48,13 @@ describe('ExportMenu', () => {
     expect(ram?.totalW).toBe((ram?.unitW ?? 0) * 4);
     expect(report.totals.yearly.kwh).toBeGreaterThan(0);
     expect(report.schedule.length).toBeGreaterThan(0);
-    expect(report.peakWallDrawW).toBeGreaterThan(0);
-    expect(report.recommendedPsuW).toBeGreaterThan(0);
+    expect(report.psu.peakWallW).toBeGreaterThan(0);
+    expect(report.psu.recommendedW).toBeGreaterThan(0);
+    // The model distinguishes component (DC) draw from the PSU capacity advice.
+    expect(report.typicalComponentW).toBeGreaterThan(0);
+    expect(report.idleWallW).toBeGreaterThan(0);
+    // Every device carries the provenance of its wattage figure.
+    expect(report.devices.every((d) => d.basis !== 'unknown')).toBe(true);
   });
 
   test('clicking Export HTML triggers a download via createObjectURL', async () => {
