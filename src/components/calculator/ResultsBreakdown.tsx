@@ -85,7 +85,7 @@ export function ResultsBreakdown() {
                   <th className="py-1.5 pr-3 font-semibold">Use case</th>
                   <th className="py-1.5 pr-3 font-semibold">Hours</th>
                   <th className="py-1.5 pr-3 text-right font-semibold">kWh/yr</th>
-                  <th className="py-1.5 pr-0 text-right font-semibold">₹/yr</th>
+                  <th className="py-1.5 pr-0 text-right font-semibold">{currency.symbol}/yr</th>
                 </tr>
               </thead>
               <tbody>

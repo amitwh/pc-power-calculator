@@ -19,6 +19,10 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Layout><Home /></Layout>} />
+      {/* Permanent shared build: the config lives in the URL, so this renders
+          the calculator with that build imported (nginx SPA fallback serves the
+          prerendered home shell; the import runs after hydration). */}
+      <Route path="/build/:token" element={<Layout><Home /></Layout>} />
       <Route path="/compare" element={<Layout><Compare /></Layout>} />
       <Route path="/suggestions" element={<Layout><Suggestions /></Layout>} />
       <Route path="/data" element={<Layout><DataFreshness /></Layout>} />

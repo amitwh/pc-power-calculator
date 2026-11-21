@@ -5,6 +5,17 @@ import { useBuildStore } from '@/store/buildStore';
 const GEO_FLAG = 'pc-power-geo-detected';
 
 /**
+ * Is the page opening someone else's build? A shared configuration carries its
+ * own tariff, so auto-detecting the visitor's region here would silently
+ * rewrite the location they were sent — a US build would arrive as ₹ at the
+ * recipient's local rate.
+ */
+function openingSharedBuild(): boolean {
+  if (typeof window === 'undefined') return false;
+  return /^\/build\//.test(window.location.pathname) || /[?&]builds=/.test(window.location.search);
+}
+
+/**
  * Geolocation helper.
  *
  * `detect()` runs on explicit user action (the "Detect from IP ↻" button).
@@ -38,6 +49,8 @@ export function useGeolocation(): {
   }
 
   function autoDetectOnce(): void {
+    // A shared build is the whole point of the visit — leave its tariff alone.
+    if (openingSharedBuild()) return;
     try {
       if (localStorage.getItem(GEO_FLAG)) return;
       const dnt = navigator.doNotTrack === '1' || (window as { doNotTrack?: string }).doNotTrack === '1';

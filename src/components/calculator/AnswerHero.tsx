@@ -1,15 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import { useBuildStore } from '@/store/buildStore';
 import { useCalc } from '@/hooks/useCalc';
-import { Button } from '@/components/ui/Button';
 import { formatCost, formatKwh } from '@/lib/calc/format';
 import { computeCost } from '@/lib/calc/cost';
 import { resolveLocationTariff, listSubdivisions, listCountries } from '@/lib/data/tariffs';
-import { shareBuild } from '@/lib/share/buildLink';
 import { hasSelectedParts } from '@/lib/build/hasSelectedParts';
 import { ExportMenu } from './ExportMenu';
-
-type ShareStatus = 'idle' | 'copied' | 'failed';
+import { ShareMenu } from './ShareMenu';
 
 /** "Ryzen 7 7800X3D · RTX 4070 SUPER · Maharashtra · 12 h/day in use" */
 function summarise(parts: string[], place: string, hours: number): string {
@@ -26,8 +21,6 @@ function summarise(parts: string[], place: string, hours: number): string {
 export function AnswerHero() {
   const { build, components, daily, monthly, yearly, psuWattage, peakWallDrawW, recommendedPsuW, currency } =
     useCalc();
-  const [shareStatus, setShareStatus] = useState<ShareStatus>('idle');
-  const clearStatusTimer = useRef<number | null>(null);
 
   const countryIso2 = build.location.country_iso2;
   const subdivisionCode = build.location.subdivision_code;
@@ -46,38 +39,9 @@ export function AnswerHero() {
     .filter(Boolean)
     .map((c) => c!.model);
 
-  const bookedHours = build.schedule.reduce((acc, s) => acc + s.hours_per_day, 0)
+  const bookedHours =
+    build.schedule.reduce((acc, s) => acc + s.hours_per_day, 0)
     + (build.idle_hours_per_day ?? 0);
-
-  useEffect(
-    () => () => {
-      if (clearStatusTimer.current != null) window.clearTimeout(clearStatusTimer.current);
-    },
-    [],
-  );
-
-  const onShare = async () => {
-    const result = await shareBuild(useBuildStore.getState().exportBuild());
-    if (clearStatusTimer.current != null) {
-      window.clearTimeout(clearStatusTimer.current);
-      clearStatusTimer.current = null;
-    }
-    if (result === 'copied') {
-      setShareStatus('copied');
-      clearStatusTimer.current = window.setTimeout(() => setShareStatus('idle'), 3000);
-    } else if (result === 'failed') {
-      setShareStatus('failed');
-    } else {
-      setShareStatus('idle');
-    }
-  };
-
-  const shareMessage =
-    shareStatus === 'copied'
-      ? 'Link copied'
-      : shareStatus === 'failed'
-        ? 'Link too long — use Export instead'
-        : '';
 
   if (!hasSelectedParts(build)) {
     return (
@@ -123,15 +87,9 @@ export function AnswerHero() {
 
         <div className="flex flex-col gap-1.5">
           <div className="flex gap-2">
-            <Button variant="primary" onClick={onShare} aria-label="Share build">
-              Share this estimate
-            </Button>
+            <ShareMenu />
             <ExportMenu />
           </div>
-          {/* Status sits under the buttons so their accessible names stay stable. */}
-          <p role="status" aria-live="polite" className="min-h-[1rem] text-xs text-gray-500">
-            {shareMessage}
-          </p>
         </div>
       </div>
 

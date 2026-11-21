@@ -2,11 +2,12 @@ import { useEffect, useRef } from 'react';
 import { BuildPicker } from '@/components/calculator/BuildPicker';
 import { ScheduleEditor } from '@/components/calculator/ScheduleEditor';
 import { AnswerHero } from '@/components/calculator/AnswerHero';
+import { MeasuredCard } from '@/components/calculator/MeasuredCard';
 import { ResultsBreakdown } from '@/components/calculator/ResultsBreakdown';
 import { AllSystemsSummary } from '@/components/calculator/AllSystemsSummary';
 import { LocationPicker } from '@/components/calculator/LocationPicker';
 import { BuildBar } from '@/components/layout/BuildBar';
-import { importBuildFromSearch } from '@/lib/share/buildLink';
+import { importBuildFromSearch, importBuildFromPath } from '@/lib/share/buildLink';
 import { findComponent } from '@/lib/data/components';
 import { useBuildStore } from '@/store/buildStore';
 import { useStoreHydrated } from '@/hooks/useStoreHydration';
@@ -63,8 +64,9 @@ export default function Home() {
     if (!hydrated || seeded.current) return;
     if (typeof window === 'undefined') return;
     seeded.current = true;
-    const search = window.location.search;
-    importBuildFromSearch(search, '/');
+    const { search, pathname } = window.location;
+    // /build/<token> first: a permalink carries a whole configuration.
+    if (!importBuildFromPath(pathname)) importBuildFromSearch(search, '/');
     seedPartFromSearch(search);
   }, [hydrated]);
 
@@ -96,6 +98,10 @@ export default function Home() {
       {/* 3. Analysis, consolidated: where the power goes, and what each use costs. */}
       <div className="mt-4">
         <ResultsBreakdown />
+      </div>
+
+      <div className="mt-4">
+        <MeasuredCard />
       </div>
 
       <div className="mt-4">

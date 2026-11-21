@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { BuildCategory, BuildConfig, ComponentSlot } from '@/types/build';
+import type { BuildCategory, BuildConfig, ComponentSlot, MeasuredReadings } from '@/types/build';
 import type { WorkloadSchedule } from '@/types/workload';
 import type { Component } from '@/types/component';
 
@@ -58,6 +58,8 @@ interface BuildStore {
 
   // CRUD on builds
   addBuild: (name?: string, category?: BuildCategory) => string;
+  /** Clone the active build under a new id and switch to the clone. */
+  duplicateActiveBuild: () => string | null;
   removeBuild: (id: string) => void;
   setActiveBuild: (id: string) => void;
   renameBuild: (id: string, name: string) => void;
@@ -77,6 +79,8 @@ interface BuildStore {
   setLocation: (country: string, subdivision?: string) => void;
   setCurrency: (currency: string) => void;
   setManualRate: (rate: number | null) => void;
+  /** Merge a real-world wall reading; `null`/undefined clears that reading. */
+  setMeasured: (patch: Partial<MeasuredReadings>) => void;
   setTdpOverride: (slot: string, watts: number | null) => void;
   /** Set CPU or GPU overclock percentage (0–50). */
   setOverclock: (part: 'cpu' | 'gpu', pct: number) => void;
@@ -117,6 +121,28 @@ export const useBuildStore = create<BuildStore>()(
           category: category ?? 'general',
         };
         set((s) => ({ builds: [...s.builds, build], activeBuildId: id }));
+        return id;
+      },
+
+      duplicateActiveBuild: () => {
+        const active = get().builds.find((b) => b.id === get().activeBuildId);
+        if (!active) return null;
+        const id = generateId();
+        const clone: BuildConfig = {
+          ...active,
+          id,
+          name: `${active.name} (copy)`,
+          // Deep-copy the containers so editing the clone cannot mutate the
+          // build it was copied from.
+          components: { ...active.components },
+          tdpOverrides: { ...active.tdpOverrides },
+          quantities: { ...(active.quantities ?? {}) },
+          overclock: active.overclock ? { ...active.overclock } : undefined,
+          schedule: active.schedule.map((s) => ({ ...s })),
+          location: { ...active.location },
+          measured: active.measured ? { ...active.measured } : undefined,
+        };
+        set((s) => ({ builds: [...s.builds, clone], activeBuildId: id }));
         return id;
       },
 
@@ -257,6 +283,19 @@ export const useBuildStore = create<BuildStore>()(
           ...b,
           location: { ...b.location, manual_rate_override: rate ?? undefined },
         })),
+
+      setMeasured: (patch) =>
+        updateActive(set, (b) => {
+          const next: MeasuredReadings = { ...(b.measured ?? {}) };
+          for (const [key, value] of Object.entries(patch) as Array<
+            [keyof MeasuredReadings, number | null | undefined]
+          >) {
+            // Only a positive finite reading is data; anything else clears it.
+            next[key] = Number.isFinite(value) && (value as number) > 0 ? (value as number) : null;
+          }
+          const hasAny = Object.values(next).some((v) => v != null);
+          return { ...b, measured: hasAny ? next : undefined };
+        }),
 
       setTdpOverride: (slot, watts) =>
         updateActive(set, (b) => {

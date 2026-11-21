@@ -114,3 +114,78 @@ export async function shareBuild(json: string): Promise<ShareResult> {
     return 'failed';
   }
 }
+
+/* ── Pretty permalinks: /build/<token> ──────────────────────────────────
+   The same JSON payload as `?builds=`, encoded base64url so it is safe as a
+   single path segment (no `/`, `+` or `=` to be percent-escaped and then
+   normalised away by a proxy). Nothing is stored server-side: the build lives
+   in the URL, which is what makes the link permanent without a database. */
+
+/** base64url-encode a build payload for use as a path segment. */
+export function encodeBuildToken(json: string): string {
+  const bytes = new TextEncoder().encode(json);
+  let bin = '';
+  for (const byte of bytes) bin += String.fromCharCode(byte);
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+/** Inverse of `encodeBuildToken`. Returns null on any bad input — never throws. */
+export function decodeBuildToken(token: string): string | null {
+  try {
+    const padded = token.replace(/-/g, '+').replace(/_/g, '/');
+    const bin = atob(padded + '='.repeat((4 - (padded.length % 4)) % 4));
+    const json = new TextDecoder().decode(Uint8Array.from(bin, (c) => c.charCodeAt(0)));
+    JSON.parse(json);
+    return json;
+  } catch {
+    return null;
+  }
+}
+
+/** `/build/<token>` permalink, or null when it would exceed the URL cap. */
+export function buildPermalinkUrl(
+  json: string,
+  origin: string = typeof window === 'undefined' ? '' : window.location.origin,
+): string | null {
+  try {
+    const url = `${origin}/build/${encodeBuildToken(json)}`;
+    return url.length > MAX_SHARE_URL_LENGTH ? null : url;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Import a `/build/<token>` permalink exactly once. The token is remembered in
+ * sessionStorage so a reload renders the already-imported build instead of
+ * stacking a second copy on top of it.
+ */
+export function importBuildFromPath(pathname: string): string | null {
+  const match = pathname.match(/^\/build\/([^/]+)\/?$/);
+  if (!match) return null;
+  const token = match[1];
+  try {
+    if (sessionStorage.getItem('pcpower-imported-token') === token) return null;
+  } catch {
+    // Storage blocked — fall through and import normally.
+  }
+  const json = decodeBuildToken(token);
+  if (!json) return null;
+
+  try {
+    const parsed = JSON.parse(json) as { build?: unknown };
+    if (!parsed?.build) return null;
+    const before = new Set(useBuildStore.getState().builds.map((b) => b.id));
+    useBuildStore.getState().importBuild(json);
+    const added = useBuildStore.getState().builds.find((b) => !before.has(b.id));
+    try {
+      sessionStorage.setItem('pcpower-imported-token', token);
+    } catch {
+      // Non-fatal: the worst case is a duplicate build on reload.
+    }
+    // The path stays: this URL is the thing people paste into a forum.
+    return added?.id ?? null;
+  } catch {
+    return null;
+  }
+}

@@ -39,6 +39,20 @@ export interface Overclock {
  */
 export type ComponentQuantities = Record<string, number>;
 
+/**
+ * Wall readings the owner took themselves. Everything the calculator predicts
+ * is a model of a machine; these are the numbers a smart plug actually shows,
+ * so they let the page say how far off it is. All at the wall (AC), in watts.
+ */
+export interface MeasuredReadings {
+  /** Wall draw while the machine is on but idle, W. */
+  idle_w?: number | null;
+  /** Wall draw at full load, W. */
+  load_w?: number | null;
+  /** Wall draw averaged over a day or a metered week, W. */
+  avg_w?: number | null;
+}
+
 export interface BuildConfig {
   id: string;
   name: string;
@@ -60,6 +74,8 @@ export interface BuildConfig {
   schedule: WorkloadSchedule[];
   location: { country_iso2: string; subdivision_code?: string; manual_rate_override?: number };
   currency_override?: string;
+  /** Optional real-world wall readings; see {@link MeasuredReadings}. */
+  measured?: MeasuredReadings;
 }
 
 export type ComponentSlot = keyof BuildComponents | 'ram' | 'storage' | 'monitor' | 'add_in_card' | 'optical_drive' | 'peripheral';

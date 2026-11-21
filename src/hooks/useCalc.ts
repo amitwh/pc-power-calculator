@@ -6,6 +6,7 @@ import type { BuildConfig } from '@/types/build';
 import type { Workload } from '@/types/workload';
 import { computeEnergy, resolveBuildComponents, type PerWorkloadEnergy } from '@/lib/calc/energy';
 import { componentPowerW, systemPowerW } from '@/lib/calc/power';
+import { IDLE_UTILIZATION } from '@/lib/calc/power';
 import { coercePsuRating, psuWattageFromSpecs, recommendPsuW } from '@/lib/calc/psu';
 import { currencyForLocation } from '@/lib/data/tariffs';
 import { listWorkloads } from '@/lib/data/workloads';
@@ -43,6 +44,8 @@ export interface CalcResult extends CalcInputs {
   componentsPowerW: Record<string, number>;
   /** Wall-side draw with every component at 100% utilization. */
   peakWallDrawW: number;
+  /** Wall draw while on but idle (no workload, monitors asleep), W. */
+  idleDrawW: number;
   /** Recommended PSU size for the peak draw (headroom included). */
   recommendedPsuW: number;
   /** Display currency: explicit override, else the tariff currency of the
@@ -117,6 +120,16 @@ export function useCalc(): CalcResult {
     );
     const recommendedPsuW = recommendPsuW(peakComponentDrawW);
 
+    // Idle draw is a property of the machine, not of the schedule: measured
+    // against it is how a visitor finds out their PC idles higher than modelled.
+    const { wallDrawW: idleDrawW } = systemPowerW(
+      resolvedRaw,
+      IDLE_UTILIZATION,
+      psuRating,
+      psuWattage ?? 650,
+      { includeMonitors: false },
+    );
+
     // Multi-system: sum energy across every build (each build auto-resolves
     // its own tariff unless it has a manual rate override).
     let allDaily = { kwh: 0, cost: 0 };
@@ -149,6 +162,7 @@ export function useCalc(): CalcResult {
       yearly: { ...yearly.total, perWorkload: yearly.perWorkload },
       componentsPowerW,
       peakWallDrawW,
+      idleDrawW,
       recommendedPsuW,
       currency,
       allDaily,

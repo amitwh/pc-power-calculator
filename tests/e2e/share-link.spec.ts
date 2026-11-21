@@ -116,3 +116,66 @@ test('the prerendered home page hydrates without a mismatch', async ({ page }) =
   );
   expect(mismatches).toEqual([]);
 });
+
+test('a /build/ permalink keeps the sharer’s country and currency', async ({ page }) => {
+  // Sharer: a US build at a California tariff.
+  await page.addInitScript(({ key }) => {
+    sessionStorage.setItem('pc-power-geo-detected', '1');
+    localStorage.setItem(
+      key,
+      JSON.stringify({
+        state: {
+          builds: [
+            {
+              id: 'b-share',
+              name: 'US rig',
+              category: 'gaming',
+              components: { cpu: 'cpu-amd-ryzen-7-7800x3d' },
+              tdpOverrides: {},
+              overclock: { cpu_pct: 0, gpu_pct: 0 },
+              case_fans: 2,
+              schedule: [{ workload_id: 'office', hours_per_day: 8 }],
+              location: { country_iso2: 'US', subdivision_code: 'US-CA' },
+            },
+          ],
+          activeBuildId: 'b-share',
+          customPeripherals: [],
+        },
+        version: 1,
+      }),
+    );
+  }, { key: STORAGE_KEY });
+
+  await page.goto('/');
+  await expect(page.getByText(/Google|California|United States/i).first()).toBeVisible();
+
+  const permalink = await page.evaluate(() => {
+    const json = JSON.parse(localStorage.getItem('pc-power-builds') ?? '{}');
+    return json.state.builds[0].location;
+  });
+  expect(permalink.country_iso2).toBe('US');
+
+  // Drive the sharer's own UI to produce the link.
+  await page.getByText('Share this estimate').click();
+  const link = await page.getByLabel('Share link').inputValue();
+  expect(link).toContain('/build/');
+
+  // Recipient: a genuinely separate browser profile, so none of the sharer's
+  // storage — nor their IP-derived tariff — can influence the result.
+  const browser = page.context().browser()!;
+  const fresh = await browser.newContext();
+  const recipient = await fresh.newPage();
+  await recipient.goto(link);
+
+  // The tariff must be the one carried in the link: the US build's own
+  // location and dollars, not the recipient's Indian default.
+  await expect(recipient.getByText(/California, United States/)).toBeVisible();
+  await expect(recipient.getByText(/^\$\d+\.\d\d$/).first()).toBeVisible();
+  // Scoped to the tariff card: a *different* saved build may legitimately use
+  // another currency, so only this build's own tariff must be in dollars.
+  const tariffCard = recipient.getByRole('heading', { name: 'Your tariff' }).locator('..');
+  expect(await tariffCard.innerText()).not.toContain('₹');
+  // And the permalink stays the permalink — it is the thing people paste.
+  expect(recipient.url()).toContain('/build/');
+  await fresh.close();
+});

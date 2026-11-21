@@ -51,8 +51,9 @@ describe('AnswerHero', () => {
     useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
     render(<AnswerHero />);
 
-    await user.click(screen.getByRole('button', { name: 'Share build' }));
+    await user.click(screen.getByRole('button', { name: /Copy permanent link/i }));
     expect(writeText).toHaveBeenCalledTimes(1);
+    expect(writeText.mock.calls[0][0]).toMatch(/\/build\/[A-Za-z0-9_-]+$/);
     expect(await screen.findByRole('status')).toHaveTextContent('Link copied');
   });
 });

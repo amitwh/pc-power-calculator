@@ -3,6 +3,7 @@ import type { BuildComponents, BuildConfig } from '@/types/build';
 import type { Component, ComponentCategory } from '@/types/component';
 import type { WorkloadId } from '@/types/workload';
 import { findComponent, listComponents } from '@/lib/data/components';
+import { confidenceFor, CONFIDENCE_CLASS } from '@/lib/data/confidence';
 import { listWorkloads } from '@/lib/data/workloads';
 import { findCurrency } from '@/lib/data/currencies';
 import { computeEnergy } from '@/lib/calc/energy';
@@ -93,6 +94,8 @@ export default function Part() {
 
   const name = `${part.brand} ${part.model}`;
   const ratedTdp = part.tdp_w;
+  const conf = confidenceFor(part.source);
+  const confidence = { ...conf, className: CONFIDENCE_CLASS[conf.level] };
   const inr = findCurrency('INR')!;
   const workloads = listWorkloads();
   const components = onePartComponents(part);
@@ -206,8 +209,15 @@ export default function Part() {
             <dd className="font-numeric tabular-nums text-lg font-semibold">{loadText}</dd>
           </div>
         </dl>
-        <p className="mt-2 text-xs text-gray-500">
-          Modelled figures from the calculator's power model — not measured.
+        <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-gray-500">
+          <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${confidence.className}`}>
+            {confidence.label}
+          </span>
+          <span>
+            Rated TDP from <strong className="font-semibold text-gray-600 dark:text-gray-300">{part.source}</strong>
+            {part.addedAt ? ` · catalogued ${part.addedAt}` : ''}. Modelled figures come from the
+            calculator's power model, not a measurement.
+          </span>
         </p>
       </Card>
 

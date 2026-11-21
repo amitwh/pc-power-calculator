@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { CATEGORY_EMOJI, CATEGORY_LABEL } from '@/lib/buildCategory';
 import { categoryColor } from '@/lib/categoryColors';
+import { confidenceFor } from '@/lib/data/confidence';
 import type { BuildCategory, ComponentSlot } from '@/types/build';
 import type { ComponentCategory, Component } from '@/types/component';
 
@@ -264,7 +265,10 @@ export function BuildPicker() {
                   </button>
                 </span>
 
-                <span className="w-12 shrink-0 text-right font-numeric text-sm font-semibold tabular-nums">
+                <span
+                  className="w-12 shrink-0 text-right font-numeric text-sm font-semibold tabular-nums"
+                  title={`${confidenceFor(d.component.source).label} · ${d.component.source}`}
+                >
                   {w != null && w > 0 ? `${Math.round(w * d.qty)} W` : '—'}
                 </span>
               </li>
