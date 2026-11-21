@@ -43,8 +43,9 @@ embedding and links, which removes that whole defect class instead of patching i
   per-workload rows.
 - **Brand typography**: embedded Inter for prose and JetBrains Mono for figures,
   so `₹`, `CO₂e`, `×`, `—`, `≈` render as themselves.
-- **Brand mark**: the page-1 header uses the repo's logo and the square webicon
-  once supplied; until then a text wordmark fallback keeps the report complete.
+- **Brand mark**: every page header uses the repo's logo; the webicon is the
+  browser/app icon. A text wordmark fallback keeps the report complete if the
+  logo is unavailable.
 - **A way back into the app**: a QR code and clickable link to the existing
   stateless `/build/<token>` permalink, when the encoded URL is within the
   existing 6 KB cap.
@@ -225,20 +226,18 @@ optional inputs with a working fallback, so the rewrite can ship before they lan
   and `assets/appicon.png` (570 × 570, RGB, white background). Copy them to
   `public/brand/logo.png` and `public/icons/appicon.png` so the runtime can fetch
   them; keep `assets/` as the owner's source of truth.
-- **Placement:** page-1 brand bar shows the full lockup on a **white rounded
-  plate** — its wordmark is navy and its gauge orange, so it cannot sit directly
-  on the `#e5461f` bar. Height ~18–20 pt. Continuation headers show the square
-  appicon on a small white plate plus build name · report ID; footer unchanged.
+- **Placement:** the PDF has **no orange band**. A fixed white header on every
+  page carries the logo top-left (~20 pt) with a 1.2 pt brand-orange rule
+  underneath. The right side shows `${currency.code} report · generated` on page
+  1 and `build name · report ID` on continuation pages. The app navbar and mobile
+  header show the same logo (on a white badge so it stays legible in dark mode).
 - **Format:** PNG (both supplied assets). react-pdf renders PNG reliably. The
   spike proved SVG also works, but SVG `<text>` needs a registered font; a PNG
   logo avoids that trap entirely.
-- **Appicon background:** the square icon is RGB with white corners. It is always
-  placed on a white plate, never directly on orange. For the PWA maskable icon,
-  regenerate the icon set from this source so the launcher icon matches.
-- **Webicon:** replace the generic generated icons by running the project's
-  `npm run generate-pwa-assets` with `assets/appicon.png` as the source (update
-  `pwa-assets.config.ts` and the manifest/index references if the output names
-  change).
+- **Webicon:** the square appicon is used for the browser/PWA icon set, not in
+  the PDF. It is RGB with white corners; the launcher icons are regenerated from
+  it via `npm run generate-pwa-assets` (including a full-bleed navy maskable
+  variant).
 - **Fallback:** when the logo cannot be fetched, draw the current text wordmark.
   No broken-image box, no layout shift.
 

@@ -492,6 +492,11 @@ git push origin main
 
 Delivered as planned, with these implementation facts worth keeping:
 
+- **Brand header (final):** the orange band and the appicon-only continuation
+  header were replaced by a fixed white header on every page — logo top-left,
+  report metadata (page 1) or build identity (pages 2+), and a thin brand rule.
+  The app navbar/mobile header use the same logo. `iconDataUrl`/`loadBrandIcon`
+  were removed.
 - **CSP:** react-pdf required `'wasm-unsafe-eval'` (Yoga WASM), `font-src data:`,
   `connect-src data:` and `worker-src blob:` in the meta tag, nginx and
   `_headers`. No `'unsafe-eval'`; the GTM inline hash is unchanged.
