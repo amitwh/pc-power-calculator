@@ -2,7 +2,13 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { useCalc } from '@/hooks/useCalc';
 import { buildExportHtml, downloadExportHtml } from '@/lib/export';
-import { exportPdf, type PdfReport, type PdfDeviceRow, type PdfScheduleRow } from '@/lib/export/pdf';
+import {
+  exportPdf,
+  reportFileName,
+  type PdfReport,
+  type PdfDeviceRow,
+  type PdfScheduleRow,
+} from '@/lib/export/pdf';
 import { listCountries, listSubdivisions, resolveLocationTariff, tariffsLastUpdated, tariffProvenance } from '@/lib/data/tariffs';
 import { workloadLabel } from '@/lib/data/workloads';
 import { computeCost } from '@/lib/calc/cost';
@@ -39,94 +45,102 @@ export function ExportMenu({
     if (getConsent() === 'granted') event('export_format', { format });
   };
 
+  /**
+   * Build the one report object both exports render. Keeping it in one place
+   * means the PDF and the HTML file can never disagree about a figure or a
+   * section.
+   */
+  const makeReport = (): PdfReport => {
+    // Distinct devices with unit counts (useCalc repeats each unit).
+    const byId = new Map<string, PdfDeviceRow>();
+    for (const c of components) {
+      const row = byId.get(c.id) ?? {
+        name: `${c.brand} ${c.model}`,
+        category: c.category,
+        qty: 0,
+        unitW: c.effective_tdp_w,
+        totalW: 0,
+        basis: basisFor(findComponent(c.id)?.source),
+        source: findComponent(c.id)?.source,
+      };
+      row.qty += 1;
+      row.totalW = row.unitW != null ? row.unitW * row.qty : 0;
+      byId.set(c.id, row);
+    }
+
+    const schedule: PdfScheduleRow[] = (yearly.perWorkload ?? []).map((r) => ({
+      name: workloadLabel(r.workload_id),
+      hoursPerDay: r.hours_per_day,
+      daysPerWeek: build.schedule.find((s) => s.workload_id === r.workload_id)?.days_per_week ?? 7,
+      drawW: r.draw_w,
+      kwhYear: r.kwh,
+      costYear: r.cost,
+    }));
+
+    const manualRate = build.location.manual_rate_override;
+    const { rate, taxes } = resolveLocationTariff(
+      build.location.country_iso2,
+      build.location.subdivision_code,
+    );
+    const tariffLabel = manualRate != null
+      ? `Manual override — ${manualRate.toFixed(2)} ${currency.code}/kWh`
+      : `≈ ${(computeCost(200, rate, taxes).total / 200).toFixed(2)} ${currency.code}/kWh incl. ${taxes.map((t) => t.name).join(' + ') || 'no regional taxes'}`;
+
+    const psuName =
+      components.find((c) => c.category === 'psu')?.model ?? null;
+    // Efficiency at the machine's own operating load, not a nominal 90%.
+    const loadPct =
+      psuWattage && psuWattage > 0 ? (totalEffectiveTdpW / psuWattage) * 100 : 50;
+    const efficiencyAtLoad = psuRating
+      ? psuEfficiency(psuRating, Math.min(100, Math.max(10, loadPct)))
+      : null;
+
+    const prov = tariffProvenance(build.location.country_iso2);
+    return {
+      buildName: build.name,
+      buildCategory: build.category,
+      locationLabel: locationLabel(build.location.country_iso2, build.location.subdivision_code),
+      tariffLabel,
+      currency,
+      devices: [...byId.values()],
+      typicalComponentW: totalEffectiveTdpW,
+      idleWallW: idleDrawW,
+      psu: {
+        name: psuName,
+        ratedW: psuWattage,
+        certification: certificationLabel(psuRating),
+        efficiencyAtLoad,
+        recommendedW: recommendedPsuW,
+        peakComponentW: totalEffectiveTdpW,
+        peakWallW: peakWallDrawW,
+      },
+      upsEfficiency,
+      measured: build.measured,
+      suggestedCategory: (() => {
+        const guess = suggestCategory(build, rawComponents);
+        return { label: CATEGORY_LABEL[guess.category], reason: guess.reason };
+      })(),
+      tariffVerifiedAt: prov.updated ?? tariffsLastUpdated(),
+      tariffSource: prov.source,
+      tariffEstimated: prov.estimated,
+      // The oldest catalogued part is the weakest link in the build's data.
+      catalogVerifiedAt: [...byId.keys()]
+        .map((id) => findComponent(id)?.addedAt)
+        .filter((d): d is string => Boolean(d))
+        .sort()[0],
+      schedule,
+      totals: {
+        daily: { kwh: daily.kwh, cost: daily.cost },
+        monthly: { kwh: monthly.kwh, cost: monthly.cost },
+        yearly: { kwh: yearly.kwh, cost: yearly.cost },
+      },
+    };
+  };
+
   const onPdf = async () => {
     setGenerating(true);
     try {
-      // Distinct devices with unit counts (useCalc repeats each unit).
-      const byId = new Map<string, PdfDeviceRow>();
-      for (const c of components) {
-        const row = byId.get(c.id) ?? {
-          name: `${c.brand} ${c.model}`,
-          category: c.category,
-          qty: 0,
-          unitW: c.effective_tdp_w,
-          totalW: 0,
-          basis: basisFor(findComponent(c.id)?.source),
-          source: findComponent(c.id)?.source,
-        };
-        row.qty += 1;
-        row.totalW = row.unitW != null ? row.unitW * row.qty : 0;
-        byId.set(c.id, row);
-      }
-
-      const schedule: PdfScheduleRow[] = (yearly.perWorkload ?? []).map((r) => ({
-        name: workloadLabel(r.workload_id),
-        hoursPerDay: r.hours_per_day,
-        daysPerWeek: build.schedule.find((s) => s.workload_id === r.workload_id)?.days_per_week ?? 7,
-        drawW: r.draw_w,
-        kwhYear: r.kwh,
-        costYear: r.cost,
-      }));
-
-      const manualRate = build.location.manual_rate_override;
-      const { rate, taxes } = resolveLocationTariff(
-        build.location.country_iso2,
-        build.location.subdivision_code,
-      );
-      const tariffLabel = manualRate != null
-        ? `Manual override — ${manualRate.toFixed(2)} ${currency.code}/kWh`
-        : `≈ ${(computeCost(200, rate, taxes).total / 200).toFixed(2)} ${currency.code}/kWh incl. ${taxes.map((t) => t.name).join(' + ') || 'no regional taxes'}`;
-
-      const psuName =
-        components.find((c) => c.category === 'psu')?.model ?? null;
-      // Efficiency at the machine's own operating load, not a nominal 90%.
-      const loadPct =
-        psuWattage && psuWattage > 0 ? (totalEffectiveTdpW / psuWattage) * 100 : 50;
-      const efficiencyAtLoad = psuRating
-        ? psuEfficiency(psuRating, Math.min(100, Math.max(10, loadPct)))
-        : null;
-
-      const prov = tariffProvenance(build.location.country_iso2);
-      const report: PdfReport = {
-        buildName: build.name,
-        buildCategory: build.category,
-        locationLabel: locationLabel(build.location.country_iso2, build.location.subdivision_code),
-        tariffLabel,
-        currency,
-        devices: [...byId.values()],
-        typicalComponentW: totalEffectiveTdpW,
-        idleWallW: idleDrawW,
-        psu: {
-          name: psuName,
-          ratedW: psuWattage,
-          certification: certificationLabel(psuRating),
-          efficiencyAtLoad,
-          recommendedW: recommendedPsuW,
-          peakComponentW: totalEffectiveTdpW,
-          peakWallW: peakWallDrawW,
-        },
-        upsEfficiency,
-        measured: build.measured,
-        suggestedCategory: (() => {
-          const guess = suggestCategory(build, rawComponents);
-          return { label: CATEGORY_LABEL[guess.category], reason: guess.reason };
-        })(),
-        tariffVerifiedAt: prov.updated ?? tariffsLastUpdated(),
-        tariffSource: prov.source,
-        tariffEstimated: prov.estimated,
-        // The oldest catalogued part is the weakest link in the build's data.
-        catalogVerifiedAt: [...byId.keys()]
-          .map((id) => findComponent(id)?.addedAt)
-          .filter((d): d is string => Boolean(d))
-          .sort()[0],
-        schedule,
-        totals: {
-          daily: { kwh: daily.kwh, cost: daily.cost },
-          monthly: { kwh: monthly.kwh, cost: monthly.cost },
-          yearly: { kwh: yearly.kwh, cost: yearly.cost },
-        },
-      };
-      await exportPdf(report);
+      await exportPdf(makeReport());
       trackExport('pdf');
     } finally {
       setGenerating(false);
@@ -134,16 +148,8 @@ export function ExportMenu({
   };
 
   const onHtml = () => {
-    const html = buildExportHtml(
-      build,
-      {
-        daily:   { total: daily },
-        monthly: { total: monthly },
-        yearly:  { total: yearly },
-      },
-      currency,
-    );
-    downloadExportHtml(html, `pc-power-${new Date().toISOString().slice(0, 10)}.html`);
+    const report = makeReport();
+    downloadExportHtml(buildExportHtml(report, build), reportFileName(report, 'html'));
     trackExport('html');
   };
 

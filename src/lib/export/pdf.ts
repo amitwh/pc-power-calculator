@@ -88,7 +88,14 @@ export interface PdfReport {
   catalogVerifiedAt?: string;
 }
 
-const CATEGORY_LABEL: Record<ComponentCategory, string> = {
+/**
+ * The estimate caveat printed in every export. Defined once so the PDF and the
+ * HTML report cannot drift apart.
+ */
+export const REPORT_DISCLAIMER =
+  'Report generated automatically. Estimates are based on configured hardware, workload assumptions and electricity tariffs. Power figures are modelled from rated specifications (or the basis shown), not measured unless labelled Measured. Carbon uses an editable grid factor, not your supplier\'s fuel mix. Verify specifications with the manufacturer and rates with your utility.';
+
+export const CATEGORY_LABEL: Record<ComponentCategory, string> = {
   cpu: 'CPU',
   gpu: 'GPU',
   ram: 'RAM',
@@ -104,7 +111,7 @@ const CATEGORY_LABEL: Record<ComponentCategory, string> = {
   peripheral: 'Peripheral',
 };
 
-const BASIS_LABEL: Record<PowerBasis, string> = {
+export const BASIS_LABEL: Record<PowerBasis, string> = {
   rated: 'Rated',
   measured: 'Measured',
   estimated: 'Estimated',
@@ -203,6 +210,23 @@ const CONTENT_W = PAGE_W - M * 2;
 
 function slugify(s: string): string {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'build';
+}
+
+/**
+ * The saved file name for a report. Shared by the PDF and HTML exports so the
+ * two never disagree about slug, date or report ID.
+ */
+export function reportFileName(report: PdfReport, ext: 'pdf' | 'html', now = new Date()): string {
+  // IST, not UTC: between 00:00 and 05:30 IST the UTC date is still yesterday,
+  // which would date the file differently from the report ID inside it.
+  const ist = new Date(now.getTime() + 5.5 * 3600 * 1000);
+  const date = `${ist.getUTCFullYear()}-${String(ist.getUTCMonth() + 1).padStart(2, '0')}-${String(
+    ist.getUTCDate(),
+  ).padStart(2, '0')}`;
+  return `CI_PC-Power_${slugify(report.buildName)}_${date}_${makeReportId(
+    report.buildName,
+    now,
+  )}.${ext}`;
 }
 
 /** IST date, because every generated document is dated in the user's zone. */
@@ -506,11 +530,11 @@ export async function exportPdf(report: PdfReport): Promise<void> {
     subject: pdfText('PC energy, cost, carbon and PSU sizing estimate'),
   });
 
-  const date = istDate();
+  const now = new Date();
+  const date = istDate(now);
   const gridFactor = report.gridFactorKgPerKwh ?? DEFAULT_GRID_FACTOR_KG_PER_KWH;
-  const disclaimer =
-    'Report generated automatically. Estimates are based on configured hardware, workload assumptions and electricity tariffs. Power figures are modelled from rated specifications (or the basis shown), not measured unless labelled Measured. Carbon uses an editable grid factor, not your supplier\'s fuel mix. Verify specifications with the manufacturer and rates with your utility.';
-  const reportId = makeReportId(report.buildName);
+  const disclaimer = REPORT_DISCLAIMER;
+  const reportId = makeReportId(report.buildName, now);
   const psu = report.psu;
 
   /* ── Page 1 ─────────────────────────────────────────────────────────── */
@@ -913,5 +937,5 @@ export async function exportPdf(report: PdfReport): Promise<void> {
 
   footers(doc, date, reportId, disclaimer);
 
-  doc.save(`CI_PC-Power_${slugify(report.buildName)}_${new Date().toISOString().slice(0, 10)}_${reportId}.pdf`);
+  doc.save(reportFileName(report, 'pdf', now));
 }
