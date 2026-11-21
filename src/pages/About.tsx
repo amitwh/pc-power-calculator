@@ -1,28 +1,43 @@
 import { Link } from 'react-router-dom';
-import { Card, CardTitle } from '@/components/ui/Card';
+import { PageHeader } from '@/components/layout/PageHeader';
+
+/** Separator between prose sections: a rule, not a card. */
+const SECTION = 'border-t border-gray-200 dark:border-gray-800 pt-4 mt-4 first:border-t-0 first:pt-0 first:mt-0';
+const BODY = 'mt-2 text-sm leading-relaxed';
+const LINK = 'text-brand-text underline underline-offset-2';
 
 export default function About() {
   return (
-    <div className="p-4 md:p-8 max-w-3xl mx-auto grid gap-3">
-      <h1 className="font-display text-2xl font-bold">About & Methodology</h1>
-      <Card>
-        <CardTitle>How we calculate</CardTitle>
-        <p className="text-sm">Per-component power at a workload is computed as:</p>
-        <pre className="font-mono text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded-8 my-2">P(w) = P_idle + (P_tdp − P_idle) × util(w)</pre>
-        <p className="text-sm">PSU efficiency is interpolated from the 80+ curve for the rating tier and load percentage. Wall draw = component sum ÷ efficiency.</p>
-      </Card>
-      <Card>
-        <CardTitle>Data sources</CardTitle>
-        <ul className="text-sm list-disc pl-5 space-y-1">
+    <div className="mx-auto max-w-3xl p-4 md:p-8">
+      <PageHeader title="About & Methodology" />
+
+      <section className={SECTION}>
+        <h2 className="text-base font-semibold">How we calculate</h2>
+        <div className={BODY}>
+          <p>Per-component power at a workload is computed as:</p>
+          <pre className="font-mono text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded-8 my-2">
+            P(w) = P_idle + (P_tdp − P_idle) × util(w)
+          </pre>
+          <p>
+            PSU efficiency is interpolated from the 80+ curve for the rating tier and load
+            percentage. Wall draw = component sum ÷ efficiency.
+          </p>
+        </div>
+      </section>
+
+      <section className={SECTION}>
+        <h2 className="text-base font-semibold">Data sources</h2>
+        <ul className={`${BODY} list-disc pl-5 space-y-1`}>
           <li>Component specs — manufacturer pages, TechPowerUp database</li>
           <li>Electricity tariffs — public utility regulators (CEA, EIA, Ofgem, Eurostat)</li>
           <li>FX rates — bundled snapshot (refreshed as part of the data-freshness workflow)</li>
           <li>Benchmarks — TechPowerUp, Gamers Nexus, Blender Open Data, PassMark, WhatToMine</li>
         </ul>
-      </Card>
-      <Card>
-        <CardTitle>Disclaimer</CardTitle>
-        <p className="text-sm">
+      </section>
+
+      <section className={SECTION}>
+        <h2 className="text-base font-semibold">Disclaimer</h2>
+        <p className={BODY}>
           All figures on this site — power draw, energy use, running cost, PSU sizing — are{' '}
           <strong>estimates for information only</strong> and are not professional, electrical or
           financial advice. Spec values are compiled from public sources and may be incomplete,
@@ -32,32 +47,41 @@ export default function About() {
           bill is always the ground truth. The service is provided “as is”, without warranty of any
           kind.
         </p>
-      </Card>
-      <Card>
-        <CardTitle>Trademarks</CardTitle>
-        <p className="text-sm">
+      </section>
+
+      <section className={SECTION}>
+        <h2 className="text-base font-semibold">Trademarks</h2>
+        <p className={BODY}>
           All product names, logos, brands and trademarks (Intel, AMD, NVIDIA, Corsair, and every
           other manufacturer mentioned) are the property of their respective owners. They are used
           on this site solely to identify hardware components. PC Power Calculator is an
           independent project and is <strong>not affiliated with, sponsored, or endorsed by</strong>{' '}
           any hardware manufacturer or utility.
         </p>
-      </Card>
-      <Card>
-        <CardTitle>Privacy</CardTitle>
-        <p className="text-sm">
+      </section>
+
+      <section className={SECTION}>
+        <h2 className="text-base font-semibold">Privacy</h2>
+        <p className={BODY}>
           Builds live only in your browser's local storage — nothing is uploaded. Details on
           analytics, ads and your choices:{' '}
-          <Link to="/privacy" className="text-brand-text underline underline-offset-2">
+          <Link to="/privacy" className={LINK}>
             Privacy policy
           </Link>
           .
         </p>
-      </Card>
-      <Card>
-        <CardTitle>Contribute</CardTitle>
-        <p className="text-sm">PRs welcome on <a className="text-brand-text underline underline-offset-2" href="https://github.com/amitwh/pc-power-calculator">github.com/amitwh/pc-power-calculator</a>. Especially: new countries / states / components.</p>
-      </Card>
+      </section>
+
+      <section className={SECTION}>
+        <h2 className="text-base font-semibold">Contribute</h2>
+        <p className={BODY}>
+          PRs welcome on{' '}
+          <a className={LINK} href="https://github.com/amitwh/pc-power-calculator">
+            github.com/amitwh/pc-power-calculator
+          </a>
+          . Especially: new countries / states / components.
+        </p>
+      </section>
     </div>
   );
 }

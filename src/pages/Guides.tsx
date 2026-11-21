@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { Card, CardTitle } from '@/components/ui/Card';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/analytics/adsense';
 
@@ -566,8 +567,8 @@ function GuideArticle({ slug }: { slug: string }) {
   const guide = GUIDES.find((g) => g.slug === slug);
   if (!guide) {
     return (
-      <div className="p-4 md:p-8 max-w-3xl mx-auto grid gap-3">
-        <h1 className="font-display text-2xl font-bold">Guide not found</h1>
+      <div className="mx-auto max-w-3xl p-4 md:p-8">
+        <PageHeader title="Guide not found" />
         <p className="text-sm">
           That guide doesn't exist. See all{' '}
           <Link to="/guides" className="text-brand-text underline underline-offset-2">guides</Link>.
@@ -576,23 +577,17 @@ function GuideArticle({ slug }: { slug: string }) {
     );
   }
   return (
-    <article className="p-4 md:p-8 max-w-3xl mx-auto grid gap-3 [&_h2]:font-display [&_h2]:text-lg [&_h2]:font-bold [&_h2]:mt-5 [&_p]:my-2">
-      <h1 className="font-display text-2xl font-bold">{guide.title}</h1>
-      <p className="text-sm text-gray-500">
-        {guide.minutes} min read · Updated {guide.updated}
-      </p>
-      <div className="text-sm leading-relaxed text-gray-800 dark:text-gray-200 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ul]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1 [&_ol]:my-2 [&_strong]:text-gray-900 dark:[&_strong]:text-gray-50">
+    <article className="mx-auto max-w-3xl p-4 md:p-8">
+      <PageHeader
+        title={guide.title}
+        lede={`${guide.minutes} min read · Updated ${guide.updated}`}
+      />
+      <div className="text-[15px] leading-relaxed text-gray-800 dark:text-gray-200 [&_h2]:font-display [&_h2]:text-lg [&_h2]:font-bold [&_h2]:mt-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1.5 [&_ul]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1.5 [&_ol]:my-2 [&_p]:my-2 [&_strong]:text-gray-900 dark:[&_strong]:text-gray-50">
         {guide.body}
       </div>
-      {/* Below the answer, above the disclaimer — never between a reader and
-          the numbers they came for. Renders nothing until an ad unit is set. */}
+      {/* Below the answer — never between a reader and the numbers they came
+          for. Renders nothing until an ad unit is set. */}
       <AdSlot slot={AD_SLOTS.guideInline} />
-      <p className="text-xs text-gray-500 border-t border-gray-200 dark:border-gray-800 pt-3">
-        Figures are estimates for information only — verify specs with manufacturers and your
-        utility's tariff card. See our{' '}
-        <Link to="/about" className="underline underline-offset-2">methodology</Link> and{' '}
-        <Link to="/privacy" className="underline underline-offset-2">privacy policy</Link>.
-      </p>
     </article>
   );
 }
@@ -603,23 +598,24 @@ export default function Guides() {
   if (slug) return <GuideArticle slug={slug} />;
 
   return (
-    <div className="p-4 md:p-8 max-w-3xl mx-auto grid gap-3">
-      <h1 className="font-display text-2xl font-bold">Guides &amp; explainers</h1>
-      <p className="text-sm text-gray-500">
-        Short, practical reads on PC power draw, PSU sizing and electricity billing — written
-        to match the calculator's model.
-      </p>
-      {GUIDES.map((g) => (
-        <Card key={g.slug}>
-          <CardTitle>
-            <Link to={`/guides/${g.slug}`} className="hover:text-brand-dark">
-              {g.title}
-            </Link>
-          </CardTitle>
-          <p className="text-sm text-gray-600 dark:text-gray-400">{g.description}</p>
-          <p className="text-xs text-gray-500 mt-1">{g.minutes} min read · Updated {g.updated}</p>
-        </Card>
-      ))}
+    <div className="mx-auto max-w-3xl p-4 md:p-8">
+      <PageHeader
+        title="Guides & explainers"
+        lede="Short, practical reads on PC power draw, PSU sizing and electricity billing — written to match the calculator's model."
+      />
+      <div className="grid gap-3">
+        {GUIDES.map((g) => (
+          <Card key={g.slug}>
+            <CardTitle>
+              <Link to={`/guides/${g.slug}`} className="hover:text-brand-dark">
+                {g.title}
+              </Link>
+            </CardTitle>
+            <p className="text-sm text-gray-600 dark:text-gray-400">{g.description}</p>
+            <p className="text-xs text-gray-500 mt-1">{g.minutes} min read · Updated {g.updated}</p>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }

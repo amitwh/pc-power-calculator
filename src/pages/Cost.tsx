@@ -12,6 +12,7 @@ import {
 import { computeCost } from '@/lib/calc/cost';
 import { describeTariffRate, formatCost, formatKwh } from '@/lib/calc/format';
 import { Card, CardTitle } from '@/components/ui/Card';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/analytics/adsense';
 
@@ -47,17 +48,15 @@ function taxBaseLabel(tax: TaxRule): string {
 
 function TariffNotFound() {
   return (
-    <div className="p-4 md:p-8 max-w-3xl mx-auto">
-      <Card>
-        <CardTitle>Tariff not found</CardTitle>
-        <p className="text-sm">
-          We don't have a bundled electricity tariff for that location.{' '}
-          <Link to="/" className="text-brand-text underline underline-offset-2">
-            Back to the calculator
-          </Link>
-          .
-        </p>
-      </Card>
+    <div className="mx-auto max-w-3xl p-4 md:p-8">
+      <PageHeader title="Tariff not found" />
+      <p className="text-sm">
+        We don't have a bundled electricity tariff for that location.{' '}
+        <Link to="/" className="text-brand-text underline underline-offset-2">
+          Back to the calculator
+        </Link>
+        .
+      </p>
     </div>
   );
 }
@@ -128,20 +127,18 @@ export default function Cost() {
   const rows = slabRows(rate);
 
   return (
-    <div className="p-4 md:p-8 max-w-3xl mx-auto grid gap-3">
+    <div className="mx-auto max-w-3xl p-4 md:p-8 grid gap-3">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(faq) }} />
 
-      <header>
-        <h1 className="font-display text-2xl font-bold">Electricity cost of running a PC in {place}</h1>
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-          Bundled tariff snapshot · last updated {tariffsLastUpdated()}
+      <PageHeader
+        title={`Electricity cost of running a PC in ${place}`}
+        lede={`Bundled tariff snapshot · last updated ${tariffsLastUpdated()}`}
+      />
+      {notes && (
+        <p className="border-l-2 border-amber-400 pl-3 text-xs text-gray-600 dark:text-gray-400">
+          {notes}
         </p>
-        {notes && (
-          <p className="mt-2 border-l-2 border-amber-400 pl-3 text-xs text-gray-600 dark:text-gray-400">
-            {notes}
-          </p>
-        )}
-      </header>
+      )}
 
       <Card>
         <CardTitle>{rate.flat != null ? 'Flat rate' : 'Slab rates'}</CardTitle>

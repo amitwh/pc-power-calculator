@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import TopNav from './TopNav';
+import MobileHeader from './MobileHeader';
 import MobileNav from './MobileNav';
+import Footer from './Footer';
 import { useInteractionCounter } from '@/hooks/useInteractionCounter';
 import { usePageView } from '@/hooks/usePageView';
 import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
@@ -23,6 +25,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   useStoreHydration();
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50">
+      <MobileHeader />
       <TopNav />
       <main className="flex-1 pb-20 md:pb-0">
         {/* Visually-hidden h1 — satisfies WCAG page-has-heading-one and gives
@@ -34,6 +37,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             sets VITE_ADSENSE_CLIENT and the user opts in. */}
         <AdSlot slot={AD_SLOTS.appShell} className="mx-4 md:mx-8 mb-4" />
       </main>
+      <Footer />
       <MobileNav />
       <PWAInstallPrompt />
       <CookieBanner />
