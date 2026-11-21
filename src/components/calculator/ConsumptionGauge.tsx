@@ -1,6 +1,18 @@
 import {
+  BatteryCharging,
   Bot,
+  Car,
   Clapperboard,
+  Cloud,
+  Droplets,
+  Factory,
+  Flame,
+  Fuel,
+  Lightbulb,
+  Refrigerator,
+  Smartphone,
+  Sun,
+  TreePine,
   Database,
   FlaskConical,
   Gamepad2,
@@ -25,6 +37,22 @@ import {
 import { equivalences } from '@/lib/calc/equivalences';
 import { formatKwh } from '@/lib/calc/format';
 import type { BuildCategory } from '@/types/build';
+
+/** One glyph per equivalence, keyed by its stable id. */
+const EQUIVALENCE_ICON: Record<string, LucideIcon> = {
+  co2: Cloud,
+  car: Car,
+  tree: TreePine,
+  coal: Factory,
+  gas: Flame,
+  diesel: Fuel,
+  water: Droplets,
+  ev: BatteryCharging,
+  fridge: Refrigerator,
+  led: Lightbulb,
+  solar: Sun,
+  phone: Smartphone,
+};
 
 const CATEGORY_ICON: Record<BuildCategory, LucideIcon> = {
   general: Monitor,
@@ -121,7 +149,15 @@ export function ConsumptionGauge({ gridFactorKgPerKwh = 0.71 }: { gridFactorKgPe
             className="rounded-8 border border-gray-100 px-2.5 py-2 dark:border-gray-800"
             title={f.basis}
           >
-            <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">{f.label}</p>
+            <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+              {(() => {
+                const Icon = EQUIVALENCE_ICON[f.key];
+                return Icon ? (
+                  <Icon className="h-4 w-4 shrink-0 text-brand" strokeWidth={1.75} aria-hidden />
+                ) : null;
+              })()}
+              <span className="truncate">{f.label}</span>
+            </p>
             <p className="font-numeric text-lg font-bold tabular-nums text-gray-900 dark:text-gray-50">
               {f.value}
               <span className="ml-1 text-[11px] font-medium text-gray-500">{f.unit}</span>

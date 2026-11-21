@@ -16,6 +16,8 @@
 export type EquivalenceGroup = 'everyday' | 'fuel' | 'water' | 'carbon';
 
 export interface Equivalence {
+  /** Stable id for icon/analytics mapping. */
+  key: string;
   /** Short label, e.g. "Coal burned". */
   label: string;
   /** Formatted value, e.g. "1,845". */
@@ -99,6 +101,7 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
 
   const out: Equivalence[] = [
     {
+      key: 'ev',
       label: 'Driving, electric',
       value: nf.format(km),
       unit: 'km',
@@ -107,6 +110,7 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
       group: 'everyday',
     },
     {
+      key: 'fridge',
       label: 'Fridges, for a year',
       value: nf1.format(fridges),
       unit: 'units',
@@ -115,6 +119,7 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
       group: 'everyday',
     },
     {
+      key: 'led',
       label: 'LED bulbs, for a year',
       value: nf.format(bulbs),
       unit: 'bulbs',
@@ -123,6 +128,7 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
       group: 'everyday',
     },
     {
+      key: 'coal',
       label: 'If it were coal',
       value: nf.format(coal),
       unit: 'kg burned',
@@ -131,6 +137,7 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
       group: 'fuel',
     },
     {
+      key: 'gas',
       label: 'If it were gas',
       value: nf1.format(gas),
       unit: 'm³ burned',
@@ -139,6 +146,7 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
       group: 'fuel',
     },
     {
+      key: 'diesel',
       label: 'If it were diesel',
       value: nf.format(diesel),
       unit: 'litres burned',
@@ -147,6 +155,7 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
       group: 'fuel',
     },
     {
+      key: 'water',
       label: 'Cooling water',
       value: nf.format(water),
       unit: 'litres',
@@ -155,6 +164,7 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
       group: 'water',
     },
     {
+      key: 'solar',
       label: 'From the sun',
       value: nf1.format(kwpYears),
       unit: 'kWp-years',
@@ -163,6 +173,7 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
       group: 'everyday',
     },
     {
+      key: 'phone',
       label: 'Phone charges',
       value: nf.format(phones),
       unit: 'charges',
@@ -177,7 +188,8 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
     const petrolKm = co2KgPerYear / PETROL_KG_CO2_PER_KM;
     out.push(
       {
-        label: 'Carbon dioxide',
+        key: 'co2',
+      label: 'Carbon dioxide',
         value: nf.format(co2KgPerYear),
         unit: 'kg CO₂e',
         sentence: `${nf.format(co2KgPerYear)} kg of CO₂e, at the grid factor used.`,
@@ -185,7 +197,8 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
         group: 'carbon',
       },
       {
-        label: 'Cars, equivalent',
+        key: 'car',
+      label: 'Cars, equivalent',
         value: nf.format(petrolKm),
         unit: 'km driven',
         sentence: `The same emissions as driving a petrol car about ${nf.format(petrolKm)} km.`,
@@ -193,7 +206,8 @@ export function equivalences(kwhPerYear: number, co2KgPerYear?: number): Equival
         group: 'carbon',
       },
       {
-        label: 'Trees to absorb it',
+        key: 'tree',
+      label: 'Trees to absorb it',
         value: nf.format(trees),
         unit: 'tree-years',
         sentence: `About ${nf.format(trees)} mature trees would take a year to absorb that CO₂.`,
