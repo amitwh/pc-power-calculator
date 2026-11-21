@@ -39,15 +39,16 @@ describe('Home one-screen structure', () => {
     expect(document.querySelector('a[href^="#"]')).toBeNull();
 
     // Every input card, then the answer, then the breakdown.
-    expect(screen.getByRole('heading', { name: /^Parts$/ })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /^Usage$/ })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /^Rate$/ })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /^Your system$/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /When you use it/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Your tariff/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Yearly cost/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Power draw breakdown/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Where the power goes/i })).toBeInTheDocument();
 
-    // The answer lives in the labelled results aside, sticky on desktop.
-    const results = screen.getByRole('complementary', { name: 'Results' });
-    expect(results.contains(screen.getByRole('heading', { name: /Yearly cost/i }))).toBe(true);
+    // The answer is the page's first section, above every input card.
+    const hero = screen.getByRole('heading', { name: /Yearly cost/i });
+    const system = screen.getByRole('heading', { name: /^Your system$/i });
+    expect(hero.compareDocumentPosition(system) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 });
 

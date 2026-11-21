@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Option 1 — Console</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  /* Answer first, full width. The number is the page's headline, so it sits
+     above the form instead of beside it — nothing to scroll to find it. */
+  .nav { height: 52px; display: flex; align-items: center; gap: 26px; padding: 0 28px;
+         background: #fff; border-bottom: 1px solid var(--gray-200); }
+  .nav .logo { font-family: var(--font-display); font-weight: 800; font-size: 20px;
+               letter-spacing: .01em; color: var(--brand); margin-right: auto; }
+  .nav a { font-size: 13px; font-weight: 600; color: var(--gray-600); text-decoration: none; }
+  .nav a.on { color: var(--brand-text); }
+
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 0 28px 24px; }
+
+  .hero { display: flex; align-items: flex-end; gap: 40px; padding: 22px 0 18px;
+          border-bottom: 1px solid var(--gray-200); flex-wrap: wrap; }
+  .hero-main { display: flex; align-items: baseline; gap: 12px; }
+  .hero .big { font-family: var(--font-display); font-weight: 800; font-size: 64px;
+               line-height: .85; color: var(--gray-950); letter-spacing: -.015em;
+               font-variant-numeric: tabular-nums; }
+  .hero .per { font-size: 14px; font-weight: 600; color: var(--gray-400); }
+  .hero .cap { font-size: 11px; font-weight: 700; letter-spacing: .09em;
+               text-transform: uppercase; color: var(--gray-400); margin-bottom: 6px; }
+  .hero-facts { display: flex; gap: 28px; padding-bottom: 6px; }
+  .fact .k { font-size: 11px; font-weight: 700; letter-spacing: .08em;
+             text-transform: uppercase; color: var(--gray-400); }
+  .fact .v { font-family: var(--font-mono); font-size: 15px; font-weight: 600;
+             font-variant-numeric: tabular-nums; color: var(--gray-900); margin-top: 2px; }
+  .hero-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .psu { display: flex; align-items: center; gap: 8px; background: #fff;
+         border: 1px solid var(--gray-200); border-radius: var(--r-md);
+         padding: 7px 12px; font-size: 12px; }
+  .psu b { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .ok { color: var(--success); font-weight: 700; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 20px; }
+  .panel { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--r-lg); }
+  .panel > header { display: flex; align-items: center; justify-content: space-between;
+                    padding: 12px 14px; border-bottom: 1px solid var(--gray-100); }
+  .panel h2 { font-size: 13px; font-weight: 800; letter-spacing: .02em;
+              text-transform: uppercase; color: var(--gray-800); }
+  .panel .body { padding: 10px 14px 12px; }
+
+  .pick { display: grid; grid-template-columns: 118px 122px 1fr; gap: 8px; margin-bottom: 8px; }
+  .pick .sel { height: 32px; font-size: 12px; }
+  .pick .trigger { height: 32px; display: flex; align-items: center; justify-content: space-between;
+                   gap: 8px; border: 1px solid var(--gray-300); border-radius: var(--r-md);
+                   padding: 0 10px; font-size: 12.5px; color: var(--gray-500); background: #fff; cursor: pointer; }
+  .pick .trigger .plus { color: var(--brand); font-weight: 800; }
+
+  .part { display: flex; align-items: center; gap: 9px; height: 38px;
+          border-top: 1px solid var(--gray-100); font-size: 13px; }
+  .part:first-of-type { border-top: 0; }
+  .part .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+              white-space: nowrap; font-weight: 600; color: var(--gray-900); }
+  .part .w { width: 46px; height: 28px; text-align: right; font-family: var(--font-mono);
+             font-size: 12px; border: 1px solid var(--gray-300); border-radius: var(--r-sm);
+             padding: 0 5px; color: var(--gray-900); }
+  .part .tot { width: 48px; text-align: right; font-family: var(--font-mono);
+               font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .part .x { border: 0; background: none; color: var(--gray-300); font-size: 15px;
+             cursor: pointer; width: 18px; padding: 0; }
+  .part .x:hover { color: var(--danger); }
+
+  .wl { display: flex; align-items: center; gap: 10px; height: 36px;
+        border-top: 1px solid var(--gray-100); font-size: 13px; }
+  .wl:first-of-type { border-top: 0; }
+  .wl .nm { flex: 1; min-width: 0; font-weight: 600; overflow: hidden;
+            text-overflow: ellipsis; white-space: nowrap; }
+  .wl .cost { width: 74px; text-align: right; font-family: var(--font-mono);
+              font-size: 11.5px; color: var(--gray-400); font-variant-numeric: tabular-nums; }
+
+  .rate { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px;
+          padding-top: 12px; border-top: 1px solid var(--gray-200); }
+  .rate .f label { display: block; margin-bottom: 4px; }
+  .rate .sel, .rate .inp { height: 32px; font-size: 12px; }
+  .rate-row { display: flex; gap: 6px; }
+  .prov { margin-top: 8px; font-size: 11px; color: var(--gray-400); }
+
+  @media (max-width: 1000px) {
+    .cols { grid-template-columns: 1fr; }
+    .wrap { padding: 0 16px 20px; }
+    .nav { padding: 0 16px; }
+    .hero .big { font-size: 48px; }
+    .hero-facts { gap: 18px; }
+  }
+  /* Narrow screens: name on its own line, controls wrapped beneath it. */
+  @media (max-width: 620px) {
+    .part, .row, .wl { flex-wrap: wrap; height: auto; min-height: 40px; padding: 7px 0; row-gap: 6px; }
+    .part .nm, .row .nm, .wl .nm { flex: 1 0 100%; }
+  }
+
+  @media (max-width: 560px) {
+    .pick { grid-template-columns: 1fr 1fr; }
+    .pick .trigger { grid-column: 1 / -1; }
+  }
+  @media (max-width: 620px) {
+    .nav { gap: 14px; }
+    .nav a:not(.on) { display: none; }
+    .form-top { flex-wrap: wrap; }
+    .form-top h1 { flex: 1 0 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="logo">⚡ PC Power Calculator</span>
+  <a href="#" class="on">Calculator</a>
+  <a href="#">Compare</a>
+  <a href="#">Guides</a>
+  <a href="#">About</a>
+</nav>
+
+<div class="wrap">
+  <!-- The answer is the headline. No sidebar, nothing to scroll for. -->
+  <section class="hero">
+    <div>
+      <div class="cap">Running cost · My build</div>
+      <div class="hero-main">
+        <span class="big">₹2,577.78</span>
+        <span class="per">per year</span>
+      </div>
+    </div>
+
+    <div class="hero-facts">
+      <div class="fact"><div class="k">Energy</div><div class="v">421 kWh</div></div>
+      <div class="fact"><div class="k">Month</div><div class="v">₹214.83</div></div>
+      <div class="fact"><div class="k">Day</div><div class="v">₹7.06</div></div>
+      <div class="fact"><div class="k">Rate</div><div class="v">₹8.41</div></div>
+    </div>
+
+    <div class="hero-right">
+      <div class="psu">
+        <b>PSU 500 W</b>
+        <span class="muted">peak 389 W</span>
+        <span class="ok">✓ 850 W fits</span>
+      </div>
+      <button class="btn btn-brand">Share</button>
+      <button class="btn">PDF</button>
+    </div>
+  </section>
+
+  <div class="cols">
+    <section class="panel">
+      <header>
+        <h2>Parts</h2>
+        <span class="small muted num">4 devices · 345 W</span>
+      </header>
+      <div class="body">
+        <div class="pick">
+          <select class="sel"><option>Gaming</option></select>
+          <select class="sel"><option>All categories</option></select>
+          <button class="trigger"><span><span class="plus">+</span> Add a part — search 2,200+…</span><span>▾</span></button>
+        </div>
+        <ul>
+          <li class="part"><i class="cbar" style="background:#7c5cff"></i><span class="nm">AMD Ryzen 7 7800X3D</span><input class="w" value="120"><span class="muted small">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot">120 W</span><button class="x">×</button></li>
+          <li class="part"><i class="cbar" style="background:#e5461f"></i><span class="nm">NVIDIA GeForce RTX 4070 SUPER</span><input class="w" value="220"><span class="muted small">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot">220 W</span><button class="x">×</button></li>
+          <li class="part"><i class="cbar" style="background:#2f9e8f"></i><span class="nm">DDR5-4800 16 GB</span><input class="w" value="5.5"><span class="muted small">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot">6 W</span><button class="x">×</button></li>
+          <li class="part"><i class="cbar" style="background:#9aa3ad"></i><span class="nm">ATX 850 W Gold</span><input class="w" value="0"><span class="muted small">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot muted">—</span><button class="x">×</button></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel">
+      <header>
+        <h2>Usage</h2>
+        <span class="small muted num">12.0 h/day booked · 12.0 free</span>
+      </header>
+      <div class="body">
+        <ul>
+          <li class="wl"><span class="nm">🎮 Gaming (1080p)</span><span class="muted small num">2 h</span><span class="stepper"><button>−</button><span class="v">2<span>h</span></span><button>+</button></span><span class="stepper"><button>−</button><span class="v">7<span>d</span></span><button>+</button></span><span class="cost">₹311.10</span><button class="x" style="border:0;background:none;color:#d1d1d1;cursor:pointer">×</button></li>
+          <li class="wl"><span class="nm">💼 Office</span><span class="muted small num">8 h</span><span class="stepper"><button>−</button><span class="v">8<span>h</span></span><button>+</button></span><span class="stepper"><button>−</button><span class="v">7<span>d</span></span><button>+</button></span><span class="cost">₹1,612.46</span><button class="x" style="border:0;background:none;color:#d1d1d1;cursor:pointer">×</button></li>
+          <li class="wl"><span class="nm">🌐 Web browsing</span><span class="muted small num">4 h</span><span class="stepper"><button>−</button><span class="v">4<span>h</span></span><button>+</button></span><span class="stepper"><button>−</button><span class="v">7<span>d</span></span><button>+</button></span><span class="cost">₹965.31</span><button class="x" style="border:0;background:none;color:#d1d1d1;cursor:pointer">×</button></li>
+          <li class="wl"><span class="nm">💤 Idle</span><span class="muted small num">10 h</span><span class="stepper"><button>−</button><span class="v">10<span>h</span></span><button>+</button></span><span style="width:82px"></span><span class="cost">₹248.00</span><span style="width:18px"></span></li>
+        </ul>
+        <button class="btn btn-ghost" style="margin-top:8px">+ Workload</button>
+
+        <div class="rate">
+          <div class="f"><label class="label">Country</label><select class="sel"><option>India (IN)</option></select></div>
+          <div class="f"><label class="label">State</label><select class="sel"><option>Maharashtra</option></select></div>
+          <div class="f"><label class="label">Rate</label><div class="rate-row"><input class="inp num" value="8.41"><button class="btn">Detect</button></div></div>
+          <div class="f"><label class="label">Currency</label><select class="sel"><option>Auto (INR)</option></select></div>
+        </div>
+        <p class="prov">Tiered, billed monthly · incl. electricity duty · FX 2026-09-15</p>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

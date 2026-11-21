@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Option 4 — Split</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  /* Two panes, one visible at a time. The left pane switches between Parts /
+     Usage / Rate, so the bottom of the page is always the answer, never a
+     fourth input card you have to scroll past. */
+  .app { height: 100vh; display: grid; grid-template-rows: 52px 1fr; background: var(--gray-50); }
+
+  .nav { display: flex; align-items: center; gap: 24px; padding: 0 22px;
+         background: #fff; border-bottom: 1px solid var(--gray-200); }
+  .nav .logo { font-family: var(--font-display); font-weight: 800; font-size: 20px;
+               color: var(--brand); margin-right: auto; }
+  .nav a { font-size: 13px; font-weight: 600; color: var(--gray-500); text-decoration: none; }
+  .nav a.on { color: var(--brand-text); }
+
+  .main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+          min-height: 0; }
+
+  /* ── Left: tabbed inputs ─────────────────────────────────────────── */
+  .form { display: flex; flex-direction: column; min-height: 0;
+          border-right: 1px solid var(--gray-200); background: #fff; }
+
+  .form-top { display: flex; align-items: center; gap: 12px; padding: 14px 22px 0; }
+  .form-top h1 { font-size: 14px; font-weight: 800; color: var(--gray-950); margin-right: auto; }
+  .form-top select { width: auto; height: 30px; font-size: 12px; font-weight: 700; }
+
+  .tabs { display: flex; gap: 2px; padding: 10px 22px 0; border-bottom: 1px solid var(--gray-200); }
+  .tab { border: 0; background: none; cursor: pointer; padding: 8px 12px 10px;
+         font-family: var(--font-sans); font-size: 12.5px; font-weight: 700;
+         color: var(--gray-400); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .tab.on { color: var(--gray-950); border-bottom-color: var(--brand); }
+  .tab .n { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+            background: var(--gray-100); color: var(--gray-500); border-radius: 20px;
+            padding: 1px 6px; margin-left: 6px; }
+
+  .pane { flex: 1; min-height: 0; overflow: auto; padding: 16px 22px 18px; }
+
+  .pick { display: grid; grid-template-columns: 124px 130px 1fr; gap: 8px; margin-bottom: 10px; }
+  .pick .sel { height: 34px; font-size: 12.5px; }
+  .trigger { height: 34px; display: flex; align-items: center; justify-content: space-between;
+             border: 1px solid var(--gray-300); border-radius: var(--r-md); padding: 0 11px;
+             font-size: 12.5px; color: var(--gray-500); background: #fff; cursor: pointer; }
+  .trigger .plus { color: var(--brand); font-weight: 800; }
+
+  /* Dense rows that read as a list, not as a form. */
+  .row { display: flex; align-items: center; gap: 10px; height: 42px;
+         border-top: 1px solid var(--gray-100); font-size: 13px; }
+  .row:first-of-type { border-top: 0; }
+  .row .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+             white-space: nowrap; font-weight: 600; color: var(--gray-900); }
+  .row .sub { font-size: 11px; color: var(--gray-400); font-weight: 500; }
+  .row .w { width: 52px; height: 28px; text-align: right; font-family: var(--font-mono);
+            font-size: 12px; border: 1px solid var(--gray-300); border-radius: var(--r-sm);
+            padding: 0 5px; color: var(--gray-900); }
+  .row .tot { width: 52px; text-align: right; font-family: var(--font-mono); font-size: 12px;
+              font-weight: 700; font-variant-numeric: tabular-nums; }
+  .row .cost { width: 78px; text-align: right; font-family: var(--font-mono); font-size: 11.5px;
+               color: var(--gray-400); font-variant-numeric: tabular-nums; }
+  .row .x { border: 0; background: none; color: var(--gray-300); font-size: 15px;
+            cursor: pointer; width: 18px; padding: 0; }
+  .row .x:hover { color: var(--danger); }
+
+  .add { border: 0; background: none; color: var(--brand-text); font-size: 12.5px;
+         font-weight: 700; cursor: pointer; padding: 10px 0 0; }
+  .add span { color: var(--brand); }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid2 .f label { display: block; margin-bottom: 4px; }
+  .hint { font-size: 11.5px; color: var(--gray-400); margin-top: 12px; line-height: 1.5; }
+
+  .form-foot { display: flex; align-items: center; gap: 8px; padding: 12px 22px;
+               border-top: 1px solid var(--gray-200); background: var(--gray-50); }
+  .form-foot .sp { margin-left: auto; font-size: 11.5px; color: var(--gray-400); }
+
+  /* ── Right: the answer, always ───────────────────────────────────── */
+  .answer { background: #fff; display: flex; flex-direction: column;
+            background-image: linear-gradient(180deg, rgb(229 70 31 / .06), rgb(229 70 31 / 0) 260px); }
+  .answer .in { padding: 26px 26px 20px; }
+  .answer .cap { font-size: 10.5px; font-weight: 800; letter-spacing: .14em;
+                 text-transform: uppercase; color: var(--brand-text); }
+  .answer .big { font-family: var(--font-display); font-weight: 800; font-size: 76px;
+                 line-height: .84; color: var(--gray-950); letter-spacing: -.02em;
+                 font-variant-numeric: tabular-nums; margin-top: 6px; }
+  .answer .big small { font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+                       color: var(--gray-400); letter-spacing: 0; }
+
+  .facts { margin-top: 22px; }
+  .facts .r { display: flex; align-items: baseline; justify-content: space-between;
+              padding: 9px 0; border-top: 1px solid var(--gray-100); font-size: 12.5px; }
+  .facts .r .k { color: var(--gray-500); }
+  .facts .r .v { font-family: var(--font-mono); font-weight: 700; color: var(--gray-900);
+                 font-variant-numeric: tabular-nums; }
+  .facts .r .v.warn { color: var(--brand-text); }
+
+  .psu { margin-top: 16px; padding: 12px; border-radius: var(--r-md);
+         background: rgb(26 122 86 / .07); border: 1px solid rgb(26 122 86 / .18);
+         font-size: 12px; color: var(--gray-700); }
+  .psu b { font-family: var(--font-mono); color: var(--gray-900); }
+  .psu .ok { color: var(--success); font-weight: 700; }
+
+  .answer .foot { margin-top: auto; padding: 16px 26px 22px; display: grid;
+                  grid-template-columns: 1fr 1fr; gap: 8px; }
+  .answer .foot .wide { grid-column: 1 / -1; }
+
+  /* Narrow screens: name on its own line, controls wrapped beneath it. */
+  @media (max-width: 620px) {
+    .part, .row, .wl { flex-wrap: wrap; height: auto; min-height: 40px; padding: 7px 0; row-gap: 6px; }
+    .part .nm, .row .nm, .wl .nm { flex: 1 0 100%; }
+  }
+
+  @media (max-width: 900px) {
+    .app { height: auto; }
+    .main { grid-template-columns: 1fr; }
+    .answer { order: -1; border-bottom: 1px solid var(--gray-200); }
+    .form { border-right: 0; }
+    .answer .big { font-size: 58px; }
+    .answer .foot { padding-top: 4px; }
+    .pick { grid-template-columns: 1fr 1fr; }
+    .trigger { grid-column: 1 / -1; }
+  }
+  @media (max-width: 620px) {
+    .nav { gap: 14px; }
+    .nav a:not(.on) { display: none; }
+    .form-top { flex-wrap: wrap; }
+    .form-top h1 { flex: 1 0 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="nav">
+    <span class="logo">⚡ PC Power Calculator</span>
+    <a href="#" class="on">Calculator</a><a href="#">Compare</a><a href="#">Guides</a><a href="#">About</a>
+  </nav>
+
+  <div class="main">
+    <!-- Inputs: one pane at a time, so this column never outgrows the screen -->
+    <div class="form">
+      <div class="form-top">
+        <h1>What does your PC cost to run?</h1>
+        <select class="sel"><option>My build</option></select>
+        <button class="btn" style="width:30px;padding:0;height:30px">✎</button>
+        <button class="btn" style="width:30px;padding:0;height:30px">+</button>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab on" role="tab">Parts<span class="n">4</span></button>
+        <button class="tab" role="tab">Usage<span class="n">4</span></button>
+        <button class="tab" role="tab">Rate</button>
+      </div>
+
+      <div class="pane" role="tabpanel">
+        <div class="pick">
+          <select class="sel"><option>Gaming</option></select>
+          <select class="sel"><option>All categories</option></select>
+          <button class="trigger"><span><span class="plus">+</span> Add a part — search 2,200+…</span><span>▾</span></button>
+        </div>
+
+        <ul>
+          <li class="row"><i class="cbar" style="background:#7c5cff"></i><span class="nm">AMD Ryzen 7 7800X3D</span><input class="w" value="120"><span class="small muted">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot">120 W</span><button class="x">×</button></li>
+          <li class="row"><i class="cbar" style="background:#e5461f"></i><span class="nm">NVIDIA GeForce RTX 4070 SUPER</span><input class="w" value="220"><span class="small muted">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot">220 W</span><button class="x">×</button></li>
+          <li class="row"><i class="cbar" style="background:#2f9e8f"></i><span class="nm">DDR5-4800 16 GB</span><input class="w" value="5.5"><span class="small muted">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot">6 W</span><button class="x">×</button></li>
+          <li class="row"><i class="cbar" style="background:#9aa3ad"></i><span class="nm">ATX 850 W Gold</span><input class="w" value="0"><span class="small muted">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot muted">—</span><button class="x">×</button></li>
+        </ul>
+        <button class="add"><span>+</span> Add a part</button>
+
+        <p class="hint">
+          Rated watts is per unit — edit only if your part differs from the catalog.
+          <b>− 1 +</b> is how many you own (4 sticks of RAM, 2 monitors…).
+        </p>
+      </div>
+
+      <div class="form-foot">
+        <span class="small muted">Everything recalculates as you type.</span>
+        <span class="sp">Auto-saved to this browser</span>
+      </div>
+    </div>
+
+    <!-- The answer: never scrolls away, never competes with a form -->
+    <aside class="answer">
+      <div class="in">
+        <div class="cap">Running cost</div>
+        <div class="big">₹2,577.78 <small>/ yr</small></div>
+
+        <div class="facts">
+          <div class="r"><span class="k">Energy per year</span><span class="v">421 kWh</span></div>
+          <div class="r"><span class="k">Per month</span><span class="v">₹214.83</span></div>
+          <div class="r"><span class="k">Per day</span><span class="v">₹7.06</span></div>
+          <div class="r"><span class="k">Effective rate</span><span class="v">₹8.41 / kWh</span></div>
+          <div class="r"><span class="k">Draw at 100%</span><span class="v warn">389 W</span></div>
+        </div>
+
+        <div class="psu">
+          <b>PSU 500 W</b> recommended · <span class="ok">✓ your 850 W has headroom</span>
+        </div>
+      </div>
+
+      <div class="foot">
+        <button class="btn btn-brand wide">Share this build</button>
+        <button class="btn">PDF</button>
+        <button class="btn">HTML</button>
+      </div>
+    </aside>
+  </div>
+</div>
+</body>
+</html>

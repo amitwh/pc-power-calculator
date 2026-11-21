@@ -108,3 +108,23 @@ const FALLBACK: CategoryColor = {
 export function categoryColor(cat: ComponentCategory | string): CategoryColor {
   return (CATEGORY_COLORS as Record<string, CategoryColor>)[cat] ?? FALLBACK;
 }
+
+/**
+ * Workload colours for the usage proportion bar and its row swatches. These are
+ * deliberately distinct from the component hues so a slice of the day never
+ * reads as a part.
+ */
+const WORKLOAD_HEX: Record<string, string> = {
+  gaming: '#2c7a9e',
+  productivity: '#6a5acd',
+  content: '#d97706',
+  ai: '#7c3aed',
+  mining: '#475569',
+  server: '#0f766e',
+};
+
+/** Colour for a workload category (or the idle baseline), with a neutral fallback. */
+export function workloadHex(category: string | null | undefined): string {
+  if (!category) return '#d1d1d1';
+  return WORKLOAD_HEX[category] ?? '#9ca3af';
+}

@@ -28,9 +28,9 @@ export default defineConfig(({ isSsrBuild }) => ({
               start_url: '/',
             },
             workbox: {
-              // No webfonts are shipped (the UI uses the system stack), so the
-              // precache is just the app shell, assets and the manifest.
-              globPatterns: ['**/*.{js,css,html,json,svg,png,ico,webmanifest}'],
+              // woff2 is precached so the installed app keeps its typeface
+              // offline instead of reflowing to a system fallback.
+              globPatterns: ['**/*.{js,css,html,json,svg,png,ico,woff2,webmanifest}'],
               // Navigations fall back to a shell, not to dist/index.html: that
               // file is the prerendered home page (366 routes are written after
               // Workbox runs), and hydrating it at another URL would mismatch.

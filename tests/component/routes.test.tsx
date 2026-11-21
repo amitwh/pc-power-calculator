@@ -10,7 +10,7 @@ test('renders Home on /', () => {
       <Routes />
     </MemoryRouter>,
   );
-  expect(screen.getByRole('heading', { name: /^Parts$/ })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /^Your system$/i })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /add a part/i })).toBeInTheDocument();
 });
 

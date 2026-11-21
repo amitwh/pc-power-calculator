@@ -13,7 +13,7 @@ beforeEach(() => {
 
 /** Open the one device picker and pick an option by (partial) name. */
 async function pickDevice(user: ReturnType<typeof userEvent.setup>, query: string, name: RegExp) {
-  await user.click(screen.getByRole('button', { name: /add device/i }));
+  await user.click(screen.getByRole('button', { name: /add a part/i }));
   await user.type(screen.getByRole('searchbox'), query);
   await user.click(screen.getAllByRole('option', { name })[0]);
 }
@@ -21,10 +21,10 @@ async function pickDevice(user: ReturnType<typeof userEvent.setup>, query: strin
 describe('BuildPicker — devices cart', () => {
   test('renders the compact system controls and the one device picker', () => {
     render(<BuildPicker />);
-    expect(screen.getByRole('heading', { name: /^Parts$/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /add device/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /^Your system$/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /add a part/i })).toBeInTheDocument();
     expect(screen.getByLabelText('Filter parts by category')).toBeInTheDocument();
-    expect(screen.getByLabelText('System type')).toBeInTheDocument();
+    expect(screen.getByLabelText('Use case')).toBeInTheDocument();
     // Build switching lives in the one-line BuildBar above the grid — the
     // picker card carries no duplicate system chips.
     expect(screen.queryByRole('button', { name: /My build/i })).not.toBeInTheDocument();
@@ -35,16 +35,16 @@ describe('BuildPicker — devices cart', () => {
   test('hides the device counter at zero and shows it once a part is added', async () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
-    expect(screen.queryByText(/0 device/i)).not.toBeInTheDocument();
+    expect(screen.queryByText('0 part')).not.toBeInTheDocument();
 
     await pickDevice(user, '7800x3d', /Ryzen 7 7800X3D/);
-    expect(screen.getByText('1 device')).toBeInTheDocument();
+    expect(screen.getByText('1 part')).toBeInTheDocument();
   });
 
   test('the System type select updates the build category', async () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
-    await user.selectOptions(screen.getByLabelText('System type'), 'workstation');
+    await user.selectOptions(screen.getByLabelText('Use case'), 'workstation');
     expect(useBuildStore.getState().builds[0].category).toBe('workstation');
   });
 
@@ -54,7 +54,7 @@ describe('BuildPicker — devices cart', () => {
     await pickDevice(user, '7800x3d', /Ryzen 7 7800X3D/);
     expect(useBuildStore.getState().builds[0].components.cpu).toBe('cpu-amd-ryzen-7-7800x3d');
     expect(screen.getByText(/AMD Ryzen 7 7800X3D/)).toBeInTheDocument();
-    expect(screen.getByLabelText('Quantity for AMD Ryzen 7 7800X3D')).toHaveValue(1);
+    expect(within(screen.getByRole('group', { name: 'Quantity for AMD Ryzen 7 7800X3D' })).getByText('1')).toBeInTheDocument();
   });
 
   test('picking the same device again multiplies its units (qty 2)', async () => {
@@ -63,7 +63,7 @@ describe('BuildPicker — devices cart', () => {
     await pickDevice(user, '7800x3d', /Ryzen 7 7800X3D/);
     await pickDevice(user, '7800x3d', /Ryzen 7 7800X3D/);
     expect(useBuildStore.getState().builds[0].quantities?.['cpu-amd-ryzen-7-7800x3d']).toBe(2);
-    expect(screen.getByLabelText('Quantity for AMD Ryzen 7 7800X3D')).toHaveValue(2);
+    expect(within(screen.getByRole('group', { name: 'Quantity for AMD Ryzen 7 7800X3D' })).getByText('2')).toBeInTheDocument();
   });
 
   test('adding RAM twice bumps its quantity instead of blocking the pick', async () => {
@@ -88,7 +88,7 @@ describe('BuildPicker — devices cart', () => {
     await user.click(screen.getByRole('button', { name: `Remove ${name}` }));
     expect(useBuildStore.getState().builds[0].components.storage ?? []).not.toContain('storage-samsung-980-1tb');
     expect(screen.queryByText(/Samsung 980 1TB/)).not.toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /add device/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /add a part/i })).toBeInTheDocument();
   });
 
   test('editing the watts field records a TDP override; reset clears it', async () => {
@@ -108,7 +108,7 @@ describe('BuildPicker — devices cart', () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
     // The custom-device form now lives inside the collapsed Advanced group.
-    await user.click(screen.getByText(/^Advanced — overclock/i));
+    await user.click(screen.getByText(/^Advanced$/));
     await user.type(screen.getByLabelText('Custom device name'), 'Desk lamp');
     await user.type(screen.getByLabelText('Custom device wattage'), '9');
     await user.click(screen.getByRole('button', { name: 'Add' }));
@@ -124,7 +124,7 @@ describe('BuildPicker — devices cart', () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
     await user.selectOptions(screen.getByLabelText('Filter parts by category'), 'cpu');
-    await user.click(screen.getByRole('button', { name: /add device/i }));
+    await user.click(screen.getByRole('button', { name: /add a part/i }));
     await user.type(screen.getByRole('searchbox'), 'ryzen 7');
     // Scope to the listbox — the native selects' own <option> children also
     // expose the `option` role.

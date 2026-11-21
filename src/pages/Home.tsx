@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { BuildPicker } from '@/components/calculator/BuildPicker';
 import { ScheduleEditor } from '@/components/calculator/ScheduleEditor';
-import { ResultsPanel } from '@/components/calculator/ResultsPanel';
+import { AnswerHero } from '@/components/calculator/AnswerHero';
 import { ResultsBreakdown } from '@/components/calculator/ResultsBreakdown';
 import { AllSystemsSummary } from '@/components/calculator/AllSystemsSummary';
 import { LocationPicker } from '@/components/calculator/LocationPicker';
@@ -69,47 +69,36 @@ export default function Home() {
   }, [hydrated]);
 
   return (
-    <div className="mx-auto max-w-[1400px] px-3 py-2.5 md:px-5 md:py-3">
+    <div className="mx-auto max-w-[1240px] px-4 py-4 md:px-8 md:py-6">
       {/* Title and the one-line build switcher share a row: the page's job is
           stated, and everything else is controls or the answer. */}
-      <div className="mb-2.5 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         {/* Visible page title. Layout already renders the route's single h1
             (visually hidden), so this stays a styled paragraph to keep exactly
             one h1 in the accessibility tree. */}
-        <p className="text-lg font-bold tracking-tight text-gray-900 dark:text-gray-50">
+        <p className="font-display text-xl font-bold tracking-tight text-gray-950 dark:text-gray-50">
           What does your PC cost to run?
         </p>
         <BuildBar />
       </div>
 
-      {/* Everything above the fold on a laptop: inputs on the left, the answer
-          pinned on the right. On a phone the answer comes first (order-first)
-          so the yearly figure is never below the fold. The chart and
-          per-workload tables are the only things that deliberately sit below. */}
-      <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
-        {/* `grid-cols-1` is load-bearing: without it the implicit column sizes
-            to its content's min-content width, which pushed the cards past the
-            phone viewport. */}
-        <div className="grid min-w-0 grid-cols-1 gap-2.5">
-          <BuildPicker />
-          <ScheduleEditor />
-          <LocationPicker />
-        </div>
+      {/* 1. The answer, first and biggest. */}
+      <AnswerHero />
 
-        {/* The aside stretches to the grid row; only the INNER wrapper sticks,
-            so the answer stays in view while the inputs scroll past it. */}
-        <aside className="order-first min-w-0 lg:order-none" aria-label="Results">
-          <div className="lg:sticky lg:top-3">
-            <ResultsPanel />
-          </div>
-        </aside>
+      {/* 2. Three inputs side by side, in the order you think in them: what it
+          is, when you use it, what power costs. */}
+      <div className="mt-5 grid grid-cols-1 items-start gap-4 lg:grid-cols-[1.6fr_1.4fr_1fr]">
+        <BuildPicker />
+        <ScheduleEditor />
+        <LocationPicker />
       </div>
 
-      <div className="mt-2.5">
+      {/* 3. Analysis, consolidated: where the power goes, and what each use costs. */}
+      <div className="mt-4">
         <ResultsBreakdown />
       </div>
 
-      <div className="mt-2.5">
+      <div className="mt-4">
         <AllSystemsSummary />
       </div>
     </div>

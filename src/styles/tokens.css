@@ -1,16 +1,23 @@
-/* Typeface: the standard system UI stack. No webfont to download, so the
-   first paint has no font swap (no CLS) and no third-party font request —
-   and it is the same stack the inline loader in index.html already uses. */
+/* Typeface: the ConcreteInfo pairing, self-hosted so the CSP stays
+   `font-src 'self'` and the PWA keeps its type offline.
+
+   Plus Jakarta Sans (variable) is the body face; Barlow Condensed 700/800 is
+   the display face and carries every headline figure. Both are the same two
+   faces cams2 uses, so the whole estate reads as one brand. */
+@import '@fontsource-variable/plus-jakarta-sans/wght.css';
+@import '@fontsource/barlow-condensed/700.css';
+@import '@fontsource/barlow-condensed/800.css';
 @import 'tailwindcss';
 
 /*
- * Design tokens. Tailwind 4 reads these from `@theme` and generates the
- * utilities from them, so `bg-brand`, `text-brand-text`, `font-display` and
- * friends resolve to exactly these values — no arbitrary `[#hex]` needed.
+ * Design tokens — the ConcreteInfo palette (identical to cams2's index.css).
+ * Tailwind 4 reads these from `@theme` and generates the utilities from them,
+ * so `bg-brand`, `text-brand-text`, `font-display` and friends resolve to
+ * exactly these values — no arbitrary `[#hex]` needed.
  *
- * Dark mode follows the OS (`prefers-color-scheme`), Tailwind 4's default.
- * The app previously declared `darkMode: 'class'` but never added the class,
- * which left 127 `dark:` rules permanently dead.
+ * The greys are deliberately warm (#6e6c6c, not a blue-grey): the mid-grays are
+ * AA-text on white and gray-50, and they are restored to lighter values under
+ * the dark-mode media query below so muted text on gray-950 stays legible.
  */
 @theme {
   --color-brand: #e5461f;
@@ -24,37 +31,26 @@
   --color-info: hsl(199 89% 48%);
 
   --color-gray-50: #fafbfc;
-  --color-gray-100: #f1f3f5;
-  --color-gray-200: #e6e8eb;
-  --color-gray-300: #cfd4d9;
-  --color-gray-400: #9aa3ad;
-  --color-gray-500: #6b7682;
-  --color-gray-600: #4b5563;
-  --color-gray-700: #374151;
-  --color-gray-800: #1f2937;
-  --color-gray-900: #111827;
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e3e3e3;
+  --color-gray-300: #d1d1d1;
+  --color-gray-400: #6e6c6c;
+  --color-gray-500: #666464;
+  --color-gray-600: #5e5c5c;
+  --color-gray-700: #565454;
+  --color-gray-800: #4e4e4e;
+  --color-gray-900: #464646;
   --color-gray-950: #0d0b09;
 
-  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-display: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-numeric: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  --font-body: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
+  --font-display: 'Barlow Condensed', system-ui, sans-serif;
+  --font-numeric: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', Consolas, ui-monospace, monospace;
 
   --radius-4: 4px;
   --radius-8: 8px;
   --radius-12: 12px;
   --radius-16: 16px;
-}
-
-/* Card headings default to 1.25rem here, in the components layer, so that any
-   `text-*` utility a caller passes wins the cascade. Declaring it as a utility
-   on the element meant `className="text-base"` lost to the element's own
-   `text-xl` — whichever font-size utility Tailwind emitted last won. */
-@layer components {
-  .card-title {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
 }
 
 html {
@@ -65,5 +61,24 @@ html {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+
+  /* Utilities resolve these variables at the element, so this one block flips
+     every muted-text utility back to a legible value on dark surfaces. */
+  :root {
+    --color-gray-400: #b0b0b0;
+    --color-gray-500: #9a9696;
+    --color-gray-600: #828080;
+  }
+}
+
+/* Card headings default to 1.25rem here, in the components layer, so that any
+   `text-*` utility a caller passes wins the cascade. Declaring it as a utility
+   on the element meant `className="text-base"` lost to the element's own
+   `text-xl` — whichever font-size utility Tailwind emitted last won. */
+@layer components {
+  .card-title {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 }

@@ -1,9 +1,11 @@
 import { lazy, Suspense, useMemo } from 'react';
 import { useCalc } from '@/hooks/useCalc';
-import { workloadLabel } from '@/lib/data/workloads';
+import { listWorkloads, workloadLabel } from '@/lib/data/workloads';
+import { computeEnergy } from '@/lib/calc/energy';
 import { categoryColor } from '@/lib/categoryColors';
 import { CASE_FANS_ID } from '@/lib/calc/energy';
 import { Card, CardTitle } from '@/components/ui/Card';
+import { formatCost, formatKwh } from '@/lib/calc/format';
 import { hasSelectedParts } from '@/lib/build/hasSelectedParts';
 import { DeferInView } from '@/components/ui/DeferInView';
 import type { Component } from '@/types/component';
@@ -16,7 +18,14 @@ const PowerBreakdown = lazy(() =>
 
 /** Full-width row: per-device draw chart + per-workload usage/cost table. */
 export function ResultsBreakdown() {
-  const { build, components, componentsPowerW, daily, currency } = useCalc();
+  const { build, components, componentsPowerW, currency } = useCalc();
+
+  // Yearly energy and cost per use case. `daily` would be the wrong basis for a
+  // "kWh/yr · ₹/yr" table — the figures are a day's worth, 365× too small.
+  const yearlyRows = useMemo(() => {
+    if (!build) return [];
+    return computeEnergy(build, listWorkloads(), 'year').perWorkload;
+  }, [build]);
 
   // `components` repeats each unit (qty ×N) — the chart wants one slice per
   // distinct device with the combined draw and a ×N label.
@@ -48,11 +57,11 @@ export function ResultsBreakdown() {
   if (!hasSelectedParts(build)) return null;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 min-w-0">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
       <Card>
-        <CardTitle className="text-base">Power draw breakdown</CardTitle>
+        <CardTitle className="text-base">Where the power goes</CardTitle>
         <p className="text-xs text-gray-500 -mt-1 mb-1">
-          Typical 70% load, per device — colors match the device list.
+          Typical 70% load, per device — colours match the system list.
         </p>
         {/* Below the fold on most screens — DeferInView keeps the ~900 KB
             chart chunk from loading until the visitor scrolls near it. */}
@@ -64,27 +73,27 @@ export function ResultsBreakdown() {
       </Card>
 
       <Card>
-        <CardTitle className="text-base">Per-workload usage</CardTitle>
+        <CardTitle className="text-base">Cost by use case</CardTitle>
         <p className="text-xs text-gray-500 -mt-1 mb-2">
           From your schedule above · costs in {currency.code}.
         </p>
-        {daily.perWorkload?.length ? (
+        {yearlyRows.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-sm font-numeric tabular-nums">
               <thead>
-                <tr className="text-left text-xs uppercase text-gray-500 border-b border-gray-200 dark:border-gray-800">
-                  <th className="py-1.5 pr-3 font-semibold">Workload</th>
-                  <th className="py-1.5 pr-3 font-semibold">Usage</th>
-                  <th className="py-1.5 pr-3 font-semibold">Draw</th>
-                  <th className="py-1.5 pr-3 font-semibold">Perf</th>
+                <tr className="border-b border-gray-200 text-left text-xs uppercase tracking-wide text-gray-500 dark:border-gray-800">
+                  <th className="py-1.5 pr-3 font-semibold">Use case</th>
+                  <th className="py-1.5 pr-3 font-semibold">Hours</th>
+                  <th className="py-1.5 pr-3 text-right font-semibold">kWh/yr</th>
+                  <th className="py-1.5 pr-0 text-right font-semibold">₹/yr</th>
                 </tr>
               </thead>
               <tbody>
-                {daily.perWorkload.map((row) => {
+                {yearlyRows.map((row) => {
                   const sched = build.schedule.find((s) => s.workload_id === row.workload_id);
                   const days = sched?.days_per_week ?? 7;
                   return (
-                    <tr key={row.workload_id} className="border-b border-gray-100 dark:border-gray-800 last:border-b-0">
+                    <tr key={row.workload_id} className="border-b border-gray-100 last:border-b-0 dark:border-gray-800">
                       <td className="py-1.5 pr-3 font-body">{workloadLabel(row.workload_id)}</td>
                       <td className="py-1.5 pr-3 text-gray-600 dark:text-gray-400">
                         {sched
@@ -93,9 +102,9 @@ export function ResultsBreakdown() {
                             ? `${row.hours_per_day} h/d · every day`
                             : '—'}
                       </td>
-                      <td className="py-1.5 pr-3">{Math.round(row.draw_w)} W</td>
-                      <td className="py-1.5 pr-3">
-                        {row.perfMetrics.map((m) => `${m.value}${m.unit}`).join(' · ') || '—'}
+                      <td className="py-1.5 pr-3 text-right tabular-nums">{formatKwh(row.kwh, 0)}</td>
+                      <td className="py-1.5 text-right font-semibold tabular-nums">
+                        {formatCost(row.cost, currency)}
                       </td>
                     </tr>
                   );
@@ -105,7 +114,7 @@ export function ResultsBreakdown() {
           </div>
         ) : (
           <p className="text-sm text-gray-500">
-            Add workloads to the schedule above to see per-task energy and cost.
+            Add a use case to the schedule above to see per-task energy and cost.
           </p>
         )}
       </Card>

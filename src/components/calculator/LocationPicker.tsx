@@ -8,7 +8,7 @@ import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { computeCost } from '@/lib/calc/cost';
 
-const fieldLabel = 'block text-xs uppercase tracking-wide text-gray-500 font-semibold mb-1';
+const fieldLabel = 'mb-1 block text-xs font-semibold uppercase tracking-wide text-gray-500';
 
 export function LocationPicker() {
   const { loading, detect } = useGeolocation();
@@ -36,108 +36,128 @@ export function LocationPicker() {
   const rate = manualOverride ?? computeCost(200, tariffRate, taxes).total / 200;
   const isManual = manualOverride != null;
 
+  const stateName = subdivisionCode
+    ? subdivisions.find((s) => s.code === subdivisionCode)?.name
+    : undefined;
+  const countryName = countries.find((c) => c.iso2 === countryIso2)?.name ?? countryIso2;
+
   return (
-    <Card className="p-3">
-      <div className="mb-2 flex items-baseline justify-between gap-2">
-        <h2 className="font-display text-base font-bold">Rate</h2>
+    <Card>
+      <div className="flex items-baseline justify-between gap-2">
+        <h2 className="font-display text-base font-bold">Your tariff</h2>
         <span className="text-xs text-gray-500">
           {isManual ? 'manual' : tariffRate.slabs ? 'tiered' : 'flat'}
-          {isLive ? ' · live FX' : ''}
         </span>
       </div>
-      <div className="grid grid-cols-2 gap-2 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.15fr)_minmax(0,1fr)]">
-        <label className="block">
-          <span className={fieldLabel}>Country</span>
-          <Select
-            aria-label="Country"
-            className="!min-h-9 !text-sm"
-            value={countryIso2}
-            options={countries.map((c) => ({ value: c.iso2, label: `${c.name} (${c.iso2})` }))}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-        </label>
-        <label className="block">
-          <span className={fieldLabel}>State</span>
-          <Select
-            aria-label="State / Province"
-            className="!min-h-9 !text-sm"
-            value={subdivisionCode ?? ''}
-            options={[
-              { value: '', label: '— Country default —' },
-              ...subdivisions.map((s) => ({ value: s.code, label: s.name })),
-            ]}
-            onChange={(e) => setLocation(countryIso2, e.target.value || undefined)}
-            disabled={subdivisions.length === 0}
-          />
-        </label>
-        <div>
-          <label htmlFor="manual-rate" className={fieldLabel}>
-            Rate
-          </label>
-          <div className="flex items-center gap-1.5">
-            <span className="relative flex-1 min-w-0">
-              <input
-                id="manual-rate"
-                type="number"
-                inputMode="decimal"
-                min={0}
-                step="0.01"
-                value={manualOverride ?? ''}
-                placeholder={rate.toFixed(2)}
-                aria-label={`Rate — override ${currency.code}/kWh`}
-                onChange={(e) => {
-                  if (e.target.value === '') return setManualRate(null);
-                  const n = Number(e.target.value);
-                  setManualRate(Number.isFinite(n) ? Math.max(0, n) : null);
-                }}
-                className="w-full min-h-9 pl-2 pr-10 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
-              />
-              <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-500">
-                /kWh
-              </span>
-            </span>
-            <Button
-              size="sm"
-              variant="secondary"
-              onClick={detect}
-              disabled={loading}
-              title="Detect location from IP"
-              className="shrink-0"
-            >
-              {loading ? '…' : 'Detect ↻'}
-            </Button>
-          </div>
-        </div>
-        <label className="block">
-          <span className={fieldLabel}>Currency</span>
-          <Select
-            aria-label="Currency"
-            className="!min-h-9 !text-sm"
-            value={currencyOverride}
-            options={[
-              { value: '', label: `Currency: Auto (${currency.code})` },
-              ...listCurrencies().map((c) => ({ value: c.code, label: `${c.code} — ${c.name}` })),
-            ]}
-            onChange={(e) => setCurrency(e.target.value)}
-          />
-        </label>
-      </div>
 
-      {/* One provenance line — the detail lives in the title attribute so it
-          stays available without occupying three wrapped lines. */}
-      <p
-        className="mt-1.5 text-[11px] leading-tight text-gray-500"
-        title={`FX ${snapshot.date}${taxes.length > 0 && !isManual ? ` · incl. ${taxes.map((t) => `${t.name} ${t.rate_pct}%`).join(', ')}` : ''} · tariffs updated ${tariffsLastUpdated()}`}
-      >
-        {isManual ? 'Manual rate, tax-free' : tariffRate.slabs ? 'Tiered, billed monthly' : 'Bundled flat rate'}
-        {taxes.length > 0 && !isManual && (
-          <>
-            {' · incl. '}
-            {taxes.map((t) => t.name).join(', ')}
-          </>
-        )}
-        {' · FX '}{snapshot.date}{isLive ? ' live' : ''}
+      {/* The rate is the number that drives everything, so it gets the display
+          face and the space; the controls live behind the disclosure. */}
+      <p className="mt-3 flex items-baseline gap-1.5">
+        <span className="font-display text-4xl font-extrabold leading-none tracking-[-0.02em] tabular-nums text-gray-950 dark:text-gray-50">
+          {currency.symbol}
+          {rate.toFixed(2)}
+        </span>
+        <span className="text-sm font-semibold text-gray-500">/ kWh</span>
       </p>
+
+      <p className="mt-2 text-sm text-gray-900 dark:text-gray-50">
+        {stateName ? `${stateName}, ${countryName}` : countryName}
+      </p>
+      <p className="mt-0.5 text-xs text-gray-500" title={`FX ${snapshot.date} · tariffs updated ${tariffsLastUpdated()}`}>
+        {isManual
+          ? 'Manual rate, tax-free'
+          : taxes.length > 0
+            ? `Includes ${taxes.map((t) => `${t.name} ${t.rate_pct}%`).join(', ')}`
+            : 'Bundled flat rate'}
+        {isLive ? ' · live FX' : ''}
+      </p>
+
+      <details className="mt-3">
+        <summary className="cursor-pointer select-none rounded-8 border border-dashed border-gray-300 px-2.5 py-1.5 text-center text-sm font-semibold text-gray-600 hover:border-brand hover:text-brand-text dark:border-gray-600 dark:text-gray-300">
+          Change location or rate
+        </summary>
+
+        <div className="mt-2 space-y-2">
+          <label className="block">
+            <span className={fieldLabel}>Country</span>
+            <Select
+              aria-label="Country"
+              className="!min-h-9 !text-sm"
+              value={countryIso2}
+              options={countries.map((c) => ({ value: c.iso2, label: `${c.name} (${c.iso2})` }))}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </label>
+          <label className="block">
+            <span className={fieldLabel}>State</span>
+            <Select
+              aria-label="State / Province"
+              className="!min-h-9 !text-sm"
+              value={subdivisionCode ?? ''}
+              options={[
+                { value: '', label: '— Country default —' },
+                ...subdivisions.map((s) => ({ value: s.code, label: s.name })),
+              ]}
+              onChange={(e) => setLocation(countryIso2, e.target.value || undefined)}
+              disabled={subdivisions.length === 0}
+            />
+          </label>
+          <div>
+            <label htmlFor="manual-rate" className={fieldLabel}>
+              Rate override
+            </label>
+            <div className="flex items-center gap-1.5">
+              <span className="relative min-w-0 flex-1">
+                <input
+                  id="manual-rate"
+                  type="number"
+                  inputMode="decimal"
+                  min={0}
+                  step="0.01"
+                  value={manualOverride ?? ''}
+                  placeholder={rate.toFixed(2)}
+                  aria-label={`Rate — override ${currency.code}/kWh`}
+                  onChange={(e) => {
+                    if (e.target.value === '') return setManualRate(null);
+                    const n = Number(e.target.value);
+                    setManualRate(Number.isFinite(n) ? Math.max(0, n) : null);
+                  }}
+                  className="min-h-9 w-full rounded-8 border border-gray-300 bg-white pl-2 pr-10 font-numeric text-sm tabular-nums dark:border-gray-700 dark:bg-gray-900"
+                />
+                <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-500">
+                  /kWh
+                </span>
+              </span>
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={detect}
+                disabled={loading}
+                title="Detect location from IP"
+                className="shrink-0"
+              >
+                {loading ? '…' : 'Detect'}
+              </Button>
+            </div>
+          </div>
+          <label className="block">
+            <span className={fieldLabel}>Currency</span>
+            <Select
+              aria-label="Currency"
+              className="!min-h-9 !text-sm"
+              value={currencyOverride}
+              options={[
+                { value: '', label: `Auto (${currency.code})` },
+                ...listCurrencies().map((c) => ({ value: c.code, label: `${c.code} — ${c.name}` })),
+              ]}
+              onChange={(e) => setCurrency(e.target.value)}
+            />
+          </label>
+          <p className="text-[11px] leading-tight text-gray-500">
+            FX {snapshot.date} · tariffs updated {tariffsLastUpdated()}
+          </p>
+        </div>
+      </details>
     </Card>
   );
 }

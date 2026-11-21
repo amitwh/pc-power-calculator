@@ -135,3 +135,59 @@ numerals, with `ui-monospace` for code-ish figures.
 - Existing tests updated: `ScheduleEditor` (sliders → steppers), `BuildPicker`
   (chips removed), `ResultsPanel`, `AllSystemsSummary` conditional, `Home`,
   `Compare`, plus the a11y suite and the hydration/prerender tests.
+
+---
+
+## Revision — answer-first (still 2026-11-21, later the same day)
+
+The Workbench layout above was measured at **994 px tall on a 900 px screen**
+(1378 px on a phone), with the cost in a 320 px rail whose first-load content
+was a single sentence. It was replaced. Everything in the sections above about
+a left rail, a results rail and a three-card single column is **superseded**.
+
+### What the page is now
+
+```
+┌ TopNav ──────────────────────────────────────────────────────────┐
+│ What does your PC cost to run?        [My build ▾] ✎ ×  + System │
+│ YOUR YEARLY COST                                                 │
+│ ₹2,577.78 / year          PER MONTH  PER DAY  ENERGY   [Share]   │
+│ Ryzen 7 7800X3D · RTX 4070 SUPER · Maharashtra · 12 h/day         │
+├───────────────────┬──────────────────┬───────────────────────────┤
+│ Your system       │ When you use it  │ Your tariff               │
+│ (parts + picker)  │ (sliders + use-  │ (₹8.41/kWh + disclosure)  │
+│                   │  case dropdowns) │                           │
+├───────────────────┴──────────────────┴───────────────────────────┤
+│ Where the power goes        │ Cost by use case                   │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+- **The answer is the headline**, not a sidebar. It is the first element in the
+  DOM and spans the full width, so no viewport hides it below a fold.
+- **Three input cards**, in the order a person thinks: what the machine is, when
+  they use it, what power costs. `1.6fr / 1.4fr / 1fr`.
+- **Usage is sliders**, one per use case, capped so the day cannot exceed 24 h,
+  with a proportion bar of the day above them.
+- **The use case on each usage row is a dropdown**, so a row can be repurposed
+  without deleting and re-adding it. Picking a case that is already scheduled
+  swaps the two rows rather than creating a duplicate. Adding one is a dropdown
+  offering only the unscheduled cases.
+- **Analysis sits below the fold** — the donut and the yearly cost table. It
+  renders nothing at all until a part exists.
+- Part rows read as a spec list (dot, name, watts). Their editing controls
+  (rated W, units, remove) appear on hover or keyboard focus on pointer devices
+  and stay visible on touch.
+
+### Typography and colour
+
+The ConcreteInfo pairing, the same two faces cams2 ships: **Plus Jakarta Sans**
+(variable) for text and **Barlow Condensed 700/800** for every headline figure —
+the yearly cost, the tariff rate, page titles. Figures are `tabular-nums`.
+Both are self-hosted via `@fontsource`, so `font-src 'self'` holds and the PWA
+keeps its type offline; they are deliberately **not** loaded from Google Fonts
+the way cams2 does.
+
+Greys are cams2's warm ramp (`#6e6c6c` at 400, `#464646` at 900), restored to
+lighter values under `prefers-color-scheme: dark` so muted text stays legible on
+`gray-950`. Brand `#e5461f` is reserved for the primary action, the focus ring
+and workload/part accents — never body text.

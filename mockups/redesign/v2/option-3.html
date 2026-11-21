@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Option 3 — Instrument</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  /* Full dark. Reads like a measuring instrument: one readout band on top
+     with a draw-composition gauge, controls below it. */
+  :root {
+    --panel: #161311;
+    --panel-2: #1d1916;
+    --line: #2b2521;
+    --line-2: #3a332d;
+    --ink: #f4efea;
+    --ink-2: #b8aca2;
+    --ink-3: #8a7f76;
+  }
+  body { background: var(--gray-950); color: var(--ink); }
+
+  .wrap { max-width: 1400px; margin: 0 auto; padding: 0 26px 26px; }
+
+  .nav { height: 50px; display: flex; align-items: center; gap: 24px;
+         border-bottom: 1px solid var(--line); }
+  .nav .logo { font-family: var(--font-display); font-weight: 800; font-size: 19px;
+               color: var(--brand-light); margin-right: auto; letter-spacing: .01em; }
+  .nav a { font-size: 12.5px; font-weight: 600; color: var(--ink-3); text-decoration: none; }
+  .nav a.on { color: var(--brand-light); }
+
+  /* ── Readout band ───────────────────────────────────────────────── */
+  .readout { display: grid; grid-template-columns: auto 1fr auto; gap: 34px;
+             align-items: center; padding: 20px 0 18px; border-bottom: 1px solid var(--line); }
+  .ro-main .cap { font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+                  color: var(--ink-3); }
+  .ro-main .big { font-family: var(--font-display); font-weight: 800; font-size: 74px;
+                  line-height: .84; color: var(--brand-light); letter-spacing: -.02em;
+                  font-variant-numeric: tabular-nums; }
+  .ro-main .big small { font-family: var(--font-sans); font-size: 13px; font-weight: 600;
+                        color: var(--ink-3); letter-spacing: 0; }
+
+  .gauge .top { display: flex; justify-content: space-between; align-items: baseline;
+                font-size: 11px; color: var(--ink-3); margin-bottom: 6px; }
+  .gauge .top b { color: var(--ink); font-family: var(--font-mono); font-size: 12px; }
+  .bar { display: flex; height: 10px; border-radius: 3px; overflow: hidden; gap: 2px; }
+  .bar i { display: block; height: 100%; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; font-size: 11px; color: var(--ink-3); }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .legend i { width: 7px; height: 7px; border-radius: 2px; display: inline-block; }
+  .legend b { color: var(--ink-2); font-family: var(--font-mono); }
+
+  .ro-facts { display: flex; gap: 22px; text-align: right; }
+  .ro-facts .k { font-size: 10px; font-weight: 700; letter-spacing: .12em;
+                 text-transform: uppercase; color: var(--ink-3); }
+  .ro-facts .v { font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+                 color: var(--ink); margin-top: 3px; font-variant-numeric: tabular-nums; }
+
+  /* ── Controls ───────────────────────────────────────────────────── */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-lg); }
+  .card > header { display: flex; align-items: center; justify-content: space-between;
+                   padding: 10px 13px; border-bottom: 1px solid var(--line); }
+  .card h2 { font-size: 10.5px; font-weight: 800; letter-spacing: .14em;
+             text-transform: uppercase; color: var(--ink-2); }
+  .card .body { padding: 9px 13px 11px; }
+
+  .sel, .inp { background: var(--panel-2); border-color: var(--line-2); color: var(--ink); }
+  .sel:focus, .inp:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgb(229 70 31 / .18); }
+  .btn { background: var(--panel-2); border-color: var(--line-2); color: var(--ink-2); }
+  .btn:hover { border-color: var(--ink-3); color: var(--ink); }
+  .btn-brand { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .btn-ghost { background: transparent; border-style: dashed; color: var(--ink-3); }
+  .stepper { background: var(--panel-2); border-color: var(--line-2); height: 28px; }
+  .stepper button { color: var(--ink-3); }
+  .stepper button:hover { background: #241f1b; color: var(--ink); }
+  .stepper .v { color: var(--ink); }
+
+  .pick { display: grid; grid-template-columns: 112px 118px 1fr; gap: 7px; margin-bottom: 7px; }
+  .pick .sel { height: 30px; font-size: 12px; }
+  .trigger { height: 30px; display: flex; align-items: center; justify-content: space-between;
+             border: 1px solid var(--line-2); border-radius: var(--r-md); padding: 0 9px;
+             font-size: 12px; color: var(--ink-3); background: var(--panel-2); cursor: pointer; }
+  .trigger .plus { color: var(--brand-light); font-weight: 800; }
+
+  .part { display: flex; align-items: center; gap: 8px; height: 36px;
+          border-top: 1px solid var(--line); font-size: 12.5px; }
+  .part:first-of-type { border-top: 0; }
+  .part .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+              white-space: nowrap; color: var(--ink); font-weight: 600; }
+  .part .w { width: 44px; height: 26px; text-align: right; font-family: var(--font-mono);
+             font-size: 11.5px; color: var(--ink); background: var(--panel-2);
+             border: 1px solid var(--line-2); border-radius: var(--r-sm); padding: 0 4px; }
+  .part .tot { width: 46px; text-align: right; font-family: var(--font-mono); font-size: 11.5px;
+               font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .part .x { border: 0; background: none; color: var(--line-2); font-size: 14px;
+             cursor: pointer; width: 16px; padding: 0; }
+
+  .wl { display: flex; align-items: center; gap: 8px; height: 34px;
+        border-top: 1px solid var(--line); font-size: 12.5px; }
+  .wl:first-of-type { border-top: 0; }
+  .wl .nm { flex: 1; min-width: 0; color: var(--ink); font-weight: 600; overflow: hidden;
+            text-overflow: ellipsis; white-space: nowrap; }
+  .wl .cost { width: 70px; text-align: right; font-family: var(--font-mono); font-size: 11px;
+              color: var(--ink-3); font-variant-numeric: tabular-nums; }
+  .wl .x { border: 0; background: none; color: var(--line-2); font-size: 14px; cursor: pointer; }
+
+  .rate { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 12px;
+          padding-top: 10px; border-top: 1px solid var(--line); }
+  .rate label { display: block; margin-bottom: 4px; color: var(--ink-3); }
+  .rate .sel, .rate .inp { height: 30px; font-size: 12px; }
+
+  .psu { display: flex; gap: 10px; align-items: center; font-size: 11.5px;
+         color: var(--ink-3); margin-top: 9px; }
+  .psu b { color: var(--ink); font-family: var(--font-mono); }
+  .ok { color: #4ade80; font-weight: 700; }
+
+  @media (max-width: 1000px) {
+    .readout { grid-template-columns: 1fr; gap: 16px; }
+    .ro-facts { text-align: left; }
+    .cols { grid-template-columns: 1fr; }
+    .ro-main .big { font-size: 56px; }
+    .wrap { padding: 0 16px 20px; }
+  }
+  /* Narrow screens: name on its own line, controls wrapped beneath it. */
+  @media (max-width: 620px) {
+    .part, .row, .wl { flex-wrap: wrap; height: auto; min-height: 40px; padding: 7px 0; row-gap: 6px; }
+    .part .nm, .row .nm, .wl .nm { flex: 1 0 100%; }
+  }
+
+  @media (max-width: 560px) {
+    .pick { grid-template-columns: 1fr 1fr; }
+    .trigger { grid-column: 1 / -1; }
+  }
+  @media (max-width: 620px) {
+    .nav { gap: 14px; }
+    .nav a:not(.on) { display: none; }
+    .form-top { flex-wrap: wrap; }
+    .form-top h1 { flex: 1 0 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <span class="logo">⚡ PC POWER CALCULATOR</span>
+    <a href="#" class="on">Calculator</a><a href="#">Compare</a><a href="#">Guides</a><a href="#">About</a>
+  </nav>
+
+  <!-- Readout: number, composition gauge, running facts. -->
+  <section class="readout">
+    <div class="ro-main">
+      <div class="cap">Yearly running cost</div>
+      <div class="big">₹2,577.78 <small>/ yr</small></div>
+    </div>
+
+    <div class="gauge">
+      <div class="top"><span>Draw at 100% load</span><b>389 W</b></div>
+      <div class="bar">
+        <i style="width:30.8%;background:#7c5cff"></i>
+        <i style="width:56.6%;background:#e5461f"></i>
+        <i style="width:1.5%;background:#2f9e8f"></i>
+        <i style="width:11.1%;background:#4e4e4e"></i>
+      </div>
+      <div class="legend">
+        <span><i style="background:#7c5cff"></i>CPU <b>120 W</b></span>
+        <span><i style="background:#e5461f"></i>GPU <b>220 W</b></span>
+        <span><i style="background:#2f9e8f"></i>RAM <b>6 W</b></span>
+        <span><i style="background:#4e4e4e"></i>Other <b>43 W</b></span>
+      </div>
+    </div>
+
+    <div class="ro-facts">
+      <div><div class="k">Energy</div><div class="v">421 kWh</div></div>
+      <div><div class="k">Month</div><div class="v">₹214.83</div></div>
+      <div><div class="k">Day</div><div class="v">₹7.06</div></div>
+    </div>
+  </section>
+
+  <div class="cols">
+    <section class="card">
+      <header><h2>Parts</h2><span class="small" style="color:var(--ink-3)">4 devices</span></header>
+      <div class="body">
+        <div class="pick">
+          <select class="sel"><option>Gaming</option></select>
+          <select class="sel"><option>All categories</option></select>
+          <button class="trigger"><span><span class="plus">+</span> Add a part…</span><span>▾</span></button>
+        </div>
+        <ul>
+          <li class="part"><i class="cbar" style="background:#7c5cff"></i><span class="nm">AMD Ryzen 7 7800X3D</span><input class="w" value="120"><span class="small" style="color:var(--ink-3)">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot">120 W</span><button class="x">×</button></li>
+          <li class="part"><i class="cbar" style="background:#e5461f"></i><span class="nm">NVIDIA GeForce RTX 4070 SUPER</span><input class="w" value="220"><span class="small" style="color:var(--ink-3)">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot">220 W</span><button class="x">×</button></li>
+          <li class="part"><i class="cbar" style="background:#2f9e8f"></i><span class="nm">DDR5-4800 16 GB</span><input class="w" value="5.5"><span class="small" style="color:var(--ink-3)">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot">6 W</span><button class="x">×</button></li>
+          <li class="part"><i class="cbar" style="background:#6e6c6c"></i><span class="nm">ATX 850 W Gold</span><input class="w" value="0"><span class="small" style="color:var(--ink-3)">W</span><span class="stepper"><button>−</button><span class="v">1</span><button>+</button></span><span class="tot" style="color:var(--ink-3)">—</span><button class="x">×</button></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <header><h2>Usage</h2><span class="small num" style="color:var(--ink-3)">12.0 h/day booked</span></header>
+      <div class="body">
+        <ul>
+          <li class="wl"><span class="nm">🎮 Gaming (1080p)</span><span class="stepper"><button>−</button><span class="v">2<span>h</span></span><button>+</button></span><span class="stepper"><button>−</button><span class="v">7<span>d</span></span><button>+</button></span><span class="cost">₹311.10</span><button class="x">×</button></li>
+          <li class="wl"><span class="nm">💼 Office</span><span class="stepper"><button>−</button><span class="v">8<span>h</span></span><button>+</button></span><span class="stepper"><button>−</button><span class="v">7<span>d</span></span><button>+</button></span><span class="cost">₹1,612.46</span><button class="x">×</button></li>
+          <li class="wl"><span class="nm">🌐 Web browsing</span><span class="stepper"><button>−</button><span class="v">4<span>h</span></span><button>+</button></span><span class="stepper"><button>−</button><span class="v">7<span>d</span></span><button>+</button></span><span class="cost">₹965.31</span><button class="x">×</button></li>
+          <li class="wl"><span class="nm">💤 Idle</span><span class="stepper"><button>−</button><span class="v">10<span>h</span></span><button>+</button></span><span style="width:74px"></span><span class="cost">₹248.00</span><span style="width:16px"></span></li>
+        </ul>
+        <button class="btn btn-ghost" style="margin-top:7px">+ Workload</button>
+
+        <div class="rate">
+          <div><label class="label" style="color:var(--ink-3)">Country</label><select class="sel"><option>India (IN)</option></select></div>
+          <div><label class="label" style="color:var(--ink-3)">State</label><select class="sel"><option>Maharashtra</option></select></div>
+          <div><label class="label" style="color:var(--ink-3)">Rate</label><div style="display:flex;gap:6px"><input class="inp num" value="8.41"><button class="btn">Detect</button></div></div>
+          <div><label class="label" style="color:var(--ink-3)">Currency</label><select class="sel"><option>Auto (INR)</option></select></div>
+        </div>
+        <div class="psu">
+          <b>PSU 500 W</b><span>peak 389 W</span><span class="ok">✓ your 850 W has headroom</span>
+          <span style="margin-left:auto"><button class="btn">Share</button></span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

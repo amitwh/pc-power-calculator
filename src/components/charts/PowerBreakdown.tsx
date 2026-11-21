@@ -25,7 +25,7 @@ export function PowerBreakdown({ components, drawWByComponentId, qtyById = {}, c
       width="100%"
       height={260}
       options={{
-        chart: { background: 'transparent', fontFamily: 'system-ui, sans-serif' },
+        chart: { background: 'transparent', fontFamily: "'Plus Jakarta Sans Variable', system-ui, sans-serif" },
         labels,
         colors: colors ?? PALETTE,
         legend: { position: 'bottom' },

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Option 2 — Ledger</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  /* No cards at all. One sheet, hairline rules, figures right-aligned in
+     columns like a printed spec sheet. The total closes it like a receipt. */
+  .top { background: #fff; border-bottom: 1px solid var(--gray-200); }
+  .top .in { max-width: 880px; margin: 0 auto; padding: 12px 24px;
+             display: flex; align-items: center; gap: 20px; }
+  .top .logo { font-family: var(--font-display); font-weight: 800; font-size: 19px;
+               color: var(--brand); margin-right: auto; }
+  .top a { font-size: 12.5px; font-weight: 600; color: var(--gray-500); text-decoration: none; }
+  .top a.on { color: var(--gray-900); }
+
+  .sheet { max-width: 880px; margin: 0 auto; padding: 26px 24px 40px; }
+
+  .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+          padding-bottom: 12px; }
+  .head h1 { font-family: var(--font-display); font-size: 30px; font-weight: 800;
+             letter-spacing: -.005em; color: var(--gray-950); }
+  .head .sub { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+  .head .sys { display: flex; align-items: center; gap: 6px; }
+  .head .sys select { width: auto; height: 30px; font-size: 12px; font-weight: 700; }
+  .head .sys .icon { border: 1px solid var(--gray-300); background: #fff; border-radius: var(--r-md);
+                     height: 30px; width: 28px; color: var(--gray-500); cursor: pointer; font-size: 12px; }
+
+  .sec { margin-top: 22px; }
+  .sec-h { display: flex; align-items: baseline; justify-content: space-between;
+           padding-bottom: 6px; border-bottom: 1px solid var(--gray-900); }
+  .sec-h h2 { font-size: 11px; font-weight: 800; letter-spacing: .12em;
+              text-transform: uppercase; color: var(--gray-800); }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { white-space: nowrap; font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+       color: var(--gray-400); text-align: right; padding: 7px 0; font-family: var(--font-sans); }
+  th.l, td.l { text-align: left; }
+  td { font-size: 13px; padding: 7px 0; border-bottom: 1px solid var(--gray-100);
+       font-variant-numeric: tabular-nums; }
+  td.r { text-align: right; font-family: var(--font-mono); font-size: 12.5px;
+         color: var(--gray-700); white-space: nowrap; }
+  td.r.strong { color: var(--gray-900); font-weight: 700; }
+  td .nm { font-weight: 600; color: var(--gray-900); }
+  td .meta { font-size: 11px; color: var(--gray-400); margin-top: 1px; }
+  .swatch { display: inline-block; width: 7px; height: 7px; border-radius: 2px;
+            margin-right: 8px; vertical-align: 1px; }
+  col.c-w { width: 76px; } col.c-q { width: 92px; } col.c-d { width: 86px; } col.c-x { width: 30px; }
+
+  .w-in, .q-in { width: 54px; height: 24px; text-align: right; font-family: var(--font-mono);
+                 font-size: 12px; border: 1px solid transparent; border-radius: var(--r-sm);
+                 background: transparent; color: var(--gray-800); padding: 0 4px; }
+  .w-in:hover, .q-in:hover { border-color: var(--gray-300); background: #fff; }
+  .tiny-step { border: 1px solid var(--gray-200); background: #fff; border-radius: var(--r-sm);
+               width: 20px; height: 24px; font-size: 12px; color: var(--gray-500);
+               cursor: pointer; line-height: 1; }
+  .tiny-step:hover { border-color: var(--gray-400); color: var(--gray-900); }
+
+  .add-row td { border-bottom: 0; padding-top: 9px; }
+  .add { border: 0; background: none; color: var(--brand-text); font-size: 12.5px;
+         font-weight: 700; cursor: pointer; padding: 0; }
+  .add span { color: var(--brand); }
+
+  .sum td { border-bottom: 0; padding: 6px 0; }
+  .sum .k { text-align: right; font-size: 11px; font-weight: 700; letter-spacing: .08em;
+            text-transform: uppercase; color: var(--gray-400); padding-right: 14px; }
+  .sum .v { text-align: right; font-family: var(--font-mono); font-size: 13px;
+            font-weight: 700; }
+
+  /* The total, closed off with a double rule the way a printed total is. */
+  .total { margin-top: 26px; border-top: 3px double var(--gray-900); padding-top: 14px;
+           display: flex; align-items: flex-end; justify-content: space-between; gap: 20px;
+           flex-wrap: wrap; }
+  .total .big { font-family: var(--font-display); font-weight: 800; font-size: 72px;
+                line-height: .82; letter-spacing: -.02em; color: var(--gray-950);
+                font-variant-numeric: tabular-nums; }
+  .total .big small { font-family: var(--font-sans); font-size: 15px; font-weight: 600;
+                      color: var(--gray-400); letter-spacing: 0; }
+  .total .side { text-align: right; }
+  .total .side p { font-size: 12.5px; color: var(--gray-500); font-variant-numeric: tabular-nums; }
+  .total .side b { color: var(--gray-900); }
+  .actions { display: flex; gap: 8px; margin-top: 10px; justify-content: flex-end; }
+  .psu-line { font-size: 12px; color: var(--gray-500); margin-top: 10px; }
+  .psu-line b { color: var(--gray-900); font-family: var(--font-mono); }
+  .ok { color: var(--success); font-weight: 700; }
+
+  @media (max-width: 720px) {
+    .head h1 { font-size: 23px; }
+    .total .big { font-size: 52px; }
+    col.c-w, col.c-q { width: 0; }
+    .hide-sm { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top"><div class="in">
+  <span class="logo">⚡ PC Power Calculator</span>
+  <a href="#" class="on">Calculator</a><a href="#">Compare</a><a href="#">Guides</a><a href="#">About</a>
+</div></div>
+
+<div class="sheet">
+  <div class="head">
+    <div>
+      <h1>What does your PC cost to run?</h1>
+      <p class="sub">Indian tariff · Maharashtra · ₹8.41 per kWh incl. duty</p>
+    </div>
+    <div class="sys">
+      <select class="sel"><option>My build</option></select>
+      <button class="icon">✎</button>
+      <button class="icon">×</button>
+      <button class="icon">+</button>
+    </div>
+  </div>
+
+  <section class="sec">
+    <div class="sec-h"><h2>Parts</h2><span class="small muted num">4 devices</span></div>
+    <table>
+      <colgroup><col><col class="c-w"><col class="c-q"><col class="c-d"><col class="c-x"></colgroup>
+      <thead><tr><th class="l">Device</th><th>Rated</th><th>Units</th><th>Draw</th><th></th></tr></thead>
+      <tbody>
+        <tr><td class="l"><span class="swatch" style="background:#7c5cff"></span><span class="nm">AMD Ryzen 7 7800X3D</span><div class="meta">CPU · 120 W TDP</div></td>
+            <td class="r"><input class="w-in" value="120"></td>
+            <td class="r"><button class="tiny-step hide-sm">−</button> <span class="q-in" style="display:inline-block;width:18px">1</span> <button class="tiny-step hide-sm">+</button></td>
+            <td class="r strong">120 W</td><td class="r"><button class="tiny-step">×</button></td></tr>
+        <tr><td class="l"><span class="swatch" style="background:#e5461f"></span><span class="nm">NVIDIA GeForce RTX 4070 SUPER</span><div class="meta">GPU · 220 W</div></td>
+            <td class="r"><input class="w-in" value="220"></td>
+            <td class="r"><button class="tiny-step hide-sm">−</button> <span class="q-in" style="display:inline-block;width:18px">1</span> <button class="tiny-step hide-sm">+</button></td>
+            <td class="r strong">220 W</td><td class="r"><button class="tiny-step">×</button></td></tr>
+        <tr><td class="l"><span class="swatch" style="background:#2f9e8f"></span><span class="nm">DDR5-4800 16 GB</span><div class="meta">RAM · 5.5 W</div></td>
+            <td class="r"><input class="w-in" value="5.5"></td>
+            <td class="r"><button class="tiny-step hide-sm">−</button> <span class="q-in" style="display:inline-block;width:18px">1</span> <button class="tiny-step hide-sm">+</button></td>
+            <td class="r strong">6 W</td><td class="r"><button class="tiny-step">×</button></td></tr>
+        <tr><td class="l"><span class="swatch" style="background:#9aa3ad"></span><span class="nm">ATX 850 W Gold</span><div class="meta">PSU · capacity, not draw</div></td>
+            <td class="r"><input class="w-in" value="0"></td>
+            <td class="r"><button class="tiny-step hide-sm">−</button> <span class="q-in" style="display:inline-block;width:18px">1</span> <button class="tiny-step hide-sm">+</button></td>
+            <td class="r muted">—</td><td class="r"><button class="tiny-step">×</button></td></tr>
+        <tr class="add-row"><td colspan="5"><button class="add"><span>+</span> Add a part — search 2,200+</button></td></tr>
+      </tbody>
+      <tfoot>
+        <tr class="sum"><td colspan="3" class="k">Total draw at 100%</td><td class="v">389 W</td><td></td></tr>
+      </tfoot>
+    </table>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>Usage</h2><span class="small muted num">12.0 h/day booked</span></div>
+    <table>
+      <colgroup><col><col class="c-w"><col class="c-q"><col class="c-d"></colgroup>
+      <thead><tr><th class="l">Workload</th><th>Hours/day</th><th colspan="2">Days/week</th><th>Cost / yr</th></tr></thead>
+      <tbody>
+        <tr><td class="l"><span class="nm">🎮 Gaming (1080p)</span></td><td class="r"><button class="tiny-step">−</button> <span class="q-in" style="display:inline-block;width:22px">2</span> <button class="tiny-step">+</button></td><td class="r" colspan="2"><button class="tiny-step">−</button> <span class="q-in" style="display:inline-block;width:22px">7</span> <button class="tiny-step">+</button></td><td class="r strong">₹311.10</td></tr>
+        <tr><td class="l"><span class="nm">💼 Office</span></td><td class="r"><button class="tiny-step">−</button> <span class="q-in" style="display:inline-block;width:22px">8</span> <button class="tiny-step">+</button></td><td class="r" colspan="2"><button class="tiny-step">−</button> <span class="q-in" style="display:inline-block;width:22px">7</span> <button class="tiny-step">+</button></td><td class="r strong">₹1,612.46</td></tr>
+        <tr><td class="l"><span class="nm">🌐 Web browsing</span></td><td class="r"><button class="tiny-step">−</button> <span class="q-in" style="display:inline-block;width:22px">4</span> <button class="tiny-step">+</button></td><td class="r" colspan="2"><button class="tiny-step">−</button> <span class="q-in" style="display:inline-block;width:22px">7</span> <button class="tiny-step">+</button></td><td class="r strong">₹965.31</td></tr>
+        <tr><td class="l"><span class="nm">💤 Idle</span><div class="meta">on but not working · every day</div></td><td class="r"><button class="tiny-step">−</button> <span class="q-in" style="display:inline-block;width:22px">10</span> <button class="tiny-step">+</button></td><td class="r muted small" colspan="2">every day</td><td class="r strong">₹248.00</td></tr>
+        <tr class="add-row"><td colspan="5"><button class="add"><span>+</span> Add a workload</button></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>Tariff</h2><span class="small muted">Tiered · FX 2026-09-15</span></div>
+    <table>
+      <colgroup><col><col><col><col></colgroup>
+      <thead><tr><th class="l">Country</th><th class="l">State</th><th>Rate / kWh</th><th>Currency</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="l"><select class="sel" style="height:30px;font-size:12px"><option>India (IN)</option></select></td>
+          <td class="l"><select class="sel" style="height:30px;font-size:12px"><option>Maharashtra</option></select></td>
+          <td class="r"><input class="inp num" style="height:30px;width:88px;display:inline-block;text-align:right" value="8.41"> <button class="tiny-step">↻</button></td>
+          <td class="r"><select class="sel" style="height:30px;font-size:12px"><option>Auto (INR)</option></select></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="total">
+    <div class="big">₹2,577.78 <small>/ year</small></div>
+    <div class="side">
+      <p><b>421 kWh</b> · <b>₹214.83</b> / month · <b>₹7.06</b> / day</p>
+      <p class="psu-line">PSU <b>500 W</b> recommended · peak <b>389 W</b> · <span class="ok">✓ your 850 W has headroom</span></p>
+      <div class="actions"><button class="btn btn-brand">Share</button><button class="btn">PDF</button><button class="btn">HTML</button></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
