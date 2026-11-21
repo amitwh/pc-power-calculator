@@ -12,10 +12,11 @@
 FROM node:22-slim
 
 # nginx serves the prerendered output; the toolchain covers Vite/rolldown native
-# deps and scripts/prerender.mjs.
+# deps and scripts/prerender.mjs. curl is required by Coolify's container
+# healthcheck, which shell-shims `curl -f http://127.0.0.1` inside the image.
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
-      nginx python3 build-essential ca-certificates \
+      nginx python3 build-essential ca-certificates curl \
  && rm -rf /var/lib/apt/lists/* \
  && rm -f /etc/nginx/sites-enabled/default
 
