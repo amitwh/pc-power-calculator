@@ -1,5 +1,5 @@
 import { Link, NavLink } from 'react-router-dom';
-import { GUIDES } from '@/pages/Guides';
+import { GUIDE_CATEGORIES, GUIDES } from '@/content/guides';
 
 const items = [
   { to: '/', label: 'Calculator', end: true },
@@ -68,7 +68,7 @@ export default function TopNav() {
                 />
               </svg>
             </summary>
-            <div className="absolute right-0 z-50 mt-2 w-80 rounded-12 border border-gray-200 bg-white p-2 shadow-card-raised dark:border-gray-700 dark:bg-gray-900">
+            <div className="absolute right-0 z-50 mt-2 max-h-[70vh] w-80 overflow-y-auto rounded-12 border border-gray-200 bg-white p-2 shadow-card-raised dark:border-gray-700 dark:bg-gray-900">
               <Link
                 to="/guides"
                 className="block rounded-8 px-2.5 py-1.5 text-sm font-semibold text-brand-text hover:bg-gray-50 dark:hover:bg-gray-800"
@@ -76,15 +76,29 @@ export default function TopNav() {
                 All guides →
               </Link>
               <div className="my-1 border-t border-gray-100 dark:border-gray-800" />
-              {GUIDES.map((g) => (
-                <Link
-                  key={g.slug}
-                  to={`/guides/${g.slug}`}
-                  className="block rounded-8 px-2.5 py-1.5 text-[13px] leading-snug text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
-                >
-                  {g.title}
-                </Link>
-              ))}
+              {/* Why: the guide set is tripling, so a flat list of 25 titles
+                  would be unusable. Grouped headings keep it scannable, and
+                  the capped height stops the panel running off the screen. */}
+              {GUIDE_CATEGORIES.map((category) => {
+                const guides = GUIDES.filter((g) => g.category === category.id);
+                if (guides.length === 0) return null;
+                return (
+                  <div key={category.id} className="mb-1">
+                    <p className="px-2.5 pt-1.5 pb-0.5 text-[11px] font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
+                      {category.label}
+                    </p>
+                    {guides.map((g) => (
+                      <Link
+                        key={g.slug}
+                        to={`/guides/${g.slug}`}
+                        className="block rounded-8 px-2.5 py-1.5 text-[13px] leading-snug text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800"
+                      >
+                        {g.title}
+                      </Link>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           </details>
 
