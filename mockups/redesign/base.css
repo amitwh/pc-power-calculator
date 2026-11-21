@@ -1,0 +1,79 @@
+/* Shared shell for the three redesign options.
+   Real brand token (#e5461f) and the app's warm near-black (#0d0b09). */
+:root {
+  --brand: #e5461f;
+  --brand-dark: #c93a18;
+  --ink: #17161a;
+  --ink-2: #4b4a52;
+  --muted: #77747b;
+  --line: #e7e4e0;
+  --line-strong: #d6d2cc;
+  --surface: #ffffff;
+  --canvas: #faf9f7;
+  --tint: #f4f1ed;
+  --radius: 14px;
+  --font: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p, ul, ol { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+
+.topbar {
+  display: flex; align-items: center; gap: 32px;
+  padding: 18px 40px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; letter-spacing: -.01em; }
+.brand .bolt { color: var(--brand); font-size: 19px; }
+.nav { display: flex; gap: 22px; margin-left: auto; font-size: 14px; color: var(--ink-2); }
+.nav a:hover { color: var(--ink); }
+.nav a.on { color: var(--brand); font-weight: 600; }
+
+.shell { max-width: 1180px; margin: 0 auto; padding: 28px 40px 64px; }
+.shell-narrow { max-width: 760px; margin: 0 auto; padding: 40px 24px 64px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.card h2 {
+  font-size: 12px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--muted);
+  display: flex; align-items: center; gap: 10px;
+}
+.card h2 .count { margin-left: auto; letter-spacing: 0; text-transform: none; font-weight: 500; color: var(--muted); }
+
+.btn-primary {
+  background: var(--brand); color: #fff; border: 0;
+  padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 14px;
+}
+.btn-primary:hover { background: var(--brand-dark); }
+.btn-ghost {
+  background: transparent; color: var(--ink-2); border: 1px solid var(--line-strong);
+  padding: 9px 14px; border-radius: 10px; font-size: 13px; font-weight: 600;
+}
+.btn-ghost:hover { border-color: var(--ink-2); color: var(--ink); }
+
+.muted { color: var(--muted); }
+.tiny { font-size: 12px; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Six-colour category dots, matching the app's category palette. */
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.cpu { background: #6a5acd; } .dot.gpu { background: #1a7a56; }
+.dot.ram { background: #d97706; } .dot.ssd { background: #2c7a9e; }
+.dot.psu { background: #a82d15; } .dot.fan { background: #667085; }

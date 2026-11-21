@@ -11,9 +11,14 @@ export function Card({ children, className = '', ...props }: HTMLAttributes<HTML
   );
 }
 
+/**
+ * Card heading. Its default size lives in the components layer (`card-title`)
+ * rather than as a `text-xl` utility so a caller's `className="text-base"`
+ * actually wins — utility order, not class-string order, decides the cascade.
+ */
 export function CardTitle({ children, className = '' }: { children: ReactNode; className?: string }) {
   return (
-    <h2 className={`font-display text-xl font-bold mb-2 flex items-center justify-between gap-2 ${className}`}>
+    <h2 className={`card-title font-display font-bold mb-2 flex items-center justify-between gap-2 ${className}`}>
       {children}
     </h2>
   );

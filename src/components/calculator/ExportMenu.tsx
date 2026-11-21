@@ -17,7 +17,11 @@ function locationLabel(countryIso2: string, subdivision?: string): string {
   return `${sub}, ${country}`;
 }
 
-export function ExportMenu() {
+export function ExportMenu({
+  className = 'flex gap-1.5 flex-nowrap shrink-0',
+}: {
+  className?: string;
+}) {
   // useCalc() already resolves the active build (multi-system store),
   // pre-computes daily / monthly / yearly totals, and resolves the display
   // currency (explicit override, else the build location's tariff currency).
@@ -105,11 +109,26 @@ export function ExportMenu() {
   };
 
   return (
-    <div className="flex gap-1.5 flex-nowrap shrink-0">
-      <Button size="sm" variant="primary" onClick={onPdf} disabled={generating} aria-label="Export PDF">
+    <div className={className}>
+      <Button
+        size="sm"
+        variant="ghost"
+        onClick={onPdf}
+        disabled={generating}
+        aria-label="Export PDF"
+        className="border border-gray-300 dark:border-gray-700"
+      >
         {generating ? '…' : 'PDF'}
       </Button>
-      <Button size="sm" variant="secondary" onClick={onHtml} aria-label="Export HTML">HTML</Button>
+      <Button
+        size="sm"
+        variant="ghost"
+        onClick={onHtml}
+        aria-label="Export HTML"
+        className="border border-gray-300 dark:border-gray-700"
+      >
+        HTML
+      </Button>
     </div>
   );
 }

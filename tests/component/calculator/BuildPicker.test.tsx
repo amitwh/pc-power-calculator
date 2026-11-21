@@ -13,20 +13,32 @@ beforeEach(() => {
 
 /** Open the one device picker and pick an option by (partial) name. */
 async function pickDevice(user: ReturnType<typeof userEvent.setup>, query: string, name: RegExp) {
-  await user.click(screen.getByRole('button', { name: 'Add device' }));
+  await user.click(screen.getByRole('button', { name: /add device/i }));
   await user.type(screen.getByRole('searchbox'), query);
   await user.click(screen.getAllByRole('option', { name })[0]);
 }
 
 describe('BuildPicker — devices cart', () => {
-  test('renders the picker, selects, and the default build chip', () => {
+  test('renders the compact system controls and the one device picker', () => {
     render(<BuildPicker />);
     expect(screen.getByRole('heading', { name: /Your Systems/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Add device' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /add device/i })).toBeInTheDocument();
     expect(screen.getByLabelText('Filter parts by category')).toBeInTheDocument();
     expect(screen.getByLabelText('System type')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /My build/i })).toBeInTheDocument();
-    expect(screen.getByText(/No devices yet/i)).toBeInTheDocument();
+    // Build switching lives in SectionRail now — no duplicate chip row, and the
+    // picker trigger is the only call to action.
+    expect(screen.queryByRole('button', { name: /My build/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Add your first part/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('group', { name: /Build systems/i })).not.toBeInTheDocument();
+  });
+
+  test('hides the device counter at zero and shows it once a part is added', async () => {
+    const user = userEvent.setup();
+    render(<BuildPicker />);
+    expect(screen.queryByText(/0 device/i)).not.toBeInTheDocument();
+
+    await pickDevice(user, '7800x3d', /Ryzen 7 7800X3D/);
+    expect(screen.getByText('1 device')).toBeInTheDocument();
   });
 
   test('the System type select updates the build category', async () => {
@@ -75,7 +87,8 @@ describe('BuildPicker — devices cart', () => {
     expect(useBuildStore.getState().builds[0].quantities?.['storage-samsung-980-1tb']).toBeUndefined();
     await user.click(screen.getByRole('button', { name: `Remove ${name}` }));
     expect(useBuildStore.getState().builds[0].components.storage ?? []).not.toContain('storage-samsung-980-1tb');
-    expect(screen.getByText(/No devices yet/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Samsung 980 1TB/)).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /add device/i })).toBeInTheDocument();
   });
 
   test('editing the watts field records a TDP override; reset clears it', async () => {
@@ -94,6 +107,8 @@ describe('BuildPicker — devices cart', () => {
   test('custom devices add a peripheral row with the entered wattage', async () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
+    // The custom-device form now lives inside the collapsed Advanced group.
+    await user.click(screen.getByText('Advanced'));
     await user.type(screen.getByLabelText('Custom device name'), 'Desk lamp');
     await user.type(screen.getByLabelText('Custom device wattage'), '9');
     await user.click(screen.getByRole('button', { name: 'Add' }));
@@ -109,7 +124,7 @@ describe('BuildPicker — devices cart', () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
     await user.selectOptions(screen.getByLabelText('Filter parts by category'), 'cpu');
-    await user.click(screen.getByRole('button', { name: 'Add device' }));
+    await user.click(screen.getByRole('button', { name: /add device/i }));
     await user.type(screen.getByRole('searchbox'), 'ryzen 7');
     // Scope to the listbox — the native selects' own <option> children also
     // expose the `option` role.
@@ -118,33 +133,5 @@ describe('BuildPicker — devices cart', () => {
     // CPU filter excludes the Ryzen-brand GPUs/boards that 'All' would match.
     const labels = options.map((o) => o.textContent ?? '');
     expect(labels.every((l) => l.includes('CPU'))).toBe(true);
-  });
-});
-
-describe('BuildPicker — systems', () => {
-  test('add system creates a new build and makes it active', async () => {
-    const user = userEvent.setup();
-    render(<BuildPicker />);
-    await user.click(screen.getByRole('button', { name: /\+ Add system/i }));
-    // Each chip is a switch button labelled with its build name. The group
-    // also contains the "+ Add system" button and remove buttons when more
-    // than one build exists, so filter to just the switch buttons.
-    const group = screen.getByRole('group', { name: /Build systems/i });
-    const switchButtons = within(group).getAllByRole('button', { name: /My build|Build \d+/i });
-    expect(switchButtons.length).toBeGreaterThanOrEqual(2);
-    expect(useBuildStore.getState().builds).toHaveLength(2);
-  });
-
-  test('remove system drops it from the list', async () => {
-    const user = userEvent.setup();
-    // Replace window.confirm with a no-op auto-accept so the prompt doesn't block the test.
-    const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
-    useBuildStore.getState().addBuild('To remove');
-    expect(useBuildStore.getState().builds).toHaveLength(2);
-    render(<BuildPicker />);
-    const removeBtn = screen.getByRole('button', { name: /Remove To remove/i });
-    await user.click(removeBtn);
-    expect(useBuildStore.getState().builds.find((b) => b.name === 'To remove')).toBeUndefined();
-    confirmSpy.mockRestore();
   });
 });

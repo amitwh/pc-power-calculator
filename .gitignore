@@ -4,11 +4,11 @@ node_modules/
 .pnp.js
 .yarn/
 
-# Build output
-dist/
-dist-ssr/
-build/
-out/
+# Build output (anchored so a source directory named `build/` is not ignored)
+/dist/
+/dist-ssr/
+/build/
+/out/
 .next/
 .nuxt/
 .cache/

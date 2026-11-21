@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { Select } from '@/components/ui/Select';
 import { useBuildStore } from '@/store/buildStore';
@@ -8,6 +9,8 @@ interface Props {
   onCompare: (b: BuildConfig[]) => void;
   /** Pre-select this build id in slot B (e.g. a build imported from an exported HTML link). */
   initialBId?: string;
+  /** Notifies the parent when the visitor changes a dropdown themselves. */
+  onUserSelect?: () => void;
 }
 
 /**
@@ -16,8 +19,10 @@ interface Props {
  * fires `onCompare` LIVE on mount and whenever the selection changes —
  * no submit button needed.
  */
-export function BuildSelector({ onCompare, initialBId }: Props) {
+export function BuildSelector({ onCompare, initialBId, onUserSelect }: Props) {
   const builds = useBuildStore((s) => s.builds);
+  // Once the visitor picks a pair, automatic resyncs must leave it alone.
+  const userSelected = useRef(false);
 
   const initial = useMemo(() => {
     const first = builds[0]?.id ?? '';
@@ -29,6 +34,15 @@ export function BuildSelector({ onCompare, initialBId }: Props) {
 
   const [buildAId, setBuildAId] = useState<string>(initial.a);
   const [buildBId, setBuildBId] = useState<string>(initial.b);
+
+  // An imported build can land after this component mounts — the store is
+  // rehydrated and `?builds=` is imported in effects. Pin slot B to it once it
+  // appears, unless the visitor has already chosen a pair themselves.
+  useEffect(() => {
+    if (!initialBId || userSelected.current) return;
+    if (!builds.some((x) => x.id === initialBId)) return;
+    setBuildBId((prev) => (prev === initialBId ? prev : initialBId));
+  }, [initialBId, builds]);
 
   // Keep the user's selection valid if the underlying list changes
   // (e.g. a build was removed from the store).
@@ -48,7 +62,10 @@ export function BuildSelector({ onCompare, initialBId }: Props) {
   useEffect(() => {
     const a = builds.find((x) => x.id === buildAId);
     const b = builds.find((x) => x.id === buildBId);
-    if (a && b) onCompare([a, b]);
+    // A single build cannot be compared with itself: on the first render the
+    // store has one build and both slots fall back to it. Reporting that pair
+    // would duplicate React keys and leave stale rows after hydration.
+    if (a && b && a.id !== b.id) onCompare([a, b]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectionKey]);
 
@@ -57,9 +74,12 @@ export function BuildSelector({ onCompare, initialBId }: Props) {
   if (builds.length < 2) {
     return (
       <Card>
-        <CardTitle>Compare systems</CardTitle>
+        <CardTitle className="text-base!">Compare systems</CardTitle>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Add at least two systems on the Calculator page to compare them side by side.
+          Add at least two systems on the Calculator page to compare them.{' '}
+          <Link to="/" className="text-brand-text underline font-medium">
+            Go to the calculator
+          </Link>
         </p>
       </Card>
     );
@@ -67,7 +87,7 @@ export function BuildSelector({ onCompare, initialBId }: Props) {
 
   return (
     <Card>
-      <CardTitle>Compare systems</CardTitle>
+      <CardTitle className="text-base!">Compare systems</CardTitle>
       <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
         Pick two systems from your library to compare their yearly energy and cost.
       </p>
@@ -84,7 +104,11 @@ export function BuildSelector({ onCompare, initialBId }: Props) {
             aria-label="System A"
             options={options}
             value={buildAId}
-            onChange={(e) => setBuildAId(e.target.value)}
+            onChange={(e) => {
+              userSelected.current = true;
+              onUserSelect?.();
+              setBuildAId(e.target.value);
+            }}
           />
         </div>
         <div>
@@ -99,7 +123,11 @@ export function BuildSelector({ onCompare, initialBId }: Props) {
             aria-label="System B"
             options={options}
             value={buildBId}
-            onChange={(e) => setBuildBId(e.target.value)}
+            onChange={(e) => {
+              userSelected.current = true;
+              onUserSelect?.();
+              setBuildBId(e.target.value);
+            }}
           />
         </div>
       </div>

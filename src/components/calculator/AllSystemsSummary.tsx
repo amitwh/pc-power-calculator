@@ -69,7 +69,9 @@ export function AllSystemsSummary() {
     return { combinedCost: cost, combinedKwh: kwh, anyConverted: converted };
   }, [summary, currency.code, snapshot]);
 
-  if (summary.length === 0) return null;
+  // With one build the results panel already shows the total; only the
+  // multi-system comparison earns its own card.
+  if (builds.length <= 1) return null;
 
   return (
     <Card>

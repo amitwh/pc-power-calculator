@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Option C — Workbench</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  .shell { max-width: 1320px; padding: 20px 28px 48px; }
+  .workbench { display: grid; grid-template-columns: 176px minmax(0,1fr) 320px; gap: 18px; align-items: start; }
+
+  /* Left: section index + build switcher, replaces the 7-link top nav. */
+  .rail { position: sticky; top: 20px; }
+  .rail .label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 14px 0 8px; }
+  .rail nav a { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 9px; font-size: 14px; color: var(--ink-2); }
+  .rail nav a:hover { background: var(--tint); color: var(--ink); }
+  .rail nav a.on { background: #fff; border: 1px solid var(--line); color: var(--ink); font-weight: 700; }
+  .builds li { display: flex; align-items: center; gap: 8px; padding: 7px 10px; font-size: 13px; border-radius: 8px; color: var(--ink-2); }
+  .builds li.on { background: var(--tint); color: var(--ink); font-weight: 600; }
+  .builds .add { color: var(--brand); font-weight: 600; }
+
+  /* Middle: the work area, grouped, one idea per card. */
+  .stack { display: grid; gap: 14px; }
+  .grp-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .grp-head h2 { font-size: 13px; font-weight: 800; letter-spacing: -.005em; text-transform: none; color: var(--ink); }
+  .grp-head .hint { font-size: 12px; color: var(--muted); }
+  .grp-head .act { margin-left: auto; }
+
+  .row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid #f1eeea; }
+  .row:first-of-type { border-top: 0; }
+  .row .nm { font-weight: 600; font-size: 14px; }
+  .row .sub { font-size: 12px; color: var(--muted); }
+  .row .val { margin-left: auto; font-size: 13px; color: var(--ink-2); font-weight: 600; }
+  .qty { display: flex; align-items: center; gap: 6px; }
+  .qty button { width: 24px; height: 24px; border: 1px solid var(--line-strong); background: #fff; border-radius: 6px; line-height: 1; color: var(--ink-2); }
+  .x { border: 0; background: transparent; color: var(--muted); font-size: 15px; padding: 2px 6px; }
+
+  /* Dense but aligned form grid — every control on one baseline. */
+  .formgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+  .field label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 5px; }
+  .control {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    min-height: 40px; padding: 0 12px; border: 1px solid var(--line-strong); border-radius: 10px;
+    background: #fff; font-size: 14px;
+  }
+  .control .chev { color: var(--muted); font-size: 11px; }
+  .control input { border: 0; outline: 0; font: inherit; width: 100%; background: transparent; }
+
+  /* Schedule as a compact table with inline steppers, not 7 sliders. */
+  .sched th { position: static; }
+  .sched td { padding: 7px 0; }
+  .stepper { display: inline-flex; align-items: center; gap: 6px; }
+  .stepper .v { min-width: 52px; text-align: right; font-size: 13px; font-weight: 600; }
+  .stepper button { width: 22px; height: 22px; border: 1px solid var(--line-strong); border-radius: 6px; background: #fff; color: var(--ink-2); line-height: 1; }
+  .bar { height: 6px; background: var(--tint); border-radius: 4px; overflow: hidden; margin-top: 10px; display: flex; }
+  .bar i { display: block; height: 100%; }
+  .bar .g { background: #2c7a9e; } .bar .o { background: #6a5acd; } .bar .b { background: #d97706; } .bar .i { background: #cfd4d9; }
+
+  /* Right: sticky result rail — the one place results live. */
+  .results { position: sticky; top: 20px; }
+  .results .cap { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .results .big { font-size: 42px; font-weight: 800; letter-spacing: -.03em; margin: 4px 0 2px; }
+  .results .big span { font-size: 15px; font-weight: 600; color: var(--muted); }
+  .results .tri { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 16px; }
+  .results .tri div { background: var(--canvas); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+  .results .tri dt { font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .results .tri dd { margin: 3px 0 0; font-size: 15px; font-weight: 700; }
+  .results hr { border: 0; border-top: 1px solid var(--line); margin: 16px 0; }
+  .psu { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .psu .b { margin-left: auto; font-weight: 700; }
+  .verdict { margin-top: 14px; background: #edf7f1; border: 1px solid #cfe8da; border-radius: 10px; padding: 10px 12px; font-size: 12.5px; color: #145c41; }
+
+  @media (max-width: 1100px) {
+    .workbench { grid-template-columns: 1fr; }
+    .rail { position: static; display: flex; gap: 10px; overflow-x: auto; }
+    .rail nav { display: flex; gap: 8px; }
+    .rail .label, .builds { display: none; }
+    .results { position: static; order: -1; }
+  }
+  @media (max-width: 700px) {
+    .shell { padding: 14px; }
+    .formgrid { grid-template-columns: 1fr; }
+    .nav { display: none; }
+    .results .big { font-size: 34px; }
+  }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="bolt">⚡</span> PC Power Calculator</div>
+    <nav class="nav"><a class="on" href="#">Calculator</a><a href="#">Compare</a><a href="#">Guides</a><a href="#">About</a></nav>
+  </header>
+
+  <div class="shell">
+    <div class="workbench">
+      <!-- Zone 1: navigation, not decoration. -->
+      <aside class="rail">
+        <p class="label">Sections</p>
+        <nav>
+          <a class="on" href="#"><i class="dot cpu"></i> Your system</a>
+          <a href="#"><i class="dot psu"></i> Usage</a>
+          <a href="#"><i class="dot ssd"></i> Tariff</a>
+          <a href="#"><i class="dot fan"></i> Analysis</a>
+        </nav>
+        <p class="label">Systems</p>
+        <ul class="builds">
+          <li class="on">Gaming rig</li>
+          <li>Work PC</li>
+          <li>Home server</li>
+          <li class="add">+ New system</li>
+        </ul>
+      </aside>
+
+      <!-- Zone 2: the work area. -->
+      <main class="stack">
+        <section class="card">
+          <div class="grp-head">
+            <h2>Your system</h2>
+            <span class="hint">5 parts · peak 310 W</span>
+            <button class="btn-ghost act">Add part</button>
+          </div>
+          <div class="row"><i class="dot cpu"></i><div><div class="nm">Ryzen 5 5600X</div><div class="sub">CPU · 65 W TDP</div></div><div class="qty"><span class="val">×1</span></div><button class="x">×</button></div>
+          <div class="row"><i class="dot gpu"></i><div><div class="nm">Radeon RX 6600</div><div class="sub">GPU · 132 W TDP</div></div><div class="qty"><span class="val">×1</span></div><button class="x">×</button></div>
+          <div class="row"><i class="dot ram"></i><div><div class="nm">16 GB DDR4-3200</div><div class="sub">Memory · 6 W</div></div><div class="qty"><button>−</button><span class="val">×2</span><button>+</button></div><button class="x">×</button></div>
+          <div class="row"><i class="dot ssd"></i><div><div class="nm">1 TB NVMe</div><div class="sub">Storage · 5 W</div></div><div class="qty"><span class="val">×1</span></div><button class="x">×</button></div>
+        </section>
+
+        <section class="card">
+          <div class="grp-head"><h2>When you use it</h2><span class="hint">15 of 24 h/day booked</span></div>
+          <table class="sched">
+            <thead><tr><th>Workload</th><th>Hours / day</th><th>Days / week</th><th class="r">kWh/yr</th></tr></thead>
+            <tbody>
+              <tr><td><i class="dot ssd" style="background:#2c7a9e"></i> Gaming</td><td><span class="stepper"><button>−</button><span class="v num">3 h</span><button>+</button></span></td><td><span class="stepper"><button>−</button><span class="v num">7 d</span><button>+</button></span></td><td class="r num">184</td></tr>
+              <tr><td><i class="dot cpu" style="background:#6a5acd"></i> Office</td><td><span class="stepper"><button>−</button><span class="v num">6 h</span><button>+</button></span></td><td><span class="stepper"><button>−</button><span class="v num">5 d</span><button>+</button></span></td><td class="r num">121</td></tr>
+              <tr><td><i class="dot ram" style="background:#d97706"></i> Browsing</td><td><span class="stepper"><button>−</button><span class="v num">2 h</span><button>+</button></span></td><td><span class="stepper"><button>−</button><span class="v num">7 d</span><button>+</button></span></td><td class="r num">33</td></tr>
+              <tr><td><i class="dot fan" style="background:#cfd4d9"></i> On, idle</td><td><span class="stepper"><button>−</button><span class="v num">13 h</span><button>+</button></span></td><td><span class="stepper"><button>−</button><span class="v num">7 d</span><button>+</button></span></td><td class="r num">74</td></tr>
+            </tbody>
+          </table>
+          <div class="bar"><i class="g" style="width:12.5%"></i><i class="o" style="width:25%"></i><i class="b" style="width:8.3%"></i><i class="i" style="width:54.2%"></i></div>
+        </section>
+
+        <section class="card">
+          <div class="grp-head"><h2>Tariff</h2><span class="hint">Bundled snapshot · updated 29 Oct</span></div>
+          <div class="formgrid">
+            <div class="field"><label>Country</label><div class="control">India (IN) <span class="chev">▾</span></div></div>
+            <div class="field"><label>State</label><div class="control">Maharashtra <span class="chev">▾</span></div></div>
+            <div class="field"><label>Rate</label><div class="control"><input value="8.41"><span class="tiny muted">₹/kWh</span></div></div>
+            <div class="field"><label>Currency</label><div class="control">INR — rupees <span class="chev">▾</span></div></div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Zone 3: the answer. Exactly one copy of it. -->
+      <aside class="results card">
+        <p class="cap">Yearly cost</p>
+        <p class="big">₹3,465 <span>/ yr</span></p>
+        <p class="tiny muted">412 kWh · ₹8.41/kWh incl. duty</p>
+
+        <dl class="tri">
+          <div><dt>Month</dt><dd class="num">₹289</dd></div>
+          <div><dt>Day</dt><dd class="num">₹9.50</dd></div>
+          <div><dt>Peak</dt><dd class="num">310 W</dd></div>
+        </dl>
+
+        <hr>
+        <div class="psu"><span>PSU to buy</span><span class="b">420 W</span></div>
+        <p class="tiny muted" style="margin-top:4px">310 W peak + 35% headroom</p>
+        <button class="btn-ghost" style="width:100%;margin-top:10px">See 6 matching PSUs</button>
+
+        <div class="verdict">Switching 2 h/day from gaming to idle saves ₹412/yr.</div>
+
+        <hr>
+        <div style="display:flex;gap:8px">
+          <button class="btn-primary" style="flex:1">Share</button>
+          <button class="btn-ghost">PDF</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>

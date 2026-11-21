@@ -71,7 +71,7 @@ export function buildExportHtml(
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>${safeName} — PC Power Calculator</title>
 <style>
-  body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 1rem; color: #111; }
+  body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; max-width: 720px; margin: 2rem auto; padding: 1rem; color: #111; }
   h1 { color: #e5461f; font-family: Inter, sans-serif; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-variant-numeric: tabular-nums; }
   th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; }

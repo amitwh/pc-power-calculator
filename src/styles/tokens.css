@@ -1,21 +1,71 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Self-hosted, so there is no third-party font request: better for the
+   privacy promise, works offline in the PWA, and skips a connection to
+   fonts.googleapis.com on first paint. */
+@import '@fontsource-variable/geist/wght.css';
+@import '@fontsource-variable/geist-mono/wght.css';
+@import 'tailwindcss';
 
-:root {
+/*
+ * Design tokens. Tailwind 4 reads these from `@theme` and generates the
+ * utilities from them, so `bg-brand`, `text-brand-text`, `font-display` and
+ * friends resolve to exactly these values — no arbitrary `[#hex]` needed.
+ *
+ * Dark mode follows the OS (`prefers-color-scheme`), Tailwind 4's default.
+ * The app previously declared `darkMode: 'class'` but never added the class,
+ * which left 127 `dark:` rules permanently dead.
+ */
+@theme {
   --color-brand: #e5461f;
   --color-brand-dark: #c93a18;
   --color-brand-text: #a82d15;
   --color-brand-light: #ff6b47;
-  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-display: 'Inter', system-ui, sans-serif;
-  --font-numeric: 'Inter', system-ui, sans-serif;
-  --font-mono: 'SF Mono', 'Fira Code', monospace;
+
+  --color-success: #1a7a56;
+  --color-warning: hsl(45 93% 47%);
+  --color-danger: hsl(0 84% 60%);
+  --color-info: hsl(199 89% 48%);
+
+  --color-gray-50: #fafbfc;
+  --color-gray-100: #f1f3f5;
+  --color-gray-200: #e6e8eb;
+  --color-gray-300: #cfd4d9;
+  --color-gray-400: #9aa3ad;
+  --color-gray-500: #6b7682;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-gray-950: #0d0b09;
+
+  --font-body: 'Geist Variable', system-ui, sans-serif;
+  --font-display: 'Geist Variable', system-ui, sans-serif;
+  --font-numeric: 'Geist Variable', system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+
+  --radius-4: 4px;
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-16: 16px;
 }
 
-html { font-family: var(--font-body); font-size: 15px; }
-.tabular-nums { font-variant-numeric: tabular-nums; }
+/* Card headings default to 1.25rem here, in the components layer, so that any
+   `text-*` utility a caller passes wins the cascade. Declaring it as a utility
+   on the element meant `className="text-base"` lost to the element's own
+   `text-xl` — whichever font-size utility Tailwind emitted last won. */
+@layer components {
+  .card-title {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+html {
+  font-family: var(--font-body);
+  font-size: 15px;
+}
 
 @media (prefers-color-scheme: dark) {
-  html { color-scheme: dark; }
+  html {
+    color-scheme: dark;
+  }
 }

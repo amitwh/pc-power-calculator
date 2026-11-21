@@ -367,6 +367,9 @@ export const useBuildStore = create<BuildStore>()(
     {
       name: 'pc-power-builds',
       version: 1,
+      // Keep the first client render identical to the prerendered HTML; the
+      // saved state is applied by useStoreHydration after mount.
+      skipHydration: true,
     },
   ),
 );

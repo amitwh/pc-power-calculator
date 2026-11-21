@@ -1,12 +1,14 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import path from 'node:path';
 
 export default defineConfig(({ isSsrBuild }) => ({
   plugins: [
     react(),
+    tailwindcss(),
     // The PWA/service-worker plugin only belongs in the client build; the SSR
     // bundle (dist-ssr) must not emit a manifest or registration scripts.
     ...(isSsrBuild
@@ -26,12 +28,29 @@ export default defineConfig(({ isSsrBuild }) => ({
               start_url: '/',
             },
             workbox: {
-              globPatterns: ['**/*.{js,css,html,json,svg,png,ico,webmanifest}'],
-              // BrowserRouter deep links (e.g. /compare) must serve the SPA shell
-              // offline too; ads.txt is a real crawl file and must never fall back.
-              navigateFallback: 'index.html',
+              // woff2 is included so the interface keeps its own typeface offline
+              // instead of falling back to system-ui in the installed app.
+              globPatterns: ['**/*.{js,css,html,json,svg,png,ico,woff2,webmanifest}'],
+              // Navigations fall back to a shell, not to dist/index.html: that
+              // file is the prerendered home page (366 routes are written after
+              // Workbox runs), and hydrating it at another URL would mismatch.
+              // `scripts/prerender.mjs` writes offline.html from the raw template
+              // and this entry precaches it, since it cannot be globbed.
+              navigateFallback: 'offline.html',
               navigateFallbackDenylist: [/^\/ads\.txt$/],
+              additionalManifestEntries: [{ url: 'offline.html', revision: null }],
               runtimeCaching: [
+                // Cache pages the visitor actually opened, so an offline deep
+                // link serves its real prerendered HTML instead of the shell.
+                {
+                  urlPattern: ({ request }: { request: Request }) => request.mode === 'navigate',
+                  handler: 'NetworkFirst',
+                  options: {
+                    cacheName: 'pages',
+                    networkTimeoutSeconds: 3,
+                    expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 30 },
+                  },
+                },
                 { urlPattern: /^https:\/\/ipapi\.co\//, handler: 'NetworkFirst', options: { cacheName: 'geo', networkTimeoutSeconds: 3 } },
               ],
             },

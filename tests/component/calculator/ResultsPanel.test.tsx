@@ -13,29 +13,35 @@ beforeEach(() => {
 });
 
 describe('ResultsPanel', () => {
-  test('renders the three period totals (Daily / Monthly / Yearly)', () => {
+  test('leads with the yearly answer and keeps month/day as one compact row', () => {
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
     render(<ResultsPanel />);
-    expect(screen.getByText(/^Daily$/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Yearly cost/i })).toBeInTheDocument();
     expect(screen.getByText(/^Monthly$/i)).toBeInTheDocument();
-    expect(screen.getByText(/^Yearly$/i)).toBeInTheDocument();
+    expect(screen.getByText(/^Daily$/i)).toBeInTheDocument();
   });
 
-  test('shows kWh for each period', () => {
+  test('shows yearly kWh with the effective per-kWh rate', () => {
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
     render(<ResultsPanel />);
-    const allKwh = screen.getAllByText(/kWh/);
-    // Daily + Monthly + Yearly → at least three kWh labels.
-    expect(allKwh.length).toBeGreaterThanOrEqual(3);
+    expect(screen.getByText(/kWh/)).toBeInTheDocument();
+    expect(screen.getByText(/₹\d+\.\d{2} per kWh/)).toBeInTheDocument();
   });
 
-  test('shows the active build name in the heading', () => {
+  test('prompts instead of estimating when no parts are added', () => {
+    render(<ResultsPanel />);
+    expect(screen.getByText(/Add a part and your running cost appears here/i)).toBeInTheDocument();
+    // No figure derived from the case-fan aggregate, and nothing to export.
+    expect(screen.queryByText(/per kWh/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Share build/i })).not.toBeInTheDocument();
+  });
+
+  test('does not use the build name as the results title', () => {
     useBuildStore.getState().renameBuild(useBuildStore.getState().activeBuildId, 'My rig');
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
     render(<ResultsPanel />);
-    expect(screen.getByText(/Results — My rig/i)).toBeInTheDocument();
-  });
-
-  test('points to the breakdown cards below', () => {
-    render(<ResultsPanel />);
-    expect(screen.getByText(/below/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Yearly cost/i })).toBeInTheDocument();
+    expect(screen.queryByText(/Results — My rig/i)).not.toBeInTheDocument();
   });
 });
 
@@ -48,6 +54,7 @@ describe('ResultsPanel Share button', () => {
   test('copies a ?builds= permalink and shows the confirmation', async () => {
     const writeText = vi.fn().mockResolvedValue(undefined);
     Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
     render(<ResultsPanel />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Share build' }));
@@ -59,6 +66,7 @@ describe('ResultsPanel Share button', () => {
 
   test('shows the export fallback when neither share nor clipboard works', async () => {
     Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined });
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
     render(<ResultsPanel />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Share build' }));
@@ -68,21 +76,36 @@ describe('ResultsPanel Share button', () => {
 });
 
 describe('ResultsBreakdown', () => {
-  test('renders the power-draw breakdown chart card', () => {
+  test('renders the power-draw breakdown chart card once a part is selected', () => {
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
     render(<ResultsBreakdown />);
     expect(screen.getByText(/Power draw breakdown/i)).toBeInTheDocument();
   });
 
-  test('renders the per-workload table card', () => {
+  test('renders the per-workload table card once a part is selected', () => {
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
     render(<ResultsBreakdown />);
-    expect(screen.getByText(/Per-workload usage & performance/i)).toBeInTheDocument();
+    expect(screen.getByText(/Per-workload usage/i)).toBeInTheDocument();
     // Default schedule has office + browser hours → rows exist.
     expect(screen.getByText(/Office/i)).toBeInTheDocument();
+  });
+
+  test('shows a single muted prompt instead of the chart when there are no parts', () => {
+    render(<ResultsBreakdown />);
+    expect(screen.getByText('Add a part to see where the power goes.')).toBeInTheDocument();
+    expect(screen.queryByText(/Power draw breakdown/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Per-workload usage/i)).not.toBeInTheDocument();
   });
 });
 
 describe('AllSystemsSummary', () => {
-  test('renders the multi-system summary card', () => {
+  test('renders nothing with a single build', () => {
+    const { container } = render(<AllSystemsSummary />);
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  test('renders the multi-system summary card once there are two builds', () => {
+    useBuildStore.getState().addBuild('Workstation');
     render(<AllSystemsSummary />);
     expect(screen.getByText(/All your systems at a glance/i)).toBeInTheDocument();
   });

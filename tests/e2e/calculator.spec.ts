@@ -5,8 +5,9 @@ import { test, expect } from '@playwright/test';
 
 test('home page shows the devices picker and results panel', async ({ page }) => {
   await page.goto('/');
+  await expect(page.getByText('What does your PC cost to run?')).toBeVisible();
   await expect(page.getByRole('heading', { name: /Your Systems/i }).first()).toBeVisible();
-  await expect(page.getByRole('heading', { name: /Results/i }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Yearly cost/i }).first()).toBeVisible();
 });
 
 test('pick a CPU via the device picker and see it in the list', async ({ page }) => {
@@ -55,21 +56,21 @@ test('single-instance parts (CPU, motherboard) can be removed and swapped', asyn
   await expect(page.getByText(/B550M Pro4/i)).toHaveCount(0);
 });
 
-test('results show PSU recommendation and overclock slider adjusts peak draw', async ({ page }) => {
+test('results show PSU recommendation and the overclock control adjusts peak draw', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Add device' }).click();
   await page.getByRole('searchbox').fill('7800x3d');
   await page.getByRole('option', { name: /Ryzen 7 7800X3D/i }).first().click();
 
-  await page.getByText('Overclocking & chassis fans').click();
+  await page.getByText('Advanced', { exact: true }).click();
 
   const peakText = () =>
     page
-      .getByText(/Peak draw \(all components at 100%\):/i)
+      .getByText(/Peak draw \d+(?:\.\d+)? W at 100%/i)
       .textContent()
-      .then((s) => Number(s?.match(/(\d+(?:\.\d+)?)\s*W\s*$/)?.[1]));
+      .then((s) => Number(s?.match(/Peak draw (\d+(?:\.\d+)?)\s*W/i)?.[1]));
 
-  await expect(page.getByText(/Recommended PSU:/i)).toBeVisible();
+  await expect(page.getByText(/PSU \d+ W/).first()).toBeVisible();
   const before = await peakText();
   await page.getByLabel(/^CPU OC/i).fill('20');
   await expect

@@ -1,4 +1,5 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useImperativeHandle, useRef, useState } from 'react';
+import type { Ref } from 'react';
 
 export interface SearchableSelectOption {
   value: string;
@@ -15,6 +16,8 @@ export interface SearchableSelectProps {
   /** Show brand filter chips above the list. Defaults to true when ≥2 brands. */
   brandFilter?: boolean;
   emptyMessage?: string;
+  /** Optional handle to the trigger, so callers can open the picker (e.g. an empty-state CTA). */
+  triggerRef?: Ref<HTMLButtonElement>;
 }
 
 /** Max options rendered at once — keeps the DOM small for 1000+ entry catalogs. */
@@ -33,14 +36,19 @@ export function SearchableSelect({
   ariaLabel,
   brandFilter = true,
   emptyMessage = 'No matches',
+  triggerRef,
 }: SearchableSelectProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [activeBrand, setActiveBrand] = useState<string | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerButtonRef = useRef<HTMLButtonElement>(null);
   const id = useId();
+
+  // Hand the trigger node to the caller's optional triggerRef, so an
+  // empty-state CTA can open the picker. Escape still uses the internal ref.
+  useImperativeHandle(triggerRef, () => triggerButtonRef.current!, []);
 
   const brands = Array.from(
     new Set(options.map((o) => o.meta?.brand).filter(Boolean) as string[]),
@@ -74,7 +82,7 @@ export function SearchableSelect({
       if (e.key === 'Escape') {
         e.stopPropagation();
         setOpen(false);
-        triggerRef.current?.focus();
+        triggerButtonRef.current?.focus();
       }
     };
     document.addEventListener('keydown', handler);
@@ -94,13 +102,17 @@ export function SearchableSelect({
   return (
     <div ref={wrapRef} className="relative">
       <button
-        ref={triggerRef}
+        ref={triggerButtonRef}
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
-        aria-label={ariaLabel}
+        // WCAG 2.5.3: the accessible name must contain the visible label, so
+        // the visible text leads and the caller's label follows. A bare
+        // `aria-label` (e.g. "Add device") overrode the visible text and failed
+        // the label-content-name-mismatch rule.
+        aria-label={`${selected ? selected.label : placeholder}${ariaLabel ? ` — ${ariaLabel}` : ''}`}
         onClick={() => setOpen((o) => !o)}
-        className="w-full min-h-[44px] px-3 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-50 font-body text-left flex items-center justify-between gap-2"
+        className="w-full min-h-10 px-3 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-50 font-body text-left flex items-center justify-between gap-2"
       >
         <span className={selected ? 'truncate' : 'truncate text-gray-500'}>
           {selected ? selected.label : placeholder}
@@ -124,7 +136,7 @@ export function SearchableSelect({
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search…"
               aria-label="Search options"
-              className="w-full min-h-[36px] px-3 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-body"
+              className="w-full min-h-9 px-3 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-body"
             />
             {brandFilter && brands.length > 1 && (
               <div className="flex flex-wrap gap-1 mt-2" role="group" aria-label="Filter by brand">
@@ -132,7 +144,7 @@ export function SearchableSelect({
                   type="button"
                   onClick={() => setActiveBrand(null)}
                   aria-pressed={activeBrand === null}
-                  className={`text-xs px-2 py-1 rounded-full border min-h-[28px] ${
+                  className={`text-xs px-2 py-1 rounded-full border min-h-9 ${
                     activeBrand === null
                       ? 'bg-brand-dark text-white border-brand-dark'
                       : 'border-gray-300 dark:border-gray-700 hover:border-gray-400'
@@ -148,7 +160,7 @@ export function SearchableSelect({
                       type="button"
                       onClick={() => setActiveBrand((cur) => (cur === b ? null : b))}
                       aria-pressed={activeBrand === b}
-                      className={`text-xs px-2 py-1 rounded-full border min-h-[28px] ${
+                      className={`text-xs px-2 py-1 rounded-full border min-h-9 ${
                         activeBrand === b
                           ? 'bg-brand-dark text-white border-brand-dark'
                           : 'border-gray-300 dark:border-gray-700 hover:border-gray-400'

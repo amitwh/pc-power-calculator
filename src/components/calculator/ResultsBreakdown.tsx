@@ -4,6 +4,7 @@ import { workloadLabel } from '@/lib/data/workloads';
 import { categoryColor } from '@/lib/categoryColors';
 import { CASE_FANS_ID } from '@/lib/calc/energy';
 import { Card, CardTitle } from '@/components/ui/Card';
+import { hasSelectedParts } from '@/lib/build/hasSelectedParts';
 import { DeferInView } from '@/components/ui/DeferInView';
 import type { Component } from '@/types/component';
 
@@ -40,6 +41,17 @@ export function ResultsBreakdown() {
     };
   }, [components]);
 
+  // With no parts selected there is no meaningful breakdown: a zero-slice
+  // donut and a "4 W" PSU/peak figure read as broken rather than empty. The
+  // derived case-fan aggregate doesn't count as a part, so check the build.
+  if (!hasSelectedParts(build)) {
+    return (
+      <Card>
+        <p className="text-sm text-gray-500">Add a part to see where the power goes.</p>
+      </Card>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 min-w-0">
       <Card>
@@ -57,7 +69,7 @@ export function ResultsBreakdown() {
       </Card>
 
       <Card>
-        <CardTitle className="text-base">Per-workload usage &amp; performance</CardTitle>
+        <CardTitle className="text-base">Per-workload usage</CardTitle>
         <p className="text-xs text-gray-500 -mt-1 mb-2">
           From your schedule above · costs in {currency.code}.
         </p>

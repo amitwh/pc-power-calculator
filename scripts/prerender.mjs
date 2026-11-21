@@ -142,6 +142,19 @@ async function main() {
     throw new Error(`Missing client build template at ${TEMPLATE_PATH} — run "vite build" first`);
   }
 
+  // Offline shell for the service worker's navigateFallback. It is the client
+  // build's own template — empty #root, no data-prerendered marker — so the SW
+  // hands an uncached navigation the app shell (client-rendered) rather than
+  // the home page's prerendered markup, which would hydrate against the wrong
+  // route. Workbox cannot glob it (this runs after the SW is generated), so it
+  // is precached via `workbox.additionalManifestEntries` in vite.config.ts.
+  const offlineShell = template.replace(
+    '</head>',
+    '    <meta name="robots" content="noindex" />\n  </head>',
+  );
+  await writeFile(path.join(DIST, 'offline.html'), offlineShell, 'utf8');
+  console.log('✓ /offline.html            -> dist/offline.html');
+
   let ssr;
   try {
     ssr = await import(pathToFileURL(SSR_ENTRY_PATH).href);

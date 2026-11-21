@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 import { listComponents, findComponent } from '@/lib/data/components';
 import { useBuildStore } from '@/store/buildStore';
 import { Select } from '@/components/ui/Select';
@@ -84,16 +84,15 @@ export function BuildPicker() {
   const setCaseFans = useBuildStore((s) => s.setCaseFans);
   const addCustomPeripheral = useBuildStore((s) => s.addCustomPeripheral);
   const removeCustomPeripheral = useBuildStore((s) => s.removeCustomPeripheral);
-  const addBuild = useBuildStore((s) => s.addBuild);
-  const removeBuild = useBuildStore((s) => s.removeBuild);
-  const setActiveBuild = useBuildStore((s) => s.setActiveBuild);
-  const renameBuild = useBuildStore((s) => s.renameBuild);
   const setBuildCategory = useBuildStore((s) => s.setBuildCategory);
 
   const activeBuild = builds.find((b) => b.id === activeBuildId);
 
-  const [renamingId, setRenamingId] = useState<string | null>(null);
-  const [renameDraft, setRenameDraft] = useState('');
+  // Stable, server/client-consistent ids for the advanced-input labels. The
+  // build id is generated per client and differs from the prerendered HTML's
+  // id, so deriving DOM ids from it would break hydration.
+  const fieldId = useId();
+
   const [filter, setFilter] = useState<ComponentCategory | 'all'>('all');
 
   // The one picker: whole catalog, newest first, category-filterable.
@@ -133,22 +132,10 @@ export function BuildPicker() {
     return (
       <Card>
         <CardTitle>Your Systems</CardTitle>
-        <Button onClick={() => addBuild('My build', 'gaming')}>+ Add system</Button>
+        <p className="text-sm text-gray-500">No system selected.</p>
       </Card>
     );
   }
-
-  const startRename = (id: string, current: string) => {
-    setRenamingId(id);
-    setRenameDraft(current);
-  };
-
-  const commitRename = () => {
-    if (renamingId) {
-      renameBuild(renamingId, renameDraft);
-      setRenamingId(null);
-    }
-  };
 
   const effectiveW = (d: SelectedDevice): number | null =>
     activeBuild.tdpOverrides[d.component.id]
@@ -161,95 +148,15 @@ export function BuildPicker() {
     <Card>
       <CardTitle className="text-base">
         <span>Your Systems</span>
-        <span className="font-body text-sm font-normal text-gray-500 font-numeric tabular-nums">
-          {devices.length} device{devices.length === 1 ? '' : 's'}
-        </span>
+        {devices.length > 0 && (
+          <span className="font-body text-sm font-normal text-gray-500 font-numeric tabular-nums">
+            {devices.length} device{devices.length === 1 ? '' : 's'}
+          </span>
+        )}
       </CardTitle>
-      <p className="text-sm text-gray-600 dark:text-gray-400 -mt-1 mb-3">
-        Add each part of your PC below — search by name, click to add. Pick the same part
-        again to add another unit of it. Results update instantly as you edit.
-      </p>
 
-      {/* System selector chips.
-          Using role="group" (not tablist) because each chip contains its own
-          interactive controls (switch + remove + rename). tablist would require
-          each direct child to be a single tab role with no nested interactive
-          content — these chips are pickers, not tabs. */}
-      <div
-        className="flex gap-2 overflow-x-auto pb-2 mb-3 -mx-1 px-1"
-        role="group"
-        aria-label="Build systems"
-      >
-        {builds.map((b) => {
-          const isActive = b.id === activeBuildId;
-          const isRenaming = renamingId === b.id;
-          const emoji = CATEGORY_EMOJI[b.category ?? 'general'];
-          return (
-            <div
-              key={b.id}
-              aria-current={isActive ? 'true' : undefined}
-              className={`group inline-flex items-center gap-2 rounded-full border pl-3 pr-2.5 py-1.5 min-h-[40px] whitespace-nowrap transition-colors ${
-                isActive
-                  ? 'bg-brand-dark text-white border-brand-dark'
-                  : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:border-gray-400'
-              }`}
-            >
-              <span aria-hidden className="text-sm leading-none">
-                {emoji}
-              </span>
-              {isRenaming ? (
-                <input
-                  autoFocus
-                  value={renameDraft}
-                  onChange={(e) => setRenameDraft(e.target.value)}
-                  onBlur={commitRename}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') commitRename();
-                    if (e.key === 'Escape') setRenamingId(null);
-                  }}
-                  className="bg-transparent border-none outline-none font-semibold text-sm min-w-[80px]"
-                  aria-label="Rename build"
-                />
-              ) : (
-                <button
-                  type="button"
-                  className="font-semibold text-sm"
-                  onClick={() => setActiveBuild(b.id)}
-                  onDoubleClick={() => startRename(b.id, b.name)}
-                  title="Click to switch; double-click to rename"
-                >
-                  {b.name}
-                </button>
-              )}
-              {builds.length > 1 && !isRenaming && (
-                <button
-                  type="button"
-                  aria-label={`Remove ${b.name}`}
-                  className={`text-base leading-none opacity-70 hover:opacity-100 ${isActive ? 'text-white' : 'text-gray-700'}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (confirm(`Remove "${b.name}"?`)) removeBuild(b.id);
-                  }}
-                >
-                  ×
-                </button>
-              )}
-            </div>
-          );
-        })}
-
-        {/* Add-system chip with dashed border */}
-        <button
-          type="button"
-          onClick={() => addBuild(undefined, 'general')}
-          className="inline-flex items-center gap-1.5 rounded-full border border-dashed border-gray-400 dark:border-gray-600 px-3 py-1.5 min-h-[40px] whitespace-nowrap text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-brand-dark hover:text-brand-dark transition-colors"
-        >
-          + Add system
-        </button>
-      </div>
-
-      {/* System type + catalog filter — native selects: one row, thumb-friendly */}
-      <div className="mb-3 grid grid-cols-2 gap-2">
+      {/* System type + catalog filter — one compact row above the picker. */}
+      <div className="mb-2 grid grid-cols-2 gap-2 [&_select]:!min-h-9 [&_select]:!text-sm">
         <Select
           aria-label="System type"
           value={activeBuild.category ?? 'general'}
@@ -282,29 +189,7 @@ export function BuildPicker() {
       </div>
 
       {/* Selected devices — cart rows with per-device unit counts */}
-      {devices.length === 0 ? (
-        <div className="py-3 text-sm text-gray-600 dark:text-gray-400">
-          <p className="font-semibold text-gray-900 dark:text-gray-50 mb-1.5">
-            No devices yet — set up your system in 3 steps:
-          </p>
-          <ol className="list-decimal list-inside space-y-1">
-            <li>
-              Pick a <strong>system type</strong> above (Gaming, Workstation, NAS…)
-            </li>
-            <li>
-              <strong>Search and add</strong> each part — start with CPU, motherboard, RAM,
-              storage and a PSU (the five essentials)
-            </li>
-            <li>
-              Set your <strong>usage schedule</strong> below — costs update instantly
-            </li>
-          </ol>
-          <p className="text-xs text-gray-500 mt-2">
-            Not sure about a part's wattage? We pre-fill catalog ratings for you — no guesswork
-            needed.
-          </p>
-        </div>
-      ) : (
+      {devices.length > 0 && (
         <ul className="divide-y divide-gray-100 dark:divide-gray-800 border-y border-gray-100 dark:border-gray-800">
           {devices.map((d) => {
             const name = `${d.component.brand} ${d.component.model}`;
@@ -349,7 +234,7 @@ export function BuildPicker() {
                       key={`${d.component.id}-w-${w ?? 'na'}`}
                       aria-label={`Rated watts for ${name}`}
                       title="Rated watts per unit"
-                      className="w-16 min-h-[36px] px-1.5 text-right rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
+                      className="w-16 min-h-9 px-1.5 text-right rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
                       onBlur={(e) => {
                         const v = e.target.value.trim();
                         const n = v === '' ? null : Number(v);
@@ -366,7 +251,7 @@ export function BuildPicker() {
                         type="button"
                         aria-label={`Reset wattage for ${name}`}
                         title="Reset to catalog rating"
-                        className="text-sm opacity-60 hover:opacity-100 min-h-[32px] min-w-[28px]"
+                        className="text-sm opacity-60 hover:opacity-100 min-h-9 min-w-9"
                         onClick={() => {
                           setTdpOverride(d.component.id, null);
                           setTdpOverride(d.slot, null);
@@ -394,7 +279,7 @@ export function BuildPicker() {
                       step={1}
                       value={d.qty}
                       aria-label={`Quantity for ${name}`}
-                      className="w-12 min-h-[36px] px-0.5 text-center rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
+                      className="w-12 min-h-9 px-0.5 text-center rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
                       onChange={(e) => {
                         const n = Number(e.target.value);
                         if (Number.isFinite(n) && n >= 1) setQty(d.component.id, n);
@@ -419,7 +304,7 @@ export function BuildPicker() {
                   <button
                     type="button"
                     aria-label={`Remove ${name}`}
-                    className="text-lg leading-none opacity-60 hover:opacity-100 min-h-[36px] min-w-[28px]"
+                    className="text-lg leading-none opacity-60 hover:opacity-100 min-h-9 min-w-9"
                     onClick={() => {
                       removeComponent(d.slot, d.component.id);
                       if (d.component.id.startsWith('user-peripheral-')) removeCustomPeripheral(d.component.id);
@@ -460,74 +345,77 @@ export function BuildPicker() {
         </details>
       )}
 
-      {/* Overclocking + case fans — collapsed by default to keep the card tight */}
-      <details className="mt-3 group">
+      {/* Overclocking, case fans and custom devices — one collapsed group. */}
+      <details className="mt-3">
         <summary className="cursor-pointer select-none text-xs uppercase tracking-wide text-gray-500 font-semibold">
-          Overclocking &amp; chassis fans
-          <span className="ml-2 font-normal normal-case tracking-normal text-gray-500 group-open:hidden">
-            (CPU/GPU OC, fan count)
-          </span>
+          Advanced
         </summary>
-        <div className="mt-2 space-y-1">
-          {([
-            { part: 'cpu' as const, label: 'CPU OC' },
-            { part: 'gpu' as const, label: 'GPU OC' },
-          ]).map(({ part, label }) => {
-            const value = activeBuild.overclock?.[`${part}_pct` as 'cpu_pct' | 'gpu_pct'] ?? 0;
-            const id = `oc-${part}-${activeBuild.id}`;
-            return (
-              <div key={part} className="flex items-center gap-3">
-                <label htmlFor={id} className="text-sm text-gray-600 dark:text-gray-400 w-20 shrink-0">
-                  {label}
-                </label>
-                <input
-                  id={id}
-                  type="range"
-                  min={0}
-                  max={50}
-                  step={5}
-                  value={value}
-                  onChange={(e) => setOverclock(part, Number(e.target.value))}
-                  className="flex-1 min-h-[36px] accent-[#e5461f]"
-                />
-                <span className="font-numeric tabular-nums text-sm font-semibold w-12 text-right">
-                  {value}%
-                </span>
-              </div>
-            );
-          })}
-          {(() => {
-            const fans = activeBuild.case_fans ?? 0;
-            const id = `case-fans-${activeBuild.id}`;
-            return (
-              <div className="flex items-center gap-3">
-                <label htmlFor={id} className="text-sm text-gray-600 dark:text-gray-400 w-20 shrink-0">
-                  Case fans
-                </label>
-                <input
-                  id={id}
-                  type="range"
-                  min={0}
-                  max={12}
-                  step={1}
-                  value={Math.min(fans, 12)}
-                  onChange={(e) => setCaseFans(Number(e.target.value))}
-                  className="flex-1 min-h-[36px] accent-[#e5461f]"
-                />
-                <span className="font-numeric tabular-nums text-sm font-semibold w-12 text-right">
-                  {fans}
-                </span>
-              </div>
-            );
-          })()}
+        <div className="mt-2 space-y-2">
+          <div className="space-y-1">
+            {([
+              { part: 'cpu' as const, label: 'CPU OC' },
+              { part: 'gpu' as const, label: 'GPU OC' },
+            ]).map(({ part, label }) => {
+              const value = activeBuild.overclock?.[`${part}_pct` as 'cpu_pct' | 'gpu_pct'] ?? 0;
+              const id = `oc-${part}-${fieldId}`;
+              return (
+                <div key={part} className="flex items-center gap-2">
+                  <label htmlFor={id} className="text-sm text-gray-600 dark:text-gray-400 w-20 shrink-0">
+                    {label}
+                  </label>
+                  <input
+                    id={id}
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    max={50}
+                    step={5}
+                    value={value}
+                    onChange={(e) => {
+                      const n = Number(e.target.value);
+                      if (Number.isFinite(n)) setOverclock(part, Math.max(0, Math.min(50, n)));
+                    }}
+                    className="w-20 min-h-9 px-2 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
+                  />
+                  <span className="text-xs text-gray-500">%</span>
+                </div>
+              );
+            })}
+            {(() => {
+              const fans = activeBuild.case_fans ?? 0;
+              const id = `case-fans-${fieldId}`;
+              return (
+                <div className="flex items-center gap-2">
+                  <label htmlFor={id} className="text-sm text-gray-600 dark:text-gray-400 w-20 shrink-0">
+                    Case fans
+                  </label>
+                  <input
+                    id={id}
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    max={12}
+                    step={1}
+                    value={Math.min(fans, 12)}
+                    onChange={(e) => {
+                      const n = Number(e.target.value);
+                      if (Number.isFinite(n)) setCaseFans(Math.max(0, Math.min(12, n)));
+                    }}
+                    className="w-20 min-h-9 px-2 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
+                  />
+                  <span className="text-xs text-gray-500">fans</span>
+                </div>
+              );
+            })()}
+          </div>
           <p className="text-xs text-gray-500">
             Overclock adds extra heat on top of the rated TDP; each fan ≈ 2 W.
           </p>
+
+          {/* Custom device — anything not in the catalog */}
+          <CustomDeviceForm onAdd={(model, watts) => addCustomPeripheral({ brand: 'Custom', model, watts })} />
         </div>
       </details>
-
-      {/* Custom device — anything not in the catalog */}
-      <CustomDeviceForm onAdd={(model, watts) => addCustomPeripheral({ brand: 'Custom', model, watts })} />
     </Card>
   );
 }
@@ -546,14 +434,14 @@ function CustomDeviceForm({ onAdd }: { onAdd: (model: string, watts: number) => 
   };
 
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <input
         type="text"
         value={model}
         onChange={(e) => setModel(e.target.value)}
         placeholder="Custom device (e.g. Desk lamp)"
         aria-label="Custom device name"
-        className="flex-1 min-w-[160px] min-h-[36px] px-3 rounded-8 border border-dashed border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-body text-sm"
+        className="flex-1 min-w-[160px] min-h-9 px-3 rounded-8 border border-dashed border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-body text-sm"
       />
       <input
         type="number"
@@ -564,7 +452,7 @@ function CustomDeviceForm({ onAdd }: { onAdd: (model: string, watts: number) => 
         onChange={(e) => setWatts(e.target.value)}
         placeholder="Watts"
         aria-label="Custom device wattage"
-        className="w-24 min-h-[36px] px-3 rounded-8 border border-dashed border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
+        className="w-24 min-h-9 px-3 rounded-8 border border-dashed border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-numeric tabular-nums text-sm"
       />
       <Button size="sm" variant="secondary" onClick={submit} disabled={!model.trim() || !(Number(watts) > 0)}>
         Add

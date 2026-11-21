@@ -1,16 +1,58 @@
 /// <reference types="vitest/globals" />
 /// <reference types="@testing-library/jest-dom/vitest" />
 import { describe, expect, test, beforeEach } from 'vitest';
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Home from '@/pages/Home';
 import { useBuildStore } from '@/store/buildStore';
+import { useStoreHydration } from '@/hooks/useStoreHydration';
 import { encodeBuildsParam } from '@/lib/share/buildLink';
+
+/** Mirrors <Layout>, which rehydrates the store after the first render. */
+function HydratedHome() {
+  useStoreHydration();
+  return <Home />;
+}
 
 beforeEach(() => {
   localStorage.clear();
   useBuildStore.getState().resetAll();
   window.history.replaceState(null, '', '/');
+});
+
+describe('Home workbench structure', () => {
+  test('renders the section rail, four anchored sections and the results rail', () => {
+    // The breakdown cards only render once a part is selected.
+    useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <HydratedHome />
+      </MemoryRouter>,
+    );
+
+    // The visible page title sits above the workbench grid; Layout owns the
+    // route's single h1, so this title is a styled paragraph.
+    expect(screen.getByText('What does your PC cost to run?')).toBeInTheDocument();
+
+    // Rail anchors target the four work-area cards, with scroll offset.
+    const sections = [
+      ['Your system', 'system'],
+      ['Usage', 'usage'],
+      ['Tariff', 'tariff'],
+      ['Analysis', 'analysis'],
+    ] as const;
+    for (const [label, id] of sections) {
+      expect(screen.getByRole('link', { name: label })).toHaveAttribute('href', `#${id}`);
+      expect(document.getElementById(id)).toHaveClass('scroll-mt-6');
+    }
+
+    // Every calculator card still renders inside its section.
+    expect(screen.getByRole('heading', { name: /^Your Systems/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Usage Schedule/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Location & Tariff/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Yearly cost/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Power draw breakdown/i })).toBeInTheDocument();
+  });
 });
 
 describe('Home shared-build link', () => {
@@ -32,7 +74,7 @@ describe('Home shared-build link', () => {
 
     render(
       <MemoryRouter initialEntries={['/']}>
-        <Home />
+        <HydratedHome />
       </MemoryRouter>,
     );
 
@@ -52,7 +94,7 @@ describe('Home ?part= seeding', () => {
 
     render(
       <MemoryRouter initialEntries={['/']}>
-        <Home />
+        <HydratedHome />
       </MemoryRouter>,
     );
 
@@ -68,7 +110,7 @@ describe('Home ?part= seeding', () => {
     expect(() =>
       render(
         <MemoryRouter initialEntries={['/']}>
-          <Home />
+          <HydratedHome />
         </MemoryRouter>,
       ),
     ).not.toThrow();

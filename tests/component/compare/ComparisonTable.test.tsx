@@ -1,8 +1,13 @@
 /// <reference types="vitest/globals" />
 /// <reference types="@testing-library/jest-dom/vitest" />
-import { describe, expect, test, beforeEach } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import { ComparisonTable } from '@/components/compare/ComparisonTable';
+import { buildStats } from '@/lib/calc/buildStats';
+import { currencyForLocation } from '@/lib/data/tariffs';
+import { findCurrency } from '@/lib/data/currencies';
+import { getBundledFxSnapshot } from '@/lib/data/fx';
+import { formatCost, formatKwh } from '@/lib/calc/format';
 import type { BuildConfig } from '@/types/build';
 
 const a: BuildConfig = {
@@ -22,37 +27,80 @@ const b: BuildConfig = {
   location: { country_iso2: 'IN', manual_rate_override: 7.5 },
 };
 
-beforeEach(() => {
-  // No-op; ComparisonTable reads no store state — but keep the hook so future
-  // tests can use it without having to remember the import.
-});
+const inr = currencyForLocation('IN');
+const snapshot = getBundledFxSnapshot();
+const stats = [a, b].map((build) => buildStats(build, inr, snapshot));
+
+/** The metric row (rowheader + A / B / difference cells). */
+function rowFor(label: string): HTMLElement {
+  const table = screen.getByRole('table');
+  return within(table).getByRole('rowheader', { name: label }).closest('tr')!;
+}
 
 describe('ComparisonTable', () => {
-  test('renders a header row per build (kWh + cost) and a Workload column', () => {
-    render(<ComparisonTable builds={[a, b]} />);
-    expect(screen.getByRole('columnheader', { name: /Workload/i })).toBeInTheDocument();
-    expect(screen.getByRole('columnheader', { name: /AMD rig \(kWh\)/i })).toBeInTheDocument();
-    expect(screen.getByRole('columnheader', { name: /AMD rig \(cost\)/i })).toBeInTheDocument();
-    expect(screen.getByRole('columnheader', { name: /Intel rig \(kWh\)/i })).toBeInTheDocument();
-    expect(screen.getByRole('columnheader', { name: /Intel rig \(cost\)/i })).toBeInTheDocument();
+  test('renders System A, System B and Difference columns', () => {
+    render(<ComparisonTable stats={stats} displayCurrency={inr} fxSnapshot={snapshot} />);
+    expect(screen.getAllByTestId('compare-system')).toHaveLength(2);
+    expect(screen.getByRole('columnheader', { name: /System A/i })).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: /System B/i })).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: /Difference/i })).toBeInTheDocument();
   });
 
-  test('Intel build (125 W) draws more yearly kWh than AMD (120 W) at 50% util', () => {
-    render(<ComparisonTable builds={[a, b]} />);
+  test('shows the five comparison rows once each in the desktop table', () => {
+    render(<ComparisonTable stats={stats} displayCurrency={inr} fxSnapshot={snapshot} />);
     const table = screen.getByRole('table');
-    // The footer row "Yearly total" exposes both builds' yearly kWh side by side.
-    // Per-build columns are: kWh, cost, perf — so AMD kWh sits at cells[1] and
-    // Intel kWh at cells[4].
-    const footer = within(table).getAllByText(/Yearly total/i)[0].closest('tr')!;
-    const cells = within(footer).getAllByRole('cell');
-    const amdkwh = cells[1].textContent ?? '';
-    const intelkwh = cells[4].textContent ?? '';
-    const parse = (s: string) => Number(s.replace(/[^\d.]/g, ''));
-    expect(parse(intelkwh)).toBeGreaterThan(parse(amdkwh));
+    for (const label of ['Energy / year', 'Cost / year', 'Peak draw', 'PSU needed', 'Devices']) {
+      expect(within(table).getByRole('rowheader', { name: label })).toBeInTheDocument();
+    }
   });
 
-  test('uses the provided currency for the cost cells (INR with ₹ symbol by default)', () => {
-    render(<ComparisonTable builds={[a, b]} />);
-    expect(screen.getAllByText(/₹/).length).toBeGreaterThan(0);
+  test('reports the values from buildStats and a signed B − A delta', () => {
+    render(<ComparisonTable stats={stats} displayCurrency={inr} fxSnapshot={snapshot} />);
+    const [amd, intel] = stats;
+
+    const energy = within(rowFor('Energy / year')).getAllByRole('cell');
+    expect(energy[0]).toHaveTextContent(formatKwh(amd.kwhYear, 0));
+    expect(energy[1]).toHaveTextContent(formatKwh(intel.kwhYear, 0));
+    expect(energy[2].textContent).toMatch(/^\+\d+ kWh$/);
+
+    const cost = within(rowFor('Cost / year')).getAllByRole('cell');
+    expect(cost[0]).toHaveTextContent(formatCost(amd.costYear, inr));
+    expect(cost[1]).toHaveTextContent(formatCost(intel.costYear, inr));
+    expect(cost[2].textContent).toMatch(/^\+₹[\d,.]+$/);
+
+    const devices = within(rowFor('Devices')).getAllByRole('cell');
+    expect(devices[0]).toHaveTextContent(String(amd.deviceCount));
+    expect(devices[1]).toHaveTextContent(String(intel.deviceCount));
+  });
+
+  test('shows the installed-PSU shortfall as a muted note under the PSU row', () => {
+    const weakPsu: BuildConfig = {
+      id: 'weak',
+      name: 'Underpowered rig',
+      components: {
+        cpu: 'cpu-intel-i9-14900k',
+        gpu: 'gpu-nvidia-rtx-4090',
+        psu: 'psu-antec-truepower-430w',
+      },
+      tdpOverrides: {},
+      schedule: [{ workload_id: 'office', hours_per_day: 8 }],
+      location: { country_iso2: 'IN' },
+    };
+    const weakStats = [weakPsu, b].map((build) => buildStats(build, inr, snapshot));
+    expect(weakStats[0].installedPsuW).toBe(430);
+    expect(weakStats[0].installedPsuW).toBeLessThan(weakStats[0].recommendedPsuW);
+
+    render(<ComparisonTable stats={weakStats} displayCurrency={inr} fxSnapshot={snapshot} />);
+    const table = screen.getByRole('table');
+    expect(within(table).getByText(/Installed 430 W PSU is below the \d+ W recommendation/)).toBeInTheDocument();
+  });
+
+  test('puts the currency conversion note once, under the table', () => {
+    const usd = findCurrency('USD')!;
+    const convertedStats = [a, b].map((build) => buildStats(build, usd, snapshot));
+    expect(convertedStats.every((s) => s.converted)).toBe(true);
+
+    render(<ComparisonTable stats={convertedStats} displayCurrency={usd} fxSnapshot={snapshot} />);
+    expect(screen.getAllByText(/Costs converted to USD at bundled FX rates/)).toHaveLength(1);
   });
 });

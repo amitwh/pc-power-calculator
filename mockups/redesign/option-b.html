@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Option B — Three steps</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  .steps { display: flex; align-items: center; gap: 10px; margin-bottom: 34px; font-size: 13px; }
+  .steps li { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+  .steps .n { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 11px; font-weight: 700; border: 1px solid var(--line-strong); }
+  .steps .done .n { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .steps .now { color: var(--ink); font-weight: 700; }
+  .steps .now .n { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .steps .sep { width: 28px; height: 1px; background: var(--line-strong); }
+
+  h1 { font-size: 32px; letter-spacing: -.025em; line-height: 1.15; font-weight: 800; }
+  .lede { margin-top: 10px; color: var(--ink-2); font-size: 15px; max-width: 52ch; }
+
+  .search {
+    display: flex; align-items: center; gap: 10px; margin-top: 26px;
+    border: 1.5px solid var(--ink); border-radius: 12px; padding: 14px 16px; background: #fff;
+  }
+  .search .ph { color: var(--muted); font-size: 15px; }
+  .search kbd { margin-left: auto; font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 2px 6px; }
+
+  .picks { margin-top: 22px; }
+  .picks h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .pick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .pick {
+    display: flex; align-items: center; gap: 12px; padding: 14px;
+    border: 1px solid var(--line); border-radius: 12px; background: #fff; text-align: left;
+  }
+  .pick:hover { border-color: var(--ink); }
+  .pick .meta { margin-left: auto; font-size: 12px; color: var(--muted); }
+  .pick .nm { font-weight: 600; font-size: 14px; }
+  .pick small { display: block; color: var(--muted); font-size: 12px; }
+
+  .foot { display: flex; align-items: center; gap: 14px; margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--line); }
+  .foot .back { color: var(--muted); font-size: 14px; }
+  .foot .next { margin-left: auto; }
+  .foot .hint { font-size: 12px; color: var(--muted); }
+
+  /* The result step, shown beneath as a preview of where this leads. */
+  .preview { margin-top: 46px; padding-top: 26px; border-top: 1px dashed var(--line-strong); }
+  .preview .cap { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .preview .big { font-size: 46px; font-weight: 800; letter-spacing: -.03em; margin-top: 6px; }
+  .preview .big span { font-size: 16px; font-weight: 600; color: var(--muted); }
+  .preview .row { display: flex; gap: 30px; margin-top: 14px; font-size: 14px; color: var(--ink-2); }
+  .preview .row b { display: block; color: var(--ink); font-size: 18px; }
+
+  @media (max-width: 700px) {
+    .pick-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 26px; }
+    .steps { gap: 6px; }
+    .steps .sep { width: 12px; }
+  }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="bolt">⚡</span> PC Power Calculator</div>
+    <nav class="nav"><a href="#">Compare</a><a href="#">Guides</a><a href="#">About</a></nav>
+  </header>
+
+  <main class="shell-narrow">
+    <ol class="steps">
+      <li class="now"><span class="n">1</span> Your system</li>
+      <li class="sep"></li>
+      <li><span class="n">2</span> Usage</li>
+      <li class="sep"></li>
+      <li><span class="n">3</span> Result</li>
+    </ol>
+
+    <h1>What's in your PC?</h1>
+    <p class="lede">Search the catalog and click to add. We use published wattage, so there's nothing to look up.</p>
+
+    <div class="search">
+      <span class="ph">Search 2,200+ parts — “5600X”, “RX 6600”, “DDR4”…</span>
+      <kbd>⌘K</kbd>
+    </div>
+
+    <section class="picks">
+      <h2>Common starting points</h2>
+      <div class="pick-grid">
+        <button class="pick"><i class="dot cpu"></i><span><span class="nm">Ryzen 5 5600X</span><small>CPU · 65 W</small></span><span class="meta">Add</span></button>
+        <button class="pick"><i class="dot gpu"></i><span><span class="nm">Radeon RX 6600</span><small>GPU · 132 W</small></span><span class="meta">Add</span></button>
+        <button class="pick"><i class="dot ram"></i><span><span class="nm">16 GB DDR4-3200</span><small>Memory · 6 W</small></span><span class="meta">Add</span></button>
+        <button class="pick"><i class="dot ssd"></i><span><span class="nm">1 TB NVMe</span><small>Storage · 5 W</small></span><span class="meta">Add</span></button>
+      </div>
+    </section>
+
+    <div class="foot">
+      <span class="hint">You can skip anything you don't know.</span>
+      <button class="btn-primary next">Next: how long it runs</button>
+    </div>
+
+    <section class="preview">
+      <p class="cap">Step 3 preview</p>
+      <p class="big">₹3,465 <span>/ year</span></p>
+      <div class="row">
+        <div><b class="num">₹289</b> per month</div>
+        <div><b class="num">412 kWh</b> per year</div>
+        <div><b class="num">310 W</b> at peak</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -9,6 +9,7 @@ import { PrivacyLink } from '@/components/PrivacyLink';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/analytics/adsense';
 import { usePageMeta } from '@/hooks/usePageMeta';
+import { useStoreHydration } from '@/hooks/useStoreHydration';
 
 export default function Layout({ children }: { children: ReactNode }) {
   // Track meaningful user interactions so the install prompt only fires after
@@ -18,6 +19,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   usePageView();
   // Per-route <title> + canonical link for crawlers that render JS.
   usePageMeta();
+  // Apply saved builds after the first render so hydration matches the prerender.
+  useStoreHydration();
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50">
       <TopNav />

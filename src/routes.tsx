@@ -9,6 +9,7 @@ import Privacy from '@/pages/Privacy';
 import Guides from '@/pages/Guides';
 import Part from '@/pages/Part';
 import Cost from '@/pages/Cost';
+import NotFound from '@/pages/NotFound';
 
 // Route tree only — App.tsx wraps this in <BrowserRouter> (real paths like
 // /compare work thanks to the nginx SPA fallback + PWA navigateFallback;
@@ -28,6 +29,8 @@ export default function AppRoutes() {
       <Route path="/parts/:id" element={<Layout><Part /></Layout>} />
       <Route path="/cost/:country" element={<Layout><Cost /></Layout>} />
       <Route path="/cost/:country/:state" element={<Layout><Cost /></Layout>} />
+      {/* Catch-all last: unknown URLs render NotFound instead of a blank page. */}
+      <Route path="*" element={<Layout><NotFound /></Layout>} />
     </Routes>
   );
 }

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Option A — Answer first</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  /* Hero answer: the number is the page. */
+  .hero {
+    display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap;
+    padding: 30px 0 26px; border-bottom: 1px solid var(--line);
+  }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+  .answer { font-size: 64px; line-height: .95; font-weight: 800; letter-spacing: -.035em; margin-top: 6px; }
+  .answer .per { font-size: 20px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+  .hero-sub { margin-top: 10px; color: var(--ink-2); font-size: 14px; }
+  .hero-sub b { color: var(--ink); font-weight: 600; }
+  .hero-side { margin-left: auto; text-align: right; }
+  .mini { display: flex; gap: 26px; margin-bottom: 14px; }
+  .mini div { text-align: right; }
+  .mini dt { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .mini dd { margin: 2px 0 0; font-size: 17px; font-weight: 700; }
+
+  .grid { display: grid; grid-template-columns: 1.6fr 1.4fr 1fr; gap: 16px; margin-top: 22px; align-items: start; }
+  .parts { margin-top: 14px; }
+  .parts li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f1eeea; font-size: 14px; }
+  .parts li:last-child { border-bottom: 0; }
+  .parts .name { font-weight: 600; }
+  .parts .w { margin-left: auto; color: var(--muted); font-size: 13px; }
+  .add { margin-top: 12px; width: 100%; border-style: dashed; }
+
+  /* Usage as a proportion bar rather than four sliders. */
+  .usage-bar { display: flex; height: 10px; border-radius: 6px; overflow: hidden; margin: 16px 0 14px; background: var(--tint); }
+  .usage-bar i { display: block; height: 100%; }
+  .usage-bar .gaming { background: #2c7a9e; }
+  .usage-bar .office { background: #6a5acd; }
+  .usage-bar .browse { background: #d97706; }
+  .usage-bar .idle { background: #cfd4d9; }
+  .usage-list li { display: flex; align-items: center; gap: 9px; padding: 7px 0; font-size: 13.5px; }
+  .usage-list .hrs { margin-left: auto; color: var(--ink-2); font-weight: 600; }
+  .usage-legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 4px; flex-wrap: wrap; }
+  .usage-legend span { display: flex; align-items: center; gap: 5px; }
+  .sw { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+
+  .tariff .rate { font-size: 34px; font-weight: 800; letter-spacing: -.02em; margin-top: 14px; }
+  .tariff .rate span { font-size: 14px; font-weight: 600; color: var(--muted); }
+  .tariff p + p { margin-top: 6px; }
+  .tariff button { margin-top: 14px; width: 100%; }
+
+  /* Analysis: only here, once. */
+  .analysis { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .donut { display: flex; align-items: center; gap: 26px; margin-top: 16px; }
+  .ring { width: 128px; height: 128px; border-radius: 50%; flex: none;
+    background: conic-gradient(#6a5acd 0 38%, #1a7a56 38% 72%, #d97706 72% 86%, #2c7a9e 86% 100%);
+    -webkit-mask: radial-gradient(circle 38px at 50% 50%, transparent 98%, #000 100%);
+            mask: radial-gradient(circle 38px at 50% 50%, transparent 98%, #000 100%); }
+  .key li { display: flex; align-items: center; gap: 8px; font-size: 13px; padding: 4px 0; }
+  .key .pc { margin-left: auto; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; padding: 0 0 8px; }
+  td { padding: 8px 0; border-top: 1px solid #f1eeea; }
+  td.r, th.r { text-align: right; }
+
+  @media (max-width: 900px) {
+    .topbar { padding: 14px 18px; }
+    .nav { display: none; }
+    .shell { padding: 18px 18px 48px; }
+    .hero { padding: 18px 0 18px; }
+    .answer { font-size: 44px; }
+    .hero-side { margin-left: 0; text-align: left; width: 100%; }
+    .mini { gap: 18px; }
+    .mini div { text-align: left; }
+    .grid, .analysis { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="bolt">⚡</span> PC Power Calculator</div>
+    <nav class="nav">
+      <a class="on" href="#">Calculator</a><a href="#">Compare</a><a href="#">Guides</a><a href="#">About</a>
+    </nav>
+  </header>
+
+  <div class="shell">
+    <!-- 1. THE ANSWER, first, always. -->
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Your yearly cost</p>
+        <h1 class="answer">₹3,465 <span class="per">/ year</span></h1>
+        <p class="hero-sub">Ryzen 5 5600X · RX 6600 · <b>Maharashtra</b> · 15 h/day in use</p>
+      </div>
+      <div class="hero-side">
+        <dl class="mini">
+          <div><dt>Per month</dt><dd class="num">₹289</dd></div>
+          <div><dt>Per day</dt><dd class="num">₹9.50</dd></div>
+          <div><dt>Energy</dt><dd class="num">412 kWh</dd></div>
+        </dl>
+        <button class="btn-primary">Share this estimate</button>
+      </div>
+    </section>
+
+    <!-- 2. Three inputs, no instructions, no empty tutorial. -->
+    <div class="grid">
+      <section class="card">
+        <h2>Your system <span class="count">5 parts · peak 310 W</span></h2>
+        <ul class="parts">
+          <li><i class="dot cpu"></i><span class="name">Ryzen 5 5600X</span><span class="w">65 W</span></li>
+          <li><i class="dot gpu"></i><span class="name">Radeon RX 6600</span><span class="w">132 W</span></li>
+          <li><i class="dot ram"></i><span class="name">16 GB DDR4-3200</span><span class="w">6 W</span></li>
+          <li><i class="dot ssd"></i><span class="name">1 TB NVMe</span><span class="w">5 W</span></li>
+          <li><i class="dot fan"></i><span class="name">Case fans ×2</span><span class="w">4 W</span></li>
+        </ul>
+        <button class="btn-ghost add">+ Add a part</button>
+      </section>
+
+      <section class="card">
+        <h2>When you use it <span class="count">15 of 24 h</span></h2>
+        <div class="usage-bar">
+          <i class="gaming" style="width:12.5%"></i><i class="office" style="width:25%"></i>
+          <i class="browse" style="width:8.3%"></i><i class="idle" style="width:54.2%"></i>
+        </div>
+        <ul class="usage-list">
+          <li><i class="sw" style="background:#2c7a9e"></i>Gaming <span class="hrs num">3 h/day</span></li>
+          <li><i class="sw" style="background:#6a5acd"></i>Office <span class="hrs num">6 h/day</span></li>
+          <li><i class="sw" style="background:#d97706"></i>Browsing <span class="hrs num">2 h/day</span></li>
+          <li><i class="sw" style="background:#cfd4d9"></i>On, idle <span class="hrs num">13 h/day</span></li>
+        </ul>
+        <button class="btn-ghost add">Adjust schedule</button>
+      </section>
+
+      <section class="card tariff">
+        <h2>Your tariff</h2>
+        <p class="rate">₹8.41 <span>/ kWh</span></p>
+        <p class="tiny muted">Maharashtra · domestic slabs</p>
+        <p class="tiny muted">Includes 8% electricity duty</p>
+        <button class="btn-ghost">Change location</button>
+      </section>
+    </div>
+
+    <!-- 3. Analysis, consolidated. One place for the numbers. -->
+    <div class="analysis">
+      <section class="card">
+        <h2>Where the power goes</h2>
+        <div class="donut">
+          <div class="ring"></div>
+          <ul class="key">
+            <li><i class="dot cpu"></i>CPU <span class="pc num">38%</span></li>
+            <li><i class="dot gpu"></i>GPU <span class="pc num">34%</span></li>
+            <li><i class="dot ram"></i>RAM <span class="pc num">14%</span></li>
+            <li><i class="dot ssd"></i>Storage <span class="pc num">14%</span></li>
+          </ul>
+        </div>
+      </section>
+      <section class="card">
+        <h2>Cost by workload</h2>
+        <table>
+          <thead><tr><th>Workload</th><th class="r">Hours</th><th class="r">kWh/yr</th><th class="r">₹/yr</th></tr></thead>
+          <tbody>
+            <tr><td>Gaming</td><td class="r num">3 h/day</td><td class="r num">184</td><td class="r num">1,548</td></tr>
+            <tr><td>Office</td><td class="r num">6 h/day</td><td class="r num">121</td><td class="r num">1,018</td></tr>
+            <tr><td>Browsing</td><td class="r num">2 h/day</td><td class="r num">33</td><td class="r num">278</td></tr>
+            <tr><td>On, idle</td><td class="r num">13 h/day</td><td class="r num">74</td><td class="r num">621</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

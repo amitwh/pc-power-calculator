@@ -14,7 +14,7 @@ test('renders Home on /', () => {
   // multi-system summary card in ResultsPanel also contains "your systems",
   // so anchor on the title prefix.
   expect(screen.getByRole('heading', { name: /^Your Systems/i })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Add device' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /add device/i })).toBeInTheDocument();
 });
 
 test('renders Compare on /compare', () => {

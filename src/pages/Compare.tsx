@@ -1,97 +1,95 @@
-import { lazy, Suspense, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { BuildSelector } from '@/components/compare/BuildSelector';
 import { ComparisonTable } from '@/components/compare/ComparisonTable';
 import { CompareVerdict } from '@/components/compare/CompareVerdict';
 import { Card, CardTitle } from '@/components/ui/Card';
-import { DeferInView } from '@/components/ui/DeferInView';
 import { useBuildStore } from '@/store/buildStore';
+import { buildStats } from '@/lib/calc/buildStats';
 import { currencyForLocation } from '@/lib/data/tariffs';
-import { computeEnergy } from '@/lib/calc/energy';
-import { listWorkloads } from '@/lib/data/workloads';
 import { useFx } from '@/hooks/useFx';
+import { useStoreHydrated } from '@/hooks/useStoreHydration';
 import { importBuildFromSearch } from '@/lib/share/buildLink';
 import type { BuildConfig } from '@/types/build';
 import type { CurrencyInfo } from '@/types/currency';
 
-// ApexCharts is heavy — only load it once the user actually asks for the
-// comparison view and the table has enough rows to chart.
-const ComparisonBars = lazy(() =>
-  import('@/components/charts/ComparisonBars').then((m) => ({ default: m.ComparisonBars })),
-);
-
 export default function Compare() {
+  const hydrated = useStoreHydrated();
+
   // Start comparing the first two store builds immediately — no click gate.
-  // (If an exported-builds link was just imported, BuildSelector puts it in
-  // slot B so the visitor lands on the intended comparison.)
+  // The store has not been rehydrated yet on the SSR pass or the first client
+  // render, so this is the default build; both are corrected below.
   const [builds, setBuilds] = useState<BuildConfig[] | null>(() =>
     useBuildStore.getState().builds.slice(0, 2),
   );
   // `window` is unavailable during the build-time prerender; there is no query
   // string to import there anyway, so the SSR pass starts with null.
-  const [importedId] = useState(() =>
-    typeof window === 'undefined' ? null : importBuildFromSearch(window.location.search, '/compare'),
-  );
+  const [importedId, setImportedId] = useState<string | null>(null);
+  // Until the visitor picks a pair, the compared builds follow the store.
+  const userSelected = useRef(false);
+  const importRan = useRef(false);
   const activeBuildId = useBuildStore((s) => s.activeBuildId);
   const storeBuilds = useBuildStore((s) => s.builds);
   const { snapshot } = useFx();
+
+  // Import an exported-builds link only once localStorage has been applied:
+  // importing before rehydration would persist this render's default build
+  // over the visitor's saved one.
+  useEffect(() => {
+    if (!hydrated || importRan.current) return;
+    importRan.current = true;
+    if (typeof window === 'undefined') return;
+    const id = importBuildFromSearch(window.location.search, '/compare');
+    if (id) setImportedId(id);
+  }, [hydrated]);
+
+  // Mirror the first two store builds into the comparison until the visitor
+  // chooses a pair. When a shared link was imported, BuildSelector pins that
+  // build to slot B and reports the intended pair, so leave the selection be.
+  useEffect(() => {
+    if (!hydrated || userSelected.current || importedId) return;
+    setBuilds(storeBuilds.slice(0, 2));
+  }, [hydrated, importedId, storeBuilds]);
+
+  // The selector is the single source of truth: exactly the pair it reports is
+  // compared. Never render a third card that no dropdown names, and never
+  // compare a build with itself (that duplicates React keys and leaves stale
+  // rows behind on hydration).
+  const pair = useMemo(() => {
+    if (!builds || builds.length < 2) return null;
+    const [first, second] = builds;
+    return first.id === second.id ? null : [first, second];
+  }, [builds]);
 
   // Currency follows the active build (or the first selected): explicit
   // override, else the tariff currency of that build's location.
   const currency: CurrencyInfo = useMemo(() => {
     const b =
-      storeBuilds.find((x) => x.id === activeBuildId) ?? builds?.[0] ?? storeBuilds[0];
+      storeBuilds.find((x) => x.id === activeBuildId) ?? pair?.[0] ?? storeBuilds[0];
     if (!b) return currencyForLocation('IN');
     return currencyForLocation(b.location.country_iso2, b.location.subdivision_code, b.currency_override);
-  }, [activeBuildId, storeBuilds, builds]);
+  }, [activeBuildId, storeBuilds, pair]);
 
-  // Yearly kWh per build for the bar chart.
-  const yearlyKwh = useMemo(() => {
-    if (!builds) return [];
-    const workloads = listWorkloads();
-    return builds.map((b) => ({
-      id: b.id,
-      name: b.name,
-      yearlyKwh: computeEnergy(b, workloads, 'year', b.location.manual_rate_override ?? undefined)
-        .total.kwh,
-    }));
-  }, [builds]);
-
-  // True when the compared systems bill in different currencies — the table
-  // and verdict convert everything into the display currency.
-  const mixedCurrency =
-    builds != null &&
-    new Set(
-      builds.map((b) => currencyForLocation(b.location.country_iso2, b.location.subdivision_code, b.currency_override).code),
-    ).size > 1;
+  // Both the verdict and the table read these same numbers — build them once.
+  const stats = useMemo(
+    () => pair?.map((b) => buildStats(b, currency, snapshot)) ?? null,
+    [pair, currency, snapshot],
+  );
 
   return (
-    <div className="p-3 md:p-6 max-w-7xl mx-auto grid gap-3">
-      <BuildSelector onCompare={setBuilds} initialBId={importedId ?? undefined} />
-      {builds && builds.length >= 2 && (
+    <div className="mx-auto max-w-[1180px] p-3 md:p-6 grid gap-3">
+      <BuildSelector
+        onCompare={setBuilds}
+        initialBId={importedId ?? undefined}
+        onUserSelect={() => {
+          userSelected.current = true;
+        }}
+      />
+      {stats && (
         <>
-          <CompareVerdict builds={builds} displayCurrency={currency} fxSnapshot={snapshot} />
+          <CompareVerdict stats={stats} displayCurrency={currency} />
           <Card>
-            <CardTitle>Yearly energy side by side</CardTitle>
-            {/* Below the verdict tiles — defer the 900 KB chart bundle until
-                a visitor scrolls near it. */}
-            <DeferInView placeholder={<div className="h-[280px] flex items-center justify-center text-sm text-gray-400">Scroll to load chart…</div>}>
-              <Suspense fallback={<div className="h-[280px] flex items-center justify-center text-sm text-gray-400">Loading chart...</div>}>
-                <ComparisonBars builds={yearlyKwh} />
-              </Suspense>
-            </DeferInView>
-          </Card>
-          <Card>
-            <CardTitle>
-              <span className="truncate">
-                Per-workload breakdown ({currency.code})
-                {mixedCurrency && (
-                  <span className="font-body text-xs font-normal text-gray-500">
-                    {' '}· converted at bundled FX ({snapshot.date})
-                  </span>
-                )}
-              </span>
-            </CardTitle>
-            <ComparisonTable builds={builds} currency={currency} fxSnapshot={snapshot} />
+            <CardTitle className="text-base!">Side by side</CardTitle>
+            <ComparisonTable stats={stats} displayCurrency={currency} fxSnapshot={snapshot} />
           </Card>
         </>
       )}
