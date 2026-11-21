@@ -16,7 +16,7 @@ export default function MobileHeader() {
         <img
           src="/brand/logo-report.png"
           alt="PC Power Calculator"
-          className="h-7 w-auto"
+          className="h-9 w-auto"
         />
       </NavLink>
     </header>

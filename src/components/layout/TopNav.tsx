@@ -24,12 +24,12 @@ export default function TopNav() {
         <NavLink
           to="/"
           aria-label="PC Power Calculator"
-          className="flex items-center rounded-8 bg-white px-2 py-1"
+          className="flex items-center rounded-8 bg-white px-2 py-0.5"
         >
           <img
             src="/brand/logo-report.png"
             alt="PC Power Calculator"
-            className="h-8 w-auto"
+            className="h-11 w-auto"
           />
         </NavLink>
 
