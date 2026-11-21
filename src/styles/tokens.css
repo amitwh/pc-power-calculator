@@ -82,3 +82,18 @@ html {
     line-height: 1.75rem;
   }
 }
+
+/* A stable, very faint identity tint for a system card. The hue comes from an
+   inline --tint; the alpha lives here so light and dark can differ (a 7% wash
+   on white is a 14% wash on near-black). */
+.system-tint {
+  background-color: color-mix(in srgb, var(--tint) 7%, transparent);
+  border-left-color: color-mix(in srgb, var(--tint) 45%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .system-tint {
+    background-color: color-mix(in srgb, var(--tint) 14%, transparent);
+    border-left-color: color-mix(in srgb, var(--tint) 55%, transparent);
+  }
+}

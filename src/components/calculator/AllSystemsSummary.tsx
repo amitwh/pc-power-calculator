@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import type { CSSProperties } from 'react';
 import { useBuildStore } from '@/store/buildStore';
 import { useCalc } from '@/hooks/useCalc';
 import { useFx } from '@/hooks/useFx';
@@ -25,6 +26,9 @@ function buildMeta(
     });
   return lines.length > 0 ? lines.join(' · ') : 'idle';
 }
+
+/** Identity hues for system cards — faint by design, distinct at a glance. */
+const SYSTEM_TINTS = ['#e5461f', '#2c7a9e', '#6a5acd', '#1a7a56', '#d97706', '#0f766e'];
 
 /** Full-width card comparing every saved system's yearly energy and cost. */
 export function AllSystemsSummary() {
@@ -79,10 +83,13 @@ export function AllSystemsSummary() {
         📊 All your systems at a glance
       </h3>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {summary.map((row) => (
+        {summary.map((row, i) => (
           <div
             key={row.id}
-            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-8 p-3"
+            // Each system keeps one faint hue for the whole page, derived from
+            // its position in the list so it is stable across renders.
+            style={{ '--tint': SYSTEM_TINTS[i % SYSTEM_TINTS.length] } as CSSProperties}
+            className="system-tint border border-l-[3px] border-gray-200 dark:border-gray-800 rounded-8 p-3"
           >
             <div className="font-body font-bold text-sm text-gray-900 dark:text-gray-50 mb-1.5 flex items-center gap-1.5">
               <span aria-hidden>{emojiFor(row.category)}</span>
