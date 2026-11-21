@@ -67,11 +67,12 @@ Existing three stay. New ones live in
 `src/components/guides/figures/{Power,Compute,Bus}Figures.tsx`, re-exported from
 `src/components/guides/Figures.tsx` so the old import path keeps working.
 
-New: PSU efficiency curve vs 80 PLUS bands · power-factor vector triangle ·
-PSU connector/rail map · CPU die block diagram · cache hierarchy pyramid ·
-CPU/GPU/NPU block comparison · GPU pipeline · VRAM bandwidth · PCIe lane
-bandwidth · RAM channels · storage speed · motherboard layout ·
-air-vs-AIO cooling.
+New — 17 in all: PSU efficiency curve vs 80 PLUS bands · power-factor vector
+triangle · PSU connector/rail map · PSU overhead against output load · CPU die
+block diagram · cache hierarchy pyramid · CPU/GPU/NPU block comparison · GPU
+pipeline · VRAM bandwidth · PCIe lane bandwidth · M.2 form factors and keys ·
+RAM channels · storage speed · motherboard layout · air-vs-AIO cooling ·
+thermal-throttle curve · the PC data path.
 
 Conventions (match `Figures.tsx`): `viewBox` fitted to the drawing, 10-unit grid,
 `role="img"` + `aria-label`, `currentColor` for ink so light/dark mode both work,
@@ -98,7 +99,8 @@ figure, grouped layers.
 ## Verification
 
 - `npm run typecheck`, `npm run lint`, `npm test`
-- `npm run build` → prerenders 25 guides + part/tariff pages, writes the sitemap
+- `npm run build` → prerenders 405 routes (26 guides + part and tariff pages),
+  writes the sitemap, and ends with the SEO verifier
 - `node scripts/verify-seo.mjs` → every page passes
 - Playwright a11y run over the new guide routes (axe: SVG needs a role + label,
   contrast of brand-on-white text)
