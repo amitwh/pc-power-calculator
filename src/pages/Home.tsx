@@ -3,6 +3,7 @@ import { BuildPicker } from '@/components/calculator/BuildPicker';
 import { ScheduleEditor } from '@/components/calculator/ScheduleEditor';
 import { AnswerHero } from '@/components/calculator/AnswerHero';
 import { MeasuredCard } from '@/components/calculator/MeasuredCard';
+import { ConsumptionGauge } from '@/components/calculator/ConsumptionGauge';
 import { ResultsBreakdown } from '@/components/calculator/ResultsBreakdown';
 import { AllSystemsSummary } from '@/components/calculator/AllSystemsSummary';
 import { LocationPicker } from '@/components/calculator/LocationPicker';
@@ -98,6 +99,10 @@ export default function Home() {
       {/* 3. Analysis, consolidated: where the power goes, and what each use costs. */}
       <div className="mt-4">
         <ResultsBreakdown />
+      </div>
+
+      <div className="mt-4">
+        <ConsumptionGauge />
       </div>
 
       <div className="mt-4">

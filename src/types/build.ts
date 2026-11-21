@@ -1,6 +1,21 @@
 import type { WorkloadSchedule } from './workload';
 
-export type BuildCategory = 'gaming' | 'workstation' | 'nas' | 'ai' | 'general';
+/**
+ * What the machine is *for*. These are the industry's own terms: a NAS is a
+ * storage appliance, a hypervisor host is a home lab, a "web server" is an
+ * application host, and an AI workstation is not the same thing as a gaming PC
+ * with a big GPU.
+ */
+export type BuildCategory =
+  | 'general'
+  | 'gaming'
+  | 'content'
+  | 'workstation'
+  | 'ai'
+  | 'homelab'
+  | 'nas'
+  | 'web'
+  | 'database';
 
 export interface BuildComponents {
   cpu?: string;

@@ -4,6 +4,8 @@ import type { MeasuredReadings } from '@/types/build';
 import { formatCost } from '@/lib/calc/format';
 import { categoryColor } from '@/lib/categoryColors';
 import { CALC_ENGINE_VERSION } from '@/lib/calc/version';
+import { CONSUMPTION_TIERS, averageWallW, tierFor, tierPosition } from '@/lib/calc/classify';
+import { equivalences } from '@/lib/calc/equivalences';
 
 export const PDF_AUTHOR = 'Amit Haridas';
 export const PDF_SOURCE_URL = 'https://pcpower.concreteinfo.co.in';
@@ -78,6 +80,8 @@ export interface PdfReport {
   tariffSource?: string;
   /** True when the tariff is a banded estimate, printed with an asterisk. */
   tariffEstimated?: boolean;
+  /** What the machine looks like it is for, with the reason. */
+  suggestedCategory?: { label: string; reason: string };
   /** When any component in the build was last catalogued / verified (ISO date). */
   catalogVerifiedAt?: string;
 }
@@ -797,6 +801,61 @@ export async function exportPdf(report: PdfReport): Promise<void> {
     'A grid factor is an average, not a promise: it varies by state, season and time of day, and a supplier\'s published fuel mix will differ from it. Change the factor to your own supplier or state figure before quoting this number.',
   );
   y += 8;
+
+  // ── What this means
+  const avgW = averageWallW(report.totals.yearly.kwh);
+  const tier = tierFor(avgW);
+  const carrier = equivalences(report.totals.yearly.kwh, co2kg).slice(0, 3);
+  y = ensureSpace(doc, y + 6, 150);
+  y = section(doc, y, 'What this means');
+  y += 4;
+
+  // Consumption band, as a five-step gauge with a marker at this machine.
+  const gaugeW = CONTENT_W;
+  CONSUMPTION_TIERS.forEach((t, i) => {
+    const left = M + (tierPosition(t.from) / 100) * gaugeW;
+    const right = M + (tierPosition(t.to ?? 1000) / 100) * gaugeW;
+    doc.setFillColor(250 - i * 9, 232 - i * 24, 230 - i * 24);
+    doc.rect(left, y, Math.max(1, right - left - 1), 8, 'F');
+  });
+  const markerX = M + (tierPosition(avgW) / 100) * gaugeW;
+  doc.setFillColor(...BRAND);
+  doc.rect(markerX - 1.5, y - 2, 3, 12, 'F');
+  y += 17;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.setTextColor(...INK);
+  doc.text(
+    pdfText(`${tier.label} - ${pdfNum(avgW)} W average, ${pdfKwh(report.totals.yearly.kwh)} a year`),
+    M,
+    y,
+  );
+  y += 11;
+  y = paragraph(doc, y, tier.blurb);
+
+  if (report.suggestedCategory) {
+    y += 2;
+    y = paragraph(
+      doc,
+      y,
+      `Looks like: ${report.suggestedCategory.label} - ${report.suggestedCategory.reason}`,
+      { bold: true, color: INK },
+    );
+  }
+
+  y += 4;
+  y += kvRows(
+    doc,
+    y,
+    carrier.map((e) => ({ k: e.sentence, v: e.value })),
+  );
+  y += 6;
+  y = paragraph(
+    doc,
+    y,
+    'These are unit conversions of the annual kWh figure, not measurements: an EV at 0.15 kWh/km, a 300 kWh/yr fridge, coal at a 35%-efficient plant (0.43 kg/kWh), and cooling water at an indicative 1.8 L/kWh.',
+    { size: 7.5 },
+  );
 
   // ── Measured vs estimated
   const measured = report.measured;

@@ -9,6 +9,8 @@ import { computeCost } from '@/lib/calc/cost';
 import { findComponent } from '@/lib/data/components';
 import { psuEfficiency } from '@/lib/calc/psu';
 import { basisFor, certificationLabel } from '@/lib/export/pdf';
+import { suggestCategory } from '@/lib/calc/classify';
+import { CATEGORY_LABEL } from '@/lib/buildCategory';
 import { getConsent } from '@/lib/analytics/consent';
 import { event } from '@/lib/analytics/gtag';
 
@@ -28,7 +30,7 @@ export function ExportMenu({
   // useCalc() already resolves the active build (multi-system store),
   // pre-computes daily / monthly / yearly totals, and resolves the display
   // currency (explicit override, else the build location's tariff currency).
-  const { build, components, daily, monthly, yearly, peakWallDrawW, idleDrawW, recommendedPsuW, psuWattage, psuRating, totalEffectiveTdpW, currency } = useCalc();
+  const { build, components, rawComponents, daily, monthly, yearly, peakWallDrawW, idleDrawW, recommendedPsuW, psuWattage, psuRating, totalEffectiveTdpW, currency } = useCalc();
   const [generating, setGenerating] = useState(false);
 
   // GA4 export tracking — gated by Consent Mode v2 so denied users keep full
@@ -104,6 +106,10 @@ export function ExportMenu({
           peakWallW: peakWallDrawW,
         },
         measured: build.measured,
+        suggestedCategory: (() => {
+          const guess = suggestCategory(build, rawComponents);
+          return { label: CATEGORY_LABEL[guess.category], reason: guess.reason };
+        })(),
         tariffVerifiedAt: prov.updated ?? tariffsLastUpdated(),
         tariffSource: prov.source,
         tariffEstimated: prov.estimated,

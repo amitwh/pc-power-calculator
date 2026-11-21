@@ -26,6 +26,8 @@ export interface PeriodEnergy {
 export interface CalcInputs {
   build: BuildConfig;
   components: ResolvedComponent[];
+  /** The catalog components themselves (specs included), one entry per unit. */
+  rawComponents: Component[];
   psuRating: PsuEfficiencyRating | null;
   psuWattage: number | null;
   /** Sum of effective TDPs across active components (best-effort, ignores peripherals and PSUs). */
@@ -153,6 +155,7 @@ export function useCalc(): CalcResult {
     return {
       build: activeBuild,
       components: resolved,
+      rawComponents: resolvedRaw,
       psuRating,
       psuWattage,
       totalEffectiveTdpW,

@@ -6,7 +6,7 @@ import { Select } from '@/components/ui/Select';
 import { SearchableSelect } from '@/components/ui/SearchableSelect';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { CATEGORY_EMOJI, CATEGORY_LABEL } from '@/lib/buildCategory';
+import { CATEGORY_LABEL } from '@/lib/buildCategory';
 import { categoryColor } from '@/lib/categoryColors';
 import { confidenceFor } from '@/lib/data/confidence';
 import type { BuildCategory, ComponentSlot } from '@/types/build';
@@ -63,7 +63,17 @@ const FILTER_OPTIONS: Array<{ value: ComponentCategory | 'all'; label: string }>
   { value: 'peripheral', label: 'Peripheral' },
 ];
 
-const CATEGORIES: BuildCategory[] = ['gaming', 'workstation', 'nas', 'ai', 'general'];
+const CATEGORIES: BuildCategory[] = [
+  'general',
+  'gaming',
+  'content',
+  'workstation',
+  'ai',
+  'homelab',
+  'nas',
+  'web',
+  'database',
+];
 
 /** One selected device: the component + which slot it occupies. */
 interface SelectedDevice {
@@ -287,7 +297,7 @@ export function BuildPicker() {
           aria-label="Use case"
           className="!min-h-9 !text-sm"
           value={activeBuild.category ?? 'general'}
-          options={CATEGORIES.map((c) => ({ value: c, label: `${CATEGORY_EMOJI[c]} ${CATEGORY_LABEL[c]}` }))}
+          options={CATEGORIES.map((c) => ({ value: c, label: CATEGORY_LABEL[c] }))}
           onChange={(e) => setBuildCategory(activeBuild.id, e.target.value as BuildCategory)}
         />
         <Select
