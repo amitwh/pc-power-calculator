@@ -27,6 +27,10 @@ function hasBinary(name: string): boolean {
 
 const PDF_PATH = path.join(process.cwd(), 'tests/tmp/report.pdf');
 
+/** A 1×1 transparent PNG, small enough to embed in every render. */
+const TINY_PNG =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==';
+
 function writePdf(buffer: Buffer): string {
   mkdirSync(path.dirname(PDF_PATH), { recursive: true });
   writeFileSync(PDF_PATH, buffer);
@@ -122,4 +126,43 @@ describe('ReportDocument', () => {
     expect(pages).toBeGreaterThanOrEqual(2);
     expect(pages).toBeLessThanOrEqual(3);
   });
+
+  test.skipIf(!hasBinary('pdftotext'))(
+    'prints the QR permalink caption and URL',
+    async () => {
+      const text = await renderAndExtract(gamingReport, {
+        shareUrl: 'https://pcpower.concreteinfo.co.in/build/abc',
+        qrDataUrl: TINY_PNG,
+      });
+
+      expect(text).toContain('Scan to open this build');
+      expect(text).toContain('https://pcpower.concreteinfo.co.in/build/abc');
+    },
+  );
+
+  test.skipIf(!hasBinary('pdftotext'))(
+    'omits the QR block when there is no share URL',
+    async () => {
+      const text = await renderAndExtract(gamingReport, {
+        shareUrl: null,
+        qrDataUrl: TINY_PNG,
+      });
+
+      expect(text).not.toContain('Scan to open this build');
+    },
+  );
+
+  test.skipIf(!hasBinary('pdfinfo'))(
+    'embeds the logo and app icon without growing past three pages',
+    async () => {
+      const buffer = await renderToBuffer(
+        <ReportDocument report={gamingReport} logoDataUrl={TINY_PNG} iconDataUrl={TINY_PNG} />,
+      );
+
+      expect(buffer.subarray(0, 5).toString()).toBe('%PDF-');
+      const pages = pdfPageCount(writePdf(buffer));
+      expect(pages).toBeGreaterThanOrEqual(2);
+      expect(pages).toBeLessThanOrEqual(3);
+    },
+  );
 });

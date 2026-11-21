@@ -1,4 +1,4 @@
-import { Document, Page, View, Text, Link, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, View, Text, Link, Image, StyleSheet } from '@react-pdf/renderer';
 import type { ComponentCategory } from '@/types/component';
 import type { CurrencyInfo } from '@/types/currency';
 import { CALC_ENGINE_VERSION } from '@/lib/calc/version';
@@ -30,13 +30,15 @@ import {
 } from '@/lib/export/report';
 
 /**
- * Options shared by the document and the browser download wrapper. The QR and
- * logo are accepted now so later tasks can add them without changing callers.
+ * Branding assets for the document and the browser download wrapper. Every
+ * image is a data URL so the document stays renderable to a buffer; a missing
+ * value falls back to the text wordmark or drops the block entirely.
  */
 export interface ExportPdfOptions {
   qrDataUrl?: string;
   shareUrl?: string | null;
   logoDataUrl?: string | null;
+  iconDataUrl?: string | null;
 }
 
 interface ReportDocumentProps extends ExportPdfOptions {
@@ -85,9 +87,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: BRAND,
     borderRadius: 2,
-    paddingVertical: 7,
+    paddingVertical: 4,
     paddingHorizontal: 10,
-    marginBottom: 12,
+    marginBottom: 10,
+  },
+  brandPlate: {
+    backgroundColor: '#ffffff',
+    borderRadius: 2,
+    paddingVertical: 3,
+    paddingHorizontal: 5,
+  },
+  /** The logo's own 2.985:1 ratio, set at a 20 pt print height. */
+  brandLogo: {
+    height: 20,
+    width: 60,
   },
   brandBarText: {
     color: '#ffffff',
@@ -393,12 +406,58 @@ const styles = StyleSheet.create({
   },
   continuationHeader: {
     position: 'absolute',
-    top: 12,
+    top: 10,
     left: PAGE_MARGIN,
     right: PAGE_MARGIN,
+    height: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  continuationPlate: {
+    backgroundColor: '#ffffff',
+    borderRadius: 2,
+    padding: 1.5,
+    marginRight: 4,
+  },
+  continuationIcon: {
+    width: 12,
+    height: 12,
+  },
+  continuationText: {
     fontSize: 7,
     color: FAINT,
-    textAlign: 'right',
+  },
+  qrCard: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fdf4ef',
+    borderRadius: 3,
+    padding: 10,
+  },
+  qrImage: {
+    width: 72,
+    height: 72,
+  },
+  qrCopy: {
+    flex: 1,
+    marginLeft: 12,
+  },
+  qrCaption: {
+    fontSize: 10,
+    fontWeight: 700,
+    color: INK,
+  },
+  qrUrl: {
+    fontSize: 7.5,
+    color: BRAND,
+    marginTop: 3,
+  },
+  qrHint: {
+    fontSize: 7.5,
+    color: MUTED,
+    marginTop: 2,
   },
   footerRule: {
     position: 'absolute',
@@ -493,7 +552,14 @@ const METHOD_STEPS = [
  * Pure in the rendering sense: no fetching, font registration or browser APIs,
  * so it can be rendered to a buffer in tests and to a blob in the browser.
  */
-export function ReportDocument({ report, generatedAt }: ReportDocumentProps) {
+export function ReportDocument({
+  report,
+  generatedAt,
+  qrDataUrl,
+  shareUrl,
+  logoDataUrl,
+  iconDataUrl,
+}: ReportDocumentProps) {
   const now = generatedAt ?? new Date();
   const reportId = makeReportId(report.buildName, now);
   const generated = `${istTimestamp(now)} IST`;
@@ -600,19 +666,37 @@ export function ReportDocument({ report, generatedAt }: ReportDocumentProps) {
       keywords="PC power, electricity cost, energy audit, PSU sizing, carbon footprint"
     >
       <Page size="A4" style={styles.page}>
-        {/* Continued-page header, blank on the cover page. */}
-        <Text
+        {/* Continued-page header: app icon plus build identity, blank on the cover. */}
+        <View
           fixed
           style={styles.continuationHeader}
           render={({ pageNumber }) =>
-            pageNumber > 1 ? `${report.buildName} · ${reportId}` : ''
+            pageNumber > 1 ? (
+              <>
+                {iconDataUrl ? (
+                  <View style={styles.continuationPlate}>
+                    <Image src={iconDataUrl} style={styles.continuationIcon} />
+                  </View>
+                ) : null}
+                <Text style={styles.continuationText}>
+                  {`${report.buildName} · ${reportId}`}
+                </Text>
+              </>
+            ) : null
           }
         />
 
-        {/* Cover: brand bar, build identity and provenance. */}
+        {/* Cover: brand bar, build identity and provenance. The logo's navy
+            wordmark cannot sit on orange, so it rides on a white plate. */}
         <View wrap={false}>
           <View style={styles.brandBar}>
-            <Text style={styles.brandBarText}>PC POWER CALCULATOR</Text>
+            {logoDataUrl ? (
+              <View style={styles.brandPlate}>
+                <Image src={logoDataUrl} style={styles.brandLogo} />
+              </View>
+            ) : (
+              <Text style={styles.brandBarText}>PC POWER CALCULATOR</Text>
+            )}
             <Text style={styles.brandBarMeta}>
               {`${report.currency.code} report · ${generated}`}
             </Text>
@@ -1119,6 +1203,21 @@ export function ReportDocument({ report, generatedAt }: ReportDocumentProps) {
             </Text>
           )}
         </View>
+
+        {/* Scan-to-open permalink. Dropped entirely when the build has no share
+            URL or the QR would push past the 6 KB link cap. */}
+        {shareUrl && qrDataUrl ? (
+          <View wrap={false} style={styles.qrCard}>
+            <Image src={qrDataUrl} style={styles.qrImage} />
+            <View style={styles.qrCopy}>
+              <Text style={styles.qrCaption}>Scan to open this build</Text>
+              <Text style={styles.qrUrl}>{shareUrl}</Text>
+              <Text style={styles.qrHint}>
+                Opens the live calculator with every part and hour pre-filled.
+              </Text>
+            </View>
+          </View>
+        ) : null}
 
         {/* The full caveat, in the flow; the footer keeps the one-line version. */}
         <View wrap={false} style={styles.section}>
