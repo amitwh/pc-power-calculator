@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /build/
 
 Sitemap: https://pcpower.concreteinfo.co.in/sitemap.xml

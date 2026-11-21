@@ -5,7 +5,11 @@ import { GUIDES } from '@/pages/Guides';
 import { initCatalog } from '@/lib/data/components';
 import { indexableParts } from '@/lib/data/partPages';
 import { listTariffPages } from '@/lib/data/tariffPages';
-import { resolveLocationTariff } from '@/lib/data/tariffs';
+import {
+  resolveLocationTariff,
+  tariffProvenance,
+  tariffsLastUpdated,
+} from '@/lib/data/tariffs';
 import { findCurrency } from '@/lib/data/currencies';
 import { describeTariffRate } from '@/lib/calc/format';
 
@@ -20,6 +24,11 @@ export interface RouteMeta {
   ogType?: 'website' | 'article';
   priority: number;
   changefreq: ChangeFreq;
+  /**
+   * `YYYY-MM-DD` date the page's content last changed. The sitemap falls back
+   * to the build date when a route has no better answer.
+   */
+  lastmod?: string;
   /** One `<script type="application/ld+json">` block is emitted per entry. */
   jsonLd?: object[];
 }
@@ -58,6 +67,11 @@ function isoMonth(updated: string): string | undefined {
   return `${match[2]}-${String(monthIndex + 1).padStart(2, '0')}-01`;
 }
 
+/** `"2026-10-29"` or an ISO timestamp -> `"2026-10-29"`; otherwise undefined. */
+function isoDate(value?: string): string | undefined {
+  return value?.match(/^(\d{4}-\d{2}-\d{2})/)?.[1];
+}
+
 const ROOT_DESCRIPTION =
   "Estimate your PC's power draw, yearly electricity use and running cost — 2,200+ CPUs, GPUs and parts, local tariffs in any currency, shareable comparison and a PDF report.";
 
@@ -71,6 +85,7 @@ const guideRoutes: RouteMeta[] = GUIDES.map((guide) => {
     ogType: 'article',
     priority: 0.7,
     changefreq: 'monthly',
+    lastmod: dateModified,
     jsonLd: [
       {
         '@context': 'https://schema.org',
@@ -217,7 +232,26 @@ export const ROUTES: RouteMeta[] = [
     ogType: 'website',
     priority: 0.8,
     changefreq: 'monthly',
-    jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Guides', path: '/guides' }])],
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'Guides & explainers',
+        description:
+          'Short, practical guides to PC power draw, PSU sizing and Indian electricity billing, written to match the calculator’s model.',
+        url: `${SITE}/guides`,
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: GUIDES.map((guide, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: guide.title,
+            url: `${SITE}/guides/${guide.slug}`,
+          })),
+        },
+      },
+      breadcrumbList([HOME_CRUMB, { name: 'Guides', path: '/guides' }]),
+    ],
   },
   ...guideRoutes,
 ];
@@ -241,6 +275,7 @@ export async function getRoutes(): Promise<RouteMeta[]> {
       ogType: 'website',
       priority: 0.6,
       changefreq: 'monthly',
+      lastmod: isoDate(part.addedAt),
       jsonLd: [breadcrumbList([HOME_CRUMB, { name, path }])],
     };
   });
@@ -255,6 +290,7 @@ export async function getRoutes(): Promise<RouteMeta[]> {
       ogType: 'website',
       priority: 0.7,
       changefreq: 'monthly',
+      lastmod: isoDate(tariffProvenance(ref.iso2).updated) ?? isoDate(tariffsLastUpdated()),
       jsonLd: [breadcrumbList([HOME_CRUMB, { name: ref.label, path: ref.path }])],
     };
   });

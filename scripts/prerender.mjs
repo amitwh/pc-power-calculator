@@ -117,13 +117,17 @@ function injectBody(html, renderedHtml) {
   return html.slice(0, rootStart) + replacement + html.slice(rootEnd);
 }
 
-function sitemap(routes, lastmod) {
+function sitemap(routes, buildDate) {
   const urls = routes
-    .map(
-      (route) =>
+    .map((route) => {
+      // A route that knows when its content changed reports that date; purely
+      // static pages fall back to the build date.
+      const lastmod = route.lastmod ?? buildDate;
+      return (
         `  <url><loc>${escapeHtml(canonicalUrl(route.path))}</loc><lastmod>${lastmod}</lastmod>` +
-        `<changefreq>${route.changefreq}</changefreq><priority>${route.priority.toFixed(1)}</priority></url>`,
-    )
+        `<changefreq>${route.changefreq}</changefreq><priority>${route.priority.toFixed(1)}</priority></url>`
+      );
+    })
     .join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -191,8 +195,8 @@ async function main() {
     console.log(`✓ ${route.path.padEnd(24)} -> ${path.relative(ROOT, outPath)}`);
   }
 
-  const lastmod = new Date().toISOString().slice(0, 10);
-  await writeFile(path.join(DIST, 'sitemap.xml'), sitemap(ROUTES, lastmod), 'utf8');
+  const buildDate = new Date().toISOString().slice(0, 10);
+  await writeFile(path.join(DIST, 'sitemap.xml'), sitemap(ROUTES, buildDate), 'utf8');
   console.log(`✓ /sitemap.xml             -> dist/sitemap.xml (${ROUTES.length} URLs)`);
 
   console.log(

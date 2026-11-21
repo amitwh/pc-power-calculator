@@ -13,6 +13,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:a11y": "playwright test tests/e2e/a11y.spec.ts",
+    "indexnow": "node scripts/indexnow.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint",
     "lighthouse": "lhci autorun",
