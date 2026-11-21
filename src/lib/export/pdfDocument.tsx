@@ -29,6 +29,8 @@ export interface ExportPdfOptions {
 
 interface ReportDocumentProps extends ExportPdfOptions {
   report: PdfReport;
+  /** One timestamp for the page, the report ID and the file name. */
+  generatedAt?: Date;
 }
 
 const A4_HEIGHT = 841.89;
@@ -323,8 +325,8 @@ const METHOD_STEPS = [
  * Pure in the rendering sense: no fetching, font registration or browser APIs,
  * so it can be rendered to a buffer in tests and to a blob in the browser.
  */
-export function ReportDocument({ report }: ReportDocumentProps) {
-  const now = new Date();
+export function ReportDocument({ report, generatedAt }: ReportDocumentProps) {
+  const now = generatedAt ?? new Date();
   const reportId = makeReportId(report.buildName, now);
   const generated = `${istTimestamp(now)} IST`;
   const reconciled = reconciledTotals(report);
@@ -612,13 +614,14 @@ export async function exportPdf(report: PdfReport, opts: ExportPdfOptions = {}):
   // Task 4 seam: call registerReportFonts('/fonts/report') here and switch the
   // document's fontFamily from Helvetica to the registered family. Helvetica is
   // the built-in fallback until then.
+  const now = new Date();
   const { pdf } = await import('@react-pdf/renderer');
-  const blob = await pdf(<ReportDocument report={report} {...opts} />).toBlob();
+  const blob = await pdf(<ReportDocument report={report} generatedAt={now} {...opts} />).toBlob();
 
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement('a');
   anchor.href = url;
-  anchor.download = reportFileName(report, 'pdf');
+  anchor.download = reportFileName(report, 'pdf', now);
   anchor.click();
   URL.revokeObjectURL(url);
 }
