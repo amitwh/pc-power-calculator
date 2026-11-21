@@ -45,8 +45,9 @@ export default defineConfig(({ isSsrBuild }) => ({
             },
             workbox: {
               // woff2 is precached so the installed app keeps its typeface
-              // offline instead of reflowing to a system fallback.
-              globPatterns: ['**/*.{js,css,html,json,svg,png,ico,woff2,webmanifest}'],
+              // offline instead of reflowing to a system fallback. The report's
+              // embedded fonts are static TTFs fetched at export time.
+              globPatterns: ['**/*.{js,css,html,json,svg,png,ico,woff2,ttf,webmanifest}'],
               // Navigations fall back to a shell, not to dist/index.html: that
               // file is the prerendered home page (366 routes are written after
               // Workbox runs), and hydrating it at another URL would mismatch.

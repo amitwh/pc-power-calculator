@@ -157,3 +157,52 @@ export const gamingReport: PdfReport = {
   tariffVerifiedAt: '2026-10-29',
   catalogVerifiedAt: '2026-09-21',
 };
+
+/**
+ * A build whose schedule rows add up to ₹1,23,456.50 — a lakh-scale figure
+ * with paise and Indian digit grouping, used to prove the rupee glyph survives
+ * the font subsetting.
+ */
+export const lakhReport: PdfReport = {
+  ...gamingReport,
+  buildName: 'Lakh build',
+  schedule: [
+    {
+      name: 'Gaming (1080p)',
+      hoursPerDay: 4,
+      daysPerWeek: 7,
+      drawW: 437,
+      kwhYear: 635.9,
+      costYear: 100000,
+    },
+    {
+      name: 'Office',
+      hoursPerDay: 8,
+      daysPerWeek: 7,
+      drawW: 176,
+      kwhYear: 511.3,
+      costYear: 20000,
+    },
+    {
+      name: 'Web browsing',
+      hoursPerDay: 4,
+      daysPerWeek: 7,
+      drawW: 196,
+      kwhYear: 285.0,
+      costYear: 3000,
+    },
+    {
+      name: 'Idle / desktop',
+      hoursPerDay: 2,
+      daysPerWeek: 7,
+      drawW: 75,
+      kwhYear: 54.5,
+      costYear: 456.5,
+    },
+  ],
+  totals: {
+    daily: { kwh: 4.07, cost: 338.24 },
+    monthly: { kwh: 123.88, cost: 10288.04 },
+    yearly: { kwh: 1486.6, cost: 123456.5 },
+  },
+};

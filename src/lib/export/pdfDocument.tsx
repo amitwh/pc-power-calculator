@@ -4,6 +4,7 @@ import type { CurrencyInfo } from '@/types/currency';
 import { CALC_ENGINE_VERSION } from '@/lib/calc/version';
 import { averageWallW, tierFor } from '@/lib/calc/classify';
 import { categoryColor } from '@/lib/categoryColors';
+import { REPORT_FONT_FAMILIES, registerReportFonts } from '@/lib/export/reportFonts';
 import {
   CATEGORY_LABEL,
   buildCategoryLabel,
@@ -43,13 +44,18 @@ const RULE = '#d9d0c9';
 const TRACK = '#efe9e4';
 const USE_CASE_COLOR = '#6a5acd';
 const PDF_SOURCE_URL = 'https://pcpower.concreteinfo.co.in';
+/**
+ * JetBrains Mono has no rupee glyph, so figures fall back to Inter for ₹ (and
+ * any other character the numeric face lacks) while digits stay monospaced.
+ */
+const NUMERIC_FONT_STACK = [REPORT_FONT_FAMILIES.numeric, REPORT_FONT_FAMILIES.body];
 const SHORT_DISCLAIMER =
   'Estimates only: power is modelled from rated specs (or the basis shown), not measured unless labelled, and carbon uses an editable grid factor — not electrical or financial advice.';
 
 const styles = StyleSheet.create({
   page: {
     padding: PAGE_MARGIN,
-    fontFamily: 'Helvetica',
+    fontFamily: REPORT_FONT_FAMILIES.body,
     fontSize: 9,
     color: INK,
     lineHeight: 1.35,
@@ -142,6 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   heroAmount: {
+    fontFamily: NUMERIC_FONT_STACK,
     fontSize: 32,
     fontWeight: 700,
     color: BRAND,
@@ -169,6 +176,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   factValue: {
+    fontFamily: NUMERIC_FONT_STACK,
     fontSize: 11,
     fontWeight: 700,
     color: INK,
@@ -196,7 +204,10 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
   barReadout: {
-    width: 105,
+    // Slightly wider than the proportional setting: the monospaced figures
+    // are wider, and this keeps "₹1,00,000.00 · 635.9 kWh" on one line.
+    width: 124,
+    fontFamily: NUMERIC_FONT_STACK,
     fontSize: 8.4,
     color: '#4a443f',
     textAlign: 'right',
@@ -230,9 +241,13 @@ const styles = StyleSheet.create({
     color: '#4a443f',
   },
   kvValue: {
+    fontFamily: NUMERIC_FONT_STACK,
     fontSize: 10,
     fontWeight: 700,
     color: INK,
+  },
+  kvLabelWord: {
+    fontFamily: REPORT_FONT_FAMILIES.body,
   },
   continuationHeader: {
     position: 'absolute',
@@ -257,6 +272,7 @@ const styles = StyleSheet.create({
     left: PAGE_MARGIN,
   },
   footerPageNumber: {
+    fontFamily: NUMERIC_FONT_STACK,
     position: 'absolute',
     top: A4_HEIGHT - PAGE_MARGIN + 1,
     right: PAGE_MARGIN,
@@ -566,7 +582,8 @@ export function ReportDocument({ report, generatedAt }: ReportDocumentProps) {
             <View style={styles.kvRow}>
               <Text style={styles.kvKey}>Consumption band (average over 8,760 hours)</Text>
               <Text style={styles.kvValue}>
-                {`${tier.label} · ${Number.isFinite(averageW) ? `${num(averageW)} W` : '—'}`}
+                <Text style={styles.kvLabelWord}>{`${tier.label} · `}</Text>
+                {Number.isFinite(averageW) ? `${num(averageW)} W` : '—'}
               </Text>
             </View>
           </View>
@@ -611,10 +628,8 @@ export function ReportDocument({ report, generatedAt }: ReportDocumentProps) {
  * app bundle, mirroring how the old jsPDF export was loaded.
  */
 export async function exportPdf(report: PdfReport, opts: ExportPdfOptions = {}): Promise<void> {
-  // Task 4 seam: call registerReportFonts('/fonts/report') here and switch the
-  // document's fontFamily from Helvetica to the registered family. Helvetica is
-  // the built-in fallback until then.
   const now = new Date();
+  registerReportFonts('/fonts/report');
   const { pdf } = await import('@react-pdf/renderer');
   const blob = await pdf(<ReportDocument report={report} generatedAt={now} {...opts} />).toBlob();
 
