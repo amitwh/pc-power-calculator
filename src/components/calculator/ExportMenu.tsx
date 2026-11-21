@@ -10,7 +10,7 @@ import {
   type PdfReport,
   type PdfScheduleRow,
 } from '@/lib/export/report';
-import { loadBrandLogo, makeQrDataUrl } from '@/lib/export/brandAssets';
+import { loadBrandLogo, loadBrandWatermark, makeQrDataUrl } from '@/lib/export/brandAssets';
 import { buildPermalinkUrl } from '@/lib/share/buildLink';
 import { useBuildStore } from '@/store/buildStore';
 import { listCountries, listSubdivisions, resolveLocationTariff, tariffsLastUpdated, tariffProvenance } from '@/lib/data/tariffs';
@@ -150,15 +150,17 @@ export function ExportMenu({
       // The renderer is a heavy lazy chunk; the branding assets and QR are
       // browser-only. Load all three together, and let a missing logo/QR
       // degrade to a report without them rather than failing the export.
-      const [{ exportPdf }, logoDataUrl, qrDataUrl] = await Promise.all([
+      const [{ exportPdf }, logoDataUrl, qrDataUrl, watermarkDataUrl] = await Promise.all([
         import('@/lib/export/pdf'),
         loadBrandLogo().catch(() => null),
         shareUrl ? makeQrDataUrl(shareUrl).catch(() => null) : Promise.resolve(null),
+        loadBrandWatermark().catch(() => null),
       ]);
       await exportPdf(report, {
         shareUrl,
         qrDataUrl: qrDataUrl ?? undefined,
         logoDataUrl,
+        watermarkDataUrl,
       });
       trackExport('pdf');
     } finally {

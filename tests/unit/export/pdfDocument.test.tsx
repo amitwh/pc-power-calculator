@@ -119,26 +119,24 @@ describe('ReportDocument', () => {
     },
   );
 
-  test.skipIf(!hasBinary('pdftotext') || !hasBinary('pdfinfo'))(
-    'prints the faint ConcreteInfo watermark once per page',
+  test.skipIf(!hasBinary('pdfimages') || !hasBinary('pdfinfo'))(
+    'embeds the diagonal watermark image on every page without changing pagination',
     async () => {
-      const buffer = await renderToBuffer(<ReportDocument report={gamingReport} />);
+      const buffer = await renderToBuffer(
+        <ReportDocument report={gamingReport} watermarkDataUrl={TINY_PNG} />,
+      );
       const pdfPath = writePdf(buffer);
       const pages = pdfPageCount(pdfPath);
-      expect(pages).toBeGreaterThanOrEqual(2);
+      const images = execFileSync('pdfimages', ['-list', pdfPath], {
+        encoding: 'utf8',
+      })
+        .split('\n')
+        .slice(2)
+        .filter((line) => line.trim() !== '').length;
 
-      for (let page = 1; page <= pages; page++) {
-        // Per-page extraction: the watermark overlaps table rows, so strip
-        // whitespace instead of relying on a single -layout line.
-        const pageText = execFileSync(
-          'pdftotext',
-          ['-f', String(page), '-l', String(page), pdfPath, '-'],
-          { encoding: 'utf8' },
-        );
-        expect(pageText.replace(/\s+/g, '')).toContain(
-          'ConcreteInfoPCPowerConsumptionCalculator',
-        );
-      }
+      expect(pages).toBeGreaterThanOrEqual(2);
+      expect(pages).toBeLessThanOrEqual(3);
+      expect(images).toBeGreaterThanOrEqual(pages);
     },
   );
 

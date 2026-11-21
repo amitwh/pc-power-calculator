@@ -8,6 +8,7 @@
  */
 
 const LOGO_URLS = ['/brand/logo-report.png', '/brand/logo.png'] as const;
+const WATERMARK_URL = '/brand/watermark.png';
 
 function blobToDataUrl(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -35,6 +36,14 @@ export async function loadBrandLogo(): Promise<string | null> {
     if (dataUrl) return dataUrl;
   }
   return null;
+}
+
+/**
+ * The pre-rotated, very faint watermark. A PNG rather than rotated text:
+ * react-pdf's transform pivot shifted rotated text partly off the page.
+ */
+export async function loadBrandWatermark(): Promise<string | null> {
+  return fetchAsDataUrl(WATERMARK_URL);
 }
 
 /** A 512 px QR encoding the build's share URL, as a PNG data URL. */

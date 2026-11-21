@@ -16,6 +16,7 @@ import type { PdfReport } from '@/lib/export/report';
 vi.mock('@/lib/export/pdf', () => ({ exportPdf: vi.fn().mockResolvedValue(undefined) }));
 vi.mock('@/lib/export/brandAssets', () => ({
   loadBrandLogo: vi.fn().mockResolvedValue(null),
+  loadBrandWatermark: vi.fn().mockResolvedValue(null),
   makeQrDataUrl: vi.fn().mockResolvedValue(null),
 }));
 
