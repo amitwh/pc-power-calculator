@@ -7,19 +7,39 @@ const items = [
   { to: '/about', label: 'About' },
 ];
 
+const PILL =
+  'inline-flex h-9 items-center rounded-full px-3.5 font-body text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-950';
+const INACTIVE =
+  'text-gray-600 hover:bg-white hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-50';
+const ACTIVE =
+  'bg-white font-semibold text-brand-text shadow-card dark:bg-gray-800 dark:text-brand-light';
+
 export default function TopNav() {
   return (
-    <header className="hidden md:flex h-16 items-center justify-between border-b border-gray-200 dark:border-gray-800 px-6 bg-white dark:bg-gray-950">
-      <NavLink to="/" className="font-display text-xl font-bold text-brand-dark">⚡ PC Power Calculator</NavLink>
-      <nav className="flex items-center gap-6">
+    <header className="sticky top-0 z-40 hidden h-16 items-center justify-between border-b border-gray-200/80 bg-white/85 px-6 backdrop-blur-md md:flex dark:border-gray-800 dark:bg-gray-950/85">
+      <NavLink to="/" aria-label="PC Power Calculator" className="flex items-center gap-2.5">
+        <span
+          aria-hidden
+          className="flex h-9 w-9 items-center justify-center rounded-8 bg-brand/10 text-lg"
+        >
+          ⚡
+        </span>
+        <span className="font-display text-lg font-bold tracking-tight">
+          PC Power{' '}
+          <span className="text-brand-text dark:text-brand-light">Calculator</span>
+        </span>
+      </NavLink>
+
+      <nav
+        aria-label="Primary"
+        className="flex items-center gap-1 rounded-full bg-gray-50 p-1 ring-1 ring-gray-200/70 dark:bg-gray-900/70 dark:ring-gray-800"
+      >
         {items.slice(0, 2).map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.end}
-            className={({ isActive }) =>
-              `font-body text-sm ${isActive ? 'text-brand-dark font-semibold' : 'text-gray-700 dark:text-gray-300 hover:text-brand-dark'}`
-            }
+            className={({ isActive }) => `${PILL} ${isActive ? ACTIVE : INACTIVE}`}
           >
             {item.label}
           </NavLink>
@@ -27,11 +47,25 @@ export default function TopNav() {
 
         {/* Guides with a menu: the articles are the site's search surface, so
             they belong one hover away rather than only behind the hub. */}
-        <details className="relative group">
-          <summary className="cursor-pointer list-none font-body text-sm text-gray-700 hover:text-brand-dark dark:text-gray-300 [&::-webkit-details-marker]:hidden">
-            Guides <span aria-hidden className="text-[10px] align-middle">▾</span>
+        <details className="group relative">
+          <summary
+            className={`${PILL} ${INACTIVE} cursor-pointer list-none [&::-webkit-details-marker]:hidden`}
+          >
+            Guides
+            <svg
+              aria-hidden
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="ml-1 h-3.5 w-3.5 transition-transform group-open:rotate-180"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z"
+                clipRule="evenodd"
+              />
+            </svg>
           </summary>
-          <div className="absolute right-0 z-50 mt-2 w-80 rounded-12 border border-gray-200 bg-white p-1.5 shadow-lg dark:border-gray-700 dark:bg-gray-900">
+          <div className="absolute right-0 z-50 mt-2 w-80 rounded-12 border border-gray-200 bg-white p-2 shadow-card-raised dark:border-gray-700 dark:bg-gray-900">
             <Link
               to="/guides"
               className="block rounded-8 px-2.5 py-1.5 text-sm font-semibold text-brand-text hover:bg-gray-50 dark:hover:bg-gray-800"
@@ -55,9 +89,8 @@ export default function TopNav() {
           <NavLink
             key={item.to}
             to={item.to}
-            className={({ isActive }) =>
-              `font-body text-sm ${isActive ? 'text-brand-dark font-semibold' : 'text-gray-700 dark:text-gray-300 hover:text-brand-dark'}`
-            }
+            end={item.end}
+            className={({ isActive }) => `${PILL} ${isActive ? ACTIVE : INACTIVE}`}
           >
             {item.label}
           </NavLink>

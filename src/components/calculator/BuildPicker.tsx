@@ -292,7 +292,7 @@ export function BuildPicker() {
       )}
 
       {/* One picker, at the foot of the card where the mockup puts it. */}
-      <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-[minmax(0,9rem)_minmax(0,10rem)]">
+      <div className="mt-3 grid grid-cols-1 gap-2">
         <Select
           aria-label="Use case"
           className="!min-h-9 !text-sm"

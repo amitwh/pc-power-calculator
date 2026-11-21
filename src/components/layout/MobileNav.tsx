@@ -19,7 +19,7 @@ export default function MobileNav() {
           to={item.to}
           end={item.end}
           className={({ isActive }) =>
-            `font-body text-xs flex flex-col items-center px-1.5 min-w-[44px] min-h-[44px] justify-center ${isActive ? 'text-brand-dark font-semibold' : 'text-gray-700 dark:text-gray-300'}`
+            `font-body text-xs flex flex-col items-center px-1.5 min-w-[44px] min-h-[44px] justify-center rounded-12 ${isActive ? 'bg-brand/10 text-brand-text font-semibold' : 'text-gray-700 dark:text-gray-300'}`
           }
         >
           {item.label}
