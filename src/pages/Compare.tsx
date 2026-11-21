@@ -3,6 +3,11 @@ import { BuildSelector } from '@/components/compare/BuildSelector';
 import { ComparisonTable } from '@/components/compare/ComparisonTable';
 import { CompareVerdict } from '@/components/compare/CompareVerdict';
 import { Card, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { BuildPicker } from '@/components/calculator/BuildPicker';
+import { ScheduleEditor } from '@/components/calculator/ScheduleEditor';
+import { useCalc } from '@/hooks/useCalc';
+import { formatCost } from '@/lib/calc/format';
 import { useBuildStore } from '@/store/buildStore';
 import { buildStats } from '@/lib/calc/buildStats';
 import { currencyForLocation } from '@/lib/data/tariffs';
@@ -30,6 +35,9 @@ export default function Compare() {
   const activeBuildId = useBuildStore((s) => s.activeBuildId);
   const storeBuilds = useBuildStore((s) => s.builds);
   const { snapshot } = useFx();
+  const addBuild = useBuildStore((s) => s.addBuild);
+  const [builderOpen, setBuilderOpen] = useState(false);
+  const { build: activeBuild, yearly, currency: activeCurrency } = useCalc();
 
   // Import an exported-builds link only once localStorage has been applied:
   // importing before rehydration would persist this render's default build
@@ -84,6 +92,42 @@ export default function Compare() {
           userSelected.current = true;
         }}
       />
+      {/* A compare page should not require a saved pair first: build one here,
+          with the same pickers as the calculator, and it joins both slots. */}
+      <Card>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <CardTitle className="text-base!">Build one here</CardTitle>
+          <div className="flex items-center gap-2">
+            <span className="font-numeric text-sm tabular-nums text-gray-600 dark:text-gray-400">
+              {builderOpen && activeBuild.name}: {formatCost(yearly.cost, activeCurrency)} / yr
+            </span>
+            <Button
+              size="sm"
+              variant={builderOpen ? 'secondary' : 'primary'}
+              onClick={() => {
+                if (!builderOpen) addBuild('Compared build');
+                setBuilderOpen((o) => !o);
+              }}
+            >
+              {builderOpen ? 'Hide builder' : '+ New build'}
+            </Button>
+          </div>
+        </div>
+
+        {builderOpen && (
+          <>
+            <p className="mt-1 text-xs text-gray-500">
+              Parts and usage for the build you are editing. It is saved in this browser and
+              appears in both dropdowns above, so it can be compared against anything.
+            </p>
+            <div className="mt-2 grid items-start gap-3 lg:grid-cols-[1.5fr_1fr]">
+              <BuildPicker />
+              <ScheduleEditor />
+            </div>
+          </>
+        )}
+      </Card>
+
       {stats && (
         <>
           <CompareVerdict stats={stats} displayCurrency={currency} />
