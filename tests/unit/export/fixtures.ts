@@ -1,5 +1,6 @@
 import { findCurrency } from '@/lib/data/currencies';
-import type { PdfReport } from '@/lib/export/report';
+import type { ComponentCategory } from '@/types/component';
+import type { PdfReport, PowerBasis } from '@/lib/export/report';
 
 const inr = findCurrency('INR')!;
 
@@ -204,5 +205,63 @@ export const lakhReport: PdfReport = {
     daily: { kwh: 4.07, cost: 338.24 },
     monthly: { kwh: 123.88, cost: 10288.04 },
     yearly: { kwh: 1486.6, cost: 123456.5 },
+  },
+};
+
+const CHUNK_TEST_CATEGORIES: ComponentCategory[] = [
+  'cpu',
+  'gpu',
+  'ram',
+  'storage',
+  'motherboard',
+  'monitor',
+  'peripheral',
+  'fan',
+  'cooler',
+  'add_in_card',
+];
+
+/**
+ * A device-heavy build used to prove the components table repeats its header
+ * when it spans pages. `n` rows are produced, none of them a PSU, cycling
+ * through categories and power bases so both colour rules are exercised.
+ */
+export function bigReport(n: number): PdfReport {
+  const devices = Array.from({ length: n }, (_, i) => {
+    const category = CHUNK_TEST_CATEGORIES[i % CHUNK_TEST_CATEGORIES.length];
+    const qty = category === 'ram' || category === 'fan' ? 2 : 1;
+    const unitW = 5 + (i % 12) * 10;
+    const basis: PowerBasis = i % 3 === 0 ? 'estimated' : i % 3 === 1 ? 'rated' : 'measured';
+    return {
+      name: `Test ${category.replace('_', ' ')} ${i + 1}`,
+      category,
+      qty,
+      unitW,
+      totalW: unitW * qty,
+      basis,
+    };
+  });
+  const typicalComponentW = devices.reduce((acc, device) => acc + device.totalW, 0);
+  return {
+    ...gamingReport,
+    buildName: `Big build ${n}`,
+    devices,
+    typicalComponentW,
+  };
+}
+
+/** A build with no PSU selected and no meter readings: the dashes path. */
+export const reportWithoutPsuAndMeasured: PdfReport = {
+  ...gamingReport,
+  buildName: 'No PSU build',
+  measured: undefined,
+  psu: {
+    name: null,
+    ratedW: null,
+    certification: null,
+    efficiencyAtLoad: null,
+    recommendedW: 600,
+    peakComponentW: 473,
+    peakWallW: 530.1,
   },
 };

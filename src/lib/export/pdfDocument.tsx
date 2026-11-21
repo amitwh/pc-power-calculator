@@ -2,12 +2,23 @@ import { Document, Page, View, Text, Link, StyleSheet } from '@react-pdf/rendere
 import type { ComponentCategory } from '@/types/component';
 import type { CurrencyInfo } from '@/types/currency';
 import { CALC_ENGINE_VERSION } from '@/lib/calc/version';
-import { averageWallW, tierFor } from '@/lib/calc/classify';
+import {
+  CONSUMPTION_TIERS,
+  averageWallW,
+  tierFor,
+  tierPosition,
+} from '@/lib/calc/classify';
+import { equivalences } from '@/lib/calc/equivalences';
 import { categoryColor } from '@/lib/categoryColors';
 import { REPORT_FONT_FAMILIES, registerReportFonts } from '@/lib/export/reportFonts';
 import {
+  BASIS_LABEL,
   CATEGORY_LABEL,
+  DEFAULT_GRID_FACTOR_KG_PER_KWH,
+  REPORT_DISCLAIMER,
   buildCategoryLabel,
+  certificationLabel,
+  deviceCategoryLabel,
   istTimestamp,
   kwh,
   makeReportId,
@@ -34,14 +45,22 @@ interface ReportDocumentProps extends ExportPdfOptions {
   generatedAt?: Date;
 }
 
+const A4_WIDTH = 595.28;
 const A4_HEIGHT = 841.89;
 const PAGE_MARGIN = 36;
+const CONTENT_WIDTH = A4_WIDTH - PAGE_MARGIN * 2;
+/** Rows per table block; each block repeats the header when it paginates. */
+const TABLE_CHUNK_ROWS = 18;
 const BRAND = '#e5461f';
 const INK = '#1a1714';
 const MUTED = '#6b625b';
 const FAINT = '#8a8078';
 const RULE = '#d9d0c9';
 const TRACK = '#efe9e4';
+const ZEBRA = '#fafbfc';
+const AMBER = '#a15c07';
+const GREEN = '#1a7a56';
+const RED = '#b91c1c';
 const USE_CASE_COLOR = '#6a5acd';
 const PDF_SOURCE_URL = 'https://pcpower.concreteinfo.co.in';
 /**
@@ -114,7 +133,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   section: {
-    marginTop: 22,
+    marginTop: 10,
   },
   sectionHeading: {
     fontSize: 11.5,
@@ -185,7 +204,7 @@ const styles = StyleSheet.create({
   barRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 6,
+    marginBottom: 5,
   },
   barLabel: {
     width: 92,
@@ -227,6 +246,129 @@ const styles = StyleSheet.create({
     fontSize: 9.5,
     color: '#4a443f',
     lineHeight: 1.45,
+  },
+  tableHeaderRow: {
+    flexDirection: 'row',
+    backgroundColor: BRAND,
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 2,
+  },
+  tableHeaderCell: {
+    color: '#ffffff',
+    fontSize: 7.2,
+    fontWeight: 700,
+    letterSpacing: 0.3,
+    paddingVertical: 4,
+    paddingHorizontal: 4,
+  },
+  tableRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 0.5,
+    borderBottomColor: RULE,
+  },
+  tableRowAlt: {
+    backgroundColor: ZEBRA,
+  },
+  tableCell: {
+    fontSize: 7.6,
+    color: INK,
+    paddingVertical: 3.2,
+    paddingHorizontal: 4,
+  },
+  tableCellNumeric: {
+    fontFamily: NUMERIC_FONT_STACK,
+    textAlign: 'right',
+  },
+  tableCellRight: {
+    textAlign: 'right',
+  },
+  tableFootRow: {
+    flexDirection: 'row',
+    backgroundColor: '#f6f1ed',
+    borderTopWidth: 0.7,
+    borderTopColor: BRAND,
+    borderBottomWidth: 0.7,
+    borderBottomColor: BRAND,
+  },
+  tableFootCell: {
+    fontSize: 7.6,
+    fontWeight: 700,
+    color: INK,
+    paddingVertical: 4.5,
+    paddingHorizontal: 4,
+  },
+  colDevice: {
+    flex: 1,
+  },
+  colCategory: {
+    width: 90,
+  },
+  colQty: {
+    width: 34,
+  },
+  colUnit: {
+    width: 62,
+  },
+  colTotal: {
+    width: 62,
+  },
+  colBasis: {
+    width: 64,
+  },
+  warningBox: {
+    marginTop: 6,
+    backgroundColor: '#fef2f2',
+    borderRadius: 2,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+  },
+  warningText: {
+    fontSize: 8.5,
+    fontWeight: 700,
+    color: RED,
+  },
+  emphasis: {
+    color: BRAND,
+  },
+  gauge: {
+    height: 12,
+    marginTop: 6,
+    marginBottom: 5,
+  },
+  gaugeSegment: {
+    position: 'absolute',
+    top: 2,
+    height: 8,
+    borderRadius: 3,
+  },
+  gaugeMarker: {
+    position: 'absolute',
+    top: 0,
+    width: 3,
+    height: 12,
+    borderRadius: 1.5,
+    backgroundColor: BRAND,
+  },
+  tierLine: {
+    fontSize: 9.5,
+    fontWeight: 700,
+    color: INK,
+  },
+  suggestionLine: {
+    fontSize: 9.5,
+    fontWeight: 700,
+    color: INK,
+    marginTop: 5,
+  },
+  equivalenceSentence: {
+    flex: 1,
+    marginRight: 14,
+  },
+  footnote: {
+    fontSize: 7.5,
+    color: '#4a443f',
+    lineHeight: 1.4,
   },
   kvRow: {
     flexDirection: 'row',
@@ -326,6 +468,16 @@ function safeKwh(value: number): string {
   return Number.isFinite(value) ? kwh(value) : '—';
 }
 
+/** Brand colour blended into white, lightest band first, for the gauge. */
+function gaugeColor(index: number): string {
+  const alpha = 0.08 + index * 0.13;
+  const channel = (base: number, target: number) =>
+    Math.round(base + (target - base) * alpha)
+      .toString(16)
+      .padStart(2, '0');
+  return `#${channel(255, 229)}${channel(255, 70)}${channel(255, 31)}`;
+}
+
 const METHOD_STEPS = [
   'Component draw: each part contributes its rated wattage, or the basis shown in the component table. Overclocking adds a percentage on top of the CPU and GPU figures.',
   'Workload draw: each use case applies a utilisation factor to those components — office and browsing run a fraction of full load, gaming and rendering run close to it.',
@@ -348,6 +500,45 @@ export function ReportDocument({ report, generatedAt }: ReportDocumentProps) {
   const reconciled = reconciledTotals(report);
   const averageW = averageWallW(report.totals.yearly.kwh);
   const tier = tierFor(Number.isFinite(averageW) ? averageW : 0);
+  const psu = report.psu;
+  const additionalCapacity = psu.ratedW != null ? psu.ratedW - psu.recommendedW : null;
+  const gridFactor = report.gridFactorKgPerKwh ?? DEFAULT_GRID_FACTOR_KG_PER_KWH;
+  const co2kg = report.totals.yearly.kwh * gridFactor;
+  const gaugeMarkerLeft =
+    (tierPosition(Number.isFinite(averageW) ? averageW : 0) / 100) * CONTENT_WIDTH;
+
+  // The table is chunked rather than left to the layout engine: each block is
+  // kept whole and repeats the header, so a split never orphans a header row.
+  const tableDevices = report.devices.filter((device) => device.category !== 'psu');
+  const deviceChunks: Array<typeof tableDevices> = [];
+  for (let i = 0; i < tableDevices.length; i += TABLE_CHUNK_ROWS) {
+    deviceChunks.push(tableDevices.slice(i, i + TABLE_CHUNK_ROWS));
+  }
+
+  // Six equivalences, chosen exactly as the old renderer chose them: one carbon,
+  // three fuel, one water and one everyday figure.
+  const allEquivalences = equivalences(report.totals.yearly.kwh, co2kg);
+  const equivalenceRows = [
+    ...allEquivalences.filter((item) => item.group === 'carbon').slice(0, 1),
+    ...allEquivalences.filter((item) => item.group === 'fuel').slice(0, 3),
+    ...allEquivalences.filter((item) => item.group === 'water').slice(0, 1),
+    ...allEquivalences.filter((item) => item.group === 'everyday').slice(0, 1),
+  ];
+
+  const measured = report.measured;
+  const hasMeasured =
+    measured != null && Boolean(measured.idle_w || measured.load_w || measured.avg_w);
+  const measuredRows: Array<{ label: string; model: number; real: number }> = [];
+  if (measured?.idle_w) {
+    measuredRows.push({ label: 'Idle draw (wall)', model: report.idleWallW, real: measured.idle_w });
+  }
+  if (measured?.load_w) {
+    measuredRows.push({ label: 'Full load (wall)', model: psu.peakWallW, real: measured.load_w });
+  }
+  if (measured?.avg_w) {
+    const modelAvg = report.totals.daily.kwh > 0 ? (report.totals.daily.kwh * 1000) / 24 : 0;
+    measuredRows.push({ label: 'Daily average (wall)', model: modelAvg, real: measured.avg_w });
+  }
 
   const meta: Array<[string, string]> = [
     ['Report ID', reportId],
@@ -593,6 +784,346 @@ export function ReportDocument({ report, generatedAt }: ReportDocumentProps) {
             machine is on. A machine that idles 100 W for 20 hours costs more than one that peaks
             at 400 W for two.
           </Text>
+        </View>
+
+        {/* Components table, chunked so every page of it repeats the header. */}
+        <View>
+          {deviceChunks.length > 0 ? (
+            deviceChunks.map((chunk, chunkIndex) => (
+              <View
+                key={`devices-${chunkIndex}`}
+                wrap={false}
+                style={chunkIndex === 0 ? styles.section : undefined}
+              >
+                {chunkIndex === 0 ? (
+                  <Text style={styles.sectionHeading}>Components</Text>
+                ) : null}
+                <View style={styles.tableHeaderRow}>
+                  <Text style={[styles.tableHeaderCell, styles.colDevice]}>Device</Text>
+                  <Text style={[styles.tableHeaderCell, styles.colCategory]}>Category</Text>
+                  <Text
+                    style={[styles.tableHeaderCell, styles.colQty, styles.tableCellRight]}
+                  >
+                    Qty
+                  </Text>
+                  <Text
+                    style={[styles.tableHeaderCell, styles.colUnit, styles.tableCellRight]}
+                  >
+                    W per unit
+                  </Text>
+                  <Text
+                    style={[styles.tableHeaderCell, styles.colTotal, styles.tableCellRight]}
+                  >
+                    Total W
+                  </Text>
+                  <Text
+                    style={[styles.tableHeaderCell, styles.colBasis, styles.tableCellRight]}
+                  >
+                    Basis
+                  </Text>
+                </View>
+                {chunk.map((row, rowIndex) => {
+                  const unitW =
+                    typeof row.unitW === 'number' && Number.isFinite(row.unitW)
+                      ? row.unitW
+                      : null;
+                  return (
+                    <View
+                      key={`${row.name}-${rowIndex}`}
+                      style={[styles.tableRow, rowIndex % 2 === 1 ? styles.tableRowAlt : {}]}
+                    >
+                      <Text style={[styles.tableCell, styles.colDevice]}>{row.name}</Text>
+                      <Text style={[styles.tableCell, styles.colCategory]}>
+                        {deviceCategoryLabel(row)}
+                      </Text>
+                      <Text
+                        style={[styles.tableCell, styles.tableCellNumeric, styles.colQty]}
+                      >
+                        {Number.isFinite(row.qty) ? String(row.qty) : '—'}
+                      </Text>
+                      <Text
+                        style={[styles.tableCell, styles.tableCellNumeric, styles.colUnit]}
+                      >
+                        {unitW != null ? num(unitW) : '—'}
+                      </Text>
+                      <Text
+                        style={[styles.tableCell, styles.tableCellNumeric, styles.colTotal]}
+                      >
+                        {unitW != null ? num(row.totalW) : '—'}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.tableCell,
+                          styles.tableCellRight,
+                          styles.colBasis,
+                          row.basis === 'estimated'
+                            ? { color: AMBER }
+                            : row.basis === 'measured'
+                              ? { color: GREEN }
+                              : {},
+                        ]}
+                      >
+                        {BASIS_LABEL[row.basis]}
+                      </Text>
+                    </View>
+                  );
+                })}
+                {chunkIndex === deviceChunks.length - 1 ? (
+                  <View style={styles.tableFootRow}>
+                    <Text style={[styles.tableFootCell, styles.colDevice]}>
+                      Estimated typical component draw (DC)
+                    </Text>
+                    <Text style={[styles.tableFootCell, styles.colCategory]} />
+                    <Text style={[styles.tableFootCell, styles.colQty]} />
+                    <Text style={[styles.tableFootCell, styles.colUnit]} />
+                    <Text
+                      style={[
+                        styles.tableFootCell,
+                        styles.tableCellRight,
+                        styles.colTotal,
+                      ]}
+                    >
+                      {num(report.typicalComponentW)}
+                    </Text>
+                    <Text style={[styles.tableFootCell, styles.colBasis]} />
+                  </View>
+                ) : null}
+              </View>
+            ))
+          ) : (
+            <View wrap={false} style={styles.section}>
+              <Text style={styles.sectionHeading}>Components</Text>
+              <Text style={styles.paragraph}>No components selected.</Text>
+            </View>
+          )}
+          <Text style={[styles.paragraph, { marginTop: 6 }]}>
+            Rated = the manufacturer&apos;s published figure. Measured = from independent
+            testing. Estimated = derived by the calculator where no figure was published. These
+            are component (DC) figures, before power-supply conversion.
+          </Text>
+        </View>
+
+        {/* Power supply sizing and conversion losses. */}
+        <View wrap={false} style={styles.section}>
+          <Text style={styles.sectionHeading}>Power supply</Text>
+          <View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Estimated typical component draw (DC)</Text>
+              <Text style={styles.kvValue}>{safeWatts(report.typicalComponentW)}</Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Estimated maximum system draw (wall, AC)</Text>
+              <Text style={styles.kvValue}>{safeWatts(psu.peakWallW)}</Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Recommended PSU capacity</Text>
+              <Text style={[styles.kvValue, styles.emphasis]}>
+                {`${num(psu.recommendedW, 0)} W`}
+              </Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Installed PSU capacity</Text>
+              <Text style={styles.kvValue}>
+                {psu.ratedW != null ? `${num(psu.ratedW, 0)} W` : 'Not selected'}
+              </Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Additional capacity</Text>
+              <Text
+                style={[
+                  styles.kvValue,
+                  additionalCapacity == null
+                    ? {}
+                    : { color: additionalCapacity < 0 ? RED : GREEN },
+                ]}
+              >
+                {additionalCapacity == null
+                  ? '—'
+                  : `${additionalCapacity >= 0 ? '+' : ''}${num(additionalCapacity, 0)} W`}
+              </Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Model / certification</Text>
+              <Text style={styles.kvValue}>
+                {[psu.name, certificationLabel(psu.certification)].filter(Boolean).join(' · ') ||
+                  '—'}
+              </Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Conversion efficiency at this load</Text>
+              <Text style={styles.kvValue}>
+                {psu.efficiencyAtLoad != null
+                  ? `${Math.round(psu.efficiencyAtLoad * 100)}%`
+                  : '—'}
+              </Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>UPS conversion efficiency</Text>
+              <Text style={styles.kvValue}>
+                {report.upsEfficiency && report.upsEfficiency < 1
+                  ? `${Math.round(report.upsEfficiency * 100)}%`
+                  : 'No UPS in the path'}
+              </Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Peak draw lost to PSU conversion</Text>
+              <Text style={styles.kvValue}>
+                {psu.efficiencyAtLoad != null
+                  ? safeWatts(psu.peakWallW * (1 - psu.efficiencyAtLoad))
+                  : '—'}
+              </Text>
+            </View>
+          </View>
+          <Text style={[styles.paragraph, { marginTop: 6 }]}>
+            The recommendation is a practical PSU size: peak component draw plus 35% headroom for
+            transient spikes and capacitor ageing, rounded up to the nearest standard rating — not
+            peak draw multiplied by 1.35 exactly. Wall draw is component draw divided by the
+            supply&apos;s conversion efficiency at this load (P_wall = P_components / efficiency).
+          </Text>
+          {psu.ratedW != null && psu.ratedW < psu.recommendedW ? (
+            <View style={styles.warningBox}>
+              <Text style={styles.warningText}>
+                {`Installed supply is ${num(
+                  psu.recommendedW - psu.ratedW,
+                  0,
+                )} W below the recommendation — undersized for sustained full load.`}
+              </Text>
+            </View>
+          ) : null}
+        </View>
+
+        {/* Carbon footprint at the configured grid factor. */}
+        <View wrap={false} style={styles.section}>
+          <Text style={styles.sectionHeading}>Carbon footprint</Text>
+          <View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Annual energy</Text>
+              <Text style={styles.kvValue}>{safeKwh(report.totals.yearly.kwh)}</Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Grid factor used</Text>
+              <Text style={styles.kvValue}>
+                {Number.isFinite(gridFactor) ? `${num(gridFactor, 2)} kg CO₂e / kWh` : '—'}
+              </Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Estimated annual emissions</Text>
+              <Text style={[styles.kvValue, styles.emphasis]}>
+                {Number.isFinite(co2kg) ? `${num(co2kg, 1)} kg CO₂e` : '—'}
+              </Text>
+            </View>
+            <View style={styles.kvRow}>
+              <Text style={styles.kvKey}>Equivalent</Text>
+              <Text style={styles.kvValue}>
+                {Number.isFinite(co2kg)
+                  ? `${num((co2kg * 5) / 1000, 2)} tonnes over 5 years at this usage`
+                  : '—'}
+              </Text>
+            </View>
+          </View>
+          <Text style={[styles.paragraph, { marginTop: 6 }]}>
+            A grid factor is an average, not a promise: it varies by state, season and time of
+            day, and a supplier&apos;s published fuel mix will differ from it. Change the factor to
+            your own supplier or state figure before quoting this number.
+          </Text>
+        </View>
+
+        {/* Consumption band, what it looks like it is for, and equivalences. */}
+        <View wrap={false} style={styles.section}>
+          <Text style={styles.sectionHeading}>What this means</Text>
+          <View style={styles.gauge}>
+            {CONSUMPTION_TIERS.map((band, index) => (
+              <View
+                key={band.key}
+                style={[
+                  styles.gaugeSegment,
+                  {
+                    left: (tierPosition(band.from) / 100) * CONTENT_WIDTH,
+                    width: Math.max(
+                      1,
+                      ((tierPosition(band.to ?? 1000) - tierPosition(band.from)) / 100) *
+                        CONTENT_WIDTH,
+                    ),
+                    backgroundColor: gaugeColor(index),
+                  },
+                ]}
+              />
+            ))}
+            <View
+              style={[styles.gaugeMarker, { left: Math.max(0, gaugeMarkerLeft - 1.5) }]}
+            />
+          </View>
+          <Text style={styles.tierLine}>
+            {`${tier.label} — ${
+              Number.isFinite(averageW) ? `${num(averageW)} W` : '—'
+            } average, ${safeKwh(report.totals.yearly.kwh)} a year`}
+          </Text>
+          <Text style={[styles.paragraph, { marginTop: 3 }]}>{tier.blurb}</Text>
+          {report.suggestedCategory ? (
+            <Text style={styles.suggestionLine}>
+              {`Looks like: ${report.suggestedCategory.label} — ${report.suggestedCategory.reason}`}
+            </Text>
+          ) : null}
+          {equivalenceRows.length > 0 ? (
+            <View style={{ marginTop: 7 }}>
+              {equivalenceRows.map((item) => (
+                <View key={item.key} style={styles.kvRow}>
+                  <Text style={[styles.kvKey, styles.equivalenceSentence]}>
+                    {item.sentence}
+                  </Text>
+                  <Text style={styles.kvValue}>{`${item.value} ${item.unit}`}</Text>
+                </View>
+              ))}
+            </View>
+          ) : null}
+          <Text style={[styles.footnote, { marginTop: 6 }]}>
+            These are unit conversions of the annual kWh figure, not measurements: coal at 24
+            MJ/kg and 35% plant efficiency (0.43 kg/kWh), gas at 36 MJ/m3 and 55% CCGT (0.18
+            m3/kWh), diesel at 38.6 MJ/L and 35% genset (0.27 L/kWh), cooling water 1.8 L/kWh,
+            solar 1,400 kWh per kWp per year.
+          </Text>
+        </View>
+
+        {/* Model versus the owner's own meter readings. */}
+        <View wrap={false} style={styles.section}>
+          <Text style={styles.sectionHeading}>Estimated versus measured</Text>
+          {hasMeasured ? (
+            <View>
+              {measuredRows.map(({ label, model, real }) => {
+                const delta = model > 0 ? Math.round(((real - model) / model) * 100) : 0;
+                return (
+                  <View key={label} style={styles.kvRow}>
+                    <Text style={styles.kvKey}>{`${label} — model ${num(model)} W`}</Text>
+                    <Text
+                      style={[
+                        styles.kvValue,
+                        { color: Math.abs(delta) > 20 ? RED : GREEN },
+                      ]}
+                    >
+                      {`${num(real)} W (${delta > 0 ? '+' : ''}${delta}%)`}
+                    </Text>
+                  </View>
+                );
+              })}
+              <Text style={[styles.paragraph, { marginTop: 6 }]}>
+                Your meter is the authoritative figure. A gap above 20% usually means one of:
+                unbooked hours the machine is actually on, a part drawing more than its rating, or
+                a supply running outside its efficiency sweet spot.
+              </Text>
+            </View>
+          ) : (
+            <Text style={styles.paragraph}>
+              No meter readings were entered for this build. Add a smart-plug reading in the
+              calculator (How accurate is this?) and this section will show the model against
+              reality, reading by reading.
+            </Text>
+          )}
+        </View>
+
+        {/* The full caveat, in the flow; the footer keeps the one-line version. */}
+        <View wrap={false} style={styles.section}>
+          <Text style={styles.sectionHeading}>Disclaimer</Text>
+          <Text style={styles.footnote}>{REPORT_DISCLAIMER}</Text>
         </View>
 
         {/* Footer repeats on every page: attribution, traceability and caveat.

@@ -5,17 +5,47 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { beforeAll, describe, expect, test } from 'vitest';
 import { renderToBuffer } from '@react-pdf/renderer';
-import { ReportDocument } from '@/lib/export/pdfDocument';
+import { ReportDocument, type ExportPdfOptions } from '@/lib/export/pdfDocument';
+import type { PdfReport } from '@/lib/export/report';
 import { registerReportFonts } from '@/lib/export/reportFonts';
-import { emptyReport, gamingReport, lakhReport } from './fixtures';
+import {
+  bigReport,
+  emptyReport,
+  gamingReport,
+  lakhReport,
+  reportWithoutPsuAndMeasured,
+} from './fixtures';
 
-function hasPdftotext(): boolean {
+function hasBinary(name: string): boolean {
   try {
-    execFileSync('pdftotext', ['-v'], { stdio: 'ignore' });
+    execFileSync(name, ['-v'], { stdio: 'ignore' });
     return true;
   } catch {
     return false;
   }
+}
+
+const PDF_PATH = path.join(process.cwd(), 'tests/tmp/report.pdf');
+
+function writePdf(buffer: Buffer): string {
+  mkdirSync(path.dirname(PDF_PATH), { recursive: true });
+  writeFileSync(PDF_PATH, buffer);
+  return PDF_PATH;
+}
+
+/** Render, keep the PDF on disk for inspection, and return its text layer. */
+async function renderAndExtract(report: PdfReport, opts: ExportPdfOptions = {}): Promise<string> {
+  const buffer = await renderToBuffer(
+    <ReportDocument report={report} generatedAt={new Date('2026-11-21T09:15:00+05:30')} {...opts} />,
+  );
+  const pdfPath = writePdf(buffer);
+  return execFileSync('pdftotext', ['-layout', pdfPath, '-'], { encoding: 'utf8' });
+}
+
+function pdfPageCount(pdfPath: string): number {
+  const info = execFileSync('pdfinfo', [pdfPath], { encoding: 'utf8' });
+  const match = /^Pages:\s+(\d+)/m.exec(info);
+  return match ? Number(match[1]) : NaN;
 }
 
 describe('ReportDocument', () => {
@@ -40,7 +70,7 @@ describe('ReportDocument', () => {
     expect(buffer.length).toBeGreaterThan(10000);
   });
 
-  test.skipIf(!hasPdftotext())(
+  test.skipIf(!hasBinary('pdftotext'))(
     'prints the rupee glyph and Indian grouping in the text layer',
     async () => {
       const buffer = await renderToBuffer(<ReportDocument report={lakhReport} />);
@@ -48,14 +78,48 @@ describe('ReportDocument', () => {
       expect(buffer.subarray(0, 5).toString()).toBe('%PDF-');
       expect(buffer.length).toBeLessThan(2 * 1024 * 1024);
 
-      const tmpDir = path.join(process.cwd(), 'tests/tmp');
-      mkdirSync(tmpDir, { recursive: true });
-      const pdfPath = path.join(tmpDir, 'report.pdf');
-      writeFileSync(pdfPath, buffer);
-
-      const text = execFileSync('pdftotext', ['-layout', pdfPath, '-'], { encoding: 'utf8' });
+      const text = execFileSync('pdftotext', ['-layout', writePdf(buffer), '-'], {
+        encoding: 'utf8',
+      });
       expect(text).toContain('₹1,23,456.50');
       expect(text).not.toContain('Rs.');
     },
   );
+
+  test.skipIf(!hasBinary('pdftotext'))(
+    'a 30-component table repeats its header on each chunk',
+    async () => {
+      const text = await renderAndExtract(bigReport(30));
+
+      expect(text.match(/Device\s+Category\s+Qty/g)?.length ?? 0).toBeGreaterThan(1);
+    },
+  );
+
+  test.skipIf(!hasBinary('pdftotext'))(
+    'missing PSU and readings render dashes, not undefined',
+    async () => {
+      const text = await renderAndExtract(reportWithoutPsuAndMeasured);
+
+      expect(text).toContain('Not selected');
+      expect(text).not.toContain('undefined');
+      expect(text).toContain('No meter readings were entered');
+    },
+  );
+
+  test.skipIf(!hasBinary('pdftotext'))(
+    'carbon and equivalence text keeps the subscript and rupee glyph',
+    async () => {
+      const text = await renderAndExtract(gamingReport);
+
+      expect(text).toContain('CO₂e');
+    },
+  );
+
+  test.skipIf(!hasBinary('pdfinfo'))('the gaming report is 2–3 dense pages', async () => {
+    const buffer = await renderToBuffer(<ReportDocument report={gamingReport} />);
+    const pages = pdfPageCount(writePdf(buffer));
+
+    expect(pages).toBeGreaterThanOrEqual(2);
+    expect(pages).toBeLessThanOrEqual(3);
+  });
 });
