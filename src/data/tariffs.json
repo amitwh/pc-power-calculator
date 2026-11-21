@@ -1,1021 +1,1314 @@
 {
- "version": "2026-10-29",
- "lastUpdated": "2026-10-29",
- "countries": [
-  {
-   "country_iso2": "IN",
-   "country_name": "India",
-   "subdivisions": [
+  "version": "2026-10-29",
+  "lastUpdated": "2026-11-21",
+  "countries": [
     {
-     "code": "IN-AN",
-     "name": "Andhra Pradesh",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 75,
-        "rate": 1.95
-       },
-       {
-        "upTo_kwh": 200,
-        "rate": 3.1
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 4.8
-       }
-      ]
-     }
+      "country_iso2": "IN",
+      "country_name": "India",
+      "subdivisions": [
+        {
+          "code": "IN-AN",
+          "name": "Andhra Pradesh",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 75,
+                "rate": 1.95
+              },
+              {
+                "upTo_kwh": 200,
+                "rate": 3.1
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 4.8
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-AR",
+          "name": "Arunachal Pradesh",
+          "rate": {
+            "currency": "INR",
+            "flat": 4.5
+          }
+        },
+        {
+          "code": "IN-AS",
+          "name": "Assam",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 120,
+                "rate": 5.5
+              },
+              {
+                "upTo_kwh": 240,
+                "rate": 6.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 7.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-BR",
+          "name": "Bihar",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 50,
+                "rate": 5.5
+              },
+              {
+                "upTo_kwh": 200,
+                "rate": 6.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 7.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-CH",
+          "name": "Chandigarh",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 150,
+                "rate": 5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 6.3
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-CT",
+          "name": "Chhattisgarh",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 4
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 5.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-DN",
+          "name": "Dadra & Nagar Haveli",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 4.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 5.8
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-DL",
+          "name": "Delhi",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 200,
+                "rate": 4
+              },
+              {
+                "upTo_kwh": 400,
+                "rate": 6.95
+              },
+              {
+                "upTo_kwh": 800,
+                "rate": 8
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 8.85
+              }
+            ]
+          },
+          "notes": "DERC domestic slabs 2025-26; Delhi subsidy covers ≤200 units for eligible consumers."
+        },
+        {
+          "code": "IN-GA",
+          "name": "Goa",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 3.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-GJ",
+          "name": "Gujarat",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 50,
+                "rate": 4
+              },
+              {
+                "upTo_kwh": 250,
+                "rate": 5.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 6.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-HR",
+          "name": "Haryana",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 50,
+                "rate": 4.5
+              },
+              {
+                "upTo_kwh": 150,
+                "rate": 6
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 7.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-HP",
+          "name": "Himachal Pradesh",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 60,
+                "rate": 3.4
+              },
+              {
+                "upTo_kwh": 300,
+                "rate": 4.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 5.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-JK",
+          "name": "Jammu & Kashmir",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 2.5
+              },
+              {
+                "upTo_kwh": 200,
+                "rate": 4
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 5.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-JH",
+          "name": "Jharkhand",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 50,
+                "rate": 4.5
+              },
+              {
+                "upTo_kwh": 200,
+                "rate": 5.75
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 6.75
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-KA",
+          "name": "Karnataka",
+          "rate": {
+            "currency": "INR",
+            "flat": 6.3
+          },
+          "notes": "BESCOM single flat domestic LT rate 2025-26 (₹5.80–6.82 band); free power ≤200 units for eligible households (Gruha Jyothi)."
+        },
+        {
+          "code": "IN-KL",
+          "name": "Kerala",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 50,
+                "rate": 2.9
+              },
+              {
+                "upTo_kwh": 100,
+                "rate": 3.4
+              },
+              {
+                "upTo_kwh": 150,
+                "rate": 4.3
+              },
+              {
+                "upTo_kwh": 200,
+                "rate": 5.8
+              },
+              {
+                "upTo_kwh": 250,
+                "rate": 6.9
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 7.7
+              }
+            ]
+          },
+          "notes": "KSEB domestic (single-phase), KSERC order effective 12/2024–03/2027; excludes fixed charge ₹25/mo. Top-slab rate estimated."
+        },
+        {
+          "code": "IN-LD",
+          "name": "Lakshadweep",
+          "rate": {
+            "currency": "INR",
+            "flat": 4.5
+          }
+        },
+        {
+          "code": "IN-MP",
+          "name": "Madhya Pradesh",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 50,
+                "rate": 4
+              },
+              {
+                "upTo_kwh": 150,
+                "rate": 5.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 6.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-MH",
+          "name": "Maharashtra",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 5.67
+              },
+              {
+                "upTo_kwh": 300,
+                "rate": 9.9
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 11
+              }
+            ]
+          },
+          "notes": "MSEDCL domestic slabs 2025-26 adjusted for the MERC 03/2026 relief (~₹9.25/unit avg); verify mahadiscom.in."
+        },
+        {
+          "code": "IN-MN",
+          "name": "Manipur",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 4
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 5.2
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-ML",
+          "name": "Meghalaya",
+          "rate": {
+            "currency": "INR",
+            "flat": 5.5
+          }
+        },
+        {
+          "code": "IN-MZ",
+          "name": "Mizoram",
+          "rate": {
+            "currency": "INR",
+            "flat": 5
+          }
+        },
+        {
+          "code": "IN-NL",
+          "name": "Nagaland",
+          "rate": {
+            "currency": "INR",
+            "flat": 5
+          }
+        },
+        {
+          "code": "IN-OD",
+          "name": "Odisha",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 50,
+                "rate": 3.5
+              },
+              {
+                "upTo_kwh": 200,
+                "rate": 5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 6
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-PY",
+          "name": "Puducherry",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 3.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 5.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-PB",
+          "name": "Punjab",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 5
+              },
+              {
+                "upTo_kwh": 300,
+                "rate": 6.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 7.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-RJ",
+          "name": "Rajasthan",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 50,
+                "rate": 4.5
+              },
+              {
+                "upTo_kwh": 150,
+                "rate": 6
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 7.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-SK",
+          "name": "Sikkim",
+          "rate": {
+            "currency": "INR",
+            "flat": 4
+          }
+        },
+        {
+          "code": "IN-TN",
+          "name": "Tamil Nadu",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 0
+              },
+              {
+                "upTo_kwh": 400,
+                "rate": 4.7
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 6.3
+              }
+            ]
+          },
+          "notes": "TNERC revised tariff 07/2025, modeled monthly; first 100 units free via government subsidy; TN bills bimonthly."
+        },
+        {
+          "code": "IN-TS",
+          "name": "Telangana",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 50,
+                "rate": 3.5
+              },
+              {
+                "upTo_kwh": 200,
+                "rate": 5.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 7
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-TR",
+          "name": "Tripura",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 4
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 5.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-UP",
+          "name": "Uttar Pradesh",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 5
+              },
+              {
+                "upTo_kwh": 300,
+                "rate": 6.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 7.5
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-UT",
+          "name": "Uttarakhand",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 100,
+                "rate": 4.2
+              },
+              {
+                "upTo_kwh": 200,
+                "rate": 5.5
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 6.8
+              }
+            ]
+          }
+        },
+        {
+          "code": "IN-WB",
+          "name": "West Bengal",
+          "rate": {
+            "currency": "INR",
+            "slabs": [
+              {
+                "upTo_kwh": 75,
+                "rate": 4.85
+              },
+              {
+                "upTo_kwh": 300,
+                "rate": 6.2
+              },
+              {
+                "upTo_kwh": null,
+                "rate": 7.3
+              }
+            ]
+          }
+        }
+      ],
+      "default": {
+        "currency": "INR",
+        "flat": 6.5
+      },
+      "applicableTaxes": [
+        {
+          "name": "Electricity duty (avg)",
+          "rate_pct": 8,
+          "appliesTo": "total"
+        }
+      ],
+      "notes": "Country default = all-India average realized residential rate. State slabs sourced Oct 2026 from DISCOM orders (KSEB 2025-27, TNERC 07/2025, BESCOM 2025-26, MERC 2026, DERC 2025-26); most Indian states bill tiered slabs monthly or bimonthly and many subsidize low consumption — check your DISCOM bill for exact rates.",
+      "rateSource": "DISCOM tariff orders, state-wise (see country note)",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": false
     },
     {
-     "code": "IN-AR",
-     "name": "Arunachal Pradesh",
-     "rate": {
-      "currency": "INR",
-      "flat": 4.5
-     }
+      "country_iso2": "US",
+      "country_name": "United States",
+      "subdivisions": [
+        {
+          "code": "US-CA",
+          "name": "California",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.32
+          }
+        },
+        {
+          "code": "US-NY",
+          "name": "New York",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.3
+          },
+          "notes": "29.90¢/kWh residential, July 2026 (EIA via Empire Center)."
+        },
+        {
+          "code": "US-TX",
+          "name": "Texas",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.15
+          }
+        },
+        {
+          "code": "US-FL",
+          "name": "Florida",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.14
+          }
+        },
+        {
+          "code": "US-WA",
+          "name": "Washington",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.11
+          }
+        },
+        {
+          "code": "US-OR",
+          "name": "Oregon",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.12
+          }
+        },
+        {
+          "code": "US-MA",
+          "name": "Massachusetts",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.27
+          }
+        },
+        {
+          "code": "US-CT",
+          "name": "Connecticut",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.25
+          }
+        },
+        {
+          "code": "US-IL",
+          "name": "Illinois",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.16
+          }
+        },
+        {
+          "code": "US-PA",
+          "name": "Pennsylvania",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.17
+          }
+        },
+        {
+          "code": "US-OH",
+          "name": "Ohio",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.13
+          }
+        },
+        {
+          "code": "US-GA",
+          "name": "Georgia",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.13
+          }
+        },
+        {
+          "code": "US-NC",
+          "name": "North Carolina",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.12
+          }
+        },
+        {
+          "code": "US-VA",
+          "name": "Virginia",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.13
+          }
+        },
+        {
+          "code": "US-MI",
+          "name": "Michigan",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.17
+          }
+        },
+        {
+          "code": "US-AZ",
+          "name": "Arizona",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.14
+          }
+        },
+        {
+          "code": "US-NV",
+          "name": "Nevada",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.13
+          }
+        },
+        {
+          "code": "US-CO",
+          "name": "Colorado",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.15
+          }
+        },
+        {
+          "code": "US-NJ",
+          "name": "New Jersey",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.18
+          }
+        },
+        {
+          "code": "US-MN",
+          "name": "Minnesota",
+          "rate": {
+            "currency": "USD",
+            "flat": 0.14
+          }
+        }
+      ],
+      "default": {
+        "currency": "USD",
+        "flat": 0.18
+      },
+      "notes": "EIA 2026 residential projection ~18¢/kWh (Oct 2025). State figures are 2024-era estimates except where re-sourced.",
+      "rateSource": "EIA Electric Power Monthly / state PUC filings (see notes)",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": false
     },
     {
-     "code": "IN-AS",
-     "name": "Assam",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 120,
-        "rate": 5.5
-       },
-       {
-        "upTo_kwh": 240,
-        "rate": 6.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 7.5
-       }
-      ]
-     }
+      "country_iso2": "GB",
+      "country_name": "United Kingdom",
+      "default": {
+        "currency": "GBP",
+        "flat": 0.26
+      },
+      "applicableTaxes": [],
+      "notes": "Ofgem price-cap unit rate from 01/10/2026 — includes VAT and standing-charge contribution; no separate VAT line.",
+      "rateSource": "Ofgem price cap, unit rate band",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-BR",
-     "name": "Bihar",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 50,
-        "rate": 5.5
-       },
-       {
-        "upTo_kwh": 200,
-        "rate": 6.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 7.5
-       }
-      ]
-     }
+      "country_iso2": "DE",
+      "country_name": "Germany",
+      "default": {
+        "currency": "EUR",
+        "flat": 0.34
+      },
+      "applicableTaxes": [],
+      "notes": "2026 household market average incl. taxes and levies (Strom-Report/Verivox, Oct 2026); grid-fee cuts offset by rising CO₂ price.",
+      "rateSource": "Eurostat household electricity prices, H1 2025",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-CH",
-     "name": "Chandigarh",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 150,
-        "rate": 5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 6.3
-       }
-      ]
-     }
+      "country_iso2": "FR",
+      "country_name": "France",
+      "default": {
+        "currency": "EUR",
+        "flat": 0.28
+      },
+      "applicableTaxes": [
+        {
+          "name": "VAT",
+          "rate_pct": 20,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "Eurostat household electricity prices, H1 2025",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-CT",
-     "name": "Chhattisgarh",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 4
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 5.5
-       }
-      ]
-     }
+      "country_iso2": "IT",
+      "country_name": "Italy",
+      "default": {
+        "currency": "EUR",
+        "flat": 0.3
+      },
+      "applicableTaxes": [
+        {
+          "name": "VAT",
+          "rate_pct": 10,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "Eurostat household electricity prices, H1 2025",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-DN",
-     "name": "Dadra & Nagar Haveli",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 4.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 5.8
-       }
-      ]
-     }
+      "country_iso2": "ES",
+      "country_name": "Spain",
+      "default": {
+        "currency": "EUR",
+        "flat": 0.26
+      },
+      "applicableTaxes": [
+        {
+          "name": "VAT",
+          "rate_pct": 21,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "Eurostat household electricity prices, H1 2025",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-DL",
-     "name": "Delhi",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 200,
-        "rate": 4
-       },
-       {
-        "upTo_kwh": 400,
-        "rate": 6.95
-       },
-       {
-        "upTo_kwh": 800,
-        "rate": 8
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 8.85
-       }
-      ]
-     },
-     "notes": "DERC domestic slabs 2025-26; Delhi subsidy covers ≤200 units for eligible consumers."
+      "country_iso2": "NL",
+      "country_name": "Netherlands",
+      "default": {
+        "currency": "EUR",
+        "flat": 0.35
+      },
+      "applicableTaxes": [
+        {
+          "name": "VAT",
+          "rate_pct": 21,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "Eurostat household electricity prices, H1 2025",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-GA",
-     "name": "Goa",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 3.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 5
-       }
-      ]
-     }
+      "country_iso2": "SE",
+      "country_name": "Sweden",
+      "default": {
+        "currency": "SEK",
+        "flat": 1.5
+      },
+      "applicableTaxes": [
+        {
+          "name": "VAT",
+          "rate_pct": 25,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "Eurostat household electricity prices, H1 2025",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-GJ",
-     "name": "Gujarat",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 50,
-        "rate": 4
-       },
-       {
-        "upTo_kwh": 250,
-        "rate": 5.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 6.5
-       }
-      ]
-     }
+      "country_iso2": "PL",
+      "country_name": "Poland",
+      "default": {
+        "currency": "PLN",
+        "flat": 0.95
+      },
+      "applicableTaxes": [
+        {
+          "name": "VAT",
+          "rate_pct": 23,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "Eurostat household electricity prices, H1 2025",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-HR",
-     "name": "Haryana",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 50,
-        "rate": 4.5
-       },
-       {
-        "upTo_kwh": 150,
-        "rate": 6
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 7.5
-       }
-      ]
-     }
+      "country_iso2": "AU",
+      "country_name": "Australia",
+      "default": {
+        "currency": "AUD",
+        "flat": 0.32
+      },
+      "applicableTaxes": [
+        {
+          "name": "GST",
+          "rate_pct": 10,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "AER / state regulator published offers (estimate)",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-HP",
-     "name": "Himachal Pradesh",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 60,
-        "rate": 3.4
-       },
-       {
-        "upTo_kwh": 300,
-        "rate": 4.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 5.5
-       }
-      ]
-     }
+      "country_iso2": "CA",
+      "country_name": "Canada",
+      "default": {
+        "currency": "CAD",
+        "flat": 0.18
+      },
+      "rateSource": "Provincial utility published rates (estimate)",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-JK",
-     "name": "Jammu & Kashmir",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 2.5
-       },
-       {
-        "upTo_kwh": 200,
-        "rate": 4
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 5.5
-       }
-      ]
-     }
+      "country_iso2": "JP",
+      "country_name": "Japan",
+      "default": {
+        "currency": "JPY",
+        "flat": 36
+      },
+      "rateSource": "METI / utility published tariffs (estimate)",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-JH",
-     "name": "Jharkhand",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 50,
-        "rate": 4.5
-       },
-       {
-        "upTo_kwh": 200,
-        "rate": 5.75
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 6.75
-       }
-      ]
-     }
+      "country_iso2": "SG",
+      "country_name": "Singapore",
+      "default": {
+        "currency": "SGD",
+        "flat": 0.32
+      },
+      "applicableTaxes": [
+        {
+          "name": "GST",
+          "rate_pct": 9,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "EMA / SP Services quarterly tariff (estimate)",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-KA",
-     "name": "Karnataka",
-     "rate": {
-      "currency": "INR",
-      "flat": 6.3
-     },
-     "notes": "BESCOM single flat domestic LT rate 2025-26 (₹5.80–6.82 band); free power ≤200 units for eligible households (Gruha Jyothi)."
+      "country_iso2": "AE",
+      "country_name": "United Arab Emirates",
+      "default": {
+        "currency": "AED",
+        "flat": 0.38
+      },
+      "applicableTaxes": [
+        {
+          "name": "VAT",
+          "rate_pct": 5,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "DEWA / ADDC published slabs (estimate)",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-KL",
-     "name": "Kerala",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 50,
-        "rate": 2.9
-       },
-       {
-        "upTo_kwh": 100,
-        "rate": 3.4
-       },
-       {
-        "upTo_kwh": 150,
-        "rate": 4.3
-       },
-       {
-        "upTo_kwh": 200,
-        "rate": 5.8
-       },
-       {
-        "upTo_kwh": 250,
-        "rate": 6.9
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 7.7
-       }
-      ]
-     },
-     "notes": "KSEB domestic (single-phase), KSERC order effective 12/2024–03/2027; excludes fixed charge ₹25/mo. Top-slab rate estimated."
+      "country_iso2": "BR",
+      "country_name": "Brazil",
+      "default": {
+        "currency": "BRL",
+        "flat": 0.95
+      },
+      "applicableTaxes": [
+        {
+          "name": "ICMS (avg)",
+          "rate_pct": 25,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "ANEEL / distributor published tariffs (estimate)",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-LD",
-     "name": "Lakshadweep",
-     "rate": {
-      "currency": "INR",
-      "flat": 4.5
-     }
+      "country_iso2": "ZA",
+      "country_name": "South Africa",
+      "default": {
+        "currency": "ZAR",
+        "flat": 3.5
+      },
+      "rateSource": "NERSA / Eskom published tariffs (estimate)",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-MP",
-     "name": "Madhya Pradesh",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 50,
-        "rate": 4
-       },
-       {
-        "upTo_kwh": 150,
-        "rate": 5.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 6.5
-       }
-      ]
-     }
+      "country_iso2": "NZ",
+      "country_name": "New Zealand",
+      "default": {
+        "currency": "NZD",
+        "flat": 0.34
+      },
+      "applicableTaxes": [
+        {
+          "name": "GST",
+          "rate_pct": 15,
+          "appliesTo": "total"
+        }
+      ],
+      "rateSource": "EA / retailer published rates (estimate)",
+      "rateUpdated": "2026-10-29",
+      "rateEstimated": true
     },
     {
-     "code": "IN-MH",
-     "name": "Maharashtra",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 5.67
-       },
-       {
-        "upTo_kwh": 300,
-        "rate": 9.9
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 11
-       }
-      ]
-     },
-     "notes": "MSEDCL domestic slabs 2025-26 adjusted for the MERC 03/2026 relief (~₹9.25/unit avg); verify mahadiscom.in."
+      "country_iso2": "PT",
+      "country_name": "Portugal",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.23
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-MN",
-     "name": "Manipur",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 4
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 5.2
-       }
-      ]
-     }
+      "country_iso2": "BE",
+      "country_name": "Belgium",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.37
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-ML",
-     "name": "Meghalaya",
-     "rate": {
-      "currency": "INR",
-      "flat": 5.5
-     }
+      "country_iso2": "AT",
+      "country_name": "Austria",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.29
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-MZ",
-     "name": "Mizoram",
-     "rate": {
-      "currency": "INR",
-      "flat": 5
-     }
+      "country_iso2": "IE",
+      "country_name": "Ireland",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.33
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-NL",
-     "name": "Nagaland",
-     "rate": {
-      "currency": "INR",
-      "flat": 5
-     }
+      "country_iso2": "FI",
+      "country_name": "Finland",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.2
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-OD",
-     "name": "Odisha",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 50,
-        "rate": 3.5
-       },
-       {
-        "upTo_kwh": 200,
-        "rate": 5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 6
-       }
-      ]
-     }
+      "country_iso2": "GR",
+      "country_name": "Greece",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.22
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-PY",
-     "name": "Puducherry",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 3.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 5.5
-       }
-      ]
-     }
+      "country_iso2": "SI",
+      "country_name": "Slovenia",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.21
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-PB",
-     "name": "Punjab",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 5
-       },
-       {
-        "upTo_kwh": 300,
-        "rate": 6.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 7.5
-       }
-      ]
-     }
+      "country_iso2": "SK",
+      "country_name": "Slovakia",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.22
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-RJ",
-     "name": "Rajasthan",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 50,
-        "rate": 4.5
-       },
-       {
-        "upTo_kwh": 150,
-        "rate": 6
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 7.5
-       }
-      ]
-     }
+      "country_iso2": "HR",
+      "country_name": "Croatia",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.2
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-SK",
-     "name": "Sikkim",
-     "rate": {
-      "currency": "INR",
-      "flat": 4
-     }
+      "country_iso2": "EE",
+      "country_name": "Estonia",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.24
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-TN",
-     "name": "Tamil Nadu",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 0
-       },
-       {
-        "upTo_kwh": 400,
-        "rate": 4.7
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 6.3
-       }
-      ]
-     },
-     "notes": "TNERC revised tariff 07/2025, modeled monthly; first 100 units free via government subsidy; TN bills bimonthly."
+      "country_iso2": "LV",
+      "country_name": "Latvia",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.23
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-TS",
-     "name": "Telangana",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 50,
-        "rate": 3.5
-       },
-       {
-        "upTo_kwh": 200,
-        "rate": 5.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 7
-       }
-      ]
-     }
+      "country_iso2": "LT",
+      "country_name": "Lithuania",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.23
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-TR",
-     "name": "Tripura",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 4
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 5.5
-       }
-      ]
-     }
+      "country_iso2": "LU",
+      "country_name": "Luxembourg",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.22
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-UP",
-     "name": "Uttar Pradesh",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 5
-       },
-       {
-        "upTo_kwh": 300,
-        "rate": 6.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 7.5
-       }
-      ]
-     }
+      "country_iso2": "CY",
+      "country_name": "Cyprus",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.28
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-UT",
-     "name": "Uttarakhand",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 100,
-        "rate": 4.2
-       },
-       {
-        "upTo_kwh": 200,
-        "rate": 5.5
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 6.8
-       }
-      ]
-     }
+      "country_iso2": "MT",
+      "country_name": "Malta",
+      "subdivisions": [],
+      "default": {
+        "currency": "EUR",
+        "flat": 0.14
+      },
+      "applicableTaxes": [],
+      "notes": "Euro-area household price band from Eurostat (H1 2025), rounded to two decimals and converted at the bundled FX rate. Domestic tariffs are tiered and include standing charges in most of these markets; treat the rate as a starting point and override it from your bill.",
+      "rateSource": "Eurostat household electricity prices (H1 2025 band), rounded — not verified for 2026",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     },
     {
-     "code": "IN-WB",
-     "name": "West Bengal",
-     "rate": {
-      "currency": "INR",
-      "slabs": [
-       {
-        "upTo_kwh": 75,
-        "rate": 4.85
-       },
-       {
-        "upTo_kwh": 300,
-        "rate": 6.2
-       },
-       {
-        "upTo_kwh": null,
-        "rate": 7.3
-       }
-      ]
-     }
+      "country_iso2": "EC",
+      "country_name": "Ecuador",
+      "subdivisions": [],
+      "default": {
+        "currency": "USD",
+        "flat": 0.1
+      },
+      "applicableTaxes": [],
+      "notes": "Residential tariff estimate for this market; rates vary by distributor and consumption band. Override with your bill.",
+      "rateSource": "ARCONEL published residential pliego tarifario (estimate)",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
+    },
+    {
+      "country_iso2": "PA",
+      "country_name": "Panama",
+      "subdivisions": [],
+      "default": {
+        "currency": "USD",
+        "flat": 0.18
+      },
+      "applicableTaxes": [],
+      "notes": "Residential tariff estimate for this market; rates vary by distributor and consumption band. Override with your bill.",
+      "rateSource": "ASEP published residential tariff schedule (estimate)",
+      "rateUpdated": "2026-11-21",
+      "rateEstimated": true
     }
-   ],
-   "default": {
-    "currency": "INR",
-    "flat": 6.5
-   },
-   "applicableTaxes": [
-    {
-     "name": "Electricity duty (avg)",
-     "rate_pct": 8,
-     "appliesTo": "total"
-    }
-   ],
-   "notes": "Country default = all-India average realized residential rate. State slabs sourced Oct 2026 from DISCOM orders (KSEB 2025-27, TNERC 07/2025, BESCOM 2025-26, MERC 2026, DERC 2025-26); most Indian states bill tiered slabs monthly or bimonthly and many subsidize low consumption — check your DISCOM bill for exact rates."
-  },
-  {
-   "country_iso2": "US",
-   "country_name": "United States",
-   "subdivisions": [
-    {
-     "code": "US-CA",
-     "name": "California",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.32
-     }
-    },
-    {
-     "code": "US-NY",
-     "name": "New York",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.3
-     },
-     "notes": "29.90¢/kWh residential, July 2026 (EIA via Empire Center)."
-    },
-    {
-     "code": "US-TX",
-     "name": "Texas",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.15
-     }
-    },
-    {
-     "code": "US-FL",
-     "name": "Florida",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.14
-     }
-    },
-    {
-     "code": "US-WA",
-     "name": "Washington",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.11
-     }
-    },
-    {
-     "code": "US-OR",
-     "name": "Oregon",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.12
-     }
-    },
-    {
-     "code": "US-MA",
-     "name": "Massachusetts",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.27
-     }
-    },
-    {
-     "code": "US-CT",
-     "name": "Connecticut",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.25
-     }
-    },
-    {
-     "code": "US-IL",
-     "name": "Illinois",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.16
-     }
-    },
-    {
-     "code": "US-PA",
-     "name": "Pennsylvania",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.17
-     }
-    },
-    {
-     "code": "US-OH",
-     "name": "Ohio",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.13
-     }
-    },
-    {
-     "code": "US-GA",
-     "name": "Georgia",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.13
-     }
-    },
-    {
-     "code": "US-NC",
-     "name": "North Carolina",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.12
-     }
-    },
-    {
-     "code": "US-VA",
-     "name": "Virginia",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.13
-     }
-    },
-    {
-     "code": "US-MI",
-     "name": "Michigan",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.17
-     }
-    },
-    {
-     "code": "US-AZ",
-     "name": "Arizona",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.14
-     }
-    },
-    {
-     "code": "US-NV",
-     "name": "Nevada",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.13
-     }
-    },
-    {
-     "code": "US-CO",
-     "name": "Colorado",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.15
-     }
-    },
-    {
-     "code": "US-NJ",
-     "name": "New Jersey",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.18
-     }
-    },
-    {
-     "code": "US-MN",
-     "name": "Minnesota",
-     "rate": {
-      "currency": "USD",
-      "flat": 0.14
-     }
-    }
-   ],
-   "default": {
-    "currency": "USD",
-    "flat": 0.18
-   },
-   "notes": "EIA 2026 residential projection ~18¢/kWh (Oct 2025). State figures are 2024-era estimates except where re-sourced."
-  },
-  {
-   "country_iso2": "GB",
-   "country_name": "United Kingdom",
-   "default": {
-    "currency": "GBP",
-    "flat": 0.26
-   },
-   "applicableTaxes": [],
-   "notes": "Ofgem price-cap unit rate from 01/10/2026 — includes VAT and standing-charge contribution; no separate VAT line."
-  },
-  {
-   "country_iso2": "DE",
-   "country_name": "Germany",
-   "default": {
-    "currency": "EUR",
-    "flat": 0.34
-   },
-   "applicableTaxes": [],
-   "notes": "2026 household market average incl. taxes and levies (Strom-Report/Verivox, Oct 2026); grid-fee cuts offset by rising CO₂ price."
-  },
-  {
-   "country_iso2": "FR",
-   "country_name": "France",
-   "default": {
-    "currency": "EUR",
-    "flat": 0.28
-   },
-   "applicableTaxes": [
-    {
-     "name": "VAT",
-     "rate_pct": 20,
-     "appliesTo": "total"
-    }
-   ]
-  },
-  {
-   "country_iso2": "IT",
-   "country_name": "Italy",
-   "default": {
-    "currency": "EUR",
-    "flat": 0.3
-   },
-   "applicableTaxes": [
-    {
-     "name": "VAT",
-     "rate_pct": 10,
-     "appliesTo": "total"
-    }
-   ]
-  },
-  {
-   "country_iso2": "ES",
-   "country_name": "Spain",
-   "default": {
-    "currency": "EUR",
-    "flat": 0.26
-   },
-   "applicableTaxes": [
-    {
-     "name": "VAT",
-     "rate_pct": 21,
-     "appliesTo": "total"
-    }
-   ]
-  },
-  {
-   "country_iso2": "NL",
-   "country_name": "Netherlands",
-   "default": {
-    "currency": "EUR",
-    "flat": 0.35
-   },
-   "applicableTaxes": [
-    {
-     "name": "VAT",
-     "rate_pct": 21,
-     "appliesTo": "total"
-    }
-   ]
-  },
-  {
-   "country_iso2": "SE",
-   "country_name": "Sweden",
-   "default": {
-    "currency": "SEK",
-    "flat": 1.5
-   },
-   "applicableTaxes": [
-    {
-     "name": "VAT",
-     "rate_pct": 25,
-     "appliesTo": "total"
-    }
-   ]
-  },
-  {
-   "country_iso2": "PL",
-   "country_name": "Poland",
-   "default": {
-    "currency": "PLN",
-    "flat": 0.95
-   },
-   "applicableTaxes": [
-    {
-     "name": "VAT",
-     "rate_pct": 23,
-     "appliesTo": "total"
-    }
-   ]
-  },
-  {
-   "country_iso2": "AU",
-   "country_name": "Australia",
-   "default": {
-    "currency": "AUD",
-    "flat": 0.32
-   },
-   "applicableTaxes": [
-    {
-     "name": "GST",
-     "rate_pct": 10,
-     "appliesTo": "total"
-    }
-   ]
-  },
-  {
-   "country_iso2": "CA",
-   "country_name": "Canada",
-   "default": {
-    "currency": "CAD",
-    "flat": 0.18
-   }
-  },
-  {
-   "country_iso2": "JP",
-   "country_name": "Japan",
-   "default": {
-    "currency": "JPY",
-    "flat": 36
-   }
-  },
-  {
-   "country_iso2": "SG",
-   "country_name": "Singapore",
-   "default": {
-    "currency": "SGD",
-    "flat": 0.32
-   },
-   "applicableTaxes": [
-    {
-     "name": "GST",
-     "rate_pct": 9,
-     "appliesTo": "total"
-    }
-   ]
-  },
-  {
-   "country_iso2": "AE",
-   "country_name": "United Arab Emirates",
-   "default": {
-    "currency": "AED",
-    "flat": 0.38
-   },
-   "applicableTaxes": [
-    {
-     "name": "VAT",
-     "rate_pct": 5,
-     "appliesTo": "total"
-    }
-   ]
-  },
-  {
-   "country_iso2": "BR",
-   "country_name": "Brazil",
-   "default": {
-    "currency": "BRL",
-    "flat": 0.95
-   },
-   "applicableTaxes": [
-    {
-     "name": "ICMS (avg)",
-     "rate_pct": 25,
-     "appliesTo": "total"
-    }
-   ]
-  },
-  {
-   "country_iso2": "ZA",
-   "country_name": "South Africa",
-   "default": {
-    "currency": "ZAR",
-    "flat": 3.5
-   }
-  },
-  {
-   "country_iso2": "NZ",
-   "country_name": "New Zealand",
-   "default": {
-    "currency": "NZD",
-    "flat": 0.34
-   },
-   "applicableTaxes": [
-    {
-     "name": "GST",
-     "rate_pct": 15,
-     "appliesTo": "total"
-    }
-   ]
-  }
- ]
+  ],
+  "notes": "Country rates carry a source and an update date. Entries marked estimated (*) are banded published averages or regional estimates rather than a verified tariff for a specific distributor; every figure can be overridden in the calculator."
 }

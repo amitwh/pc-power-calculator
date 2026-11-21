@@ -40,6 +40,21 @@ export function listSubdivisions(iso2: string): Array<{ code: string; name: stri
   return (c?.subdivisions ?? []).map((s) => ({ code: s.code, name: s.name }));
 }
 
+/** Provenance for a country's rate: source, date, and whether it is an estimate. */
+export function tariffProvenance(iso2: string): {
+  source?: string;
+  updated?: string;
+  estimated: boolean;
+} {
+  const c = list.find((x) => x.country_iso2 === iso2);
+  return {
+    source: c?.rateSource,
+    updated: c?.rateUpdated,
+    // Unknown countries are, by definition, not verified.
+    estimated: c?.rateEstimated ?? true,
+  };
+}
+
 export function tariffsLastUpdated(): string {
   return (data as { lastUpdated: string }).lastUpdated;
 }

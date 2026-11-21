@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/Button';
 import { useCalc } from '@/hooks/useCalc';
 import { buildExportHtml, downloadExportHtml } from '@/lib/export';
 import { exportPdf, type PdfReport, type PdfDeviceRow, type PdfScheduleRow } from '@/lib/export/pdf';
-import { listCountries, listSubdivisions, resolveLocationTariff, tariffsLastUpdated } from '@/lib/data/tariffs';
+import { listCountries, listSubdivisions, resolveLocationTariff, tariffsLastUpdated, tariffProvenance } from '@/lib/data/tariffs';
 import { workloadLabel } from '@/lib/data/workloads';
 import { computeCost } from '@/lib/calc/cost';
 import { findComponent } from '@/lib/data/components';
@@ -84,6 +84,7 @@ export function ExportMenu({
         ? psuEfficiency(psuRating, Math.min(100, Math.max(10, loadPct)))
         : null;
 
+      const prov = tariffProvenance(build.location.country_iso2);
       const report: PdfReport = {
         buildName: build.name,
         buildCategory: build.category,
@@ -103,7 +104,9 @@ export function ExportMenu({
           peakWallW: peakWallDrawW,
         },
         measured: build.measured,
-        tariffVerifiedAt: tariffsLastUpdated(),
+        tariffVerifiedAt: prov.updated ?? tariffsLastUpdated(),
+        tariffSource: prov.source,
+        tariffEstimated: prov.estimated,
         // The oldest catalogued part is the weakest link in the build's data.
         catalogVerifiedAt: [...byId.keys()]
           .map((id) => findComponent(id)?.addedAt)

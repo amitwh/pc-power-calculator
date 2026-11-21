@@ -7,6 +7,7 @@ import {
   listSubdivisions,
   resolveLocationTariff,
   tariffNotes,
+  tariffProvenance,
   tariffsLastUpdated,
 } from '@/lib/data/tariffs';
 import { computeCost } from '@/lib/calc/cost';
@@ -79,6 +80,7 @@ export default function Cost() {
   const { rate, taxes } = resolveLocationTariff(iso2, subdivisionCode);
   const currency = findCurrency(rate.currency) ?? findCurrency('USD')!;
   const notes = tariffNotes(iso2, subdivisionCode);
+  const prov = tariffProvenance(iso2);
 
   const examples = EXAMPLE_WATTS.map((watts) => {
     const kwh = (watts * EXAMPLE_HOURS_PER_DAY * DAYS_PER_MONTH) / 1000;
@@ -134,6 +136,12 @@ export default function Cost() {
         title={`Electricity cost of running a PC in ${place}`}
         lede={`Bundled tariff snapshot · last updated ${tariffsLastUpdated()}`}
       />
+      <p className="text-[11px] leading-relaxed text-gray-500">
+        {prov.estimated ? '* Estimated rate. ' : ''}
+        {prov.source}
+        {prov.updated ? ` · updated ${prov.updated}` : ''}
+      </p>
+
       {notes && (
         <p className="border-l-2 border-amber-400 pl-3 text-xs text-gray-600 dark:text-gray-400">
           {notes}

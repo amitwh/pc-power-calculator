@@ -1,12 +1,23 @@
 /// <reference types="vitest/globals" />
 import { describe, expect, test } from 'vitest';
 import { listTariffPages } from '@/lib/data/tariffPages';
-import { findTariff } from '@/lib/data/tariffs';
+import { findTariff, listCountries, listSubdivisions } from '@/lib/data/tariffs';
 
 describe('listTariffPages', () => {
   test('lists one country page plus one page per subdivision', () => {
-    // 18 countries overall (2 with subdivisions: India's 34 and the US's 20).
-    expect(listTariffPages()).toHaveLength(18 + 34 + 20);
+    // Derived from the data, not hardcoded: adding a country must not require
+    // editing this test, only growing the dataset.
+    const expected =
+      listCountries().length +
+      listCountries().reduce((acc, c) => acc + listSubdivisions(c.iso2).length, 0);
+    expect(listTariffPages()).toHaveLength(expected);
+  });
+
+  test('every country in the dataset has a page', () => {
+    const paths = new Set(listTariffPages().map((ref) => ref.path));
+    for (const c of listCountries()) {
+      expect(paths.has(`/cost/${c.iso2.toLowerCase()}`), c.iso2).toBe(true);
+    }
   });
 
   test('includes Indian and US subdivision pages', () => {

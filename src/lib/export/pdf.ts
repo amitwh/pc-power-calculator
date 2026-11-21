@@ -74,6 +74,10 @@ export interface PdfReport {
   gridFactorKgPerKwh?: number;
   /** When the tariff data was last verified (ISO date). */
   tariffVerifiedAt?: string;
+  /** Where the tariff figure came from (country-level provenance). */
+  tariffSource?: string;
+  /** True when the tariff is a banded estimate, printed with an asterisk. */
+  tariffEstimated?: boolean;
   /** When any component in the build was last catalogued / verified (ISO date). */
   catalogVerifiedAt?: string;
 }
@@ -547,7 +551,10 @@ export async function exportPdf(report: PdfReport): Promise<void> {
     ['Location', report.locationLabel],
     ['Tariff currency', `${report.currency.code} (${report.currency.symbol.trim()})`],
     ['Engine', `v${CALC_ENGINE_VERSION}`],
-    ['Tariff data verified', report.tariffVerifiedAt ?? '—'],
+    [
+      'Tariff source',
+      `${report.tariffSource ?? 'Compiled'}${report.tariffVerifiedAt ? ` · ${report.tariffVerifiedAt}` : ''}`,
+    ],
     ['Catalog data verified', report.catalogVerifiedAt ?? '—'],
   ]);
 
@@ -622,6 +629,14 @@ export async function exportPdf(report: PdfReport): Promise<void> {
   steps.forEach((step, i) => {
     y = paragraph(doc, y, `${i + 1}.  ${step}`, { size: 8, indent: 0 });
   });
+  y = paragraph(
+    doc,
+    y + 2,
+    report.tariffEstimated
+      ? `* The tariff used is an estimated rate (${report.tariffSource ?? 'compiled band'}), not a verified bill for a specific distributor. Override it with your own rate for an exact figure.`
+      : `Tariff source: ${report.tariffSource ?? 'compiled published tariffs'}, ${report.tariffVerifiedAt ?? 'date not recorded'}.`,
+    { size: 7.5 },
+  );
 
 
   // ── Idle vs typical vs maximum

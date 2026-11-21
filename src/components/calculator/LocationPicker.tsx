@@ -1,5 +1,5 @@
 import { useBuildStore } from '@/store/buildStore';
-import { listCountries, listSubdivisions, resolveLocationTariff, currencyForLocation, tariffsLastUpdated } from '@/lib/data/tariffs';
+import { listCountries, listSubdivisions, resolveLocationTariff, currencyForLocation, tariffsLastUpdated, tariffProvenance } from '@/lib/data/tariffs';
 import { listCurrencies } from '@/lib/data/currencies';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useFx } from '@/hooks/useFx';
@@ -36,6 +36,10 @@ export function LocationPicker() {
   const rate = manualOverride ?? computeCost(200, tariffRate, taxes).total / 200;
   const isManual = manualOverride != null;
 
+  // Where the rate came from. An estimated figure carries a visible '*', so
+  // the number is never presented as a verified tariff when it is not.
+  const prov = tariffProvenance(countryIso2);
+
   const stateName = subdivisionCode
     ? subdivisions.find((s) => s.code === subdivisionCode)?.name
     : undefined;
@@ -56,6 +60,7 @@ export function LocationPicker() {
         <span className="font-display text-4xl font-extrabold leading-none tracking-[-0.02em] tabular-nums text-gray-950 dark:text-gray-50">
           {currency.symbol}
           {rate.toFixed(2)}
+          {prov.estimated && <sup className="ml-0.5 text-base font-bold text-brand-text">*</sup>}
         </span>
         <span className="text-sm font-semibold text-gray-500">/ kWh</span>
       </p>
@@ -71,6 +76,13 @@ export function LocationPicker() {
             : 'Bundled flat rate'}
         {isLive ? ' · live FX' : ''}
       </p>
+      {(prov.source || prov.updated) && (
+        <p className="mt-1 text-[11px] leading-tight text-gray-500">
+          {prov.estimated ? '* Estimated rate. ' : ''}
+          {prov.source}
+          {prov.updated ? ` · updated ${prov.updated}` : ''}
+        </p>
+      )}
 
       <details className="mt-3">
         <summary className="cursor-pointer select-none rounded-8 border border-dashed border-gray-300 px-2.5 py-1.5 text-center text-sm font-semibold text-gray-600 hover:border-brand hover:text-brand-text dark:border-gray-600 dark:text-gray-300">
