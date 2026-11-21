@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { BuildSelector } from '@/components/compare/BuildSelector';
 import { ComparisonTable } from '@/components/compare/ComparisonTable';
+import { ComparisonScales } from '@/components/compare/ComparisonScales';
 import { CompareVerdict } from '@/components/compare/CompareVerdict';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -131,6 +132,7 @@ export default function Compare() {
       {stats && (
         <>
           <CompareVerdict stats={stats} displayCurrency={currency} />
+          <ComparisonScales stats={stats} displayCurrency={currency} />
           <Card>
             <CardTitle className="text-base!">Side by side</CardTitle>
             <ComparisonTable stats={stats} displayCurrency={currency} fxSnapshot={snapshot} />
