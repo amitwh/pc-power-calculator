@@ -5,15 +5,37 @@
  * explains. They are hand-drawn SVG (no image files, no chart library) so they
  * stay crisp in print, inherit the page's type, and cost the reader no extra
  * request.
+ *
+ * This module is the barrel: the figures themselves live in `figures/`, one
+ * file per topic, and are re-exported here so every guide keeps importing
+ * them from `@/components/guides/Figures`.
  */
+import { Caption, INK } from './figures/Caption';
 
-const INK = 'currentColor';
-
-function Caption({ children }: { children: React.ReactNode }) {
-  return (
-    <figcaption className="mt-2 text-xs leading-relaxed text-gray-500">{children}</figcaption>
-  );
-}
+export { Caption, INK } from './figures/Caption';
+export {
+  PsuEfficiencyCurveFigure,
+  PowerFactorFigure,
+  PsuConnectorMapFigure,
+  StandbyAndLoadFigure,
+} from './figures/PowerFigures';
+export {
+  CpuDieBlockFigure,
+  CacheHierarchyFigure,
+  ComputeUnitComparisonFigure,
+  GpuPipelineFigure,
+} from './figures/ComputeFigures';
+export {
+  PcieGenerationFigure,
+  M2FormFactorFigure,
+  StorageSpeedFigure,
+  RamChannelFigure,
+  MotherboardLayoutFigure,
+  CoolingLoopFigure,
+  ThermalThrottleFigure,
+  DataPathFigure,
+  VramBandwidthFigure,
+} from './figures/BusFigures';
 
 /** Wall → UPS → PSU → components, with where the losses happen. */
 export function PowerPathFigure() {
@@ -82,7 +104,7 @@ export function PowerPathFigure() {
               strokeWidth="1.5"
               markerEnd="url(#arrow)"
             />
-            <text x={l.x + 6} y={128} fontSize="9" fill="#a82d15" fontWeight="600">
+            <text x={l.x + 6} y={128} fontSize="9" fill={INK} fontWeight="600">
               {l.label}
             </text>
           </g>
@@ -139,7 +161,7 @@ export function TariffSlabFigure() {
             </g>
           );
         })}
-        <text x={40} y={22} fontSize="10" fill="#a82d15" fontWeight="700">
+        <text x={40} y={22} fontSize="10" fill={INK} fontWeight="700">
           The next unit you add is priced here →
         </text>
       </svg>

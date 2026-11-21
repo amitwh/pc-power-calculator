@@ -31,7 +31,7 @@ function GuideArticle({ slug }: { slug: string }) {
         title={guide.title}
         lede={`${guide.minutes} min read · Updated ${guide.updated}`}
       />
-      <div className="text-[15px] leading-relaxed text-gray-800 dark:text-gray-200 [&_h2]:font-display [&_h2]:text-lg [&_h2]:font-bold [&_h2]:mt-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1.5 [&_ul]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1.5 [&_ol]:my-2 [&_p]:my-2 [&_strong]:text-gray-900 dark:[&_strong]:text-gray-50">
+      <div className="text-[15px] leading-relaxed text-gray-800 dark:text-gray-200 [&_h2]:font-display [&_h2]:text-lg [&_h2]:font-bold [&_h2]:mt-6 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1.5 [&_ul]:my-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1.5 [&_ol]:my-2 [&_p]:my-2 [&_strong]:text-gray-900 dark:[&_strong]:text-gray-50 [&_table]:my-4 [&_table]:w-full [&_table]:border-collapse [&_table]:text-sm [&_th]:border-b [&_th]:border-gray-300 [&_th]:py-1.5 [&_th]:pr-3 [&_th]:text-left [&_th]:font-semibold dark:[&_th]:border-gray-700 [&_td]:border-b [&_td]:border-gray-100 [&_td]:py-1.5 [&_td]:pr-3 [&_td]:align-top dark:[&_td]:border-gray-800 [&_table_caption]:text-left [&_table_caption]:text-xs [&_table_caption]:text-gray-500">
         {guide.body}
       </div>
       {/* Below the answer — never between a reader and the numbers they came
@@ -61,7 +61,7 @@ function GuidesHub() {
     <div className="mx-auto max-w-3xl p-4 md:p-8">
       <PageHeader
         title="Guides & explainers"
-        lede="Short, practical reads on PC power draw, PSU sizing and electricity billing — written to match the calculator's model."
+        lede="Short, practical reads on PC power draw, PSU sizing, electricity billing and the hardware behind them — written to match the calculator's model."
       />
 
       <div className="mb-6 grid gap-1.5">
