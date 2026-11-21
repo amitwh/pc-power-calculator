@@ -1,6 +1,5 @@
 import type { BuildConfig } from '@/types/build';
 import type { ComponentCategory } from '@/types/component';
-import { formatCost } from '@/lib/calc/format';
 import { categoryColor } from '@/lib/categoryColors';
 import { CALC_ENGINE_VERSION } from '@/lib/calc/version';
 import { CONSUMPTION_TIERS, averageWallW, tierFor, tierPosition } from '@/lib/calc/classify';
@@ -12,11 +11,12 @@ import {
   REPORT_DISCLAIMER,
   istTimestamp,
   makeReportId,
+  money as formatMoney,
   pdfKwh,
   pdfNum,
-  sumRounded,
+  reconciledTotals,
   type PdfReport,
-} from './pdf';
+} from './report';
 
 /**
  * Escape characters that have special meaning in HTML so user-supplied
@@ -131,7 +131,8 @@ function kvRows(rows: KvRow[]): string {
 export function buildExportHtml(report: PdfReport, build: BuildConfig): string {
   const currency = report.currency;
   const yearly = report.totals.yearly;
-  const money = (amount: number) => formatCost(amount, currency);
+  const totals = reconciledTotals(report);
+  const money = (amount: number) => formatMoney(amount, currency);
 
   const generatedAt = istTimestamp();
   // "21 Nov 2026, 14:45" → "21 Nov 2026". Kept IST, like the PDF.
@@ -169,7 +170,7 @@ export function buildExportHtml(report: PdfReport, build: BuildConfig): string {
 
   const heroHtml = `<section class="hero">
   <span class="hero-label">ESTIMATED ANNUAL RUNNING COST</span>
-  <div class="hero-line"><span class="hero-amount">${money(yearly.cost)}</span><span class="hero-per">per year</span></div>
+  <div class="hero-line"><span class="hero-amount">${money(totals.yearly)}</span><span class="hero-per">per year</span></div>
   <div class="facts">
     <div><span class="fact-k">Per month</span><span class="fact-v fact-month">${money(report.totals.monthly.cost)}</span></div>
     <div><span class="fact-k">Per day</span><span class="fact-v fact-day">${money(report.totals.daily.cost)}</span></div>
@@ -207,7 +208,7 @@ ${powerRows.length > 0 ? barList(powerRows) : '<p>No components selected.</p>'}
   /* ── 2. What each use case costs ─────────────────────────────────────── */
   let useCaseSection = '';
   if (report.schedule.length > 0) {
-    const scheduleTotal = sumRounded(report.schedule.map((s) => s.costYear));
+    const scheduleTotal = totals.yearly;
     const maxCost = Math.max(...report.schedule.map((s) => s.costYear), 1);
     const costRows: BarRow[] = report.schedule
       .slice()

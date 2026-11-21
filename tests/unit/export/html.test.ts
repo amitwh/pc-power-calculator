@@ -165,7 +165,9 @@ describe('buildExportHtml — report content matches the PDF', () => {
   test('carries the hero cost and the three coloured facts', () => {
     const out = html();
     expect(out).toContain('ESTIMATED ANNUAL RUNNING COST');
-    expect(out).toContain('₹4,950.00');
+    // The hero now uses the reconciled schedule total (2,632 + 1,875), not the
+    // unrelated totals.yearly.cost the fixture carries.
+    expect(out).toContain('₹4,507.00');
     expect(out).toContain('per year');
     expect(out).toMatch(/\.fact-month\s*\{[^}]*#c93a18/);
     expect(out).toMatch(/\.fact-day\s*\{[^}]*#0b6f96/);
