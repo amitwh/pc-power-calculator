@@ -24,11 +24,21 @@
     <!-- frame-ancestors 'none' is intentionally HTTP-only — HTML spec disallows
          it in <meta> tags. Enforced via nginx/default.conf instead.
          CSP also allowlists Google AdSense hosts (2026-11-05) — inert until a
-         deployment sets VITE_ADSENSE_CLIENT; synced with nginx + public/_headers. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://ipapi.co https://ipwho.is https://ip-api.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://*.doubleclick.net; img-src 'self' data: https://www.google-analytics.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net; manifest-src 'self'; worker-src 'self'; frame-src 'self' https://*.googlesyndication.com https://googleads.g.doubleclick.net https://fundingchoicesmessages.google.com; base-uri 'self'; form-action 'self'" />
+         deployment sets VITE_ADSENSE_CLIENT; synced with nginx + public/_headers.
+         2026-11-21: GTM-MB4LMGGX is installed below; its inline stub is allowed
+         by SHA-256 hash (never 'unsafe-inline') and must be re-hashed if edited. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-WFRMLsMGdvJeEZAYZrUympeBpc2cT0AELK1vPulFTTM=' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://ipapi.co https://ipwho.is https://ip-api.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://*.doubleclick.net; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net; manifest-src 'self'; worker-src 'self'; frame-src 'self' https://*.googlesyndication.com https://googleads.g.doubleclick.net https://fundingchoicesmessages.google.com; base-uri 'self'; form-action 'self'" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <title>PC Power Calculator</title>
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MB4LMGGX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script>
+    <!-- End Google Tag Manager -->
   </head>
   <body>
     <div id="root">
