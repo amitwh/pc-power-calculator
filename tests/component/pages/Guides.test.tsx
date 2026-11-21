@@ -25,10 +25,12 @@ function renderAt(path: string) {
 const NEW_SLUGS = ['running-pc-24-7', 'local-ai-power', 'cutting-pc-power'] as const;
 
 describe('/guides hub', () => {
-  test('lists every guide, including the three new slugs', () => {
+  test('lists every guide on the hub', () => {
     renderAt('/guides');
 
-    expect(GUIDES).toHaveLength(6);
+    // Every guide in the data must be on the hub; the count is asserted as
+    // "at least the nine published" so adding an article does not break it.
+    expect(GUIDES.length).toBeGreaterThanOrEqual(9);
     for (const guide of GUIDES) {
       expect(screen.getByRole('link', { name: guide.title })).toBeInTheDocument();
     }

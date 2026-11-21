@@ -561,6 +561,168 @@ export const GUIDES: Guide[] = [
       </>
     ),
   },
+  {
+    slug: 'wall-power-vs-component-power',
+    title: 'Wall power vs component power: why your meter reads higher',
+    description:
+      'The calculator works in two currencies — watts at the component and watts at the socket. Here is the conversion, and why a 200 W load can show 230 W on a smart plug.',
+    minutes: 5,
+    updated: 'November 2026',
+    body: (
+      <>
+        <p>
+          Every number on this site starts as <strong>component draw</strong>: the watts a
+          CPU, GPU, drive or fan uses inside the case. What your electricity bill charges
+          for is <strong>wall draw</strong>, which is that figure divided by how efficiently
+          the power supply converts mains AC into the low-voltage DC the parts need. A PSU
+          is not a magic pipe; it loses part of what it takes in as heat.
+        </p>
+        <p>
+          <code>P_wall = P_components ÷ efficiency</code>
+        </p>
+        <h2>An example that looks wrong until it doesn't</h2>
+        <p>
+          Components drawing 200 W through a supply running at 90% efficiency pull
+          <strong> 222 W</strong> from the socket. The extra 22 W never reaches a component —
+          it warms your room. This is why the same PC can read 180 W on one PSU and 210 W on
+          another with identical parts.
+        </p>
+        <h2>Efficiency is not one number</h2>
+        <p>
+          It depends on the load. An 80 PLUS Gold unit is typically most efficient around
+          50% of its rated capacity — perhaps 90–91% — and worse at 10% (~85%) and at 100%
+          (~87%). That matters for a home server idling most of the day: it spends its life
+          in the least efficient part of its own curve. This calculator models that curve
+          rather than assuming a flat 90%.
+        </p>
+        <h2>What a meter measures that we cannot</h2>
+        <ul>
+          <li><strong>Other devices on the strip</strong> — monitors, speakers, a dock.</li>
+          <li><strong>Transient spikes</strong> — a GPU can exceed its rated draw for
+            milliseconds; a meter averages them away.</li>
+          <li><strong>Battery charging</strong> — a laptop or UPS charging is a load the
+            model does not see.</li>
+        </ul>
+        <p>
+          If you have taken a smart-plug reading, enter it under{' '}
+          <Link to="/" className="text-brand-text underline underline-offset-2">How accurate is this?</Link>{' '}
+          and the page will show the gap reading by reading rather than hiding it.
+        </p>
+      </>
+    ),
+  },
+  {
+    slug: 'what-each-component-draws',
+    title: 'What each PC component actually draws',
+    description:
+      'A plain guide to the power profile of every part in a build — CPU, GPU, RAM, storage, motherboard, fans, monitors and the PSU — and which ones dominate the bill.',
+    minutes: 7,
+    updated: 'November 2026',
+    body: (
+      <>
+        <p>
+          A PC has one or two big consumers and a long tail of small ones. Knowing which is
+          which tells you where to spend money to save money — and where not to bother.
+        </p>
+        <h2>The CPU</h2>
+        <p>
+          Rated by TDP (thermal design power), which is a cooling requirement, not a
+          measurement. A 120 W CPU at idle uses a few watts; at full load it approaches its
+          rated figure and can exceed it on boost. Modern designs also have a short
+          “boost window” well above TDP, which is why a 65 W part can show 100 W briefly.
+        </p>
+        <h2>The GPU — usually the whole bill</h2>
+        <p>
+          A discrete card is often half the machine's draw under load and the single largest
+          difference between two builds. Idle is low (10–20 W, though older cards idle
+          poorly), gaming is near the rated board power, and rendering or training pins it.
+          If one part decides your running cost, it is this one.
+        </p>
+        <h2>RAM, storage and motherboard</h2>
+        <p>
+          Small and predictable: a DDR5 stick is around 3–6 W, an NVMe drive 5–9 W under
+          load, a hard disk ~5 W idle and ~9 W spinning up, and a motherboard 15–40 W once
+          chipsets and VRMs are included. The exception is a machine with many drives — ten
+          HDDs is 50 W idle, which is a permanent tax on an always-on server.
+        </p>
+        <h2>Fans, coolers and lighting</h2>
+        <p>
+          A case fan is about 2 W; a tower cooler's fans and a pump together are 5–10 W; LED
+          strips can be 10–20 W if you leave them on. Individually trivial, not always
+          trivial in aggregate.
+        </p>
+        <h2>The monitor</h2>
+        <p>
+          A 24–27" LCD is typically 20–40 W, and it is powered from the wall rather than from
+          the PSU. It sits outside PSU sizing but inside your bill. OLED panels are higher.
+        </p>
+        <h2>The PSU is not a consumer</h2>
+        <p>
+          A 650 W supply does not draw 650 W. It draws what the components demand, divided
+          by its efficiency. Its rating is capacity, not consumption — a distinction that
+          most simple calculators skip, and the reason a PSU appears with no wattage of its
+          own in our component table.
+        </p>
+        <p>
+          To see the split for your own build, add the parts in the{' '}
+          <Link to="/" className="text-brand-text underline underline-offset-2">calculator</Link>{' '}
+          — the breakdown chart shows each part's share of the total.
+        </p>
+      </>
+    ),
+  },
+  {
+    slug: 'how-electricity-tariffs-work',
+    title: 'How a residential electricity tariff is actually calculated',
+    description:
+      'Slabs, fixed charges, duty, and the difference between the average rate on your bill and the marginal rate your PC actually pays.',
+    minutes: 6,
+    updated: 'November 2026',
+    body: (
+      <>
+        <p>
+          A bill is not “units × rate”. It is slabs plus a fixed charge plus taxes, and the
+          order matters. Getting this wrong makes a PC look cheaper to run than it is.
+        </p>
+        <h2>Tiered slabs</h2>
+        <p>
+          Most Indian states price units in steps: the first 100 units at one rate, the next
+          200 at a higher one, everything above at a higher one still. The rate you pay for
+          <em> the next</em> unit is the <strong>marginal rate</strong>. Adding a PC does not
+          pay the average of all your units — it pays the top slab you land in, every hour it
+          runs.
+        </p>
+        <h2>The fixed charge</h2>
+        <p>
+          A monthly amount that does not move with consumption (meter rental and the
+          licensee's fixed costs). It is why a zero-unit month is never a zero-rupee bill,
+          and why adding a PC does not change it.
+        </p>
+        <h2>Duty and other add-ons</h2>
+        <p>
+          Electricity duty is a state tax charged as a percentage of the energy charge —
+          8% is common, some states are higher. Some tariffs add a fuel surcharge or a
+          wheeling charge. These apply to the units you add, so the effective rate for a new
+          load is the slab rate plus duty.
+        </p>
+        <h2>Average vs marginal, with numbers</h2>
+        <p>
+          Suppose your home already uses 250 units a month in Maharashtra. The next 50 units
+          are billed in the 100–300 slab, and a PC that adds 40 units does not push your
+          whole bill into a higher band — it only prices those 40 units at the slab you have
+          reached, plus duty. That is why “my bill went up by ₹400, so the PC costs ₹400” is
+          only right if nothing else changed.
+        </p>
+        <p>
+          The calculator walks the slabs properly and applies the taxes the bundled schedule
+          declares. Check the walk state by state on the{' '}
+          <Link to="/cost/in/mh" className="text-brand-text underline underline-offset-2">cost pages</Link>,
+          and override the rate with your own bill's figure if you want an exact match.
+        </p>
+      </>
+    ),
+  },
+
 ];
 
 function GuideArticle({ slug }: { slug: string }) {
