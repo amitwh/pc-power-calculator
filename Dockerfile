@@ -25,11 +25,15 @@ COPY src/ ./src/
 # scripts/prerender.mjs runs as the last step of `npm run build`; without it
 # the build fails with MODULE_NOT_FOUND inside the image.
 COPY scripts/ ./scripts/
-RUN npm run build
+# dist-ssr is only an intermediate for scripts/prerender.mjs; dropping it keeps
+# the build layer small. `dist` must exist even when vite fails silently.
+RUN npm run build \
+ && rm -rf dist-ssr \
+ && test -f dist/index.html
 
 # ---------- Runtime stage ----------
 FROM nginx:1.27-alpine
-COPY --from=build /app/dist/ /usr/share/nginx/html/
+COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
