@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
+import { CloseButton } from '@/components/ui/CloseButton';
 import { submitMessage, type FeedbackType } from '@/lib/forms/message';
 
 const MAX_SUBJECT = 120;
@@ -118,10 +119,13 @@ export default function Feedback() {
 
   return (
     <div className="mx-auto max-w-3xl p-4 md:p-8">
-      <PageHeader
-        title="Send feedback"
-        lede="Found a bug, have an idea, or spotted something that looks wrong? Tell the ConcreteInfo team."
-      />
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <PageHeader
+          title="Send feedback"
+          lede="Found a bug, have an idea, or spotted something that looks wrong? Tell the ConcreteInfo team."
+        />
+        <CloseButton />
+      </div>
 
       <Card>
         <CardTitle>What would you like to tell us?</CardTitle>

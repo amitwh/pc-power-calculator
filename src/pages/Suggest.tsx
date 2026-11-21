@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
+import { CloseButton } from '@/components/ui/CloseButton';
 import { submitMessage, type SuggestionType } from '@/lib/forms/message';
 
 const MAX_SUBJECT = 120;
@@ -152,10 +153,13 @@ export default function Suggest() {
 
   return (
     <div className="mx-auto max-w-3xl p-4 md:p-8">
-      <PageHeader
-        title="Suggest a part or correction"
-        lede="Found a missing component, a wrong rated wattage, or a tariff that should be in the catalog? Send it straight to the ConcreteInfo team."
-      />
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <PageHeader
+          title="Suggest a part or correction"
+          lede="Found a missing component, a wrong rated wattage, or a tariff that should be in the catalog? Send it straight to the ConcreteInfo team."
+        />
+        <CloseButton />
+      </div>
 
       <Card>
         <CardTitle>What would you like to add?</CardTitle>

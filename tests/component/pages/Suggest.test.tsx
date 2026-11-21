@@ -50,6 +50,7 @@ describe('/suggest form', () => {
     expect(screen.getByLabelText(/Your email/i)).toBeInTheDocument();
     expect(screen.getByText(/sent directly to ConcreteInfo/i)).toBeInTheDocument();
     expect(screen.getByText(/sensitive information/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^Close$/i })).toBeInTheDocument();
 
     const honeypot = container.querySelector<HTMLInputElement>('input[name="website"]');
     expect(honeypot).not.toBeNull();
