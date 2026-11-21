@@ -1,85 +1,45 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { GUIDES } from '@/pages/Guides';
-import { findComponent } from '@/lib/data/components';
-import { listTariffPages } from '@/lib/data/tariffPages';
-
-const SITE = 'https://pcpower.concreteinfo.co.in';
-
-const NOT_FOUND_TITLE = 'Page not found · PC Power Calculator';
-
-/** Routes whose title never depends on catalog or tariff data. */
-const STATIC_TITLES: Record<string, string> = {
-  '/': "PC Power Calculator — estimate your PC's electricity use & cost",
-  '/compare': 'Compare systems · PC Power Calculator',
-  '/suggestions': 'PSU & UPS suggestions · PC Power Calculator',
-  '/suggest': 'Suggest a part or correction · PC Power Calculator',
-  '/feedback': 'Feedback · PC Power Calculator',
-  '/data': 'Data freshness · PC Power Calculator',
-  '/about': 'About & methodology · PC Power Calculator',
-  '/privacy': 'Privacy policy · PC Power Calculator',
-};
-
-interface ResolvedRoute {
-  title: string;
-  notFound: boolean;
-}
+import { OG_IMAGE, SITE, TWITTER_CARD, pageMetaFor } from '@/lib/seo/routeMeta';
 
 /**
- * Decide the title and whether the route actually exists. Both come from the
- * same resolution so a path that renders nothing can never keep an indexable
- * title. One trailing slash is ignored, so `/parts/x/` resolves like
- * `/parts/x`.
+ * Update a meta tag's content, creating the tag when it is missing.
+ *
+ * Why: the client-side navigation used to refresh only the title and the
+ * canonical, so the description, the OG tags and the Twitter tags kept the
+ * values of the page the reader came from. Every tag the resolver owns goes
+ * through here, so the head always describes the page that is on screen.
  */
-function resolveRoute(rawPathname: string): ResolvedRoute {
-  const pathname =
-    rawPathname.length > 1 && rawPathname.endsWith('/') ? rawPathname.slice(0, -1) : rawPathname;
-
-  if (pathname === '/guides') {
-    return { title: 'Guides & explainers · PC Power Calculator', notFound: false };
+function upsertMeta(attr: 'name' | 'property', key: string, content: string): void {
+  let tag = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
+  if (!tag) {
+    tag = document.createElement('meta');
+    tag.setAttribute(attr, key);
+    document.head.appendChild(tag);
   }
+  tag.content = content;
+}
 
-  const guideMatch = pathname.match(/^\/guides\/([^/]+)$/);
-  if (guideMatch) {
-    const guide = GUIDES.find((g) => g.slug === guideMatch[1]);
-    return guide
-      ? { title: guide.title, notFound: false }
-      : { title: NOT_FOUND_TITLE, notFound: true };
+/** Point the canonical link at `href`, creating the link when it is missing. */
+function upsertCanonical(href: string): void {
+  let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'canonical';
+    document.head.appendChild(link);
   }
-
-  const partMatch = pathname.match(/^\/parts\/([^/]+)$/);
-  if (partMatch) {
-    let partId: string | undefined;
-    try {
-      partId = decodeURIComponent(partMatch[1]);
-    } catch {
-      partId = undefined;
-    }
-    const part = partId ? findComponent(partId) : undefined;
-    return part
-      ? { title: `${part.brand} ${part.model} power consumption & yearly cost`, notFound: false }
-      : { title: NOT_FOUND_TITLE, notFound: true };
-  }
-
-  if (/^\/cost\/[^/]+(?:\/[^/]+)?$/.test(pathname)) {
-    // Tariff page paths are lowercase, but Cost.tsx uppercases its params, so a
-    // hand-typed `/cost/IN` must still resolve.
-    const tariff = listTariffPages().find((ref) => ref.path === pathname.toLowerCase());
-    return tariff
-      ? { title: `Electricity cost of running a PC in ${tariff.label}`, notFound: false }
-      : { title: NOT_FOUND_TITLE, notFound: true };
-  }
-
-  const staticTitle = STATIC_TITLES[pathname];
-  if (staticTitle) return { title: staticTitle, notFound: false };
-
-  return { title: NOT_FOUND_TITLE, notFound: true };
+  link.href = href;
 }
 
 /**
- * Per-route document title + canonical link. index.html ships a root
- * canonical + description; this keeps both correct once JS is running so
- * crawlers that render (Google) index each route separately.
+ * Per-route document metadata: title, description, keywords, canonical, the
+ * Open Graph and Twitter cards. index.html ships the defaults; this keeps them
+ * correct once JS is running so crawlers that render (Google) index each
+ * route separately.
+ *
+ * The metadata itself comes from the shared resolver
+ * (`@/lib/seo/routeMeta`), the same one the prerenderer uses — so a
+ * prerendered page and a client-side navigation always agree.
  *
  * Unknown paths are marked `noindex, follow` and lose their canonical: nginx
  * serves `index.html` with HTTP 200 for them, so without this an arbitrary
@@ -90,13 +50,26 @@ export function usePageMeta(): void {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const { title, notFound } = resolveRoute(pathname);
-    document.title = title;
+    const meta = pageMetaFor(pathname);
+    document.title = meta.title;
 
-    if (notFound) {
-      document.querySelector('link[rel="canonical"]')?.remove();
+    const url = `${SITE}${pathname === '/' ? '/' : pathname}`;
 
-      let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    upsertMeta('name', 'description', meta.description);
+    upsertMeta('name', 'keywords', meta.keywords.join(', '));
+    upsertMeta('property', 'og:title', meta.title);
+    upsertMeta('property', 'og:description', meta.description);
+    upsertMeta('property', 'og:url', url);
+    upsertMeta('property', 'og:type', meta.ogType);
+    upsertMeta('name', 'twitter:card', TWITTER_CARD);
+    upsertMeta('name', 'twitter:title', meta.title);
+    upsertMeta('name', 'twitter:description', meta.description);
+    upsertMeta('name', 'twitter:image', OG_IMAGE);
+
+    if (!meta.found) {
+      document.head.querySelector('link[rel="canonical"]')?.remove();
+
+      let robots = document.head.querySelector<HTMLMetaElement>('meta[name="robots"]');
       if (!robots) {
         robots = document.createElement('meta');
         robots.name = 'robots';
@@ -106,14 +79,7 @@ export function usePageMeta(): void {
       return;
     }
 
-    document.querySelector('meta[name="robots"]')?.remove();
-
-    let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    if (!link) {
-      link = document.createElement('link');
-      link.rel = 'canonical';
-      document.head.appendChild(link);
-    }
-    link.href = `${SITE}${pathname === '/' ? '/' : pathname}`;
+    document.head.querySelector('meta[name="robots"]')?.remove();
+    upsertCanonical(url);
   }, [pathname]);
 }

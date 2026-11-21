@@ -14,6 +14,8 @@ const DIST = path.join(ROOT, 'dist');
 const TEMPLATE_PATH = path.join(DIST, 'index.html');
 const SSR_ENTRY_PATH = path.join(ROOT, 'dist-ssr', 'entry-server.js');
 const SITE = 'https://pcpower.concreteinfo.co.in';
+const OG_IMAGE = `${SITE}/og.png`;
+const TWITTER_CARD = 'summary_large_image';
 
 const escapeHtml = (value) =>
   value
@@ -34,6 +36,7 @@ function upsertTag(html, pattern, replacement) {
 function injectHead(html, route) {
   const title = escapeHtml(route.title);
   const description = escapeHtml(route.description);
+  const keywords = escapeHtml((route.keywords ?? []).join(', '));
   const url = escapeHtml(canonicalUrl(route.path));
   const ogType = route.ogType ?? 'website';
 
@@ -43,6 +46,11 @@ function injectHead(html, route) {
     out,
     /<meta\s+[^>]*\bname="description"[^>]*>/i,
     `<meta name="description" content="${description}" />`,
+  );
+  out = upsertTag(
+    out,
+    /<meta\s+[^>]*\bname="keywords"[^>]*>/i,
+    `<meta name="keywords" content="${keywords}" />`,
   );
   out = upsertTag(
     out,
@@ -68,6 +76,28 @@ function injectHead(html, route) {
     out,
     /<meta\s+[^>]*\bproperty="og:url"[^>]*>/i,
     `<meta property="og:url" content="${url}" />`,
+  );
+  // The Twitter card mirrors the Open Graph one — the template ships the
+  // home page's defaults, so every page has to overwrite them.
+  out = upsertTag(
+    out,
+    /<meta\s+[^>]*\bname="twitter:card"[^>]*>/i,
+    `<meta name="twitter:card" content="${TWITTER_CARD}" />`,
+  );
+  out = upsertTag(
+    out,
+    /<meta\s+[^>]*\bname="twitter:title"[^>]*>/i,
+    `<meta name="twitter:title" content="${title}" />`,
+  );
+  out = upsertTag(
+    out,
+    /<meta\s+[^>]*\bname="twitter:description"[^>]*>/i,
+    `<meta name="twitter:description" content="${description}" />`,
+  );
+  out = upsertTag(
+    out,
+    /<meta\s+[^>]*\bname="twitter:image"[^>]*>/i,
+    `<meta name="twitter:image" content="${OG_IMAGE}" />`,
   );
 
   const jsonLd = (route.jsonLd ?? [])

@@ -1,19 +1,19 @@
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import AppRoutes from '@/routes';
-import { GUIDES } from '@/pages/Guides';
+import { GUIDES } from '@/content/guides';
 import { initCatalog } from '@/lib/data/components';
 import { indexableParts } from '@/lib/data/partPages';
 import { listTariffPages } from '@/lib/data/tariffPages';
 import {
-  resolveLocationTariff,
   tariffProvenance,
   tariffsLastUpdated,
 } from '@/lib/data/tariffs';
-import { findCurrency } from '@/lib/data/currencies';
-import { describeTariffRate } from '@/lib/calc/format';
+import { GUIDES_DESCRIPTION, ROOT_DESCRIPTION, SITE, pageMetaFor } from '@/lib/seo/routeMeta';
 
-export const SITE = 'https://pcpower.concreteinfo.co.in';
+// The origin lives with the metadata resolver now — one constant, so the
+// sitemap, the canonical links and the meta tags cannot drift apart.
+export { SITE };
 
 export type ChangeFreq = 'daily' | 'weekly' | 'monthly' | 'yearly';
 
@@ -21,6 +21,8 @@ export interface RouteMeta {
   path: string;
   title: string;
   description: string;
+  /** Keywords for the page's `meta[name="keywords"]` tag. */
+  keywords: string[];
   ogType?: 'website' | 'article';
   priority: number;
   changefreq: ChangeFreq;
@@ -72,17 +74,31 @@ function isoDate(value?: string): string | undefined {
   return value?.match(/^(\d{4}-\d{2}-\d{2})/)?.[1];
 }
 
-const ROOT_DESCRIPTION =
-  "Estimate your PC's power draw, yearly electricity use and running cost — 2,200+ CPUs, GPUs and parts, local tariffs in any currency, shareable comparison and a PDF report.";
+/**
+ * The resolver's answer for a route, folded into a manifest entry.
+ *
+ * Why: the manifest used to spell out every title and description by hand,
+ * which meant a title could exist twice — once here, once in the metadata
+ * resolver — and the two would quietly drift apart. The resolver owns the
+ * copy; the manifest owns the sitemap fields (priority, changefreq, lastmod)
+ * and the JSON-LD.
+ */
+function metaFor(path: string): Pick<RouteMeta, 'title' | 'description' | 'keywords' | 'ogType'> {
+  const meta = pageMetaFor(path);
+  return {
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords,
+    ogType: meta.ogType,
+  };
+}
 
 const guideRoutes: RouteMeta[] = GUIDES.map((guide) => {
   const path = `/guides/${guide.slug}`;
   const dateModified = isoMonth(guide.updated);
   return {
     path,
-    title: guide.title,
-    description: guide.description,
-    ogType: 'article',
+    ...metaFor(path),
     priority: 0.7,
     changefreq: 'monthly',
     lastmod: dateModified,
@@ -101,16 +117,18 @@ const guideRoutes: RouteMeta[] = GUIDES.map((guide) => {
 });
 
 /**
- * The single source of truth for prerendered routes, page metadata and the
- * generated sitemap. Titles mirror `src/hooks/usePageMeta.ts` so a prerendered
- * page and a client-side navigation end on the same document title.
+ * The prerender manifest: the static routes plus one entry per guide.
+ *
+ * The titles and descriptions come from the metadata resolver (the same one
+ * the client-side navigation uses), so a prerendered page and a client-side
+ * navigation always end on the same document title and description. This
+ * module owns the sitemap fields — priority, changefreq, lastmod — and the
+ * JSON-LD, which the resolver deliberately does not know about.
  */
 export const ROUTES: RouteMeta[] = [
   {
     path: '/',
-    title: "PC Power Calculator — estimate your PC's electricity use & cost",
-    description: ROOT_DESCRIPTION,
-    ogType: 'website',
+    ...metaFor('/'),
     priority: 1,
     changefreq: 'weekly',
     jsonLd: [
@@ -156,80 +174,56 @@ export const ROUTES: RouteMeta[] = [
   },
   {
     path: '/compare',
-    title: 'Compare systems · PC Power Calculator',
-    description:
-      'Compare PC builds side by side: yearly kWh, running cost in your currency, PSU sizing and a verdict on which system is cheaper to run.',
-    ogType: 'website',
+    ...metaFor('/compare'),
     priority: 0.8,
     changefreq: 'monthly',
     jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Compare', path: '/compare' }])],
   },
   {
     path: '/suggestions',
-    title: 'PSU & UPS suggestions · PC Power Calculator',
-    description:
-      'Lower-power alternative parts that keep at least 90% of the relevant performance, ranked by the running cost they save at your tariff.',
-    ogType: 'website',
+    ...metaFor('/suggestions'),
     priority: 0.7,
     changefreq: 'monthly',
     jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Suggestions', path: '/suggestions' }])],
   },
   {
     path: '/suggest',
-    title: 'Suggest a part or correction · PC Power Calculator',
-    description:
-      'Send corrections, missing components, new countries or tariff data to the team so the calculator catalog stays accurate.',
-    ogType: 'website',
+    ...metaFor('/suggest'),
     priority: 0.5,
     changefreq: 'monthly',
     jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Suggest a part', path: '/suggest' }])],
   },
   {
     path: '/feedback',
-    title: 'Feedback · PC Power Calculator',
-    description:
-      'Report a bug, suggest a feature, or tell us about a content problem in the PC power and electricity cost calculator.',
-    ogType: 'website',
+    ...metaFor('/feedback'),
     priority: 0.4,
     changefreq: 'monthly',
     jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Feedback', path: '/feedback' }])],
   },
   {
     path: '/data',
-    title: 'Data freshness · PC Power Calculator',
-    description:
-      'Which component specs, electricity tariffs and exchange-rate snapshots the calculator uses, and when each dataset last changed.',
-    ogType: 'website',
+    ...metaFor('/data'),
     priority: 0.4,
     changefreq: 'weekly',
     jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Data freshness', path: '/data' }])],
   },
   {
     path: '/about',
-    title: 'About & methodology · PC Power Calculator',
-    description:
-      'How the calculator models component power, PSU efficiency and slab tariffs — sources, assumptions and the limits of every estimate.',
-    ogType: 'website',
+    ...metaFor('/about'),
     priority: 0.5,
     changefreq: 'monthly',
     jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'About & methodology', path: '/about' }])],
   },
   {
     path: '/privacy',
-    title: 'Privacy policy · PC Power Calculator',
-    description:
-      'What the calculator stores (only in your browser), when analytics and ads load, and how to opt out.',
-    ogType: 'website',
+    ...metaFor('/privacy'),
     priority: 0.3,
     changefreq: 'yearly',
     jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Privacy policy', path: '/privacy' }])],
   },
   {
     path: '/guides',
-    title: 'Guides & explainers · PC Power Calculator',
-    description:
-      'Short, practical guides to PC power draw, PSU sizing and Indian electricity billing, written to match the calculator’s model.',
-    ogType: 'website',
+    ...metaFor('/guides'),
     priority: 0.8,
     changefreq: 'monthly',
     jsonLd: [
@@ -237,8 +231,9 @@ export const ROUTES: RouteMeta[] = [
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
         name: 'Guides & explainers',
-        description:
-          'Short, practical guides to PC power draw, PSU sizing and Indian electricity billing, written to match the calculator’s model.',
+        // Why the resolver's wording: the JSON-LD description and the visible
+        // lede describe the same collection, so they read the same string.
+        description: GUIDES_DESCRIPTION,
         url: `${SITE}/guides`,
         mainEntity: {
           '@type': 'ItemList',
@@ -267,12 +262,9 @@ export async function getRoutes(): Promise<RouteMeta[]> {
   const partRoutes: RouteMeta[] = indexableParts().map((part) => {
     const path = `/parts/${encodeURIComponent(part.id)}`;
     const name = `${part.brand} ${part.model}`;
-    const categoryLabel = part.category === 'gpu' ? 'graphics card' : 'processor';
     return {
       path,
-      title: `${name} power consumption & yearly cost`,
-      description: `Rated ${part.tdp_w} W ${categoryLabel}: modelled idle and full-load draw, yearly kWh and running cost on an Indian tariff, plus lower-power alternatives.`,
-      ogType: 'website',
+      ...metaFor(path),
       priority: 0.6,
       changefreq: 'monthly',
       lastmod: isoDate(part.addedAt),
@@ -280,20 +272,14 @@ export async function getRoutes(): Promise<RouteMeta[]> {
     };
   });
 
-  const tariffRoutes: RouteMeta[] = listTariffPages().map((ref) => {
-    const { rate } = resolveLocationTariff(ref.iso2, ref.subdivisionCode);
-    const currency = findCurrency(rate.currency) ?? findCurrency('USD')!;
-    return {
-      path: ref.path,
-      title: `Electricity cost of running a PC in ${ref.label}`,
-      description: `Electricity rates in ${ref.label}: ${describeTariffRate(rate, currency)}. What a 150 W, 350 W and 600 W PC costs per month at 4 h/day, with taxes.`,
-      ogType: 'website',
-      priority: 0.7,
-      changefreq: 'monthly',
-      lastmod: isoDate(tariffProvenance(ref.iso2).updated) ?? isoDate(tariffsLastUpdated()),
-      jsonLd: [breadcrumbList([HOME_CRUMB, { name: ref.label, path: ref.path }])],
-    };
-  });
+  const tariffRoutes: RouteMeta[] = listTariffPages().map((ref) => ({
+    path: ref.path,
+    ...metaFor(ref.path),
+    priority: 0.7,
+    changefreq: 'monthly',
+    lastmod: isoDate(tariffProvenance(ref.iso2).updated) ?? isoDate(tariffsLastUpdated()),
+    jsonLd: [breadcrumbList([HOME_CRUMB, { name: ref.label, path: ref.path }])],
+  }));
 
   return [...ROUTES, ...partRoutes, ...tariffRoutes];
 }

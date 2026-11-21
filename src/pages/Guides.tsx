@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/analytics/adsense';
 import { GUIDE_CATEGORIES, GUIDES } from '@/content/guides';
+import { GUIDES_DESCRIPTION } from '@/lib/seo/routeMeta';
 
 // Why: the guide content moved to `@/content/guides`, but the nav, the page
 // meta hook, the prerender manifest and the tests all import `GUIDES` from
@@ -61,7 +62,10 @@ function GuidesHub() {
     <div className="mx-auto max-w-3xl p-4 md:p-8">
       <PageHeader
         title="Guides & explainers"
-        lede="Short, practical reads on PC power draw, PSU sizing, electricity billing and the hardware behind them — written to match the calculator's model."
+        // Why the import: the visible lede and the page's meta description
+        // describe the same collection, so they read the same string — one
+        // place to change, and no chance of the two drifting apart.
+        lede={GUIDES_DESCRIPTION}
       />
 
       <div className="mb-6 grid gap-1.5">
