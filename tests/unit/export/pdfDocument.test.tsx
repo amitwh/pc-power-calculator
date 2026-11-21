@@ -5,7 +5,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { beforeAll, describe, expect, test } from 'vitest';
 import { renderToBuffer } from '@react-pdf/renderer';
-import { ReportDocument, type ExportPdfOptions } from '@/lib/export/pdfDocument';
+import { ReportDocument, type ExportPdfOptions } from '@/lib/export/pdf';
 import type { PdfReport } from '@/lib/export/report';
 import { registerReportFonts } from '@/lib/export/reportFonts';
 import {

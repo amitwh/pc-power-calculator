@@ -1,7 +1,7 @@
 /// <reference types="vitest/globals" />
 import { describe, expect, test } from 'vitest';
 import { buildExportHtml } from '@/lib/export/html';
-import { REPORT_DISCLAIMER, reportFileName, type PdfReport } from '@/lib/export/pdf';
+import { REPORT_DISCLAIMER, reportFileName, type PdfReport } from '@/lib/export/report';
 import type { BuildConfig } from '@/types/build';
 import type { CurrencyInfo } from '@/types/currency';
 

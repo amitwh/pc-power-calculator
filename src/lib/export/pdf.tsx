@@ -1255,7 +1255,7 @@ export function ReportDocument({
  * Render the report in the browser and download it under the shared file name.
  *
  * react-pdf is imported dynamically so the renderer stays out of the initial
- * app bundle, mirroring how the old jsPDF export was loaded.
+ * app bundle and only loads when someone exports a report.
  */
 export async function exportPdf(report: PdfReport, opts: ExportPdfOptions = {}): Promise<void> {
   const now = new Date();

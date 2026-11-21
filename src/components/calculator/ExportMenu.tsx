@@ -3,18 +3,21 @@ import { Button } from '@/components/ui/Button';
 import { useCalc } from '@/hooks/useCalc';
 import { buildExportHtml, downloadExportHtml } from '@/lib/export';
 import {
-  exportPdf,
+  basisFor,
+  certificationLabel,
   reportFileName,
-  type PdfReport,
   type PdfDeviceRow,
+  type PdfReport,
   type PdfScheduleRow,
-} from '@/lib/export/pdf';
+} from '@/lib/export/report';
+import { loadBrandIcon, loadBrandLogo, makeQrDataUrl } from '@/lib/export/brandAssets';
+import { buildPermalinkUrl } from '@/lib/share/buildLink';
+import { useBuildStore } from '@/store/buildStore';
 import { listCountries, listSubdivisions, resolveLocationTariff, tariffsLastUpdated, tariffProvenance } from '@/lib/data/tariffs';
 import { workloadLabel } from '@/lib/data/workloads';
 import { computeCost } from '@/lib/calc/cost';
 import { findComponent } from '@/lib/data/components';
 import { psuEfficiency } from '@/lib/calc/psu';
-import { basisFor, certificationLabel } from '@/lib/export/pdf';
 import { suggestCategory } from '@/lib/calc/classify';
 import { CATEGORY_LABEL } from '@/lib/buildCategory';
 import { getConsent } from '@/lib/analytics/consent';
@@ -140,7 +143,25 @@ export function ExportMenu({
   const onPdf = async () => {
     setGenerating(true);
     try {
-      await exportPdf(makeReport());
+      const report = makeReport();
+      // The QR points at this build's own permalink, so the reader can open the
+      // exact configuration the report describes.
+      const shareUrl = buildPermalinkUrl(useBuildStore.getState().exportBuild());
+      // The renderer is a heavy lazy chunk; the branding assets and QR are
+      // browser-only. Load all four together, and let a missing logo/icon/QR
+      // degrade to a report without them rather than failing the export.
+      const [{ exportPdf }, logoDataUrl, iconDataUrl, qrDataUrl] = await Promise.all([
+        import('@/lib/export/pdf'),
+        loadBrandLogo().catch(() => null),
+        loadBrandIcon().catch(() => null),
+        shareUrl ? makeQrDataUrl(shareUrl).catch(() => null) : Promise.resolve(null),
+      ]);
+      await exportPdf(report, {
+        shareUrl,
+        qrDataUrl: qrDataUrl ?? undefined,
+        logoDataUrl,
+        iconDataUrl,
+      });
       trackExport('pdf');
     } finally {
       setGenerating(false);

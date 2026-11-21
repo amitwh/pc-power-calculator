@@ -5,16 +5,20 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ExportMenu } from '@/components/calculator/ExportMenu';
 import { useBuildStore } from '@/store/buildStore';
-import { exportPdf, type PdfReport } from '@/lib/export/pdf';
+import { exportPdf } from '@/lib/export/pdf';
+import type { PdfReport } from '@/lib/export/report';
 
-// jsPDF rendering is browser-heavy; the wiring test only asserts the report
-// ExportMenu assembles before handing it to the generator.
-// Only the generator is stubbed; the pure helpers (basisFor, certificationLabel)
-// must behave for real so the test can assert what the report carries.
-vi.mock('@/lib/export/pdf', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@/lib/export/pdf')>();
-  return { ...actual, exportPdf: vi.fn().mockResolvedValue(undefined) };
-});
+// The react-pdf renderer and the browser-only asset loaders are replaced with
+// test doubles: the wiring test asserts the report ExportMenu assembles before
+// handing it to the generator, not how the document is painted. Keeping the
+// renderer out of jsdom also keeps @react-pdf/renderer and canvas out of this
+// suite.
+vi.mock('@/lib/export/pdf', () => ({ exportPdf: vi.fn().mockResolvedValue(undefined) }));
+vi.mock('@/lib/export/brandAssets', () => ({
+  loadBrandLogo: vi.fn().mockResolvedValue(null),
+  loadBrandIcon: vi.fn().mockResolvedValue(null),
+  makeQrDataUrl: vi.fn().mockResolvedValue(null),
+}));
 
 beforeEach(() => {
   localStorage.clear();
