@@ -31,6 +31,8 @@ interface ReportDocumentProps extends ExportPdfOptions {
   report: PdfReport;
 }
 
+const A4_HEIGHT = 841.89;
+const PAGE_MARGIN = 36;
 const BRAND = '#e5461f';
 const INK = '#1a1714';
 const MUTED = '#6b625b';
@@ -44,7 +46,7 @@ const SHORT_DISCLAIMER =
 
 const styles = StyleSheet.create({
   page: {
-    padding: 36,
+    padding: PAGE_MARGIN,
     fontFamily: 'Helvetica',
     fontSize: 9,
     color: INK,
@@ -233,47 +235,47 @@ const styles = StyleSheet.create({
   continuationHeader: {
     position: 'absolute',
     top: 12,
-    left: 36,
-    right: 36,
+    left: PAGE_MARGIN,
+    right: PAGE_MARGIN,
     fontSize: 7,
     color: FAINT,
     textAlign: 'right',
   },
   footerRule: {
     position: 'absolute',
-    top: 800,
-    left: 36,
-    right: 36,
+    top: A4_HEIGHT - PAGE_MARGIN,
+    left: PAGE_MARGIN,
+    right: PAGE_MARGIN,
     height: 0.7,
     backgroundColor: RULE,
   },
   footerAttribution: {
     position: 'absolute',
-    top: 802,
-    left: 36,
+    top: A4_HEIGHT - PAGE_MARGIN + 1,
+    left: PAGE_MARGIN,
   },
   footerPageNumber: {
     position: 'absolute',
-    top: 802,
-    right: 36,
+    top: A4_HEIGHT - PAGE_MARGIN + 1,
+    right: PAGE_MARGIN,
     textAlign: 'right',
   },
   footerSite: {
     position: 'absolute',
-    top: 814,
-    left: 36,
+    top: A4_HEIGHT - PAGE_MARGIN + 11,
+    left: PAGE_MARGIN,
   },
   footerReportId: {
     position: 'absolute',
-    top: 814,
-    right: 36,
+    top: A4_HEIGHT - PAGE_MARGIN + 11,
+    right: PAGE_MARGIN,
     textAlign: 'right',
   },
   footerDisclaimer: {
     position: 'absolute',
-    top: 826,
-    left: 36,
-    right: 36,
+    top: A4_HEIGHT - PAGE_MARGIN + 21,
+    left: PAGE_MARGIN,
+    right: PAGE_MARGIN,
     fontSize: 6,
     color: FAINT,
   },
