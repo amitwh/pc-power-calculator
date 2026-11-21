@@ -30,6 +30,16 @@ function buildMeta(
 /** Identity hues for system cards — faint by design, distinct at a glance. */
 const SYSTEM_TINTS = ['#e5461f', '#2c7a9e', '#6a5acd', '#1a7a56', '#d97706', '#0f766e'];
 
+/**
+ * A build's hue comes from its id, not its position: deleting one system must
+ * not repaint the others, and the same build keeps its colour across visits.
+ */
+function tintFor(id: string): string {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) hash = (hash * 31 + id.charCodeAt(i)) >>> 0;
+  return SYSTEM_TINTS[hash % SYSTEM_TINTS.length];
+}
+
 /** Full-width card comparing every saved system's yearly energy and cost. */
 export function AllSystemsSummary() {
   const builds = useBuildStore((s) => s.builds);
@@ -83,12 +93,12 @@ export function AllSystemsSummary() {
         📊 All your systems at a glance
       </h3>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {summary.map((row, i) => (
+        {summary.map((row) => (
           <div
             key={row.id}
             // Each system keeps one faint hue for the whole page, derived from
             // its position in the list so it is stable across renders.
-            style={{ '--tint': SYSTEM_TINTS[i % SYSTEM_TINTS.length] } as CSSProperties}
+            style={{ '--tint': tintFor(row.id) } as CSSProperties}
             className="system-tint border border-l-[3px] border-gray-200 dark:border-gray-800 rounded-8 p-3"
           >
             <div className="font-body font-bold text-sm text-gray-900 dark:text-gray-50 mb-1.5 flex items-center gap-1.5">
