@@ -97,14 +97,24 @@ interface BuildStore {
   importBuild: (json: string) => void;
 }
 
+/**
+ * Apply a change to the active build.
+ *
+ * A dangling `activeBuildId` (a saved store whose active build was removed, or
+ * state merged from an older version) used to make this a silent no-op: the
+ * edit was dropped and the DOM kept showing what the user had just clicked,
+ * which reads as "changing the country does nothing". Fall back to the first
+ * build and repoint the active id instead of losing the write.
+ */
 const updateActive = (set: (fn: (s: BuildStore) => Partial<BuildStore>) => void, mutator: (b: BuildConfig) => BuildConfig) =>
   set((s) => {
-    const idx = s.builds.findIndex((b) => b.id === s.activeBuildId);
-    if (idx < 0) return {};
-    const updated = mutator(s.builds[idx]);
+    const found = s.builds.findIndex((b) => b.id === s.activeBuildId);
+    const idx = found >= 0 ? found : 0;
+    const target = s.builds[idx];
+    if (!target) return {};
     const builds = s.builds.slice();
-    builds[idx] = updated;
-    return { builds };
+    builds[idx] = mutator(target);
+    return found >= 0 ? { builds } : { builds, activeBuildId: target.id };
   });
 
 export const useBuildStore = create<BuildStore>()(
@@ -406,6 +416,16 @@ export const useBuildStore = create<BuildStore>()(
     {
       name: 'pc-power-builds',
       version: 1,
+      // Repair a saved store whose active build no longer exists, before any
+      // component reads it.
+      onRehydrateStorage: () => (state) => {
+        if (!state) return;
+        const { builds, activeBuildId } = state;
+        if (builds.length === 0) return;
+        if (!builds.some((b) => b.id === activeBuildId)) {
+          state.setActiveBuild?.(builds[0].id);
+        }
+      },
       // Keep the first client render identical to the prerendered HTML; the
       // saved state is applied by useStoreHydration after mount.
       skipHydration: true,
