@@ -22,7 +22,7 @@ export default function About() {
     <div className="mx-auto max-w-3xl p-4 md:p-8">
       <PageHeader
         title="About & Methodology"
-        lede="How the estimate is built — the formula, the data behind it, and where to check our figures."
+        lede="Who makes it, why it's free, how the estimate is built, and where to check our figures."
       />
 
       <dl className="grid gap-3 sm:grid-cols-3">
@@ -45,6 +45,59 @@ export default function About() {
           </dd>
         </div>
       </dl>
+
+      <Section title="Why this exists">
+        <div className="space-y-3">
+          <p className={BODY}>
+            I built PC Power Calculator because the cost of running a computer is invisible when
+            you buy it. Comparing two graphics cards takes seconds; working out what either will
+            add to your electricity bill usually means a spreadsheet, a guess at your tariff and a
+            hunt through the manual for wattages.
+          </p>
+          <p className={BODY}>
+            This calculator puts the answer in one place: real component specifications, the way
+            you actually use the machine, and the tariff where you live. Open it, add your parts,
+            and get a number you can question, check and share — without an account.
+          </p>
+
+          <div className={`${TILE} mt-4`}>
+            <p className={EYEBROW}>Built by</p>
+            <p className="mt-1 font-display text-sm font-bold">Amit Haridas · ConcreteInfo</p>
+            <p className="mt-1 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+              PC Power Calculator is an independent project by Amit Haridas, built at{' '}
+              <a
+                href="https://www.concreteinfo.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={LINK}
+              >
+                ConcreteInfo
+              </a>
+              , which makes practical software for construction and engineering teams. The same
+              idea applies here: clear numbers, sources you can check, and no sales pitch.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      <Section title="Why it is free">
+        <div className="space-y-3">
+          <p className={BODY}>
+            The answer should not depend on whether you can afford a subscription. This site is
+            built as static pages with its component and tariff data bundled at build time, so
+            serving it costs very little and there is no per-user cost to recover.
+          </p>
+          <p className={BODY}>
+            There are no accounts, no paywall, and builds never leave your browser. If advertising
+            is ever switched on, it will be clearly labelled, consent-gated, and never placed
+            between you and the result.
+          </p>
+          <p className={BODY}>
+            Being free is what lets a first-time builder, a student, a small office or someone
+            running a home server use the same numbers as a professional — and that is the point.
+          </p>
+        </div>
+      </Section>
 
       <Section title="How we calculate">
         <div className={TILE}>
@@ -142,6 +195,12 @@ export default function About() {
             className="bg-brand-dark text-white hover:bg-brand rounded-8 min-h-11 px-4 inline-flex items-center text-sm font-semibold"
           >
             Suggest a component
+          </Link>
+          <Link
+            to="/feedback"
+            className="text-sm font-semibold text-brand-text hover:underline"
+          >
+            Send feedback
           </Link>
           <Link to="/" className="text-sm font-semibold text-brand-text hover:underline">
             Back to the calculator
