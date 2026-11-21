@@ -4,7 +4,7 @@ export function Card({ children, className = '', ...props }: HTMLAttributes<HTML
   return (
     <div
       {...props}
-      className={`bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-12 p-4 ${className}`}
+      className={`bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-12 p-4 shadow-card dark:shadow-none ${className}`}
     >
       {children}
     </div>

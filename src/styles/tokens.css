@@ -47,6 +47,11 @@
   --font-numeric: 'JetBrains Mono Variable', ui-monospace, monospace;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
 
+  /* One soft elevation for cards: two very low-alpha shadows rather than a
+     single hard drop, so surfaces separate without a visible edge. */
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.04), 0 1px 3px rgb(16 24 40 / 0.06);
+  --shadow-card-raised: 0 2px 4px rgb(16 24 40 / 0.05), 0 4px 12px rgb(16 24 40 / 0.06);
+
   --radius-4: 4px;
   --radius-8: 8px;
   --radius-12: 12px;
@@ -88,12 +93,10 @@ html {
    on white is a 14% wash on near-black). */
 .system-tint {
   background-color: color-mix(in srgb, var(--tint) 7%, transparent);
-  border-left-color: color-mix(in srgb, var(--tint) 45%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
   .system-tint {
     background-color: color-mix(in srgb, var(--tint) 14%, transparent);
-    border-left-color: color-mix(in srgb, var(--tint) 55%, transparent);
   }
 }

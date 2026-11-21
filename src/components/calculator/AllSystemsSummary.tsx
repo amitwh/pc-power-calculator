@@ -99,7 +99,7 @@ export function AllSystemsSummary() {
             // Each system keeps one faint hue for the whole page, derived from
             // its position in the list so it is stable across renders.
             style={{ '--tint': tintFor(row.id) } as CSSProperties}
-            className="system-tint border border-l-[3px] border-gray-200 dark:border-gray-800 rounded-8 p-3"
+            className="system-tint rounded-8 border border-gray-200 p-3 shadow-card dark:border-gray-800 dark:shadow-none"
           >
             <div className="font-body font-bold text-sm text-gray-900 dark:text-gray-50 mb-1.5 flex items-center gap-1.5">
               <span aria-hidden>{emojiFor(row.category)}</span>
