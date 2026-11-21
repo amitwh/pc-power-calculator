@@ -57,7 +57,11 @@ export function ConsumptionGauge({ gridFactorKgPerKwh = 0.71 }: { gridFactorKgPe
   const suggestion = suggestCategory(build, rawComponents);
   const Icon = CATEGORY_ICON[suggestion.category];
   const co2 = yearly.kwh * gridFactorKgPerKwh;
-  const facts = equivalences(yearly.kwh, co2).slice(0, 3);
+  // The full set, grouped: what it took to make the electricity, what it costs
+  // the environment, and what else it could have powered.
+  const all = equivalences(yearly.kwh, co2);
+  const pick = (group: string) => all.filter((e) => e.group === group).slice(0, 3);
+  const facts = [...pick('carbon'), ...pick('fuel'), ...pick('water'), ...pick('everyday')].slice(0, 9);
 
   return (
     <Card>
@@ -110,15 +114,17 @@ export function ConsumptionGauge({ gridFactorKgPerKwh = 0.71 }: { gridFactorKgPe
       </div>
 
       {/* Equivalences. */}
-      <ul className="mt-3 grid gap-2 sm:grid-cols-3">
+      <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
         {facts.map((f) => (
-          <li key={f.label} className="rounded-8 border border-gray-100 px-2.5 py-2 dark:border-gray-800">
+          <li
+            key={f.label}
+            className="rounded-8 border border-gray-100 px-2.5 py-2 dark:border-gray-800"
+            title={f.basis}
+          >
             <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">{f.label}</p>
-            <p className="font-display text-xl font-bold tabular-nums text-gray-900 dark:text-gray-50">
+            <p className="font-numeric text-lg font-bold tabular-nums text-gray-900 dark:text-gray-50">
               {f.value}
-            </p>
-            <p className="mt-0.5 text-[11px] leading-tight text-gray-500" title={f.basis}>
-              {f.sentence}
+              <span className="ml-1 text-[11px] font-medium text-gray-500">{f.unit}</span>
             </p>
           </li>
         ))}

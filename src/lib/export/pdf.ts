@@ -811,8 +811,16 @@ export async function exportPdf(report: PdfReport): Promise<void> {
   // ── What this means
   const avgW = averageWallW(report.totals.yearly.kwh);
   const tier = tierFor(avgW);
-  const carrier = equivalences(report.totals.yearly.kwh, co2kg).slice(0, 3);
-  y = ensureSpace(doc, y + 6, 150);
+  // Six: the fuel it took, the carbon it produced, and what else it could power.
+  const allEq = equivalences(report.totals.yearly.kwh, co2kg);
+  const carrier = [
+    ...allEq.filter((e) => e.group === 'carbon').slice(0, 1),
+    ...allEq.filter((e) => e.group === 'fuel').slice(0, 3),
+    ...allEq.filter((e) => e.group === 'water').slice(0, 1),
+    ...allEq.filter((e) => e.group === 'everyday').slice(0, 1),
+  ];
+  // Gauge + band + suggestion + six equivalence rows.
+  y = ensureSpace(doc, y + 6, 230);
   y = section(doc, y, 'What this means');
   y += 4;
 
@@ -853,13 +861,13 @@ export async function exportPdf(report: PdfReport): Promise<void> {
   y += kvRows(
     doc,
     y,
-    carrier.map((e) => ({ k: e.sentence, v: e.value })),
+    carrier.map((e) => ({ k: e.sentence, v: `${e.value} ${e.unit}` })),
   );
   y += 6;
   y = paragraph(
     doc,
     y,
-    'These are unit conversions of the annual kWh figure, not measurements: an EV at 0.15 kWh/km, a 300 kWh/yr fridge, coal at a 35%-efficient plant (0.43 kg/kWh), and cooling water at an indicative 1.8 L/kWh.',
+    'These are unit conversions of the annual kWh figure, not measurements: coal at 24 MJ/kg and 35% plant efficiency (0.43 kg/kWh), gas at 36 MJ/m3 and 55% CCGT (0.18 m3/kWh), diesel at 38.6 MJ/L and 35% genset (0.27 L/kWh), cooling water 1.8 L/kWh, solar 1,400 kWh per kWp per year.',
     { size: 7.5 },
   );
 

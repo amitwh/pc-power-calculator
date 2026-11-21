@@ -22,16 +22,16 @@ describe('equivalences', () => {
   });
 
   test('an EV figure scales with energy', () => {
-    const one = equivalences(150).find((e) => e.label.includes('electric car'))!;
-    const two = equivalences(300).find((e) => e.label.includes('electric car'))!;
+    const one = equivalences(150).find((e) => e.label === 'Driving, electric')!;
+    const two = equivalences(300).find((e) => e.label === 'Driving, electric')!;
     // 150 kWh ÷ 0.15 kWh/km = 1,000 km; double the energy doubles the distance.
     expect(one.value).toBe('1,000');
     expect(two.value).toBe('2,000');
   });
 
   test('the CO2 equivalence only appears when a CO2 figure is supplied', () => {
-    expect(equivalences(421).some((e) => e.label.includes('trees'))).toBe(false);
-    expect(equivalences(421, 299).some((e) => e.label.includes('trees'))).toBe(true);
+    expect(equivalences(421).some((e) => e.label.includes('Trees'))).toBe(false);
+    expect(equivalences(421, 299).some((e) => e.label.includes('Trees'))).toBe(true);
   });
 });
 
