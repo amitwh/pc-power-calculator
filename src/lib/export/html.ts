@@ -356,7 +356,7 @@ ${kvRows([
     { k: 'Estimated annual emissions', v: `${pdfNum(co2kg, 1)} kg CO2e`, emphasis: true },
     {
       k: 'Equivalent',
-      v: `${pdfNum(co2kg / 1000, 2)} tonnes over 5 years at this usage`,
+      v: `${pdfNum((co2kg * 5) / 1000, 2)} tonnes over 5 years at this usage`,
     },
   ])}
 <p>${escapeHtml(

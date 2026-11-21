@@ -246,12 +246,12 @@ git push origin main
 Download the upstream OFL releases (Inter release zip, JetBrains Mono release zip). Subset each with fonttools:
 
 ```bash
-pyftsubset Inter-Regular.ttf --output-file=public/fonts/report/Inter-Regular.ttf \
+python3 -m fontTools.subset Inter-Regular.ttf --output-file=public/fonts/report/Inter-Regular.ttf \
   --unicodes="U+0020-007E,U+00A0-00FF,U+2013-2014,U+2018-201D,U+2022,U+20B9,U+2082,U+00B7,U+00D7,U+2248,U+00B3" \
   --layout-features='*' --glyph-names --notdef-outline
 ```
 
-Repeat for SemiBold, Bold, and JetBrainsMono-Regular. Copy the upstream OFL licence files beside them. Expected: each file 30–60 KB. If `pyftsubset` is unavailable, commit the full static TTFs instead (larger precache, same rendering) and note it.
+Repeat for SemiBold, Bold, and JetBrainsMono-Regular. Copy the upstream OFL licence files beside them. Expected: each file 30–60 KB. If the subsetting tool is unavailable, commit the full static TTFs instead (larger precache, same rendering) and note it.
 
 - [ ] **Step 2: Extend the render test with a text-layer check**
 
@@ -259,9 +259,10 @@ Add to `pdfDocument.test.tsx`: render a `lakhReport` fixture whose **schedule ro
 
 ```ts
 expect(text).toContain('₹1,23,456.50');
-expect(text).toContain('CO₂e');
 expect(text).not.toContain('Rs.');
 ```
+
+`CO₂e` is asserted in Task 5, once the carbon/equivalence sections exist.
 
 - [ ] **Step 3: Run it to verify it fails**
 
@@ -313,6 +314,10 @@ test('missing PSU and readings render dashes, not undefined', async () => {
   expect(text).not.toContain('undefined');
   expect(text).toContain('No meter readings were entered');
 });
+test('carbon and equivalence text keeps the subscript and rupee glyph', async () => {
+  const text = await renderAndExtract(gamingReport);
+  expect(text).toContain('CO₂e');
+});
 ```
 
 - [ ] **Step 2: Run them to verify they fail**
@@ -324,7 +329,7 @@ Expected: FAIL — sections do not exist yet.
 
 Components table: rows from `report.devices` excluding PSU; chunk 18 rows per `<View wrap={false}>`, each chunk rendering the header row (`Device / Category / Qty / W per unit / Total W / Basis`); category via `deviceCategoryLabel`; basis colour (estimated amber, measured green); foot row with `report.typicalComponentW`.
 
-Power supply: rows and recommendation paragraph, undersized warning, all values via `num`. Carbon: annual energy, grid factor, emissions, five-year equivalent. What this means: five-band gauge (Views), band line, suggestion, equivalence rows (same selection logic as the old renderer: one carbon, three fuel, one water, one everyday). Measured vs model: rows with delta colouring and the empty-state sentence. Closing full `REPORT_DISCLAIMER`.
+Power supply: rows and recommendation paragraph, undersized warning, all values via `num`. Carbon: annual energy, grid factor, emissions, five-year equivalent. What this means: consumption-band gauge over every `CONSUMPTION_TIERS` entry (six today — follow the data, not a fixed count), band line, suggestion, equivalence rows (same selection logic as the old renderer: one carbon, three fuel, one water, one everyday). Measured vs model: rows with delta colouring and the empty-state sentence. Closing full `REPORT_DISCLAIMER`.
 
 - [ ] **Step 4: Run tests, typecheck, and inspect the pages**
 
@@ -345,14 +350,16 @@ git push origin main
 ### Task 6: QR permalink, running header, and logo fallback
 
 **Files:**
+- Create: `src/lib/export/brandAssets.ts` (browser helpers; must NOT import react-pdf)
 - Modify: `src/lib/export/pdfDocument.tsx`
 - Modify: `src/components/calculator/ExportMenu.tsx` (asset loading only; the call stays on the old renderer until Task 7)
 - Test: `tests/unit/export/pdfDocument.test.tsx` (extend)
 
 **Interfaces:**
 - Produces:
-  - `ReportDocument` accepts `qrDataUrl`, `shareUrl`, `logoDataUrl` (already in the Task 3 signature)
-  - `loadBrandLogo(): Promise<string | null>` — browser-only helper in `pdfDocument.tsx`; fetches `/brand/logo.png`, then `/icons/pwa-192x192.png`, returns a data URL or null
+  - `ReportDocument` accepts `qrDataUrl`, `shareUrl`, `logoDataUrl`, `iconDataUrl` (Task 3 signature extended)
+  - `loadBrandLogo(): Promise<string | null>` — in `brandAssets.ts`; fetches `/brand/logo.png`, returns a data URL or null
+  - `loadBrandIcon(): Promise<string | null>` — fetches `/icons/pwa-192x192.png`, returns a data URL or null
   - `makeQrDataUrl(url: string): Promise<string>` — browser-only, dynamic `import('qrcode')`, `toDataURL(url, { margin: 1, width: 512 })`
 
 - [ ] **Step 1: Write the failing tests**
@@ -382,10 +389,10 @@ navy wordmark) and `public/icons/pwa-192x192.png` (square appicon). Cover: when
 inside a white rounded plate on the left of the orange brand bar (the logo's navy
 wordmark cannot sit directly on orange); otherwise the text wordmark. When
 `shareUrl` is present, place the QR (72 × 72 pt) with the caption and the URL in
-small type at the foot of page 1. Continuation header: the square appicon on a
+small type as a closing block on the last page (the cover is full). Continuation header: the square appicon on a
 small white plate + `buildName · reportId`.
 
-In `ExportMenu`, add the two browser helpers (not yet used by `onPdf`): `makeQrDataUrl(buildPermalinkUrl(useBuildStore.getState().exportBuild()))` and `loadBrandLogo()`. They are wired in Task 7.
+Create `brandAssets.ts` with the three browser helpers. `ExportMenu` imports it statically (it must not import react-pdf, or the renderer enters the main bundle); `makeQrDataUrl(buildPermalinkUrl(useBuildStore.getState().exportBuild()))`, `loadBrandLogo()` and `loadBrandIcon()` are wired into `onPdf` in Task 7.
 
 - [ ] **Step 4: Run tests, typecheck, build, inspect**
 

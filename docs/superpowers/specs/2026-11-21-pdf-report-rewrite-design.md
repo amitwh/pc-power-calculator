@@ -148,9 +148,10 @@ block on the last page, so nothing is ever truncated.
 
 **QR and link.** `ExportMenu` calls the existing `buildPermalinkUrl(buildJson)`.
 When it returns a URL, `qrcode.toDataURL()` produces a PNG data URL at export
-time (browser only) and `exportPdf` places it on the cover with the caption "Scan
-to open this build". When the URL exceeds the 6 KB cap, no QR is drawn and the
-site URL is linked instead — no silent truncation.
+time (browser only) and `exportPdf` places it as a closing block on the last page
+— the cover is already full and the last page has the whitespace — with the
+caption "Scan to open this build". When the URL exceeds the 6 KB cap, no QR is
+drawn and the site URL is linked instead — no silent truncation.
 
 ### Money consistency
 
@@ -186,6 +187,9 @@ export function reconciledTotals(report: PdfReport) {
   violates the non-goal.
 - The estimated-tariff asterisk is printed next to the tariff figure when
   `tariffEstimated` is true, matching the explanatory sentence.
+- The carbon "Equivalent" row prints **five-year** tonnes (`annual × 5 / 1000`).
+  Both legacy renderers printed annual tonnes under a five-year label; the HTML
+  export gets the same correction (content only).
 
 ### Fonts
 
