@@ -143,6 +143,15 @@ describe('SearchableSelect', () => {
     expect(onChange).toHaveBeenCalledWith('cpu-amd-ryzen9-7950x');
   });
 
+  test('Enter in the search box takes the top match', async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    render(<SearchableSelect options={options} value="" onChange={onChange} ariaLabel="CPU" />);
+    await user.click(screen.getByRole('button', { name: /CPU/i }));
+    await user.type(screen.getByLabelText('Search options'), 'ryzen{Enter}');
+    expect(onChange).toHaveBeenCalledWith('cpu-amd-ryzen9-7950x');
+  });
+
   test('brandFilter=false hides brand chips', async () => {
     const user = userEvent.setup();
     render(

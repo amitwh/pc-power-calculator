@@ -20,8 +20,8 @@ beforeEach(() => {
   window.history.replaceState(null, '', '/');
 });
 
-describe('Home workbench structure', () => {
-  test('renders the section rail, four anchored sections and the results rail', () => {
+describe('Home one-screen structure', () => {
+  test('puts the answer beside the inputs with no section rail or anchors', () => {
     // The breakdown cards only render once a part is selected.
     useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
     render(
@@ -30,28 +30,24 @@ describe('Home workbench structure', () => {
       </MemoryRouter>,
     );
 
-    // The visible page title sits above the workbench grid; Layout owns the
-    // route's single h1, so this title is a styled paragraph.
+    // The visible page title sits above the grid; Layout owns the route's
+    // single h1, so this title is a styled paragraph.
     expect(screen.getByText('What does your PC cost to run?')).toBeInTheDocument();
 
-    // Rail anchors target the four work-area cards, with scroll offset.
-    const sections = [
-      ['Your system', 'system'],
-      ['Usage', 'usage'],
-      ['Tariff', 'tariff'],
-      ['Analysis', 'analysis'],
-    ] as const;
-    for (const [label, id] of sections) {
-      expect(screen.getByRole('link', { name: label })).toHaveAttribute('href', `#${id}`);
-      expect(document.getElementById(id)).toHaveClass('scroll-mt-6');
-    }
+    // The build switcher is a one-line select in the title row, not a rail.
+    expect(screen.getByRole('combobox', { name: 'Active system' })).toBeInTheDocument();
+    expect(document.querySelector('a[href^="#"]')).toBeNull();
 
-    // Every calculator card still renders inside its section.
-    expect(screen.getByRole('heading', { name: /^Your Systems/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Usage Schedule/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Location & Tariff/i })).toBeInTheDocument();
+    // Every input card, then the answer, then the breakdown.
+    expect(screen.getByRole('heading', { name: /^Parts$/ })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /^Usage$/ })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /^Rate$/ })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Yearly cost/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Power draw breakdown/i })).toBeInTheDocument();
+
+    // The answer lives in the labelled results aside, sticky on desktop.
+    const results = screen.getByRole('complementary', { name: 'Results' });
+    expect(results.contains(screen.getByRole('heading', { name: /Yearly cost/i }))).toBe(true);
   });
 });
 

@@ -3,7 +3,7 @@ import { listCountries, listSubdivisions, resolveLocationTariff, currencyForLoca
 import { listCurrencies } from '@/lib/data/currencies';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useFx } from '@/hooks/useFx';
-import { Card, CardTitle } from '@/components/ui/Card';
+import { Card } from '@/components/ui/Card';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { computeCost } from '@/lib/calc/cost';
@@ -38,8 +38,14 @@ export function LocationPicker() {
 
   return (
     <Card className="p-3">
-      <CardTitle className="text-base">Location &amp; Tariff</CardTitle>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="mb-2 flex items-baseline justify-between gap-2">
+        <h2 className="font-display text-base font-bold">Rate</h2>
+        <span className="text-xs text-gray-500">
+          {isManual ? 'manual' : tariffRate.slabs ? 'tiered' : 'flat'}
+          {isLive ? ' · live FX' : ''}
+        </span>
+      </div>
+      <div className="grid grid-cols-2 gap-2 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.15fr)_minmax(0,1fr)]">
         <label className="block">
           <span className={fieldLabel}>Country</span>
           <Select
@@ -117,14 +123,20 @@ export function LocationPicker() {
         </label>
       </div>
 
-      <p className="mt-2 text-xs text-gray-500">
-        {isManual ? 'Manual rate' : tariffRate.slabs ? 'Tiered, billed monthly' : 'Bundled flat rate'}
-        {' · '}FX {snapshot.date}
-        {isLive ? ' (live)' : ''}
+      {/* One provenance line — the detail lives in the title attribute so it
+          stays available without occupying three wrapped lines. */}
+      <p
+        className="mt-1.5 text-[11px] leading-tight text-gray-500"
+        title={`FX ${snapshot.date}${taxes.length > 0 && !isManual ? ` · incl. ${taxes.map((t) => `${t.name} ${t.rate_pct}%`).join(', ')}` : ''} · tariffs updated ${tariffsLastUpdated()}`}
+      >
+        {isManual ? 'Manual rate, tax-free' : tariffRate.slabs ? 'Tiered, billed monthly' : 'Bundled flat rate'}
         {taxes.length > 0 && !isManual && (
-          <> · Incl. {taxes.map((t) => `${t.name} ${t.rate_pct}%`).join(', ')}</>
+          <>
+            {' · incl. '}
+            {taxes.map((t) => t.name).join(', ')}
+          </>
         )}
-        {' · '}Tariffs updated {tariffsLastUpdated()}
+        {' · FX '}{snapshot.date}{isLive ? ' live' : ''}
       </p>
     </Card>
   );

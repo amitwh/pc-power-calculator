@@ -5,7 +5,7 @@ import { listWorkloads } from '@/lib/data/workloads';
 import { computeEnergy } from '@/lib/calc/energy';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { formatCost, formatKwh } from '@/lib/calc/format';
+import { formatCost } from '@/lib/calc/format';
 import type { WorkloadSchedule, Workload } from '@/types/workload';
 
 const CATEGORY_EMOJI: Record<string, string> = {
@@ -39,9 +39,9 @@ interface StepperProps {
 /** A compact − value + control; step is always 1 hour/day. */
 function Stepper({ label, value, min, max, unit, onChange }: StepperProps) {
   const buttonClass =
-    'min-h-9 min-w-9 rounded-8 border border-gray-300 dark:border-gray-700 text-base leading-none opacity-80 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed';
+    'h-8 w-7 rounded-8 border border-gray-300 dark:border-gray-700 text-base leading-none opacity-80 hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed';
   return (
-    <span className="inline-flex items-center gap-1" role="group" aria-label={label}>
+    <span className="inline-flex items-center gap-0.5" role="group" aria-label={label}>
       <button
         type="button"
         aria-label={`Decrease ${label}`}
@@ -53,9 +53,10 @@ function Stepper({ label, value, min, max, unit, onChange }: StepperProps) {
       </button>
       <span
         aria-live="polite"
-        className="font-numeric tabular-nums text-sm w-12 text-center"
+        className="font-numeric tabular-nums text-sm w-10 text-center whitespace-nowrap"
       >
-        {value} {unit}
+        {value}
+        <span className="ml-0.5 text-xs text-gray-500">{unit}</span>
       </span>
       <button
         type="button"
@@ -135,39 +136,36 @@ export function ScheduleEditor() {
   }, {});
 
   return (
-    <Card>
-      <div className="mb-2 flex flex-col items-start gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
-        <h2 className="font-display text-base font-bold">Usage Schedule</h2>
+    <Card className="p-3">
+      <div className="mb-2 flex items-baseline justify-between gap-2">
+        <h2 className="font-display text-base font-bold">Usage</h2>
         <span
-          className={`font-body text-xs font-normal font-numeric tabular-nums sm:text-right ${
-            overBudget ? 'text-red-600 dark:text-red-400 font-semibold' : 'text-gray-500'
+          className={`font-numeric tabular-nums text-xs ${
+            overBudget ? 'font-semibold text-red-600 dark:text-red-400' : 'text-gray-500'
           }`}
         >
-          <span className="hidden sm:inline">
-            {dailyHours.toFixed(1)} of 24 h/day booked · {remaining.toFixed(1)} h free
-            {anyPartWeek && !overBudget ? ` · ${avgHours.toFixed(1)} h/day avg` : ''}
-          </span>
-          <span className="sm:hidden">{dailyHours.toFixed(1)} h of 24 booked</span>
+          {dailyHours.toFixed(1)} h/day booked{anyPartWeek && !overBudget ? ` · ${avgHours.toFixed(1)} h/day avg` : ''}
+          {!overBudget && remaining > 0 ? ` · ${remaining.toFixed(1)} free` : ''}
         </span>
       </div>
 
       {overBudget && (
         <p
           role="alert"
-          className="mb-2 rounded-8 border border-red-300 dark:border-red-500/40 bg-red-50 dark:bg-red-500/10 px-3 py-2 text-sm text-red-700 dark:text-red-300"
+          className="mb-2 rounded-8 border border-red-300 dark:border-red-500/40 bg-red-50 dark:bg-red-500/10 px-2.5 py-1.5 text-xs text-red-700 dark:text-red-300"
         >
-          This schedule totals {dailyHours.toFixed(1)} h in a day — a day only has 24. Lower some
-          workloads below; until then the estimate above is overstated.
+          {dailyHours.toFixed(1)} h in a day — a day only has 24. Lower a workload; until then the
+          estimate is overstated.
         </p>
       )}
 
       {schedule.length === 0 && (
-        <p className="text-sm text-gray-500 mb-2">
-          No usage scheduled — add at least one workload to estimate energy use.
+        <p className="mb-2 text-sm text-gray-500">
+          No usage scheduled — add a workload to estimate energy use.
         </p>
       )}
 
-      <div>
+      <ul className="divide-y divide-gray-100 dark:divide-gray-800">
         {schedule.map((s: WorkloadSchedule) => {
           const wl = workloadMap.get(s.workload_id);
           if (!wl) return null;
@@ -175,102 +173,92 @@ export function ScheduleEditor() {
           const days = s.days_per_week ?? 7;
           const row = yearlyByWorkload[s.workload_id];
           return (
-            <div
-              key={s.workload_id}
-              className="py-2 border-b border-gray-100 dark:border-gray-800 last:border-b-0"
-            >
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
-                <span className="order-1 font-body font-semibold text-gray-900 dark:text-gray-50 flex items-center gap-1.5 min-w-0 flex-1 basis-40">
-                  <span aria-hidden>{emoji}</span>
-                  <span className="truncate">{wl.name}</span>
-                </span>
-                <button
-                  type="button"
-                  aria-label={`Remove ${wl.name}`}
-                  className="order-2 shrink-0 text-base leading-none opacity-60 hover:opacity-100 min-h-9 min-w-9 sm:order-4"
-                  onClick={() => removeWorkload(s.workload_id)}
-                >
-                  ×
-                </button>
-                <div className="order-3 flex w-full items-center justify-end gap-3 sm:order-2 sm:w-auto sm:justify-start">
-                  <Stepper
-                    label={`${wl.name} hours`}
-                    value={s.hours_per_day}
-                    min={0}
-                    max={s.hours_per_day + remaining}
-                    unit="h"
-                    onChange={(v) => update(s.workload_id, { hours_per_day: v })}
-                  />
-                  <Stepper
-                    label={`${wl.name} days`}
-                    value={days}
-                    min={1}
-                    max={7}
-                    unit="d"
-                    onChange={(v) => update(s.workload_id, { days_per_week: v })}
-                  />
-                </div>
-                {row && row.kwh > 0 && (
-                  <span className="order-4 hidden font-numeric tabular-nums text-xs text-gray-500 sm:order-3 sm:inline">
-                    ≈ {formatKwh(row.kwh, 0)}/yr · {formatCost(row.cost, currency)}
-                  </span>
-                )}
-              </div>
-            </div>
+            <li key={s.workload_id} className="flex items-center gap-2 py-0.5 text-sm">
+              <span className="flex min-w-0 flex-1 items-center gap-1.5 font-medium text-gray-900 dark:text-gray-50">
+                <span aria-hidden>{emoji}</span>
+                {/* The one place the full name is allowed to wrap: the row
+                    must stay one line tall on a phone. */}
+                <span className="truncate" title={wl.name}>{wl.name}</span>
+              </span>
+              {/* Cost sits next to the name, not out at the right edge, so the
+                  row reads name → what it costs → the controls that change it. */}
+              <span className="hidden w-[4.5rem] shrink-0 text-right font-numeric tabular-nums text-xs text-gray-500 sm:block">
+                {row && row.kwh > 0 ? formatCost(row.cost, currency) : ''}
+              </span>
+              <Stepper
+                label={`${wl.name} hours`}
+                value={s.hours_per_day}
+                min={0}
+                max={s.hours_per_day + remaining}
+                unit="h"
+                onChange={(v) => update(s.workload_id, { hours_per_day: v })}
+              />
+              <Stepper
+                label={`${wl.name} days`}
+                value={days}
+                min={1}
+                max={7}
+                unit="d"
+                onChange={(v) => update(s.workload_id, { days_per_week: v })}
+              />
+              <button
+                type="button"
+                aria-label={`Remove ${wl.name}`}
+                className="h-8 w-7 shrink-0 text-base leading-none opacity-60 hover:opacity-100"
+                onClick={() => removeWorkload(s.workload_id)}
+              >
+                ×
+              </button>
+            </li>
           );
         })}
-      </div>
 
-      {/* Idle baseline — always on, shares the 24 h budget with the workloads. */}
-      <div className="py-2 border-b border-gray-100 dark:border-gray-800">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
-          <span className="order-1 font-body font-semibold text-gray-900 dark:text-gray-50 flex items-center gap-1.5 min-w-0 flex-1 basis-40">
+        {/* Idle baseline — always on, shares the 24 h budget with the workloads. */}
+        <li className="flex items-center gap-2 py-0.5 text-sm">
+          <span
+            className="flex min-w-0 flex-1 items-center gap-1.5 font-medium text-gray-900 dark:text-gray-50"
+            title="On but not running a workload — the biggest hidden cost"
+          >
             <span aria-hidden>💤</span>
-            <span className="truncate">On but idle (desktop / browsing)</span>
+            <span className="truncate">Idle</span>
           </span>
-          <div className="order-3 flex w-full items-center justify-end gap-3 sm:order-2 sm:w-auto sm:justify-start">
-            <Stepper
-              label="idle hours"
-              value={idleHours}
-              min={0}
-              max={idleHours + remaining}
-              unit="h"
-              onChange={setIdleHoursPerDay}
-            />
-          </div>
-          {idleRow && idleRow.kwh > 0 && (
-            <span className="order-4 hidden font-numeric tabular-nums text-xs text-gray-500 sm:order-3 sm:inline">
-              ≈ {formatKwh(idleRow.kwh, 0)}/yr · {formatCost(idleRow.cost, currency)}
-            </span>
-          )}
-        </div>
-        <p className="text-xs text-gray-500 mt-1">
-          The machine is on but not running a workload — this is the biggest hidden cost.
-        </p>
-      </div>
+          <span className="hidden w-[4.5rem] shrink-0 text-right font-numeric tabular-nums text-xs text-gray-500 sm:block">
+            {idleRow && idleRow.kwh > 0 ? formatCost(idleRow.cost, currency) : ''}
+          </span>
+          <Stepper
+            label="idle hours"
+            value={idleHours}
+            min={0}
+            max={idleHours + remaining}
+            unit="h"
+            onChange={setIdleHoursPerDay}
+          />
+          {/* No day-count control for idle: it runs every day. The spacer keeps
+              the hour stepper aligned with the rows above. */}
+          <span className="w-[3.5rem] shrink-0" aria-hidden />
+        </li>
+      </ul>
 
       {/* Add workload */}
-      <div className="mt-3">
+      <div className="mt-2">
         {addOpen ? (
-          <div className="border border-gray-200 dark:border-gray-800 rounded-8 p-3 space-y-2">
+          <div className="rounded-8 border border-gray-200 p-2 space-y-1.5 dark:border-gray-800">
             {Object.entries(byCategory).map(([cat, list]) => (
-              <div key={cat}>
-                <div className="text-xs uppercase tracking-wide text-gray-500 font-semibold mb-1">
+              <div key={cat} className="flex flex-wrap items-center gap-1.5">
+                <span className="w-[6.5rem] shrink-0 text-xs font-semibold text-gray-500">
                   {CATEGORY_EMOJI[cat] ?? '⚙️'} {CATEGORY_LABEL[cat] ?? cat}
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {list.map((w) => (
-                    <button
-                      key={w.id}
-                      type="button"
-                      onClick={() => addWorkload(w.id)}
-                      title={w.description}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-gray-300 dark:border-gray-700 px-3 py-1.5 min-h-9 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:border-brand-dark hover:text-brand-dark transition-colors"
-                    >
-                      + {w.name}
-                    </button>
-                  ))}
-                </div>
+                </span>
+                {list.map((w) => (
+                  <button
+                    key={w.id}
+                    type="button"
+                    onClick={() => addWorkload(w.id)}
+                    title={w.description}
+                    className="inline-flex items-center rounded-full border border-gray-300 px-2.5 py-1 text-xs font-semibold text-gray-700 transition-colors hover:border-brand-dark hover:text-brand-dark dark:border-gray-700 dark:text-gray-300"
+                  >
+                    + {w.name}
+                  </button>
+                ))}
               </div>
             ))}
             <Button size="sm" variant="ghost" onClick={() => setAddOpen(false)}>
@@ -278,7 +266,7 @@ export function ScheduleEditor() {
             </Button>
           </div>
         ) : (
-          <span className="inline-flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <Button
               size="sm"
               variant="secondary"
@@ -286,14 +274,12 @@ export function ScheduleEditor() {
               disabled={unscheduled.length === 0 || remaining <= 0}
               title={remaining <= 0 ? 'No free hours left — reduce an existing workload first' : undefined}
             >
-              + Add workload
+              + Workload
             </Button>
             {remaining <= 0 && unscheduled.length > 0 && (
-              <span className="text-xs text-gray-500">
-                24 h fully booked — reduce a workload to add another.
-              </span>
+              <span className="text-xs text-gray-500">24 h booked — free some hours first.</span>
             )}
-          </span>
+          </div>
         )}
       </div>
     </Card>

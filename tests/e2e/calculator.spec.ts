@@ -6,7 +6,7 @@ import { test, expect } from '@playwright/test';
 test('home page shows the devices picker and results panel', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByText('What does your PC cost to run?')).toBeVisible();
-  await expect(page.getByRole('heading', { name: /Your Systems/i }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: /^Parts$/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: /Yearly cost/i }).first()).toBeVisible();
 });
 
@@ -14,7 +14,7 @@ test('pick a CPU via the device picker and see it in the list', async ({ page })
   await page.goto('/');
   // The catalog has 1,900+ parts and the listbox caps rendered options, so
   // search first — the same way a real user narrows the list.
-  await page.getByRole('button', { name: 'Add device' }).click();
+  await page.getByRole('button', { name: /Add device/ }).click();
   await page.getByRole('searchbox').fill('7800x3d');
   await page.getByRole('option', { name: /Ryzen 7 7800X3D/i }).first().click();
   await expect(page.getByText(/Ryzen 7 7800X3D/i).first()).toBeVisible();
@@ -22,7 +22,7 @@ test('pick a CPU via the device picker and see it in the list', async ({ page })
 
 test('picking the same device twice multiplies its units', async ({ page }) => {
   await page.goto('/');
-  const add = page.getByRole('button', { name: 'Add device' });
+  const add = page.getByRole('button', { name: /Add device/ });
   await add.click();
   await page.getByRole('searchbox').fill('vengeance 32gb ddr5-5600');
   await page.getByRole('option', { name: /Vengeance 32GB DDR5-5600/i }).first().click();
@@ -36,7 +36,7 @@ test('picking the same device twice multiplies its units', async ({ page }) => {
 
 test('single-instance parts (CPU, motherboard) can be removed and swapped', async ({ page }) => {
   await page.goto('/');
-  const add = page.getByRole('button', { name: 'Add device' });
+  const add = page.getByRole('button', { name: /Add device/ });
   await add.click();
   await page.getByRole('searchbox').fill('7800x3d');
   await page.getByRole('option', { name: /Ryzen 7 7800X3D/i }).first().click();
@@ -58,17 +58,17 @@ test('single-instance parts (CPU, motherboard) can be removed and swapped', asyn
 
 test('results show PSU recommendation and the overclock control adjusts peak draw', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Add device' }).click();
+  await page.getByRole('button', { name: /Add device/ }).click();
   await page.getByRole('searchbox').fill('7800x3d');
   await page.getByRole('option', { name: /Ryzen 7 7800X3D/i }).first().click();
 
-  await page.getByText('Advanced', { exact: true }).click();
+  await page.getByText(/^Advanced —/).click();
 
   const peakText = () =>
     page
-      .getByText(/Peak draw \d+(?:\.\d+)? W at 100%/i)
+      .getByText(/^peak \d+(?:\.\d+)? W$/i)
       .textContent()
-      .then((s) => Number(s?.match(/Peak draw (\d+(?:\.\d+)?)\s*W/i)?.[1]));
+      .then((s) => Number(s?.match(/peak (\d+(?:\.\d+)?)\s*W/i)?.[1]));
 
   await expect(page.getByText(/PSU \d+ W/).first()).toBeVisible();
   const before = await peakText();

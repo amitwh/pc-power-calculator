@@ -18,6 +18,8 @@ export interface SearchableSelectProps {
   emptyMessage?: string;
   /** Optional handle to the trigger, so callers can open the picker (e.g. an empty-state CTA). */
   triggerRef?: Ref<HTMLButtonElement>;
+  /** Tight 36 px trigger, for toolbars that sit next to compact selects. */
+  compact?: boolean;
 }
 
 /** Max options rendered at once — keeps the DOM small for 1000+ entry catalogs. */
@@ -37,6 +39,7 @@ export function SearchableSelect({
   brandFilter = true,
   emptyMessage = 'No matches',
   triggerRef,
+  compact = false,
 }: SearchableSelectProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -64,6 +67,12 @@ export function SearchableSelect({
   });
 
   const selected = options.find((o) => o.value === value);
+
+  /** Commit a pick and close — shared by click, Enter and Space. */
+  const choose = (v: string) => {
+    onChange(v);
+    setOpen(false);
+  };
 
   // Close on outside click
   useEffect(() => {
@@ -112,7 +121,9 @@ export function SearchableSelect({
         // the label-content-name-mismatch rule.
         aria-label={`${selected ? selected.label : placeholder}${ariaLabel ? ` — ${ariaLabel}` : ''}`}
         onClick={() => setOpen((o) => !o)}
-        className="w-full min-h-10 px-3 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-50 font-body text-left flex items-center justify-between gap-2"
+        className={`w-full rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-50 font-body text-left flex items-center justify-between gap-2 ${
+          compact ? 'min-h-9 px-2.5 text-sm' : 'min-h-10 px-3'
+        }`}
       >
         <span className={selected ? 'truncate' : 'truncate text-gray-500'}>
           {selected ? selected.label : placeholder}
@@ -134,6 +145,15 @@ export function SearchableSelect({
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              // Enter takes the top match: typing "7800X3D" then Enter is the
+              // obvious keyboard path, and without this it did nothing.
+              onKeyDown={(e) => {
+                if (e.key !== 'Enter') return;
+                const first = filtered[0];
+                if (!first) return;
+                e.preventDefault();
+                choose(first.value);
+              }}
               placeholder="Search…"
               aria-label="Search options"
               className="w-full min-h-9 px-3 rounded-8 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 font-body"
@@ -186,15 +206,11 @@ export function SearchableSelect({
                     role="option"
                     aria-selected={o.value === value}
                     tabIndex={0}
-                    onClick={() => {
-                      onChange(o.value);
-                      setOpen(false);
-                    }}
+                    onClick={() => choose(o.value)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        onChange(o.value);
-                        setOpen(false);
+                        choose(o.value);
                       }
                     }}
                     className={`px-3 py-2 cursor-pointer hover:bg-brand/10 focus:bg-brand/10 focus:outline-none ${

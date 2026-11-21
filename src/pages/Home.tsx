@@ -5,7 +5,7 @@ import { ResultsPanel } from '@/components/calculator/ResultsPanel';
 import { ResultsBreakdown } from '@/components/calculator/ResultsBreakdown';
 import { AllSystemsSummary } from '@/components/calculator/AllSystemsSummary';
 import { LocationPicker } from '@/components/calculator/LocationPicker';
-import { SectionRail } from '@/components/layout/SectionRail';
+import { BuildBar } from '@/components/layout/BuildBar';
 import { importBuildFromSearch } from '@/lib/share/buildLink';
 import { findComponent } from '@/lib/data/components';
 import { useBuildStore } from '@/store/buildStore';
@@ -69,44 +69,48 @@ export default function Home() {
   }, [hydrated]);
 
   return (
-    <div className="p-3 md:p-6 max-w-7xl mx-auto">
-      {/* Visible page title. Layout already renders the route's single h1
-          (visually hidden), so this stays a styled paragraph to keep exactly
-          one h1 in the accessibility tree. */}
-      <p className="text-xl font-bold text-gray-900 dark:text-gray-50 mb-3">
-        What does your PC cost to run?
-      </p>
+    <div className="mx-auto max-w-[1400px] px-3 py-2.5 md:px-5 md:py-3">
+      {/* Title and the one-line build switcher share a row: the page's job is
+          stated, and everything else is controls or the answer. */}
+      <div className="mb-2.5 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+        {/* Visible page title. Layout already renders the route's single h1
+            (visually hidden), so this stays a styled paragraph to keep exactly
+            one h1 in the accessibility tree. */}
+        <p className="text-lg font-bold tracking-tight text-gray-900 dark:text-gray-50">
+          What does your PC cost to run?
+        </p>
+        <BuildBar />
+      </div>
 
-      {/* Workbench: [rail 176px] [work area] [results 320px] at ≥1100px. Below
-          that it is one column with the results first (order-first), so the
-          yearly figure is the first thing on a phone. */}
-      <div className="grid grid-cols-1 gap-3 min-[1100px]:grid-cols-[176px_minmax(0,1fr)_320px]">
-        <SectionRail />
-
-        <div className="grid grid-cols-1 gap-3 min-w-0">
-          <section id="system" className="scroll-mt-6">
-            <BuildPicker />
-          </section>
-          <section id="usage" className="scroll-mt-6">
-            <ScheduleEditor />
-          </section>
-          <section id="tariff" className="scroll-mt-6">
-            <LocationPicker />
-          </section>
-          <section id="analysis" className="scroll-mt-6">
-            <ResultsBreakdown />
-          </section>
+      {/* Everything above the fold on a laptop: inputs on the left, the answer
+          pinned on the right. On a phone the answer comes first (order-first)
+          so the yearly figure is never below the fold. The chart and
+          per-workload tables are the only things that deliberately sit below. */}
+      <div className="grid grid-cols-1 gap-2.5 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_360px]">
+        {/* `grid-cols-1` is load-bearing: without it the implicit column sizes
+            to its content's min-content width, which pushed the cards past the
+            phone viewport. */}
+        <div className="grid min-w-0 grid-cols-1 gap-2.5">
+          <BuildPicker />
+          <ScheduleEditor />
+          <LocationPicker />
         </div>
 
-        {/* Plain grid item stretches to the row height; only the INNER wrapper
-            is sticky, so it stays inside this column and can never float over
-            the sections. */}
-        <aside className="min-w-0 order-first min-[1100px]:order-none" aria-label="Results">
-          <div className="grid grid-cols-1 gap-3 min-[1100px]:sticky min-[1100px]:top-5">
+        {/* The aside stretches to the grid row; only the INNER wrapper sticks,
+            so the answer stays in view while the inputs scroll past it. */}
+        <aside className="order-first min-w-0 lg:order-none" aria-label="Results">
+          <div className="lg:sticky lg:top-3">
             <ResultsPanel />
-            <AllSystemsSummary />
           </div>
         </aside>
+      </div>
+
+      <div className="mt-2.5">
+        <ResultsBreakdown />
+      </div>
+
+      <div className="mt-2.5">
+        <AllSystemsSummary />
       </div>
     </div>
   );

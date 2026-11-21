@@ -48,30 +48,37 @@ view and uses zoning — not hiding — to create hierarchy.
 
 ## The design
 
-### Layout, ≥1100px
+### Layout, ≥1024px
 
 ```
-┌ TopNav ─────────────────────────────────────────────┐
-┌ rail 176px ┐ ┌ work area ───────────┐ ┌ results 320px ┐
-│ Sections   │ │ Your system          │ │ Yearly cost   │
-│  System    │ │ When you use it      │ │ ₹3,465 / yr   │
-│  Usage     │ │ Tariff               │ │ month/day/peak│
-│  Tariff    │ │ Analysis             │ │ PSU           │
-│  Analysis  │ │                      │ │ Share / PDF   │
-│ Systems    │ │                      │ │               │
-└────────────┘ └──────────────────────┘ └───────────────┘
+┌ TopNav ──────────────────────────────────────────────────┐
+│ What does your PC cost to run?      [My build ▾] ✎  + System │
+┌ inputs ───────────────────────────┐ ┌ answer 320–360px ──┐
+│ Parts    (3 controls, 1 row)      │ │ YEARLY COST        │
+│ Usage    (one 36px line each)     │ │ ₹2,577 / yr        │
+│ Rate     (country·state·rate·cur) │ │ kWh · print/month  │
+│                                   │ │ PSU · peak · Share │
+└───────────────────────────────────┘ └────────────────────┘
+┌ Power draw breakdown ┐ ┌ Per-workload usage ┐   (below fold)
 ```
 
-- **Rail** — section anchors (in-page) and the build switcher. Replaces the
-  build-chip row currently at the top of `BuildPicker`.
-- **Work area** — four cards in order: Your system, When you use it, Tariff,
-  Analysis.
-- **Results rail** — `position: sticky`, the only place results are rendered.
+- **No section rail.** The left rail cost 176 px of width and carried nothing
+  that the cards themselves did not say. Section anchors went with the stacked
+  layout. The build switcher is one `<select>` plus rename / delete / add in the
+  title row.
+- **Inputs: three cards, one screen.** Target: parts + usage + rate + the answer
+  all visible at 800 px viewport height without scrolling. Measured 900 px tall
+  at 1440×900 with four parts selected.
+- **Answer column** — `position: sticky`, so the number stays in view while the
+  part list grows.
+- **Analysis sits below the fold** — chart and per-workload table are supporting
+  detail, and they render nothing at all until a part exists.
 
-### Layout, <1100px
+### Layout, <1024px
 
-Single column. Results rail moves to the top (`order: -1`) and becomes a compact
-answer block; the rail collapses to a horizontal scroller or disappears.
+Single column with the answer first (`order: -1`) so the yearly figure is never
+below the fold. Part rows wrap to a name line plus a controls line; the
+per-workload cost column hides below `sm`.
 
 ### Components
 
@@ -92,16 +99,17 @@ answer block; the rail collapses to a horizontal scroller or disappears.
 
 ### Typography
 
-Replaced the Google Fonts pairing (Plus Jakarta Sans + Inter) with **Geist
-Variable**, self-hosted from `@fontsource-variable/geist` and
-`@fontsource-variable/geist-mono`.
+The interface uses the **standard system UI stack** — `system-ui, -apple-system,
+'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif` — for body, display and
+numerals, with `ui-monospace` for code-ish figures.
 
-- One family for body, display and numerals; Geist Mono for any code-ish figure.
-- Self-hosted, so the page makes no third-party font request — the CSP no longer
-  allowlists `fonts.googleapis.com` or `fonts.gstatic.com`, and the PWA keeps its
-  typeface offline (woff2 added to the precache glob).
-- Numerals stay `tabular-nums`; Geist's figures align better than the previous
-  mix, which matters because the interface is mostly numbers.
+- Superseded an intermediate phase that shipped self-hosted Geist; that variable
+  font read poorly at this size and added a webfont download for no benefit.
+- No webfont means no third-party font request, no font swap and therefore no
+  CLS from late text reflow. The CSP keeps `font-src 'self'` and the precache
+  glob no longer lists `woff2` because none is emitted.
+- Numerals stay `tabular-nums`, which the system fonts support, so columns of
+  money still align.
 
 ## Visual rules
 

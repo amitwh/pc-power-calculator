@@ -24,15 +24,15 @@ describe('ResultsPanel', () => {
   test('shows yearly kWh with the effective per-kWh rate', () => {
     useBuildStore.getState().addComponent('cpu', 'cpu-amd-ryzen-7-7800x3d');
     render(<ResultsPanel />);
-    expect(screen.getByText(/kWh/)).toBeInTheDocument();
-    expect(screen.getByText(/₹\d+\.\d{2} per kWh/)).toBeInTheDocument();
+    expect(screen.getByText(/^[\d,.]+\s*kWh$/)).toBeInTheDocument();
+    expect(screen.getByText(/₹\d+\.\d{2}\/kWh/)).toBeInTheDocument();
   });
 
   test('prompts instead of estimating when no parts are added', () => {
     render(<ResultsPanel />);
-    expect(screen.getByText(/Add a part and your running cost appears here/i)).toBeInTheDocument();
+    expect(screen.getByText(/Add a part and the yearly running cost appears here/i)).toBeInTheDocument();
     // No figure derived from the case-fan aggregate, and nothing to export.
-    expect(screen.queryByText(/per kWh/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/\/kWh/)).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Share build/i })).not.toBeInTheDocument();
   });
 
@@ -90,11 +90,11 @@ describe('ResultsBreakdown', () => {
     expect(screen.getByText(/Office/i)).toBeInTheDocument();
   });
 
-  test('shows a single muted prompt instead of the chart when there are no parts', () => {
-    render(<ResultsBreakdown />);
-    expect(screen.getByText('Add a part to see where the power goes.')).toBeInTheDocument();
-    expect(screen.queryByText(/Power draw breakdown/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Per-workload usage/i)).not.toBeInTheDocument();
+  test('renders nothing at all when there are no parts', () => {
+    // ResultsPanel already carries the single prompt; a second empty card
+    // below the fold read as a broken page rather than an empty one.
+    const { container } = render(<ResultsBreakdown />);
+    expect(container).toBeEmptyDOMElement();
   });
 });
 

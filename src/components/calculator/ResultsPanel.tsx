@@ -82,29 +82,32 @@ export function ResultsPanel() {
   // and a "4 W peak" would read as a confident wrong answer. Prompt instead.
   if (!hasSelectedParts(build)) {
     return (
-      <Card>
-        <h2 className="text-xs uppercase tracking-wide text-gray-500 font-semibold">Yearly cost</h2>
-        <p className="mt-1.5 text-sm text-gray-500">
-          Add a part and your running cost appears here.
+      <Card className="p-3">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-500">Yearly cost</h2>
+        <p className="mt-1 text-sm text-gray-500">
+          Add a part and the yearly running cost appears here.
         </p>
       </Card>
     );
   }
 
   return (
-    <Card>
-      <h2 className="text-xs uppercase tracking-wide text-gray-500 font-semibold">Yearly cost</h2>
+    <Card className="p-3">
+      <div className="flex items-baseline justify-between gap-2">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-500">Yearly cost</h2>
+        <span className="text-xs text-gray-500 font-numeric tabular-nums">
+          {currency.symbol}{ratePerKwh.toFixed(2)}/kWh
+        </span>
+      </div>
 
-      <p className="mt-1 font-display text-3xl md:text-4xl font-extrabold text-brand-text font-numeric tabular-nums leading-none">
+      <p className="mt-0.5 font-display text-3xl font-extrabold leading-none text-brand-text font-numeric tabular-nums">
         {formatCost(yearly.cost, currency)}
         <span className="ml-1.5 font-body text-sm font-normal text-gray-500">/ yr</span>
       </p>
-      <p className="mt-1.5 text-sm text-gray-500 font-numeric tabular-nums">
-        {formatKwh(yearly.kwh)} · {currency.symbol}{ratePerKwh.toFixed(2)} per kWh
-      </p>
+      <p className="mt-1 text-sm text-gray-500 font-numeric tabular-nums">{formatKwh(yearly.kwh)}</p>
 
       {/* Month and day in one compact row — the yearly figure stays dominant. */}
-      <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-numeric tabular-nums">
+      <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-numeric tabular-nums">
         <span className="text-gray-500">Monthly</span>
         <span className="font-semibold">{formatCost(monthly.cost, currency)}</span>
         <span aria-hidden className="text-gray-400">·</span>
@@ -112,18 +115,24 @@ export function ResultsPanel() {
         <span className="font-semibold">{formatCost(daily.cost, currency)}</span>
       </p>
 
-      {/* PSU sizing guidance */}
-      <div className="mt-4 border-t border-gray-200 dark:border-gray-800 pt-3">
+      {/* PSU sizing — one line; the sizing basis lives in the title. */}
+      <div className="mt-2.5 border-t border-gray-200 pt-2 dark:border-gray-800">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
           <span className="font-semibold">PSU {recommendedPsuW} W</span>
+          <span
+            className="text-xs text-gray-500 font-numeric tabular-nums"
+            title="Peak draw at 100% load, plus a 35% safety margin on the recommendation"
+          >
+            peak {Math.round(peakWallDrawW)} W
+          </span>
           {psuWattage != null && psuWattage >= recommendedPsuW && (
             <span className="text-xs font-semibold text-green-700 dark:text-green-400">
-              ✓ your {psuWattage} W PSU has headroom
+              ✓ your {psuWattage} W has headroom
             </span>
           )}
           {psuWattage != null && psuWattage < recommendedPsuW && (
             <span className="text-xs font-semibold text-red-600 dark:text-red-400">
-              ⚠ your {psuWattage} W PSU is undersized
+              ⚠ your {psuWattage} W is undersized
             </span>
           )}
           {psuWattage == null && <span className="text-xs text-gray-500">none selected</span>}
@@ -132,19 +141,16 @@ export function ResultsPanel() {
               size="sm"
               variant="secondary"
               onClick={pickRecommendedPsu}
-              className="w-full shrink-0 sm:ml-auto sm:w-auto"
+              className="ml-auto shrink-0"
             >
-              Pick a {recommendedPsuW} W PSU for me
+              Pick one
             </Button>
           )}
         </div>
-        <p className="mt-1 text-xs text-gray-500 font-numeric tabular-nums">
-          Peak draw {Math.round(peakWallDrawW)} W at 100% · 35% safety margin included
-        </p>
       </div>
 
       {/* Share + exports, one full-width row at the bottom. */}
-      <div className="mt-4 grid grid-cols-3 gap-2">
+      <div className="mt-2.5 grid grid-cols-3 gap-2">
         <Button size="sm" variant="primary" onClick={onShare} aria-label="Share build">
           Share
         </Button>

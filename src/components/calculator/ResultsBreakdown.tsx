@@ -43,14 +43,9 @@ export function ResultsBreakdown() {
 
   // With no parts selected there is no meaningful breakdown: a zero-slice
   // donut and a "4 W" PSU/peak figure read as broken rather than empty. The
-  // derived case-fan aggregate doesn't count as a part, so check the build.
-  if (!hasSelectedParts(build)) {
-    return (
-      <Card>
-        <p className="text-sm text-gray-500">Add a part to see where the power goes.</p>
-      </Card>
-    );
-  }
+  // results panel above already carries the one prompt, so this renders
+  // nothing at all instead of a second, near-identical empty card.
+  if (!hasSelectedParts(build)) return null;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 min-w-0">

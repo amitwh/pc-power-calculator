@@ -21,12 +21,12 @@ async function pickDevice(user: ReturnType<typeof userEvent.setup>, query: strin
 describe('BuildPicker — devices cart', () => {
   test('renders the compact system controls and the one device picker', () => {
     render(<BuildPicker />);
-    expect(screen.getByRole('heading', { name: /Your Systems/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /^Parts$/ })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /add device/i })).toBeInTheDocument();
     expect(screen.getByLabelText('Filter parts by category')).toBeInTheDocument();
     expect(screen.getByLabelText('System type')).toBeInTheDocument();
-    // Build switching lives in SectionRail now — no duplicate chip row, and the
-    // picker trigger is the only call to action.
+    // Build switching lives in the one-line BuildBar above the grid — the
+    // picker card carries no duplicate system chips.
     expect(screen.queryByRole('button', { name: /My build/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Add your first part/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('group', { name: /Build systems/i })).not.toBeInTheDocument();
@@ -108,7 +108,7 @@ describe('BuildPicker — devices cart', () => {
     const user = userEvent.setup();
     render(<BuildPicker />);
     // The custom-device form now lives inside the collapsed Advanced group.
-    await user.click(screen.getByText('Advanced'));
+    await user.click(screen.getByText(/^Advanced — overclock/i));
     await user.type(screen.getByLabelText('Custom device name'), 'Desk lamp');
     await user.type(screen.getByLabelText('Custom device wattage'), '9');
     await user.click(screen.getByRole('button', { name: 'Add' }));
