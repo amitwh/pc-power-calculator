@@ -1,6 +1,11 @@
 import { Link, useParams } from 'react-router-dom';
 import { Card, CardTitle } from '@/components/ui/Card';
 import { PageHeader } from '@/components/layout/PageHeader';
+import {
+  LoadCurveFigure,
+  PowerPathFigure,
+  TariffSlabFigure,
+} from '@/components/guides/Figures';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { AD_SLOTS } from '@/lib/analytics/adsense';
 
@@ -580,6 +585,7 @@ export const GUIDES: Guide[] = [
         <p>
           <code>P_wall = P_components ÷ efficiency</code>
         </p>
+        <PowerPathFigure />
         <h2>An example that looks wrong until it doesn't</h2>
         <p>
           Components drawing 200 W through a supply running at 90% efficiency pull
@@ -638,6 +644,7 @@ export const GUIDES: Guide[] = [
           poorly), gaming is near the rated board power, and rendering or training pins it.
           If one part decides your running cost, it is this one.
         </p>
+        <LoadCurveFigure />
         <h2>RAM, storage and motherboard</h2>
         <p>
           Small and predictable: a DDR5 stick is around 3–6 W, an NVMe drive 5–9 W under
@@ -692,6 +699,7 @@ export const GUIDES: Guide[] = [
           pay the average of all your units — it pays the top slab you land in, every hour it
           runs.
         </p>
+        <TariffSlabFigure />
         <h2>The fixed charge</h2>
         <p>
           A monthly amount that does not move with consumption (meter rental and the

@@ -32,11 +32,15 @@ describe('/guides hub', () => {
     // "at least the nine published" so adding an article does not break it.
     expect(GUIDES.length).toBeGreaterThanOrEqual(9);
     for (const guide of GUIDES) {
-      expect(screen.getByRole('link', { name: guide.title })).toBeInTheDocument();
+      // The nav's Guides menu lists the same titles, so assert presence
+      // rather than uniqueness.
+      expect(screen.getAllByRole('link', { name: guide.title }).length).toBeGreaterThan(0);
     }
     for (const slug of NEW_SLUGS) {
-      expect(screen.getByRole('link', { name: GUIDES.find((g) => g.slug === slug)!.title }))
-        .toHaveAttribute('href', `/guides/${slug}`);
+      const link = screen
+        .getAllByRole('link', { name: GUIDES.find((g) => g.slug === slug)!.title })
+        .find((el) => el.getAttribute('href') === `/guides/${slug}`);
+      expect(link).toBeDefined();
     }
   });
 });

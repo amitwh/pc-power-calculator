@@ -97,7 +97,13 @@ export function LocationPicker() {
               className="!min-h-9 !text-sm"
               value={countryIso2}
               options={countries.map((c) => ({ value: c.iso2, label: `${c.name} (${c.iso2})` }))}
-              onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => {
+              setLocation(e.target.value);
+              // Moving country must not leave an explicit currency behind: an
+              // override set for the old country would silently pin the symbol
+              // (and the figure) to the old currency for every country after it.
+              if (currencyOverride) setCurrency('');
+            }}
             />
           </label>
           <label className="block">

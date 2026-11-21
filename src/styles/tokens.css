@@ -1,12 +1,12 @@
-/* Typeface: the ConcreteInfo pairing, self-hosted so the CSP stays
-   `font-src 'self'` and the PWA keeps its type offline.
+/* Typefaces: Inter for every piece of prose and UI text, JetBrains Mono for
+   figures. Self-hosted so the CSP stays `font-src 'self'` and the PWA keeps its
+   type offline.
 
-   Plus Jakarta Sans (variable) is the body face; Barlow Condensed 700/800 is
-   the display face and carries every headline figure. Both are the same two
-   faces cams2 uses, so the whole estate reads as one brand. */
-@import '@fontsource-variable/plus-jakarta-sans/wght.css';
-@import '@fontsource/barlow-condensed/700.css';
-@import '@fontsource/barlow-condensed/800.css';
+   The split is by use case, not by taste: Inter is optimised for interface text
+   at 13–16 px, JetBrains Mono's tabular digits keep columns of money aligned and
+   make a number read as a measurement rather than as prose. */
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/jetbrains-mono/wght.css';
 @import 'tailwindcss';
 
 /*
@@ -42,10 +42,10 @@
   --color-gray-900: #464646;
   --color-gray-950: #0d0b09;
 
-  --font-body: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
-  --font-display: 'Barlow Condensed', system-ui, sans-serif;
-  --font-numeric: 'Plus Jakarta Sans Variable', system-ui, sans-serif;
-  --font-mono: 'SF Mono', 'Fira Code', Consolas, ui-monospace, monospace;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+  --font-display: 'Inter Variable', system-ui, sans-serif;
+  --font-numeric: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
 
   --radius-4: 4px;
   --radius-8: 8px;

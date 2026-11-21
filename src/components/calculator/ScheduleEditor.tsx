@@ -180,7 +180,7 @@ export function ScheduleEditor() {
                 onChange={(e) => update(s.workload_id, { hours_per_day: Number(e.target.value) })}
                 className="h-1.5 min-w-[3rem] flex-1 cursor-pointer accent-brand"
               />
-              <span className="w-9 shrink-0 text-right font-numeric text-sm font-semibold tabular-nums">
+              <span className="w-12 shrink-0 text-right font-numeric text-sm font-semibold tabular-nums">
                 {s.hours_per_day}
                 <span className="ml-0.5 text-xs font-normal text-gray-500">h</span>
               </span>
@@ -212,7 +212,7 @@ export function ScheduleEditor() {
             onChange={(e) => setIdleHoursPerDay(Number(e.target.value))}
             className="h-1.5 min-w-[3rem] flex-1 cursor-pointer accent-brand"
           />
-          <span className="w-9 shrink-0 text-right font-numeric text-sm font-semibold tabular-nums">
+          <span className="w-12 shrink-0 text-right font-numeric text-sm font-semibold tabular-nums">
             {idleHours}
             <span className="ml-0.5 text-xs font-normal text-gray-500">h</span>
           </span>

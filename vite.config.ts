@@ -26,6 +26,22 @@ export default defineConfig(({ isSsrBuild }) => ({
               display: 'standalone',
               orientation: 'any',
               start_url: '/',
+              id: '/',
+              // Without an icons array the manifest is valid but NOT
+              // installable: Chrome requires a 192 and a 512 px icon before it
+              // will offer the install prompt, however good the service worker.
+              icons: [
+                { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+                { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+                {
+                  src: '/icons/icon-maskable.png',
+                  sizes: '512x512',
+                  type: 'image/png',
+                  purpose: 'maskable',
+                },
+                { src: '/icons/apple-touch-icon-180x180.png', sizes: '180x180', type: 'image/png' },
+              ],
+              categories: ['utilities', 'productivity'],
             },
             workbox: {
               // woff2 is precached so the installed app keeps its typeface

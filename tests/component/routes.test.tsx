@@ -40,7 +40,8 @@ test('renders the guides hub on /guides', () => {
     </MemoryRouter>,
   );
   expect(screen.getByRole('heading', { name: /Guides & explainers/i })).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: /PSU sizing explained/i })).toBeInTheDocument();
+  // The nav's Guides menu lists the same article, so presence is the assertion.
+  expect(screen.getAllByRole('link', { name: /PSU sizing explained/i }).length).toBeGreaterThan(0);
 });
 
 test('renders a guide article on /guides/:slug', () => {
