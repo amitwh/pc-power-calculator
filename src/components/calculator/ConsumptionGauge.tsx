@@ -47,7 +47,7 @@ const CATEGORY_ICON: Record<BuildCategory, LucideIcon> = {
  * of the bill, never a new claim about the hardware.
  */
 export function ConsumptionGauge({ gridFactorKgPerKwh = 0.71 }: { gridFactorKgPerKwh?: number }) {
-  const { build, rawComponents, yearly } = useCalc();
+  const { build, rawComponents, yearly, upsEfficiency, peakWallDrawW } = useCalc();
 
   if (!hasSelectedParts(build)) return null;
 
@@ -124,6 +124,15 @@ export function ConsumptionGauge({ gridFactorKgPerKwh = 0.71 }: { gridFactorKgPe
         ))}
       </ul>
 
+      {upsEfficiency < 1 && (
+        <p className="mt-2 rounded-8 bg-amber-50 px-2.5 py-1.5 text-[11px] leading-relaxed text-amber-900 dark:bg-amber-500/10 dark:text-amber-200">
+          A UPS is in the power path. Its inverter adds about{' '}
+          <strong className="font-semibold">
+            {Math.round(peakWallDrawW * (1 - upsEfficiency))} W
+          </strong>{' '}
+          at peak — a second conversion stage after the PSU, not a load of its own.
+        </p>
+      )}
       <p className="mt-2 flex items-center gap-1.5 text-[11px] text-gray-400">
         <Zap className="h-3 w-3" aria-hidden />
         Indicative conversions, not measurements. Hover a figure for the arithmetic; carbon uses{' '}

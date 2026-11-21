@@ -82,6 +82,8 @@ export interface PdfReport {
   tariffEstimated?: boolean;
   /** What the machine looks like it is for, with the reason. */
   suggestedCategory?: { label: string; reason: string };
+  /** UPS conversion efficiency in the power path (1 when no UPS is fitted). */
+  upsEfficiency?: number;
   /** When any component in the build was last catalogued / verified (ISO date). */
   catalogVerifiedAt?: string;
 }
@@ -750,6 +752,10 @@ export async function exportPdf(report: PdfReport): Promise<void> {
     {
       k: 'Conversion efficiency at this load',
       v: psu.efficiencyAtLoad != null ? `${Math.round(psu.efficiencyAtLoad * 100)}%` : '—',
+    },
+    {
+      k: 'UPS conversion efficiency',
+      v: report.upsEfficiency && report.upsEfficiency < 1 ? `${Math.round(report.upsEfficiency * 100)}%` : 'No UPS in the path',
     },
     {
       k: 'Peak draw lost to PSU conversion',

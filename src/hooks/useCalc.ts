@@ -48,6 +48,8 @@ export interface CalcResult extends CalcInputs {
   peakWallDrawW: number;
   /** Wall draw while on but idle (no workload, monitors asleep), W. */
   idleDrawW: number;
+  /** UPS conversion efficiency in the path (1 when no UPS is selected). */
+  upsEfficiency: number;
   /** Recommended PSU size for the peak draw (headroom included). */
   recommendedPsuW: number;
   /** Display currency: explicit override, else the tariff currency of the
@@ -114,7 +116,7 @@ export function useCalc(): CalcResult {
     // PSU sizing: size from the PSU-side component draw at 100% — monitors are
     // wall-powered and must not inflate the recommendation. `peakWallDrawW`
     // stays the full wall total (used for the "Peak draw … at the wall" display).
-    const { componentDrawW: peakComponentDrawW, wallDrawW: peakWallDrawW } = systemPowerW(
+    const { componentDrawW: peakComponentDrawW, wallDrawW: peakWallDrawW, upsEfficiency } = systemPowerW(
       resolvedRaw,
       { cpu: 1, gpu: 1, ram: 1, storage: 1 },
       psuRating,
@@ -166,6 +168,7 @@ export function useCalc(): CalcResult {
       componentsPowerW,
       peakWallDrawW,
       idleDrawW,
+      upsEfficiency,
       recommendedPsuW,
       currency,
       allDaily,

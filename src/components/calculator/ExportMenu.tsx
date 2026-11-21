@@ -30,7 +30,7 @@ export function ExportMenu({
   // useCalc() already resolves the active build (multi-system store),
   // pre-computes daily / monthly / yearly totals, and resolves the display
   // currency (explicit override, else the build location's tariff currency).
-  const { build, components, rawComponents, daily, monthly, yearly, peakWallDrawW, idleDrawW, recommendedPsuW, psuWattage, psuRating, totalEffectiveTdpW, currency } = useCalc();
+  const { build, components, rawComponents, upsEfficiency, daily, monthly, yearly, peakWallDrawW, idleDrawW, recommendedPsuW, psuWattage, psuRating, totalEffectiveTdpW, currency } = useCalc();
   const [generating, setGenerating] = useState(false);
 
   // GA4 export tracking — gated by Consent Mode v2 so denied users keep full
@@ -105,6 +105,7 @@ export function ExportMenu({
           peakComponentW: totalEffectiveTdpW,
           peakWallW: peakWallDrawW,
         },
+        upsEfficiency,
         measured: build.measured,
         suggestedCategory: (() => {
           const guess = suggestCategory(build, rawComponents);

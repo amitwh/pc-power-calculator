@@ -84,7 +84,13 @@ export function systemPowerW(
   psuRating: PsuEfficiencyRating | null,
   psuWattage: number = 650,
   options: { includeMonitors?: boolean } = {},
-): { componentDrawW: number; wallDirectW: number; wallDrawW: number } {
+): {
+  componentDrawW: number;
+  wallDirectW: number;
+  wallDrawW: number;
+  /** UPS conversion efficiency applied to the PSU-side load (1 = no UPS). */
+  upsEfficiency: number;
+} {
   const includeMonitors = options.includeMonitors ?? true;
   let total = 0;
   let wallDirect = 0;
@@ -104,5 +110,28 @@ export function systemPowerW(
   const psuSideWallW = psuRating
     ? wallDrawW(total, psuRating, Math.min(100, (total / psuWattage) * 100))
     : total;
-  return { componentDrawW: total, wallDirectW: wallDirect, wallDrawW: psuSideWallW + wallDirect };
+
+  /**
+   * A UPS is a second conversion stage: it inverts DC back to AC, and that
+   * costs energy even when the mains is fine. It is not a load of its own, so
+   * it never appears as a wattage — it divides the load, the way the PSU does.
+   *
+   * Efficiency comes from the catalog entry when it states one
+   * (`efficiency_pct`), otherwise a documented 95% assumption for a
+   * line-interactive unit. Online double-conversion units are nearer 90%.
+   */
+  const ups = components.find((c) => c.category === 'ups');
+  const stated = Number(ups?.specs.efficiency_pct);
+  const upsEfficiency = ups
+    ? Number.isFinite(stated) && stated > 50 && stated < 100
+      ? stated / 100
+      : 0.95
+    : 1;
+
+  return {
+    componentDrawW: total,
+    wallDirectW: wallDirect,
+    wallDrawW: psuSideWallW / upsEfficiency + wallDirect,
+    upsEfficiency,
+  };
 }
