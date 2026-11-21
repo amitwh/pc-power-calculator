@@ -30,6 +30,16 @@
   --color-danger: hsl(0 84% 60%);
   --color-info: hsl(199 89% 48%);
 
+  /* One hue per headline fact — the bill, the daily rate, the energy — so the
+     three figures separate at a glance without labelling each one. Each hue is
+     declared twice: these deep values clear AA on white, and the bright values
+     in the dark-mode block clear AA on the gray-900 card. A neon orange on
+     white would fail (the brand's own #ff6b47 scores ~2.9:1), and the deep red
+     on near-black would fail the other way round. */
+  --color-fact-month: #c93a18;
+  --color-fact-day: #0b6f96;
+  --color-fact-energy: #1a7a56;
+
   --color-gray-50: #fafbfc;
   --color-gray-100: #f5f5f5;
   --color-gray-200: #e3e3e3;
@@ -74,6 +84,12 @@ html {
     --color-gray-400: #b0b0b0;
     --color-gray-500: #9a9696;
     --color-gray-600: #828080;
+
+    /* The bright end of each fact hue: 4.7–5.1:1 on the gray-900 card, where
+       the light-mode values would drop below 3:1. */
+    --color-fact-month: #ff9d82;
+    --color-fact-day: #6cc9fa;
+    --color-fact-energy: #34d399;
   }
 }
 

@@ -29,6 +29,14 @@ describe('AnswerHero', () => {
     expect(screen.getByText('Per month')).toBeInTheDocument();
     expect(screen.getByText('Per day')).toBeInTheDocument();
     expect(screen.getByText('Energy')).toBeInTheDocument();
+
+    // Each fact carries its own hue, in a fixed order, so the figures read
+    // apart without re-reading the labels (--color-fact-* in tokens.css).
+    const tones = ['Per month', 'Per day', 'Energy'].map((label) => {
+      const value = screen.getByText(label).closest('div')!.querySelector('dd')!;
+      return value.className.match(/text-fact-\w+/)?.[0];
+    });
+    expect(tones).toEqual(['text-fact-month', 'text-fact-day', 'text-fact-energy']);
     // The summary line names the part and the location.
     expect(screen.getByText(/Ryzen 7 7800X3D/)).toBeInTheDocument();
     expect(screen.getByText(/India/)).toBeInTheDocument();

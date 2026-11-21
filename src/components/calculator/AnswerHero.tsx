@@ -73,14 +73,18 @@ export function AnswerHero() {
 
       <div className="ml-auto flex flex-wrap items-end gap-x-7 gap-y-3">
         <dl className="flex gap-6">
+          {/* One hue per fact (see --color-fact-* in tokens.css) so the three
+              figures read apart before the label does. */}
           {[
-            { k: 'Per month', v: formatCost(monthly.cost, currency) },
-            { k: 'Per day', v: formatCost(daily.cost, currency) },
-            { k: 'Energy', v: formatKwh(yearly.kwh, 0) },
+            { k: 'Per month', v: formatCost(monthly.cost, currency), tone: 'text-fact-month' },
+            { k: 'Per day', v: formatCost(daily.cost, currency), tone: 'text-fact-day' },
+            { k: 'Energy', v: formatKwh(yearly.kwh, 0), tone: 'text-fact-energy' },
           ].map((f) => (
             <div key={f.k}>
               <dt className="text-[11px] font-bold uppercase tracking-[0.06em] text-gray-500">{f.k}</dt>
-              <dd className="mt-0.5 font-numeric text-[17px] font-bold tabular-nums">{f.v}</dd>
+              <dd className={`mt-0.5 font-numeric text-[17px] font-bold tabular-nums ${f.tone}`}>
+                {f.v}
+              </dd>
             </div>
           ))}
         </dl>
