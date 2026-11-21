@@ -409,24 +409,20 @@ const styles = StyleSheet.create({
     top: 10,
     left: PAGE_MARGIN,
     right: PAGE_MARGIN,
-    height: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  continuationPlate: {
-    backgroundColor: '#ffffff',
-    borderRadius: 2,
-    padding: 1.5,
-    marginRight: 4,
-  },
-  continuationIcon: {
-    width: 12,
-    height: 12,
-  },
-  continuationText: {
     fontSize: 7,
     color: FAINT,
+    textAlign: 'right',
+  },
+  continuationIconWrap: {
+    position: 'absolute',
+    top: 8,
+    left: PAGE_MARGIN,
+    width: 14,
+    height: 14,
+  },
+  continuationIcon: {
+    width: 14,
+    height: 14,
   },
   qrCard: {
     marginTop: 10,
@@ -525,6 +521,23 @@ function safeMoney(amount: number, currency: CurrencyInfo): string {
 
 function safeKwh(value: number): string {
   return Number.isFinite(value) ? kwh(value) : '—';
+}
+
+/**
+ * The share URL printed under the QR. A full build token can be hundreds of
+ * characters; printing it wraps the card over half a page and pushes the
+ * closing sections onto an otherwise blank page. The QR carries the full URL,
+ * so the caption only needs enough to recognise it.
+ */
+function displayShareUrl(url: string): string {
+  if (url.length <= 64) return url;
+  try {
+    const parsed = new URL(url);
+    const token = parsed.pathname.replace(/^\/build\//, '');
+    return `${parsed.host}/build/…${token.slice(-8)}`;
+  } catch {
+    return `${url.slice(0, 61)}…`;
+  }
 }
 
 /** Brand colour blended into white, lightest band first, for the gauge. */
@@ -667,21 +680,21 @@ export function ReportDocument({
     >
       <Page size="A4" style={styles.page}>
         {/* Continued-page header: app icon plus build identity, blank on the cover. */}
-        <View
+        {/* The text and the icon are separate fixed elements on purpose: a
+            fixed View returning text loses it from the page in this version. */}
+        <Text
           fixed
           style={styles.continuationHeader}
           render={({ pageNumber }) =>
-            pageNumber > 1 ? (
-              <>
-                {iconDataUrl ? (
-                  <View style={styles.continuationPlate}>
-                    <Image src={iconDataUrl} style={styles.continuationIcon} />
-                  </View>
-                ) : null}
-                <Text style={styles.continuationText}>
-                  {`${report.buildName} · ${reportId}`}
-                </Text>
-              </>
+            pageNumber > 1 ? `${report.buildName} · ${reportId}` : ''
+          }
+        />
+        <View
+          fixed
+          style={styles.continuationIconWrap}
+          render={({ pageNumber }) =>
+            pageNumber > 1 && iconDataUrl ? (
+              <Image src={iconDataUrl} style={styles.continuationIcon} />
             ) : null
           }
         />
@@ -1211,7 +1224,7 @@ export function ReportDocument({
             <Image src={qrDataUrl} style={styles.qrImage} />
             <View style={styles.qrCopy}>
               <Text style={styles.qrCaption}>Scan to open this build</Text>
-              <Text style={styles.qrUrl}>{shareUrl}</Text>
+              <Text style={styles.qrUrl}>{displayShareUrl(shareUrl)}</Text>
               <Text style={styles.qrHint}>
                 Opens the live calculator with every part and hour pre-filled.
               </Text>

@@ -104,6 +104,19 @@ test('exports the report with reconciled totals, brand content and a QR permalin
   expect(text).toContain('Case fan');
   // Carbon uses a real subscript glyph from the embedded font.
   expect(text).toContain('CO₂e');
+  // Continuation pages carry the build identity beside the app icon.
+  expect(text).toMatch(/Gaming build · PCP-/);
   // The QR card is only printed when the browser generated a share permalink.
   expect(text).toContain('Scan to open this build');
+  // The printed URL is shortened; the full token lives in the QR only, so the
+  // card cannot push the closing sections onto a fourth page.
+  expect(text).toContain('/build/…');
+  expect(text).not.toMatch(/\/build\/[A-Za-z0-9_-]{200,}/);
+
+  if (hasBinary('pdfinfo')) {
+    const info = execFileSync('pdfinfo', [pdfPath], { encoding: 'utf8' });
+    const pages = Number(/^Pages:\s+(\d+)/m.exec(info)?.[1]);
+    expect(pages).toBeGreaterThanOrEqual(2);
+    expect(pages).toBeLessThanOrEqual(3);
+  }
 });

@@ -141,6 +141,20 @@ describe('ReportDocument', () => {
   );
 
   test.skipIf(!hasBinary('pdftotext'))(
+    'prints a shortened share URL, never the full build token',
+    async () => {
+      const longUrl = `https://pcpower.concreteinfo.co.in/build/${'x'.repeat(400)}`;
+      const text = await renderAndExtract(gamingReport, {
+        shareUrl: longUrl,
+        qrDataUrl: TINY_PNG,
+      });
+
+      expect(text).toContain('pcpower.concreteinfo.co.in/build/…');
+      expect(text).not.toContain('x'.repeat(100));
+    },
+  );
+
+  test.skipIf(!hasBinary('pdftotext'))(
     'omits the QR block when there is no share URL',
     async () => {
       const text = await renderAndExtract(gamingReport, {
