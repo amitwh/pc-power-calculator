@@ -1,6 +1,7 @@
 import { useBuildStore } from '@/store/buildStore';
 import { useCalc } from '@/hooks/useCalc';
 import { Card } from '@/components/ui/Card';
+import { HelpTip } from '@/components/ui/HelpTip';
 import { psuEfficiency } from '@/lib/calc/psu';
 
 /** −12% / +8% / "on the nose" */
@@ -41,6 +42,7 @@ function Reading({
           step={1}
           value={value ?? ''}
           placeholder={String(Math.round(predicted))}
+          title={hint}
           onChange={(e) => {
             const raw = e.target.value.trim();
             onChange(raw === '' ? null : Number(raw));
@@ -83,7 +85,14 @@ export function MeasuredCard() {
   return (
     <Card>
       <div className="flex items-baseline justify-between gap-2">
-        <h2 className="font-display text-base font-bold">How accurate is this?</h2>
+        <span className="flex items-center gap-1">
+          <h2 className="font-display text-base font-bold">How accurate is this?</h2>
+          <HelpTip
+            align="center"
+            label="About measured readings"
+            text="Enter smart-plug readings at the wall to compare the model with reality."
+          />
+        </span>
         <span className="text-xs text-gray-500">your meter</span>
       </div>
       <p className="mt-1 text-xs text-gray-500">

@@ -6,10 +6,10 @@ import { Select } from '@/components/ui/Select';
 import { SearchableSelect } from '@/components/ui/SearchableSelect';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { CATEGORY_LABEL } from '@/lib/buildCategory';
+import { HelpTip } from '@/components/ui/HelpTip';
 import { categoryColor } from '@/lib/categoryColors';
 import { confidenceFor } from '@/lib/data/confidence';
-import type { BuildCategory, ComponentSlot } from '@/types/build';
+import type { ComponentSlot } from '@/types/build';
 import type { ComponentCategory, Component } from '@/types/component';
 
 /** Catalog category → build slot it lands in when picked (canonical keys). */
@@ -63,18 +63,6 @@ const FILTER_OPTIONS: Array<{ value: ComponentCategory | 'all'; label: string }>
   { value: 'peripheral', label: 'Peripheral' },
 ];
 
-const CATEGORIES: BuildCategory[] = [
-  'general',
-  'gaming',
-  'content',
-  'workstation',
-  'ai',
-  'homelab',
-  'nas',
-  'web',
-  'database',
-];
-
 /** One selected device: the component + which slot it occupies. */
 interface SelectedDevice {
   component: Component;
@@ -96,7 +84,6 @@ export function BuildPicker() {
   const setCaseFans = useBuildStore((s) => s.setCaseFans);
   const addCustomPeripheral = useBuildStore((s) => s.addCustomPeripheral);
   const removeCustomPeripheral = useBuildStore((s) => s.removeCustomPeripheral);
-  const setBuildCategory = useBuildStore((s) => s.setBuildCategory);
   const { peakWallDrawW, recommendedPsuW } = useCalc();
 
   const activeBuild = builds.find((b) => b.id === activeBuildId);
@@ -160,7 +147,14 @@ export function BuildPicker() {
   return (
     <Card>
       <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-1">
-        <h2 className="font-display text-base font-bold">Your system</h2>
+        <span className="flex items-center gap-1">
+          <h2 className="font-display text-base font-bold">Your system</h2>
+          <HelpTip
+            align="left"
+            label="About your system"
+            text="The parts in this build. Override a part's rated watts if the catalog is wrong."
+          />
+        </span>
         <span className="flex flex-wrap items-baseline gap-x-1.5 font-numeric text-xs tabular-nums text-gray-500">
           {devices.length > 0 && (
             <>
@@ -232,6 +226,7 @@ export function BuildPicker() {
                     <button
                       type="button"
                       aria-label={`Decrease quantity for ${name}`}
+                      title="One fewer unit"
                       disabled={d.qty <= 1}
                       onClick={() => setQty(d.component.id, d.qty - 1)}
                       className="h-6 w-5 rounded-4 text-sm leading-none text-gray-500 hover:bg-gray-100 disabled:opacity-30 dark:hover:bg-gray-800"
@@ -242,6 +237,7 @@ export function BuildPicker() {
                     <button
                       type="button"
                       aria-label={`Increase quantity for ${name}`}
+                      title="One more unit"
                       onClick={() => setQty(d.component.id, d.qty + 1)}
                       className="h-6 w-5 rounded-4 text-sm leading-none text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
                     >
@@ -265,6 +261,7 @@ export function BuildPicker() {
                   <button
                     type="button"
                     aria-label={`Remove ${name}`}
+                    title="Remove this part from the system"
                     onClick={() => {
                       removeComponent(d.slot, d.component.id);
                       if (d.component.id.startsWith('user-peripheral-')) removeCustomPeripheral(d.component.id);
@@ -292,23 +289,23 @@ export function BuildPicker() {
       )}
 
       {/* One picker, at the foot of the card where the mockup puts it. */}
-      <div className="mt-3 grid grid-cols-1 gap-2">
-        <Select
-          aria-label="Use case"
-          className="!min-h-9 !text-sm"
-          value={activeBuild.category ?? 'general'}
-          options={CATEGORIES.map((c) => ({ value: c, label: CATEGORY_LABEL[c] }))}
-          onChange={(e) => setBuildCategory(activeBuild.id, e.target.value as BuildCategory)}
-        />
-        <Select
-          aria-label="Filter parts by category"
-          className="!min-h-9 !text-sm"
-          value={filter}
-          options={FILTER_OPTIONS}
-          onChange={(e) => setFilter(e.target.value as ComponentCategory | 'all')}
+      <div className="mt-3 flex items-center gap-1.5">
+        <div className="min-w-0 flex-1">
+          <Select
+            aria-label="Filter parts by category"
+            className="!min-h-9 !text-sm"
+            value={filter}
+            options={FILTER_OPTIONS}
+            onChange={(e) => setFilter(e.target.value as ComponentCategory | 'all')}
+          />
+        </div>
+        <HelpTip
+          align="right"
+          label="About the part filter"
+          text="Show only one component type in the parts picker."
         />
       </div>
-      <div className="mt-2">
+      <div className="mt-2" title="Add another part from the catalog">
         <SearchableSelect
           ariaLabel="Add a part"
           placeholder="+ Add a part — search 2,200+ parts"
@@ -326,7 +323,10 @@ export function BuildPicker() {
 
       {/* Overclocking, case fans and custom devices — one collapsed group. */}
       <details className="mt-3">
-        <summary className="cursor-pointer select-none text-xs font-semibold text-gray-500">
+        <summary
+          title="Overclocking, case fans and custom devices"
+          className="cursor-pointer select-none text-xs font-semibold text-gray-500"
+        >
           Advanced
         </summary>
         <div className="mt-2 space-y-2">

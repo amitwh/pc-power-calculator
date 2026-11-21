@@ -24,9 +24,9 @@ describe('BuildPicker — devices cart', () => {
     expect(screen.getByRole('heading', { name: /^Your system$/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /add a part/i })).toBeInTheDocument();
     expect(screen.getByLabelText('Filter parts by category')).toBeInTheDocument();
-    expect(screen.getByLabelText('Use case')).toBeInTheDocument();
-    // Build switching lives in the one-line BuildBar above the grid — the
-    // picker card carries no duplicate system chips.
+    // Build switching and system type live in the one-line BuildBar above the
+    // grid — the picker card carries no duplicate system chips or use-case select.
+    expect(screen.queryByLabelText('Use case')).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /My build/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /Add your first part/i })).not.toBeInTheDocument();
     expect(screen.queryByRole('group', { name: /Build systems/i })).not.toBeInTheDocument();
@@ -39,13 +39,6 @@ describe('BuildPicker — devices cart', () => {
 
     await pickDevice(user, '7800x3d', /Ryzen 7 7800X3D/);
     expect(screen.getByText('1 part')).toBeInTheDocument();
-  });
-
-  test('the System type select updates the build category', async () => {
-    const user = userEvent.setup();
-    render(<BuildPicker />);
-    await user.selectOptions(screen.getByLabelText('Use case'), 'workstation');
-    expect(useBuildStore.getState().builds[0].category).toBe('workstation');
   });
 
   test('adding a CPU via the searchable picker lands in the store and the list', async () => {

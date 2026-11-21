@@ -1,5 +1,18 @@
 import type { BuildCategory } from '@/types/build';
 
+/** Every system type, in the order the picker and the report present them. */
+export const BUILD_CATEGORIES: BuildCategory[] = [
+  'general',
+  'gaming',
+  'content',
+  'workstation',
+  'ai',
+  'homelab',
+  'nas',
+  'web',
+  'database',
+];
+
 /** Short label for a system type, in the term the industry actually uses. */
 export const CATEGORY_LABEL: Record<BuildCategory, string> = {
   general: 'General desktop',

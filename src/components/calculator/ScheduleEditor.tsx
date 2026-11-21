@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useBuildStore } from '@/store/buildStore';
 import { listWorkloads } from '@/lib/data/workloads';
 import { Card } from '@/components/ui/Card';
+import { HelpTip } from '@/components/ui/HelpTip';
 import { workloadHex } from '@/lib/categoryColors';
 import type { WorkloadSchedule, Workload } from '@/types/workload';
 
@@ -41,9 +42,13 @@ function UseCaseSelect({
   label: string;
 }) {
   return (
-    <span className="relative w-[8rem] min-w-0 shrink-0 sm:w-[10rem]" title={value}>
+    <span
+      className="relative w-[8rem] min-w-0 shrink-0 sm:w-[10rem]"
+      title="Change the use case for this row"
+    >
       <select
         aria-label={label}
+        title="Change the use case for this row"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="w-full cursor-pointer truncate rounded-4 border border-transparent bg-transparent py-0.5 pl-0 pr-5 text-sm font-semibold text-gray-900 hover:border-gray-300 hover:bg-white focus:border-brand focus:outline-none dark:text-gray-50 dark:hover:bg-gray-900"
@@ -130,7 +135,14 @@ export function ScheduleEditor() {
   return (
     <Card className="p-4">
       <div className="flex items-baseline justify-between gap-2">
-        <h2 className="font-display text-base font-bold">When you use it</h2>
+        <span className="flex items-center gap-1">
+          <h2 className="font-display text-base font-bold">When you use it</h2>
+          <HelpTip
+            align="left"
+            label="About the schedule"
+            text="Hours per day at each workload; use 'On, but idle' for the rest of the time the PC is on."
+          />
+        </span>
         <span
           className={`font-numeric text-xs tabular-nums ${
             overBudget ? 'font-bold text-red-600 dark:text-red-400' : 'text-gray-500'
@@ -177,6 +189,7 @@ export function ScheduleEditor() {
                 step={1}
                 value={s.hours_per_day}
                 aria-label={`${wl.name} hours per day`}
+                title={`${wl.name}: hours per day`}
                 onChange={(e) => update(s.workload_id, { hours_per_day: Number(e.target.value) })}
                 className="h-1.5 min-w-[3rem] flex-1 cursor-pointer accent-brand"
               />
@@ -187,6 +200,7 @@ export function ScheduleEditor() {
               <button
                 type="button"
                 aria-label={`Remove ${wl.name}`}
+                title={`Remove ${wl.name} from the schedule`}
                 onClick={() => removeWorkload(s.workload_id)}
                 className="h-7 w-6 shrink-0 text-base leading-none text-gray-300 hover:text-red-600 dark:hover:text-red-400"
               >
@@ -209,6 +223,7 @@ export function ScheduleEditor() {
             step={1}
             value={idleHours}
             aria-label="Idle hours per day"
+            title="Hours per day the PC is on but idle"
             onChange={(e) => setIdleHoursPerDay(Number(e.target.value))}
             className="h-1.5 min-w-[3rem] flex-1 cursor-pointer accent-brand"
           />
@@ -223,6 +238,7 @@ export function ScheduleEditor() {
       {/* Adding a use case is a dropdown, not a paragraph of buttons. */}
       <select
         aria-label="Add a use case"
+        title="Add another workload to the day"
         value=""
         disabled={unscheduled.length === 0 || remaining <= 0}
         onChange={(e) => addWorkload(e.target.value)}

@@ -34,8 +34,10 @@ describe('Home one-screen structure', () => {
     // single h1, so this title is a styled paragraph.
     expect(screen.getByText('What does your PC cost to run?')).toBeInTheDocument();
 
-    // The build switcher is a one-line select in the title row, not a rail.
+    // The build switcher and system type are one-line selects in the title row,
+    // not a rail.
     expect(screen.getByRole('combobox', { name: 'Active system' })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'System type' })).toBeInTheDocument();
     expect(document.querySelector('a[href^="#"]')).toBeNull();
 
     // Every input card, then the answer, then the breakdown.

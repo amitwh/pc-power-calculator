@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react';
 import { useBuildStore } from '@/store/buildStore';
 import { Select } from '@/components/ui/Select';
+import { HelpTip } from '@/components/ui/HelpTip';
+import { BUILD_CATEGORIES, CATEGORY_LABEL } from '@/lib/buildCategory';
+import type { BuildCategory } from '@/types/build';
 
 /**
  * One-line build switcher: pick the active system, rename it, delete it, add
@@ -15,6 +18,7 @@ export function BuildBar() {
   const addBuild = useBuildStore((s) => s.addBuild);
   const renameBuild = useBuildStore((s) => s.renameBuild);
   const removeBuild = useBuildStore((s) => s.removeBuild);
+  const setBuildCategory = useBuildStore((s) => s.setBuildCategory);
 
   const [renaming, setRenaming] = useState(false);
   const [draft, setDraft] = useState('');
@@ -65,7 +69,7 @@ export function BuildBar() {
   }
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex flex-wrap items-center gap-1">
       <Select
         aria-label="Active system"
         className="!h-8 !min-h-8 !w-auto !py-0 !pl-2 !pr-7 !text-sm font-semibold"
@@ -73,6 +77,27 @@ export function BuildBar() {
         options={builds.map((b) => ({ value: b.id, label: b.name }))}
         onChange={(e) => setActiveBuild(e.target.value)}
       />
+      <HelpTip
+        align="left"
+        label="About systems"
+        text="Switch between saved systems — each keeps its own parts, schedule and tariff."
+      />
+      {active && (
+        <>
+          <Select
+            aria-label="System type"
+            className="!h-8 !min-h-8 !w-auto !py-0 !pl-2 !pr-7 !text-sm font-semibold"
+            value={active.category ?? 'general'}
+            options={BUILD_CATEGORIES.map((c) => ({ value: c, label: CATEGORY_LABEL[c] }))}
+            onChange={(e) => setBuildCategory(active.id, e.target.value as BuildCategory)}
+          />
+          <HelpTip
+            align="right"
+            label="About system type"
+            text="What this machine is for: sets the suggested category, defaults and report labels."
+          />
+        </>
+      )}
       <button type="button" onClick={startRename} aria-label="Rename system" title="Rename system" className={iconButton}>
         <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden className="h-3.5 w-3.5">
           <path d="M13.586 3.586a2 2 0 1 1 2.828 2.828l-8.9 8.9-3.536.708.708-3.536 8.9-8.9Z" />
@@ -92,6 +117,7 @@ export function BuildBar() {
       <button
         type="button"
         onClick={() => addBuild()}
+        title="Add another saved system"
         className="h-8 shrink-0 rounded-8 border border-dashed border-gray-300 px-2.5 text-sm font-semibold text-gray-600 transition-colors hover:border-brand-dark hover:text-brand-dark dark:border-gray-600 dark:text-gray-300"
       >
         + System

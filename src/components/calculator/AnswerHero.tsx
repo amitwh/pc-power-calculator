@@ -61,7 +61,10 @@ export function AnswerHero() {
       <div className="min-w-0">
         <h2 className="text-xs font-bold uppercase tracking-[0.09em] text-gray-500">Your yearly cost</h2>
         <p className="mt-1 flex flex-wrap items-baseline gap-x-3">
-          <span className="font-display text-5xl font-extrabold leading-[0.95] tracking-[-0.035em] text-gray-950 tabular-nums sm:text-6xl md:text-7xl dark:text-gray-50">
+          <span
+            title="Estimated annual running cost at this schedule and tariff"
+            className="font-display text-5xl font-extrabold leading-[0.95] tracking-[-0.035em] text-gray-950 tabular-nums sm:text-6xl md:text-7xl dark:text-gray-50"
+          >
             {formatCost(yearly.cost, currency)}
           </span>
           <span className="text-lg font-semibold text-gray-400">/ year</span>
@@ -76,11 +79,26 @@ export function AnswerHero() {
           {/* One hue per fact (see --color-fact-* in tokens.css) so the three
               figures read apart before the label does. */}
           {[
-            { k: 'Per month', v: formatCost(monthly.cost, currency), tone: 'text-fact-month' },
-            { k: 'Per day', v: formatCost(daily.cost, currency), tone: 'text-fact-day' },
-            { k: 'Energy', v: formatKwh(yearly.kwh, 0), tone: 'text-fact-energy' },
+            {
+              k: 'Per month',
+              v: formatCost(monthly.cost, currency),
+              tone: 'text-fact-month',
+              title: 'Estimated monthly running cost at this schedule and tariff',
+            },
+            {
+              k: 'Per day',
+              v: formatCost(daily.cost, currency),
+              tone: 'text-fact-day',
+              title: 'Estimated daily running cost at this schedule and tariff',
+            },
+            {
+              k: 'Energy',
+              v: formatKwh(yearly.kwh, 0),
+              tone: 'text-fact-energy',
+              title: 'Estimated annual energy use at this schedule',
+            },
           ].map((f) => (
-            <div key={f.k}>
+            <div key={f.k} title={f.title}>
               <dt className="text-[11px] font-bold uppercase tracking-[0.06em] text-gray-500">{f.k}</dt>
               <dd className={`mt-0.5 font-numeric text-[17px] font-bold tabular-nums ${f.tone}`}>
                 {f.v}

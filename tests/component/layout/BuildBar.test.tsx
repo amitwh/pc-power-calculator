@@ -26,6 +26,28 @@ describe('BuildBar', () => {
     expect(select).toHaveValue(useBuildStore.getState().activeBuildId);
   });
 
+  test('the System type select updates the active build category', async () => {
+    const user = userEvent.setup();
+    render(<BuildBar />);
+
+    const select = screen.getByRole('combobox', { name: 'System type' });
+    expect(select).toHaveValue('gaming');
+    expect(Array.from(select.querySelectorAll('option')).map((o) => o.textContent)).toEqual([
+      'General desktop',
+      'Gaming PC',
+      'Content creation',
+      'CAD workstation',
+      'AI / ML workstation',
+      'Home lab',
+      'NAS / storage',
+      'Web server',
+      'Database server',
+    ]);
+
+    await user.selectOptions(select, 'workstation');
+    expect(useBuildStore.getState().builds[0].category).toBe('workstation');
+  });
+
   test('switching the select changes the active build', async () => {
     const user = userEvent.setup();
     useBuildStore.getState().addBuild('Workstation');

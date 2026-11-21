@@ -180,6 +180,7 @@ export function ExportMenu({
         onClick={onPdf}
         disabled={generating}
         aria-label="Export PDF"
+        title="Download a printable PDF report"
         className="border border-gray-300 dark:border-gray-700"
       >
         {generating ? '…' : 'PDF'}
@@ -189,6 +190,7 @@ export function ExportMenu({
         variant="ghost"
         onClick={onHtml}
         aria-label="Export HTML"
+        title="Download a standalone HTML report"
         className="border border-gray-300 dark:border-gray-700"
       >
         HTML

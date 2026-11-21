@@ -4,6 +4,7 @@ import { listCurrencies } from '@/lib/data/currencies';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useFx } from '@/hooks/useFx';
 import { Card } from '@/components/ui/Card';
+import { HelpTip } from '@/components/ui/HelpTip';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
 import { computeCost } from '@/lib/calc/cost';
@@ -48,7 +49,14 @@ export function LocationPicker() {
   return (
     <Card>
       <div className="flex items-baseline justify-between gap-2">
-        <h2 className="font-display text-base font-bold">Your tariff</h2>
+        <span className="flex items-center gap-1">
+          <h2 className="font-display text-base font-bold">Your tariff</h2>
+          <HelpTip
+            align="left"
+            label="About the tariff"
+            text="Resolved from your location and tariff data; override the rate if your bill differs."
+          />
+        </span>
         <span className="text-xs text-gray-500">
           {isManual ? 'manual' : tariffRate.slabs ? 'tiered' : 'flat'}
         </span>
@@ -56,7 +64,10 @@ export function LocationPicker() {
 
       {/* The rate is the number that drives everything, so it gets the display
           face and the space; the controls live behind the disclosure. */}
-      <p className="mt-3 flex items-baseline gap-1.5">
+      <p
+        className="mt-3 flex items-baseline gap-1.5"
+        title="Effective rate used by the calculation, including taxes at a typical 200 kWh month"
+      >
         <span className="font-display text-4xl font-extrabold leading-none tracking-[-0.02em] tabular-nums text-gray-950 dark:text-gray-50">
           {currency.symbol}
           {rate.toFixed(2)}
@@ -85,7 +96,10 @@ export function LocationPicker() {
       )}
 
       <details className="mt-3">
-        <summary className="cursor-pointer select-none rounded-8 border border-dashed border-gray-300 px-2.5 py-1.5 text-center text-sm font-semibold text-gray-600 hover:border-brand hover:text-brand-text dark:border-gray-600 dark:text-gray-300">
+        <summary
+          title="Change the country, state or the rate used"
+          className="cursor-pointer select-none rounded-8 border border-dashed border-gray-300 px-2.5 py-1.5 text-center text-sm font-semibold text-gray-600 hover:border-brand hover:text-brand-text dark:border-gray-600 dark:text-gray-300"
+        >
           Change location or rate
         </summary>
 

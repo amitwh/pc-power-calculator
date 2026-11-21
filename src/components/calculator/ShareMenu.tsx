@@ -94,6 +94,7 @@ export function ShareMenu() {
     <details ref={detailsRef} className="relative">
       <summary
         aria-label="Share build"
+        title="Get a permalink, copy the configuration or share this estimate"
         className="inline-flex min-h-[38px] cursor-pointer list-none items-center rounded-8 bg-brand px-4 text-sm font-bold text-white hover:bg-brand-dark [&::-webkit-details-marker]:hidden"
       >
         Share this estimate
@@ -118,6 +119,7 @@ export function ShareMenu() {
           type="button"
           disabled={!permalink}
           onClick={() => permalink && copy(permalink, 'Link copied')}
+          title="Copy the permanent link to this build"
           className="flex w-full items-center gap-2 rounded-8 px-2 py-1.5 text-left text-sm font-semibold text-gray-800 hover:bg-gray-100 disabled:opacity-40 dark:text-gray-100 dark:hover:bg-gray-800"
         >
           🔗 Copy permanent link
@@ -125,6 +127,7 @@ export function ShareMenu() {
         <button
           type="button"
           onClick={() => copy(configurationText(), 'Configuration copied')}
+          title="Copy the parts, schedule and tariff as plain text"
           className="flex w-full items-center gap-2 rounded-8 px-2 py-1.5 text-left text-sm font-semibold text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-800"
         >
           📋 Copy configuration
