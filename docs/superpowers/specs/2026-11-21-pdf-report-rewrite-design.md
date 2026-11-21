@@ -211,22 +211,26 @@ offline. Verification: `pdftotext` output contains `₹`, `CO₂e`, `×` and no
 The owner is adding a logo and a webicon to the repo. The renderer treats both as
 optional inputs with a working fallback, so the rewrite can ship before they land.
 
-- **Expected files:** a wordmark logo under `public/brand/` and the square webicon
-  already used by the PWA (e.g. `public/icons/icon-512.png`). The build should
-  resolve whichever exists; if only the webicon is present, it becomes the square
-  mark and the text wordmark stays beside it.
-- **Placement:** page-1 brand bar shows the logo (or webicon + wordmark) on the
-  left; continuation headers show the small square mark plus build name · report
-  ID. Footer unchanged.
-- **Format:** prefer PNG at ≥2× (transparent). react-pdf renders PNG/JPEG
-  reliably; SVG support must be proven in the spike before relying on it.
-- **Contrast:** the brand bar is solid `#e5461f`. A dark logo sits on a white
-  rounded plate; a light/knockout logo sits directly on the bar. Check both in
-  the spike and pick the treatment that reads at 18–22 pt height.
-- **Fallback:** when neither asset resolves, draw the current text wordmark. No
-  broken-image box, no layout shift.
-- The webicon is also the natural source for the report's square mark, so one
-  asset covers both the browser icon and the printed header.
+- **Source files (supplied):** `assets/logo.png` (2167 × 726, RGBA, transparent)
+  and `assets/appicon.png` (570 × 570, RGB, white background). Copy them to
+  `public/brand/logo.png` and `public/icons/appicon.png` so the runtime can fetch
+  them; keep `assets/` as the owner's source of truth.
+- **Placement:** page-1 brand bar shows the full lockup on a **white rounded
+  plate** — its wordmark is navy and its gauge orange, so it cannot sit directly
+  on the `#e5461f` bar. Height ~18–20 pt. Continuation headers show the square
+  appicon on a small white plate plus build name · report ID; footer unchanged.
+- **Format:** PNG (both supplied assets). react-pdf renders PNG reliably. The
+  spike proved SVG also works, but SVG `<text>` needs a registered font; a PNG
+  logo avoids that trap entirely.
+- **Appicon background:** the square icon is RGB with white corners. It is always
+  placed on a white plate, never directly on orange. For the PWA maskable icon,
+  regenerate the icon set from this source so the launcher icon matches.
+- **Webicon:** replace the generic generated icons by running the project's
+  `npm run generate-pwa-assets` with `assets/appicon.png` as the source (update
+  `pwa-assets.config.ts` and the manifest/index references if the output names
+  change).
+- **Fallback:** when the logo cannot be fetched, draw the current text wordmark.
+  No broken-image box, no layout shift.
 
 ### Testing
 

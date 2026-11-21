@@ -16,7 +16,7 @@ export default defineConfig(({ isSsrBuild }) => ({
       : [
           VitePWA({
             registerType: 'autoUpdate',
-            includeAssets: ['icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable.png'],
+            includeAssets: ['icons/favicon.ico', 'icons/apple-touch-icon-180x180.png', 'brand/logo.png'],
             manifest: {
               name: 'PC Power Calculator',
               short_name: 'PC Power',
@@ -31,10 +31,10 @@ export default defineConfig(({ isSsrBuild }) => ({
               // installable: Chrome requires a 192 and a 512 px icon before it
               // will offer the install prompt, however good the service worker.
               icons: [
-                { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-                { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+                { src: '/icons/pwa-192x192.png', sizes: '192x192', type: 'image/png' },
+                { src: '/icons/pwa-512x512.png', sizes: '512x512', type: 'image/png' },
                 {
-                  src: '/icons/icon-maskable.png',
+                  src: '/icons/maskable-icon-512x512.png',
                   sizes: '512x512',
                   type: 'image/png',
                   purpose: 'maskable',

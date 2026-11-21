@@ -93,14 +93,16 @@ Do **not** commit the spike. Note in the task report: whether `Image` accepted t
   - `REPORT_DISCLAIMER`, `CATEGORY_LABEL` (component categories), `BASIS_LABEL`, `DEFAULT_GRID_FACTOR_KG_PER_KWH` (moved unchanged)
   - `money(amount: number, currency: CurrencyInfo): string` — returns `formatCost` output including `₹`
   - `num(n: number, decimals?: number): string`, `kwh(kwh: number, decimals?: number): string`
-  - `pdfMoney`/`pdfNum`/`pdfKwh` — aliases kept so existing imports compile
+  - `pdfNum`/`pdfKwh` — aliases kept so existing imports compile
   - `sumRounded(values: number[], decimals?: number): number`
   - `roundMoney2(n: number): number`
   - `reconciledTotals(report: PdfReport): { rows: number[]; yearly: number }` — `rows[i]` aligns with `report.schedule[i]`; `yearly` is the sum of `rows`
   - `basisFor`, `certificationLabel`, `reportFileName`, `istTimestamp`, `makeReportId` (moved unchanged)
   - `buildCategoryLabel(category?: string): string` — `'gaming'` → `'Gaming PC'`; unknown → the raw string
   - `deviceCategoryLabel(row: PdfDeviceRow): string` — `"Generic Case fans ×N"` → `'Case fan'`; otherwise `CATEGORY_LABEL[row.category] ?? row.category`
-- `pdfText` is removed; nothing may import it after this task.
+- `pdfText` and the WinAnsi-safe `pdfMoney` are **not** moved: the old jsPDF
+  renderer keeps them as private functions until Task 7 deletes it. The shared
+  `money()` returns a real `₹`, which jsPDF's Helvetica cannot print.
 
 - [ ] **Step 1: Write the failing unit tests**
 
@@ -138,7 +140,12 @@ Move the types, constants and helpers listed in Interfaces verbatim, with these 
 
 - [ ] **Step 4: Update the two existing consumers**
 
-`src/lib/export/pdf.ts` imports the moved names from `./report` and re-exports them for compatibility. `src/lib/export/html.ts` imports from `./report`, and both its hero amount and its "The schedule totals …" sentence use `reconciledTotals(report).yearly`.
+`src/lib/export/pdf.ts` imports the moved names from `./report` and re-exports
+them for compatibility; it keeps private `pdfText`/`pdfMoney` helpers, and its
+hero amount and "The schedule totals …" sentence both use
+`reconciledTotals(report).yearly` so the live renderer is consistent until Task
+7. `src/lib/export/html.ts` imports from `./report`, and both its hero amount and
+its "The schedule totals …" sentence use `reconciledTotals(report).yearly`.
 
 - [ ] **Step 5: Run the tests and typecheck**
 
@@ -345,7 +352,7 @@ git push origin main
 **Interfaces:**
 - Produces:
   - `ReportDocument` accepts `qrDataUrl`, `shareUrl`, `logoDataUrl` (already in the Task 3 signature)
-  - `loadBrandLogo(): Promise<string | null>` — browser-only helper in `pdfDocument.tsx`; fetches `/brand/logo.png`, then `/icons/icon-512.png`, returns a data URL or null
+  - `loadBrandLogo(): Promise<string | null>` — browser-only helper in `pdfDocument.tsx`; fetches `/brand/logo.png`, then `/icons/pwa-192x192.png`, returns a data URL or null
   - `makeQrDataUrl(url: string): Promise<string>` — browser-only, dynamic `import('qrcode')`, `toDataURL(url, { margin: 1, width: 512 })`
 
 - [ ] **Step 1: Write the failing tests**
@@ -369,7 +376,14 @@ Expected: FAIL — no caption.
 
 - [ ] **Step 3: Implement QR block, running header, and logo**
 
-Cover: when `logoDataUrl` is present render `<Image src={logoDataUrl} style={{ height: 20 }} />` on the left of the brand bar (or on a white plate if the logo is dark); otherwise the text wordmark. When `shareUrl` is present, place the QR (72 × 72 pt) with the caption and the URL in small type at the foot of page 1. Continuation header: small logo or wordmark + `buildName · reportId`.
+The supplied assets are already committed at `public/brand/logo.png` (2167 × 726,
+navy wordmark) and `public/icons/pwa-192x192.png` (square appicon). Cover: when
+`logoDataUrl` is present render `<Image src={logoDataUrl} style={{ height: 20 }} />`
+inside a white rounded plate on the left of the orange brand bar (the logo's navy
+wordmark cannot sit directly on orange); otherwise the text wordmark. When
+`shareUrl` is present, place the QR (72 × 72 pt) with the caption and the URL in
+small type at the foot of page 1. Continuation header: the square appicon on a
+small white plate + `buildName · reportId`.
 
 In `ExportMenu`, add the two browser helpers (not yet used by `onPdf`): `makeQrDataUrl(buildPermalinkUrl(useBuildStore.getState().exportBuild()))` and `loadBrandLogo()`. They are wired in Task 7.
 
@@ -461,6 +475,6 @@ git push origin main
 ## Self-Review Notes
 
 - Spec coverage: every spec section maps to a task — module split (2), flow document (3, 5), fonts (4), QR/header/logo (6), lazy boundary (7), totals (2), labels (2, 5), testing (2–7), brand assets (6).
-- Task 2's `pdfMoney` alias keeps `html.ts` compiling while the old renderer still exists; Task 7 removes the old module.
+- Task 2 keeps the old renderer compiling by leaving its private `pdfText`/`pdfMoney` in place; Task 7 removes the whole module.
 - The new renderer is never in the app bundle until Task 7, so each intermediate push keeps the live PDF unchanged.
 - `ReportDocument` stays pure (no fetch, no fonts registration) so Node tests can render it; browser I/O lives in `exportPdf` and `ExportMenu`.
