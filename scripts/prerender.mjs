@@ -152,9 +152,12 @@ async function main() {
   // the home page's prerendered markup, which would hydrate against the wrong
   // route. Workbox cannot glob it (this runs after the SW is generated), so it
   // is precached via `workbox.additionalManifestEntries` in vite.config.ts.
-  const offlineShell = template.replace(
-    '</head>',
-    '    <meta name="robots" content="noindex" />\n  </head>',
+  // Replace the template's indexable robots tag rather than appending a second
+  // one: two conflicting directives would leave the shell's status ambiguous.
+  const offlineShell = upsertTag(
+    template,
+    /<meta\s+[^>]*\bname="robots"[^>]*>/i,
+    '<meta name="robots" content="noindex" />',
   );
   await writeFile(path.join(DIST, 'offline.html'), offlineShell, 'utf8');
   console.log('✓ /offline.html            -> dist/offline.html');
