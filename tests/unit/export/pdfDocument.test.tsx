@@ -167,16 +167,26 @@ describe('ReportDocument', () => {
   );
 
   test.skipIf(!hasBinary('pdfinfo'))(
-    'embeds the logo and app icon without growing past three pages',
+    'embeds the logo without growing past three pages',
     async () => {
       const buffer = await renderToBuffer(
-        <ReportDocument report={gamingReport} logoDataUrl={TINY_PNG} iconDataUrl={TINY_PNG} />,
+        <ReportDocument report={gamingReport} logoDataUrl={TINY_PNG} />,
       );
 
       expect(buffer.subarray(0, 5).toString()).toBe('%PDF-');
       const pages = pdfPageCount(writePdf(buffer));
       expect(pages).toBeGreaterThanOrEqual(2);
       expect(pages).toBeLessThanOrEqual(3);
+    },
+  );
+
+  test.skipIf(!hasBinary('pdftotext'))(
+    'prints the page-1 header meta and the build identity on continuation pages',
+    async () => {
+      const text = await renderAndExtract(gamingReport);
+
+      expect(text).toContain('INR report · ');
+      expect(text).toMatch(/Gaming build · PCP-/);
     },
   );
 });

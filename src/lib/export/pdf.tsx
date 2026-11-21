@@ -38,7 +38,6 @@ export interface ExportPdfOptions {
   qrDataUrl?: string;
   shareUrl?: string | null;
   logoDataUrl?: string | null;
-  iconDataUrl?: string | null;
 }
 
 interface ReportDocumentProps extends ExportPdfOptions {
@@ -75,42 +74,56 @@ const SHORT_DISCLAIMER =
 
 const styles = StyleSheet.create({
   page: {
-    padding: PAGE_MARGIN,
+    // Flow content clears the fixed header: logo at top 14 plus 20 pt height,
+    // the orange rule at 46, and the first flow element at 60.
+    paddingTop: 60,
+    paddingHorizontal: PAGE_MARGIN,
+    paddingBottom: PAGE_MARGIN,
     fontFamily: REPORT_FONT_FAMILIES.body,
     fontSize: 9,
     color: INK,
     lineHeight: 1.35,
   },
-  brandBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: BRAND,
-    borderRadius: 2,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    marginBottom: 10,
-  },
-  brandPlate: {
-    backgroundColor: '#ffffff',
-    borderRadius: 2,
-    paddingVertical: 3,
-    paddingHorizontal: 5,
-  },
   /** The logo's own 2.985:1 ratio, set at a 20 pt print height. */
-  brandLogo: {
+  headerLogo: {
+    position: 'absolute',
+    top: 14,
+    left: PAGE_MARGIN,
     height: 20,
     width: 60,
   },
-  brandBarText: {
-    color: '#ffffff',
-    fontSize: 10,
+  headerWordmark: {
+    position: 'absolute',
+    top: 16,
+    left: PAGE_MARGIN,
+    fontSize: 9,
     fontWeight: 700,
+    color: BRAND,
     letterSpacing: 1.2,
   },
-  brandBarMeta: {
-    color: '#ffe4dc',
+  headerMetaPrimary: {
+    position: 'absolute',
+    top: 20,
+    right: PAGE_MARGIN,
     fontSize: 8,
+    color: MUTED,
+    textAlign: 'right',
+  },
+  headerMetaContinuation: {
+    position: 'absolute',
+    top: 21,
+    right: PAGE_MARGIN,
+    fontSize: 7,
+    color: FAINT,
+    textAlign: 'right',
+  },
+  headerRule: {
+    position: 'absolute',
+    top: 46,
+    left: PAGE_MARGIN,
+    right: PAGE_MARGIN,
+    height: 1.2,
+    backgroundColor: BRAND,
   },
   title: {
     fontSize: 24,
@@ -404,26 +417,6 @@ const styles = StyleSheet.create({
   kvLabelWord: {
     fontFamily: REPORT_FONT_FAMILIES.body,
   },
-  continuationHeader: {
-    position: 'absolute',
-    top: 10,
-    left: PAGE_MARGIN,
-    right: PAGE_MARGIN,
-    fontSize: 7,
-    color: FAINT,
-    textAlign: 'right',
-  },
-  continuationIconWrap: {
-    position: 'absolute',
-    top: 8,
-    left: PAGE_MARGIN,
-    width: 14,
-    height: 14,
-  },
-  continuationIcon: {
-    width: 14,
-    height: 14,
-  },
   qrCard: {
     marginTop: 10,
     flexDirection: 'row',
@@ -571,7 +564,6 @@ export function ReportDocument({
   qrDataUrl,
   shareUrl,
   logoDataUrl,
-  iconDataUrl,
 }: ReportDocumentProps) {
   const now = generatedAt ?? new Date();
   const reportId = makeReportId(report.buildName, now);
@@ -679,42 +671,33 @@ export function ReportDocument({
       keywords="PC power, electricity cost, energy audit, PSU sizing, carbon footprint"
     >
       <Page size="A4" style={styles.page}>
-        {/* Continued-page header: app icon plus build identity, blank on the cover. */}
-        {/* The text and the icon are separate fixed elements on purpose: a
-            fixed View returning text loses it from the page in this version. */}
+        {/* One fixed header on every page: the logo on white, the page-1
+            identity, the build identity on later pages, and the brand rule.
+            The logo and the metadata are separate fixed elements on purpose:
+            a fixed View returning text loses it from the page in this version. */}
+        {logoDataUrl ? (
+          <Image fixed src={logoDataUrl} style={styles.headerLogo} />
+        ) : (
+          <Text fixed style={styles.headerWordmark}>PC POWER CALCULATOR</Text>
+        )}
         <Text
           fixed
-          style={styles.continuationHeader}
+          style={styles.headerMetaPrimary}
+          render={({ pageNumber }) =>
+            pageNumber === 1 ? `${report.currency.code} report · ${generated}` : ''
+          }
+        />
+        <Text
+          fixed
+          style={styles.headerMetaContinuation}
           render={({ pageNumber }) =>
             pageNumber > 1 ? `${report.buildName} · ${reportId}` : ''
           }
         />
-        <View
-          fixed
-          style={styles.continuationIconWrap}
-          render={({ pageNumber }) =>
-            pageNumber > 1 && iconDataUrl ? (
-              <Image src={iconDataUrl} style={styles.continuationIcon} />
-            ) : null
-          }
-        />
+        <View fixed style={styles.headerRule} />
 
-        {/* Cover: brand bar, build identity and provenance. The logo's navy
-            wordmark cannot sit on orange, so it rides on a white plate. */}
+        {/* Cover identity and provenance, in the flow below the header. */}
         <View wrap={false}>
-          <View style={styles.brandBar}>
-            {logoDataUrl ? (
-              <View style={styles.brandPlate}>
-                <Image src={logoDataUrl} style={styles.brandLogo} />
-              </View>
-            ) : (
-              <Text style={styles.brandBarText}>PC POWER CALCULATOR</Text>
-            )}
-            <Text style={styles.brandBarMeta}>
-              {`${report.currency.code} report · ${generated}`}
-            </Text>
-          </View>
-
           <Text style={styles.title}>{report.buildName}</Text>
           <Text style={styles.subtitle}>
             {[buildCategoryLabel(report.buildCategory), report.locationLabel, report.tariffLabel]

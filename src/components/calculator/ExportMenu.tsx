@@ -10,7 +10,7 @@ import {
   type PdfReport,
   type PdfScheduleRow,
 } from '@/lib/export/report';
-import { loadBrandIcon, loadBrandLogo, makeQrDataUrl } from '@/lib/export/brandAssets';
+import { loadBrandLogo, makeQrDataUrl } from '@/lib/export/brandAssets';
 import { buildPermalinkUrl } from '@/lib/share/buildLink';
 import { useBuildStore } from '@/store/buildStore';
 import { listCountries, listSubdivisions, resolveLocationTariff, tariffsLastUpdated, tariffProvenance } from '@/lib/data/tariffs';
@@ -148,19 +148,17 @@ export function ExportMenu({
       // exact configuration the report describes.
       const shareUrl = buildPermalinkUrl(useBuildStore.getState().exportBuild());
       // The renderer is a heavy lazy chunk; the branding assets and QR are
-      // browser-only. Load all four together, and let a missing logo/icon/QR
+      // browser-only. Load all three together, and let a missing logo/QR
       // degrade to a report without them rather than failing the export.
-      const [{ exportPdf }, logoDataUrl, iconDataUrl, qrDataUrl] = await Promise.all([
+      const [{ exportPdf }, logoDataUrl, qrDataUrl] = await Promise.all([
         import('@/lib/export/pdf'),
         loadBrandLogo().catch(() => null),
-        loadBrandIcon().catch(() => null),
         shareUrl ? makeQrDataUrl(shareUrl).catch(() => null) : Promise.resolve(null),
       ]);
       await exportPdf(report, {
         shareUrl,
         qrDataUrl: qrDataUrl ?? undefined,
         logoDataUrl,
-        iconDataUrl,
       });
       trackExport('pdf');
     } finally {

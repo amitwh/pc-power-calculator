@@ -8,7 +8,6 @@
  */
 
 const LOGO_URLS = ['/brand/logo-report.png', '/brand/logo.png'] as const;
-const ICON_URL = '/icons/pwa-192x192.png';
 
 function blobToDataUrl(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -29,18 +28,13 @@ async function fetchAsDataUrl(url: string): Promise<string | null> {
   }
 }
 
-/** The report logo, rendered onto a white plate by the document. */
+/** The report logo, printed at the top of every page. */
 export async function loadBrandLogo(): Promise<string | null> {
   for (const url of LOGO_URLS) {
     const dataUrl = await fetchAsDataUrl(url);
     if (dataUrl) return dataUrl;
   }
   return null;
-}
-
-/** The square app icon shown in the continuation header. */
-export async function loadBrandIcon(): Promise<string | null> {
-  return fetchAsDataUrl(ICON_URL);
 }
 
 /** A 512 px QR encoding the build's share URL, as a PNG data URL. */

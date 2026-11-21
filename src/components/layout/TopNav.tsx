@@ -21,17 +21,16 @@ export default function TopNav() {
           wordmark and the footer's first column share one alignment line; the
           header itself stays full-bleed for the border and blur. */}
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 md:px-8">
-        <NavLink to="/" aria-label="PC Power Calculator" className="flex items-center gap-2.5">
-          <span
-            aria-hidden
-            className="flex h-9 w-9 items-center justify-center rounded-8 bg-brand/10 text-lg"
-          >
-            ⚡
-          </span>
-          <span className="font-display text-lg font-bold tracking-tight">
-            PC Power{' '}
-            <span className="text-brand-text dark:text-brand-light">Calculator</span>
-          </span>
+        <NavLink
+          to="/"
+          aria-label="PC Power Calculator"
+          className="flex items-center rounded-8 bg-white px-2 py-1"
+        >
+          <img
+            src="/brand/logo-report.png"
+            alt="PC Power Calculator"
+            className="h-8 w-auto"
+          />
         </NavLink>
 
         <nav
