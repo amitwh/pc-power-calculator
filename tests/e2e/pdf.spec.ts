@@ -93,12 +93,21 @@ test('exports the report with reconciled totals, brand content and a QR permalin
 
   // Running footer proves pagination rendered.
   expect(text).toContain('Page 1 of');
-  // The faint brand watermark is in the text layer (raw extraction, because
-  // its overlap with table rows splits the phrase in -layout mode).
+  // The faint brand watermark is a pre-rendered transparent PNG drawn
+  // diagonally on every page, so it has no text layer to assert on — it is
+  // proven by the full-page image the renderer embeds instead. The brand
+  // credit still has to reach the text layer through the running footer.
   const rawText = execFileSync('pdftotext', [pdfPath, '-'], { encoding: 'utf8' });
-  expect(rawText.replace(/\s+/g, '')).toContain(
-    'ConcreteInfoPCPowerConsumptionCalculator',
-  );
+  expect(rawText.replace(/\s+/g, '')).toContain('AConcreteInfoproduct');
+
+  const imageList = execFileSync('pdfimages', ['-list', pdfPath], { encoding: 'utf8' });
+  const fullPageWatermarks = imageList
+    .split('\n')
+    .slice(2)
+    .map((line) => line.trim().split(/\s+/))
+    .filter((cols) => cols[2] === 'image' && cols[3] === '1190' && cols[4] === '1684');
+  // One watermark per page, and the report is three pages.
+  expect(fullPageWatermarks.length).toBeGreaterThanOrEqual(3);
   // The hero total and the schedule prose must agree, with a real rupee glyph
   // (the retired jsPDF renderer could only print "Rs.").
   expect(text).toContain('₹10,436.26');
