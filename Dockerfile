@@ -16,8 +16,10 @@ RUN apt-get update \
 COPY package.json package-lock.json ./
 RUN npm ci --include=optional --no-audit --no-fund
 
-# Copy source and build
-COPY tsconfig.json tsconfig.node.json vite.config.ts tailwind.config.js postcss.config.js index.html ./
+# Copy source and build. Tailwind 4 is configured from CSS (@theme in
+# src/styles/tokens.css), so there is no tailwind.config.js or PostCSS config
+# to copy any more.
+COPY tsconfig.json tsconfig.node.json vite.config.ts index.html ./
 COPY public/ ./public/
 COPY src/ ./src/
 # scripts/prerender.mjs runs as the last step of `npm run build`; without it
