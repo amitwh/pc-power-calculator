@@ -19,7 +19,7 @@ export default function Footer() {
       <div className="flex flex-wrap items-start justify-between gap-x-10 gap-y-5">
         <div>
           <p className="text-sm font-bold text-gray-900 dark:text-gray-50">PC Power Calculator</p>
-          <p className="mt-1 max-w-xs leading-relaxed text-gray-500">
+          <p className="mt-1 leading-relaxed text-gray-500">
             Free PC power consumption and electricity cost calculator.
           </p>
           <p className="mt-2 font-semibold text-gray-600 dark:text-gray-400">
@@ -52,7 +52,7 @@ export default function Footer() {
         </nav>
       </div>
 
-      <p className="mt-5 max-w-3xl leading-relaxed text-gray-500">
+      <p className="mt-5 leading-relaxed text-gray-500">
         Figures are estimates for information only — not electrical or financial advice. Power is
         modelled from rated specifications; verify specs with manufacturers and rates with your
         utility's tariff card.
