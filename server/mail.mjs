@@ -225,6 +225,11 @@ export function createServer() {
       return;
     }
 
+    if (pathname === '/health') {
+      sendJson(res, 200, { ok: true });
+      return;
+    }
+
     if (pathname !== ENDPOINT) {
       sendJson(res, 404, { error: 'NOT_FOUND', message: 'Not found.', detail: {} });
       return;
