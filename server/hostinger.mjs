@@ -337,6 +337,24 @@ const server = http.createServer((req, res) => {
       return;
     }
 
+    // A request for a file that does not exist is a 404, not the app shell. A
+    // script or a stylesheet that answers with HTML and a 200 is the shape of
+    // a success, and a chunk that is gone then fails silently in the browser
+    // — no error, no broken page, just a part of the app that stops working.
+    //
+    // Only a path that could be a client-side route falls back to the shell,
+    // and a route has no file extension: /build/<token>, /guides/psu-sizing,
+    // /cost/in/mh. A last segment with a dot is a file request — robots.txt,
+    // sitemap.xml, og.png, the hashed bundles under /assets/.
+    if (path.posix.basename(pathname).includes('.')) {
+      sendJson(res, 404, {
+        error: 'NOT_FOUND',
+        message: `${pathname} is not here.`,
+        detail: {},
+      });
+      return;
+    }
+
     // Anything else is a client-side route: the SPA shell.
     const shell = await fileAt('/index.html');
     if (!shell) {

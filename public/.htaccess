@@ -35,7 +35,15 @@ DirectorySlash Off
   # /api/ is excluded on purpose: an API path that does not exist here must
   # 404, not answer with the app shell, or a client that only reads the
   # status code would believe a message had been sent.
+  #
+  # So is any path whose last segment has a file extension: that is a request
+  # for a file, and a file that is not there must 404. A script that answers
+  # with the HTML of a page and a 200 fails silently in the browser — no
+  # error, just a part of the app that stops working. Only a path that could
+  # be a client-side route falls back to the shell, and a route has no file
+  # extension.
   RewriteCond %{REQUEST_URI} !^/api/
+  RewriteCond %{REQUEST_URI} !\.[A-Za-z0-9]+$
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
@@ -57,4 +65,17 @@ DirectorySlash Off
   Header always set Permissions-Policy "geolocation=(self), camera=(), microphone=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
   Header always set Cross-Origin-Opener-Policy "same-origin"
+
+  # A prerendered page must be revalidated on every visit. Without an explicit
+  # directive a browser applies HEURISTIC freshness — 10% of the time since
+  # the file was last modified — so a page last touched weeks ago could be
+  # served for days, and a deploy could stay invisible for hours.
+  Header always set Cache-Control "no-cache"
+
+  # The built bundles carry a content hash in their name, so they can be
+  # cached briefly. sw.js is excluded on purpose: a cached service worker
+  # never updates itself, and the app would be stuck on an old build.
+  <FilesMatch "^(?!sw\.js$)(?!manifest\.webmanifest$).*\.(js|css|woff2|ttf|png|jpe?g|svg|ico|webp|map)$">
+    Header always set Cache-Control "public, max-age=3600"
+  </FilesMatch>
 </IfModule>

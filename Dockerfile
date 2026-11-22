@@ -44,6 +44,10 @@ RUN npm run build \
  && cp -r dist/. /usr/share/nginx/html/
 
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+# The security headers are a snippet: every location that sets its own
+# `add_header` has to re-declare them, because nginx replaces the inherited
+# set as soon as a location adds one of its own.
+COPY nginx/security-headers.conf /etc/nginx/snippets/security-headers.conf
 
 # Same-origin mail API (server/mail.mjs) run by the entrypoint below.
 COPY server/ ./server/

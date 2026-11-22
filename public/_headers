@@ -1,6 +1,7 @@
-# Netlify-only security headers (Coolify/nginx ignores this file).
-# The same policy is enforced by nginx in `Dockerfile` (default.conf).
-# Keep both in sync if you change either.
+# Netlify-only headers (Coolify/nginx ignores this file).
+# The same policy is enforced by nginx in `Dockerfile` (default.conf) and by
+# the Node server in `server/hostinger.mjs`.
+# Keep them in sync if you change any one of them.
 #
 # `api.exchangerate.host` was removed from connect-src per ce8741e
 # (live FX fetch dropped — FX rates are bundled now).
@@ -11,6 +12,13 @@
 # 2026-11-22: the GTM container was removed from index.html, so its inline stub
 # is gone and the SHA-256 allowance for it went with it. googletagmanager.com
 # stays in script-src: gtag.js is served from there.
+#
+# 2026-11-22: added the caching rules. A prerendered page must be revalidated
+# on every visit — without an explicit directive a browser applies HEURISTIC
+# freshness, 10% of the time since the file was last modified, so a page last
+# touched weeks ago could be served for days and a deploy could stay invisible
+# for hours. The built bundles carry a content hash in their name, so they can
+# be cached briefly.
 /*
   Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' data: https://www.googletagmanager.com https://ipapi.co https://ipwho.is https://ip-api.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://*.doubleclick.net; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net; manifest-src 'self'; worker-src 'self' blob:; frame-src 'self' https://*.googlesyndication.com https://googleads.g.doubleclick.net https://fundingchoicesmessages.google.com; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
@@ -18,3 +26,7 @@
   Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Cross-Origin-Opener-Policy: same-origin
+  Cache-Control: no-cache
+
+/assets/*
+  Cache-Control: public, max-age=3600

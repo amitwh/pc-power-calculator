@@ -142,4 +142,17 @@ describe('the Hostinger file server', () => {
     expect(res.body).not.toContain('<title>root</title>');
     expect(JSON.parse(res.body).error).toBe('NOT_FOUND');
   });
+
+  test('404s a missing asset instead of serving the shell', async () => {
+    const res = await request('/assets/index-missing.js');
+    expect(res.status).toBe(404);
+    // A chunk that answers with HTML and a 200 fails silently in the browser.
+    expect(res.body).not.toContain('<title>root</title>');
+  });
+
+  test('still serves the shell for a client-side route', async () => {
+    const res = await request('/build/some-token');
+    expect(res.status).toBe(200);
+    expect(res.body).toContain('<title>root</title>');
+  });
 });
