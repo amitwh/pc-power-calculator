@@ -106,27 +106,49 @@ async function findStaticRootPath() {
     return null;
   }
 
-  const relative = [
-    'current/nodejs/dist',
-    'current/dist',
-    'current/public_html',
-    'public_html',
-    'dist',
-  ];
+  const ancestors = [];
+  let dir = process.cwd();
+  for (let depth = 0; depth < 6; depth += 1) {
+    ancestors.push(dir);
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
 
-  for (const name of relative) {
-    let dir = process.cwd();
-    for (let depth = 0; depth < 6; depth += 1) {
-      const candidate = path.join(dir, name);
-      try {
-        const info = await stat(path.join(candidate, 'index.html'));
-        if (info.isFile()) return candidate;
-      } catch {
-        // Not here — keep walking up.
-      }
-      const parent = path.dirname(dir);
-      if (parent === dir) break;
-      dir = parent;
+  const hasIndex = async (candidate) => {
+    try {
+      const info = await stat(path.join(candidate, 'index.html'));
+      return info.isFile();
+    } catch {
+      return false;
+    }
+  };
+
+  // First: the platform's pointer to the current build. It is a symlink to
+  // the version directory, so following it is what makes a deploy visible
+  // without a restart. The path is kept *through* the pointer — resolving it
+  // here would pin the server to the version that happens to be live now.
+  for (const ancestor of ancestors) {
+    const pointer = path.join(ancestor, 'current');
+    try {
+      const info = await stat(await realpath(pointer));
+      if (!info.isDirectory()) continue;
+    } catch {
+      // No pointer at this level.
+      continue;
+    }
+
+    for (const relative of ['public_html', path.join('nodejs', 'dist'), 'dist']) {
+      const candidate = path.join(pointer, relative);
+      if (await hasIndex(candidate)) return candidate;
+    }
+  }
+
+  // Then: the document root, then the versioned build directory.
+  for (const name of ['public_html', 'dist']) {
+    for (const ancestor of ancestors) {
+      const candidate = path.join(ancestor, name);
+      if (await hasIndex(candidate)) return candidate;
     }
   }
   return null;
