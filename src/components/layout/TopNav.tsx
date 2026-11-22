@@ -3,9 +3,14 @@ import { Link, NavLink } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import { GUIDE_CATEGORIES, GUIDE_CATEGORY_STYLES, GUIDES } from '@/content/guides';
 
+// The nav order is Calculator · Compare · Guides · Help · About. The Guides
+// menu is rendered between the first two entries and the tail, so `items`
+// holds the four plain links in that same order — the first two above the
+// menu, the last two below it.
 const items = [
   { to: '/', label: 'Calculator', end: true },
   { to: '/compare', label: 'Compare' },
+  { to: '/help', label: 'Help' },
   { to: '/about', label: 'About' },
 ];
 

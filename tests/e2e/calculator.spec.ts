@@ -107,6 +107,12 @@ test('navigate to all routes', async ({ page }) => {
   await expect(page.getByText('PC hardware, explained')).toBeVisible();
   await expect(page.getByRole('link', { name: /How much power does a gaming PC/i })).toBeVisible();
 
+  await page.goto('/help');
+  // The user guide follows the same convention: a styled title paragraph in
+  // the hero, and the section headings below it as h2s.
+  await expect(page.getByText('User guide')).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Quick start/i })).toBeVisible();
+
   // Deep link renders the article, and links back to the calculator exist.
   await page.goto('/guides/psu-sizing');
   await expect(page.getByRole('heading', { name: /PSU sizing explained/i })).toBeVisible();

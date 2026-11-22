@@ -5,6 +5,7 @@ const LINKS = [
   { to: '/feedback', label: 'Feedback' },
   { to: '/data', label: 'Data freshness' },
   { to: '/guides', label: 'Guides' },
+  { to: '/help', label: 'Help' },
   { to: '/privacy', label: 'Privacy' },
   { to: '/about', label: 'About' },
 ];

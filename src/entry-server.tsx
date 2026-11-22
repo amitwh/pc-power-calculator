@@ -248,6 +248,13 @@ export const ROUTES: RouteMeta[] = [
       breadcrumbList([HOME_CRUMB, { name: 'Guides', path: '/guides' }]),
     ],
   },
+  {
+    path: '/help',
+    ...metaFor('/help'),
+    priority: 0.6,
+    changefreq: 'monthly',
+    jsonLd: [breadcrumbList([HOME_CRUMB, { name: 'Help', path: '/help' }])],
+  },
   ...guideRoutes,
 ];
 

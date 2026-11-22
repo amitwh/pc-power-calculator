@@ -9,6 +9,7 @@ import DataFreshness from '@/pages/DataFreshness';
 import About from '@/pages/About';
 import Privacy from '@/pages/Privacy';
 import Guides from '@/pages/Guides';
+import Help from '@/pages/Help';
 import Part from '@/pages/Part';
 import Cost from '@/pages/Cost';
 import NotFound from '@/pages/NotFound';
@@ -34,6 +35,7 @@ export default function AppRoutes() {
       <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
       <Route path="/guides" element={<Layout><Guides /></Layout>} />
       <Route path="/guides/:slug" element={<Layout><Guides /></Layout>} />
+      <Route path="/help" element={<Layout><Help /></Layout>} />
       <Route path="/parts/:id" element={<Layout><Part /></Layout>} />
       <Route path="/cost/:country" element={<Layout><Cost /></Layout>} />
       <Route path="/cost/:country/:state" element={<Layout><Cost /></Layout>} />

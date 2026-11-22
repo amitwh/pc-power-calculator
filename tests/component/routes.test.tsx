@@ -76,3 +76,17 @@ test('renders a guide article on /guides/:slug', () => {
   ).toBeInTheDocument();
   expect(screen.getByText(/min read/i)).toBeInTheDocument();
 });
+
+test('renders the user guide on /help', () => {
+  render(
+    <MemoryRouter initialEntries={['/help']}>
+      <Routes />
+    </MemoryRouter>,
+  );
+  // The hero's visible title is a styled paragraph, not a heading: Layout
+  // already renders the route's single sr-only h1 (the nav also carries a
+  // "Help" link, so the paragraph selector is what makes this unambiguous).
+  expect(screen.getByText('Help', { selector: 'p' })).toBeInTheDocument();
+  expect(screen.getByText('User guide')).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /Quick start/i })).toBeInTheDocument();
+});

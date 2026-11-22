@@ -167,6 +167,18 @@ const STATIC_ROUTES: Record<string, StaticMeta> = {
       'electricity bill guide',
     ],
   },
+  '/help': {
+    title: 'Help & user guide · PC Power Calculator',
+    description:
+      'How to use the PC power calculator: add your parts, set how you use the machine, pick your tariff, read the yearly cost and check the estimate before you trust it.',
+    keywords: [
+      'pc power calculator help',
+      'how to use pc power calculator',
+      'pc power calculator guide',
+      'pc electricity cost help',
+      'pc power calculator user guide',
+    ],
+  },
 };
 
 /**

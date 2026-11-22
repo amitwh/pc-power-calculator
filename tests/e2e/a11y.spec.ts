@@ -18,6 +18,7 @@ const ROUTES = [
   '/about',
   '/privacy',
   '/guides',
+  '/help',
   '/guides/psu-sizing',
   '/guides/how-a-pc-works',
   '/guides/cpu-explained',
