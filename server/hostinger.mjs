@@ -20,7 +20,7 @@ import http from 'node:http';
 import { constants } from 'node:fs';
 import { open, realpath, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { createHandler } from './mail.mjs';
+import { createHandler, describeTransport } from './mail.mjs';
 
 const PORT = Number(process.env.PORT ?? 3000);
 const HOST = process.env.HOST ?? '0.0.0.0';
@@ -79,53 +79,98 @@ const MIME_TYPES = {
  * `public_html/` (the document root). Both are checked, walking up from the
  * working directory, and the first one holding an index.html wins.
  */
-async function findStaticRoot() {
+/**
+ * Where the built site lives.
+ *
+ * Hostinger runs the entry file from a directory below the site root, and
+ * the build output may be in `dist/` (the build directory) or already synced
+ * to `public_html/` (the document root).
+ *
+ * `public_html` is preferred wherever it is found: the platform points it at
+ * the current build, so following it survives a deploy, where the versioned
+ * `dist/` directory does not. The path is returned unresolved on purpose —
+ * the symlink is resolved per request, so a new build is picked up.
+ */
+async function findStaticRootPath() {
   // An explicit STATIC_ROOT is authoritative: if it is wrong, the site fails
   // loudly rather than quietly serving some other directory.
   if (process.env.STATIC_ROOT) {
     const explicit = path.resolve(process.env.STATIC_ROOT);
     try {
       const info = await stat(path.join(explicit, 'index.html'));
-      if (info.isFile()) return await realpath(explicit);
+      if (info.isFile()) return explicit;
     } catch {
       // Fall through — it will report that no root was found.
     }
     return null;
   }
 
-  const candidates = [];
-  let dir = process.cwd();
-  for (let depth = 0; depth < 5; depth += 1) {
-    candidates.push(path.join(dir, 'public_html'), path.join(dir, 'dist'));
-    const parent = path.dirname(dir);
-    if (parent === dir) break;
-    dir = parent;
-  }
-
-  for (const candidate of candidates) {
-    try {
-      const info = await stat(path.join(candidate, 'index.html'));
-      if (!info.isFile()) continue;
-      // The canonical form, so every later containment test is against the
-      // real directory rather than a path that may point somewhere else.
-      return await realpath(candidate);
-    } catch {
-      // Not here — try the next candidate.
+  for (const name of ['public_html', 'dist']) {
+    let dir = process.cwd();
+    for (let depth = 0; depth < 6; depth += 1) {
+      const candidate = path.join(dir, name);
+      try {
+        const info = await stat(path.join(candidate, 'index.html'));
+        if (info.isFile()) return candidate;
+      } catch {
+        // Not here — keep walking up.
+      }
+      const parent = path.dirname(dir);
+      if (parent === dir) break;
+      dir = parent;
     }
   }
   return null;
 }
 
-const staticRoot = await findStaticRoot();
+let staticRootPath = await findStaticRootPath();
+const staticRoot = staticRootPath ? await realpath(staticRootPath).catch(() => null) : null;
 console.log(
   `[hostinger] serving ${staticRoot ?? '(no static root found)'} on ${HOST}:${PORT}`,
 );
 
 const mailHandler = createHandler();
 
+// Say up front what the mail API will use, and whether the SMTP host even
+// resolves from here — a shared host with restricted egress cannot send, and
+// that should be visible in the log rather than discovered by a visitor.
+const transport = await describeTransport();
+console.log(
+  `[hostinger] SMTP ${transport.host}:${transport.port} as ${transport.user} — DNS: ${transport.resolved}`,
+);
+
+/**
+ * The canonical static root, refreshed as the platform moves it.
+ *
+ * Why it is not fixed at startup: the platform publishes each build into its
+ * own version directory and points the document root at the current one. A
+ * path captured at startup would keep serving the build that was live then,
+ * and every deploy after it would be invisible.
+ */
+let resolvedRoot = null;
+let resolvedAt = 0;
+
+async function currentRoot() {
+  const now = Date.now();
+  if (resolvedRoot && now - resolvedAt < 2000) return resolvedRoot;
+  try {
+    resolvedRoot = await realpath(staticRootPath);
+  } catch {
+    // The build this pointed at is gone — look for the current one.
+    staticRootPath = await findStaticRootPath();
+    try {
+      resolvedRoot = staticRootPath ? await realpath(staticRootPath) : null;
+    } catch {
+      resolvedRoot = null;
+    }
+  }
+  resolvedAt = now;
+  return resolvedRoot;
+}
+
 /** Is this path the root itself, or inside it? */
-function isInside(target) {
-  return target === staticRoot || target.startsWith(staticRoot + path.sep);
+function isInside(root, target) {
+  return target === root || target.startsWith(root + path.sep);
 }
 
 /**
@@ -139,9 +184,10 @@ function isInside(target) {
  * and the read.
  */
 async function fileAt(relativePath) {
-  if (!staticRoot) return null;
-  const candidate = path.resolve(staticRoot, `.${path.posix.normalize(relativePath)}`);
-  if (!isInside(candidate)) return null;
+  const root = await currentRoot();
+  if (!root) return null;
+  const candidate = path.resolve(root, `.${path.posix.normalize(relativePath)}`);
+  if (!isInside(root, candidate)) return null;
 
   let real;
   try {
@@ -149,7 +195,7 @@ async function fileAt(relativePath) {
   } catch {
     return null;
   }
-  if (!isInside(real)) return null;
+  if (!isInside(root, real)) return null;
 
   try {
     const info = await stat(real);

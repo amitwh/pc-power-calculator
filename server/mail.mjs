@@ -4,6 +4,7 @@
 // /api/v1/messages proxy. Plain ESM + node:http — no framework, no Express.
 
 import http from 'node:http';
+import dns from 'node:dns/promises';
 import { pathToFileURL } from 'node:url';
 import nodemailer from 'nodemailer';
 import { validateMessage } from './validate.mjs';
@@ -190,6 +191,29 @@ async function handleMessage(req, res, rateLimit) {
       detail: {},
     });
   }
+}
+
+/**
+ * What the transporter will use, and whether this runtime can even resolve
+ * the SMTP host.
+ *
+ * Why it exists: shared hosting has restricted egress, and a mail API whose
+ * host does not resolve fails at the moment someone tries to send — which is
+ * the worst time to find out. One line at startup says which host is
+ * configured and whether it resolves.
+ */
+export async function describeTransport() {
+  const host = process.env.SMTP_HOST ?? 'smtp.hostinger.com';
+  const port = Number(process.env.SMTP_PORT ?? 587);
+  const user = process.env.SMTP_USER ?? '(unset)';
+  let resolved;
+  try {
+    const addresses = await dns.lookup(host, { all: true });
+    resolved = addresses.map((address) => address.address).join(', ') || 'no addresses';
+  } catch (error) {
+    resolved = `FAILED (${error instanceof Error ? error.message : String(error)})`;
+  }
+  return { host, port, user, resolved };
 }
 
 /**
