@@ -1,9 +1,10 @@
-import { useId, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { listComponents, findComponent } from '@/lib/data/components';
 import { useBuildStore } from '@/store/buildStore';
+import { usePickerStore } from '@/store/pickerStore';
 import { useCalc } from '@/hooks/useCalc';
 import { Select } from '@/components/ui/Select';
-import { SearchableSelect } from '@/components/ui/SearchableSelect';
+import { SearchableSelect, type SearchableSelectHandle } from '@/components/ui/SearchableSelect';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { HelpTip } from '@/components/ui/HelpTip';
@@ -94,6 +95,28 @@ export function BuildPicker() {
   const fieldId = useId();
 
   const [filter, setFilter] = useState<ComponentCategory | 'all'>('all');
+
+  // A CTA on another card (the answer hero's "Add a power supply") can ask
+  // for the picker to open on a category. `nonce` is the trigger — the
+  // category alone cannot tell "open on PSUs" from "open on PSUs again".
+  const pickerRequest = usePickerStore((s) => s.category);
+  const pickerNonce = usePickerStore((s) => s.nonce);
+  const clearPickerRequest = usePickerStore((s) => s.clear);
+  const pickerHandle = useRef<SearchableSelectHandle>(null);
+  const pickerAnchor = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!pickerRequest) return;
+    setFilter(pickerRequest);
+    pickerHandle.current?.open();
+    clearPickerRequest();
+    // The CTA lives in the hero, this card in the column below it, and on a
+    // laptop the card can be off-screen — without the scroll the button looks
+    // like it did nothing. jsdom has no layout engine, hence the guard.
+    const scroll = pickerAnchor.current?.scrollIntoView;
+    if (typeof scroll === 'function') scroll.call(pickerAnchor.current, { block: 'center' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pickerRequest, pickerNonce]);
 
   // The one picker: whole catalog, newest first, category-filterable.
   const options = useMemo(() => {
@@ -305,7 +328,7 @@ export function BuildPicker() {
           text="Show only one component type in the parts picker."
         />
       </div>
-      <div className="mt-2" title="Add another part from the catalog">
+      <div className="mt-2" title="Add another part from the catalog" ref={pickerAnchor}>
         <SearchableSelect
           ariaLabel="Add a part"
           placeholder="+ Add a part — search 2,200+ parts"
@@ -318,6 +341,7 @@ export function BuildPicker() {
             addComponent(CATEGORY_TO_SLOT[component.category], v);
           }}
           brandFilter={false}
+          handleRef={pickerHandle}
         />
       </div>
 

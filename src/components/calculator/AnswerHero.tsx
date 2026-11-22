@@ -1,8 +1,10 @@
 import { useCalc } from '@/hooks/useCalc';
 import { formatCost, formatKwh } from '@/lib/calc/format';
 import { computeCost } from '@/lib/calc/cost';
+import { SMALLEST_STANDARD_PSU_W } from '@/lib/calc/psu';
 import { resolveLocationTariff, listSubdivisions, listCountries } from '@/lib/data/tariffs';
 import { hasSelectedParts } from '@/lib/build/hasSelectedParts';
+import { usePickerStore } from '@/store/pickerStore';
 import { ExportMenu } from './ExportMenu';
 import { ShareMenu } from './ShareMenu';
 
@@ -15,11 +17,52 @@ function summarise(parts: string[], place: string, hours: number): string {
 }
 
 /**
+ * "This machine needs a power supply" — the answer for a build that has no PSU.
+ *
+ * A recommendation, not a warning: the undersized-PSU warning below is a red
+ * alarm about a unit you already picked, this one is about a unit you have
+ * not picked yet, so it stays neutral and carries the brand colour on the
+ * recommended wattage rather than on a red background.
+ */
+function PsuRecommendation({ peakW, recommendedW }: { peakW: number; recommendedW: number }) {
+  const requestPicker = usePickerStore((s) => s.request);
+
+  return (
+    <div className="w-full rounded-8 border border-gray-200 bg-gray-100 px-3 py-2.5 dark:border-gray-800 dark:bg-gray-900">
+      {/* The copy takes the row on a phone and the button sits beside it from
+          `sm` up — side by side on a narrow screen the copy is squeezed into
+          a two-word column. */}
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-x-4">
+        <p className="min-w-0 text-sm text-gray-700 dark:text-gray-300 sm:flex-1">
+          <span className="font-semibold text-gray-900 dark:text-gray-50">Power supply</span> — no
+          PSU in this build. Your parts draw{' '}
+          <span className="font-semibold tabular-nums">{Math.round(peakW)} W</span> at full load,
+          so a{' '}
+          <span className="font-semibold tabular-nums text-brand-text dark:text-orange-300">
+            {recommendedW} W
+          </span>{' '}
+          unit is the safe pick. 35% headroom covers transient spikes and keeps the supply on its
+          efficiency sweet spot.
+        </p>
+        <button
+          type="button"
+          onClick={() => requestPicker('psu')}
+          className="inline-flex min-h-[44px] w-full shrink-0 items-center justify-center gap-1 rounded-8 border border-gray-300 bg-white px-3 text-sm font-semibold text-brand-text hover:bg-gray-100 sm:w-auto dark:border-gray-700 dark:bg-gray-800 dark:text-orange-300 dark:hover:bg-gray-700"
+        >
+          Add a power supply
+          <span aria-hidden>→</span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/**
  * The answer, first and biggest. This is the page's headline — everything else
  * on the screen exists to change these numbers.
  */
 export function AnswerHero() {
-  const { build, components, daily, monthly, yearly, psuWattage, peakWallDrawW, recommendedPsuW, currency } =
+  const { build, components, daily, monthly, yearly, psuWattage, peakWallDrawW, peakComponentDrawW, recommendedPsuW, currency } =
     useCalc();
 
   const countryIso2 = build.location.country_iso2;
@@ -121,6 +164,19 @@ export function AnswerHero() {
           ⚠ Your {psuWattage} W PSU is undersized for a 100% load of {Math.round(peakWallDrawW)} W —
           a {recommendedPsuW} W unit is the safe pick.
         </p>
+      )}
+
+      {/* No PSU at all: say what the machine needs, and make it one click to
+          fix. The figure quoted is the PSU-side draw, so the 35% between it
+          and the recommendation is the 35% the reader can check.
+
+          The gate is the recommendation, not the number of parts: a build
+          holding only a monitor and the two default case fans sizes to the
+          smallest standard unit, and "a 300 W unit is the safe pick" for a 4 W
+          machine reads as a bug. Once the recommendation clears the smallest
+          unit there is something to say. */}
+      {psuWattage == null && recommendedPsuW > SMALLEST_STANDARD_PSU_W && (
+        <PsuRecommendation peakW={peakComponentDrawW} recommendedW={recommendedPsuW} />
       )}
     </section>
   );

@@ -46,6 +46,15 @@ export interface CalcResult extends CalcInputs {
   componentsPowerW: Record<string, number>;
   /** Wall-side draw with every component at 100% utilization. */
   peakWallDrawW: number;
+  /**
+   * The PSU-side draw at 100% — the load the supply actually has to deliver.
+   *
+   * Why it is separate from `peakWallDrawW`: the wall figure includes
+   * wall-powered devices such as monitors, which no PSU has to supply. The
+   * recommendation is sized from this number, so anything quoting the
+   * recommendation has to quote this number beside it.
+   */
+  peakComponentDrawW: number;
   /** Wall draw while on but idle (no workload, monitors asleep), W. */
   idleDrawW: number;
   /** UPS conversion efficiency in the path (1 when no UPS is selected). */
@@ -167,6 +176,7 @@ export function useCalc(): CalcResult {
       yearly: { ...yearly.total, perWorkload: yearly.perWorkload },
       componentsPowerW,
       peakWallDrawW,
+      peakComponentDrawW,
       idleDrawW,
       upsEfficiency,
       recommendedPsuW,

@@ -78,6 +78,37 @@ test('results show PSU recommendation and the overclock control adjusts peak dra
     .toBeGreaterThan(before);
 });
 
+test('the answer recommends a PSU and the CTA opens the picker on PSUs', async ({ page }) => {
+  await page.goto('/');
+  const add = page.getByRole('button', { name: /add a part/i });
+
+  // A CPU and a GPU, and no power supply.
+  await add.click();
+  await page.getByRole('searchbox').fill('7800x3d');
+  await page.getByRole('option', { name: /Ryzen 7 7800X3D/i }).first().click();
+  await add.click();
+  await page.getByRole('searchbox').fill('rtx 4070');
+  await page.getByRole('option', { name: /GeForce RTX 4070/i }).first().click();
+
+  await expect(page.getByText(/no PSU in this build/i).first()).toBeVisible();
+
+  // The CTA opens the parts picker, already filtered to PSUs.
+  await page.getByRole('button', { name: /Add a power supply/i }).click();
+  await expect(page.getByLabel('Filter parts by category')).toHaveValue('psu');
+  const listbox = page.getByRole('listbox');
+  await expect(listbox).toBeVisible();
+  await expect(listbox.getByRole('option').first()).toContainText('PSU');
+
+  // Picking a PSU from that list adds it, and the recommendation goes away.
+  await page.getByRole('searchbox').fill('RM650x (2021)');
+  await page.getByRole('option', { name: /RM650x \(2021\)/i }).first().click();
+  await expect(page.getByText(/no PSU in this build/i)).toHaveCount(0);
+
+  // Removing it brings the recommendation back.
+  await page.getByRole('button', { name: 'Remove Corsair RM650x (2021)' }).click();
+  await expect(page.getByText(/no PSU in this build/i).first()).toBeVisible();
+});
+
 test('navigate to all routes', async ({ page }) => {
   await page.goto('/');
   await expect(page).toHaveURL(/\/$/);

@@ -52,6 +52,16 @@ const STANDARD_PSU_WATTS = [
 ];
 
 /**
+ * The smallest unit in the range.
+ *
+ * Why it is exported: a recommendation that lands on the smallest step says
+ * nothing — every unit above it would serve the machine too. A build whose
+ * PSU-side load is a couple of case fans sizes to 300 W, and telling someone
+ * with 4 W of fans that "a 300 W unit is the safe pick" reads as a bug.
+ */
+export const SMALLEST_STANDARD_PSU_W = STANDARD_PSU_WATTS[0];
+
+/**
  * Recommended PSU size for a peak component draw: +35% headroom for transient
  * spikes, capacitor aging and the efficiency sweet spot, rounded up to the
  * nearest standard rating.

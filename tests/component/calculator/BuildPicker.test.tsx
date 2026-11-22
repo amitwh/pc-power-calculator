@@ -1,14 +1,16 @@
 /// <reference types="vitest/globals" />
 /// <reference types="@testing-library/jest-dom/vitest" />
 import { describe, expect, test, beforeEach } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BuildPicker } from '@/components/calculator/BuildPicker';
 import { useBuildStore } from '@/store/buildStore';
+import { usePickerStore } from '@/store/pickerStore';
 
 beforeEach(() => {
   localStorage.clear();
   useBuildStore.getState().resetAll();
+  usePickerStore.getState().clear();
 });
 
 /** Open the one device picker and pick an option by (partial) name. */
@@ -126,5 +128,19 @@ describe('BuildPicker — devices cart', () => {
     // CPU filter excludes the Ryzen-brand GPUs/boards that 'All' would match.
     const labels = options.map((o) => o.textContent ?? '');
     expect(labels.every((l) => l.includes('CPU'))).toBe(true);
+  });
+
+  test('a request from another card opens the picker on that category', () => {
+    render(<BuildPicker />);
+    // The answer hero's "Add a power supply" asks for the PSU category.
+    act(() => {
+      usePickerStore.getState().request('psu');
+    });
+
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    expect(screen.getByLabelText('Filter parts by category')).toHaveValue('psu');
+    const options = within(screen.getByRole('listbox')).getAllByRole('option');
+    expect(options.length).toBeGreaterThan(0);
+    expect(options.every((o) => (o.textContent ?? '').includes('PSU'))).toBe(true);
   });
 });

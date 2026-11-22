@@ -122,7 +122,7 @@ const TOOLS: Tool[] = [
       "CurveExpert's commercial licence is one a student or a small laboratory cannot justify, and closed software cannot be checked. AGPL means the source is public, the desktop app and the web app are free, and a lab can audit exactly how a fit was produced. A fit that does not converge is reported as failed, never quietly replaced by a plausible-looking result.",
     links: [
       { label: 'Source', href: 'https://github.com/amitwh/ConcreteInfo_CurveStudio' },
-      { label: 'Open the app', href: 'https://curvestudio.concreteinfo.co.in' },
+      { label: 'Open the app', href: 'https://curvestudio.concreteinfo.net' },
     ],
   },
   {

@@ -7,6 +7,12 @@ export interface SearchableSelectOption {
   meta?: { brand?: string; year?: number; tdp_w?: number | null };
 }
 
+/** Imperative handle — lets a caller open the dropdown from outside. */
+export interface SearchableSelectHandle {
+  /** Open the dropdown — for a CTA elsewhere on the page. */
+  open: () => void;
+}
+
 export interface SearchableSelectProps {
   options: SearchableSelectOption[];
   value: string;
@@ -18,6 +24,8 @@ export interface SearchableSelectProps {
   emptyMessage?: string;
   /** Optional handle to the trigger, so callers can open the picker (e.g. an empty-state CTA). */
   triggerRef?: Ref<HTMLButtonElement>;
+  /** Optional handle to open the dropdown programmatically (e.g. a CTA on another card). */
+  handleRef?: Ref<SearchableSelectHandle>;
   /** Tight 36 px trigger, for toolbars that sit next to compact selects. */
   compact?: boolean;
 }
@@ -39,6 +47,7 @@ export function SearchableSelect({
   brandFilter = true,
   emptyMessage = 'No matches',
   triggerRef,
+  handleRef,
   compact = false,
 }: SearchableSelectProps) {
   const [open, setOpen] = useState(false);
@@ -52,6 +61,11 @@ export function SearchableSelect({
   // Hand the trigger node to the caller's optional triggerRef, so an
   // empty-state CTA can open the picker. Escape still uses the internal ref.
   useImperativeHandle(triggerRef, () => triggerButtonRef.current!, []);
+
+  // A handle that opens the dropdown itself, for a CTA that lives on another
+  // card (the answer hero's "Add a power supply"). The empty deps are safe:
+  // setOpen is a stable state setter.
+  useImperativeHandle(handleRef, () => ({ open: () => setOpen(true) }), []);
 
   const brands = Array.from(
     new Set(options.map((o) => o.meta?.brand).filter(Boolean) as string[]),
