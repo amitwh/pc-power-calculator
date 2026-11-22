@@ -5,10 +5,13 @@ import { findCurrency } from '@/lib/data/currencies';
 import { findComponent } from '@/lib/data/components';
 import { listTariffPages } from '@/lib/data/tariffPages';
 import { resolveLocationTariff } from '@/lib/data/tariffs';
+import { SITE } from '@/lib/site';
 import type { Component } from '@/types/component';
 
-/** The canonical origin every absolute URL in the metadata is built from. */
-export const SITE = 'https://pcpower.concreteinfo.net';
+/** The canonical origin every absolute URL in the metadata is built from.
+ *  Re-exported from lib/site so the report footers can share it without
+ *  pulling the guide catalogue into the report chunk. */
+export { SITE };
 
 /** The social card every page points at. */
 export const OG_IMAGE = `${SITE}/og.png`;

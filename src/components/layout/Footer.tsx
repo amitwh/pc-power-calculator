@@ -1,8 +1,5 @@
 import { Link } from 'react-router-dom';
-import { SITE } from '@/lib/seo/routeMeta';
-
-/** The bare host, for display — SITE carries the scheme. */
-const SITE_HOST = SITE.replace(/^https?:\/\//, '');
+import { SITE, SITE_HOST } from '@/lib/site';
 
 const LINKS = [
   { to: '/suggest', label: 'Suggest a part' },

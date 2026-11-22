@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { SITE } from '@/lib/seo/routeMeta';
+import { SITE, SITE_HOST } from '@/lib/site';
 import {
   ArrowUpRight,
   Briefcase,
@@ -26,9 +26,6 @@ import type { LucideIcon } from 'lucide-react';
  * gray-900 — the same lift the guides hub uses for its brand text.
  */
 const BRAND_TEXT = 'text-brand-text dark:text-orange-300';
-
-/** The bare host, for display — SITE carries the scheme. */
-const SITE_HOST = SITE.replace(/^https?:\/\//, '');
 
 /** The rule between two sections. */
 const RULE = 'mt-10 border-t border-gray-200 pt-6 dark:border-gray-800';
