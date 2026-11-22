@@ -134,13 +134,15 @@ const STATIC_ROUTES: Record<string, StaticMeta> = {
   '/about': {
     title: 'About & methodology · PC Power Calculator',
     description:
-      'How the calculator models component power, PSU efficiency and slab tariffs — sources, assumptions and the limits of every estimate.',
+      'How the calculator models component power, PSU efficiency and slab tariffs — sources, assumptions and the limits of every estimate, plus the free tools ConcreteInfo publishes.',
     keywords: [
       'pc power calculator methodology',
       'how pc power is calculated',
       'psu efficiency model',
       'slab tariff model',
       'pc power estimation limits',
+      'concreteinfo free tools',
+      'open source pc tools',
     ],
   },
   '/privacy': {

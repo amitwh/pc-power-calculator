@@ -93,7 +93,12 @@ test('navigate to all routes', async ({ page }) => {
   await expect(page.getByText(/parts \(2000–2026\)/i)).toBeVisible();
 
   await page.goto('/about');
-  await expect(page.getByRole('heading', { name: /About/i }).first()).toBeVisible();
+  // The visible title is a styled paragraph, not a heading — Layout already
+  // renders the route's single (visually hidden) h1, so the page's headings
+  // are the section h2s. The hero's eyebrow is what marks the page as
+  // rendered.
+  await expect(page.getByText('Who we are & how it works')).toBeVisible();
+  await expect(page.getByRole('heading', { name: /More from ConcreteInfo/i })).toBeVisible();
 
   await page.goto('/privacy');
   await expect(page.getByRole('heading', { name: /Privacy Policy/i })).toBeVisible();

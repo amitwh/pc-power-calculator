@@ -65,6 +65,23 @@ test('renders the guides hub on /guides', () => {
   expect(screen.getAllByRole('link', { name: /PSU sizing explained/i }).length).toBeGreaterThan(0);
 });
 
+test('renders the about page on /about', () => {
+  render(
+    <MemoryRouter initialEntries={['/about']}>
+      <Routes />
+    </MemoryRouter>,
+  );
+  // The visible title is a styled paragraph, not a heading: Layout already
+  // renders the route's single sr-only h1, so the section headings below it
+  // are the page's h2s (same convention as the home page and the guides hub).
+  expect(screen.getByText('About & methodology', { selector: 'p' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /More from ConcreteInfo/i })).toBeInTheDocument();
+  // Each free tool is a heading that links to its source repository.
+  for (const name of ['GitHub Desktop for Linux', 'CurveStudio', 'Markdown Converter']) {
+    expect(screen.getByRole('heading', { level: 3, name })).toBeInTheDocument();
+  }
+});
+
 test('renders a guide article on /guides/:slug', () => {
   render(
     <MemoryRouter initialEntries={['/guides/india-tariff']}>
