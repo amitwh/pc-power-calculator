@@ -7,6 +7,7 @@
  */
 import { Link } from 'react-router-dom';
 import { rupee } from './format';
+import { ReceiptIndianRupee } from 'lucide-react';
 import type { Guide } from './types';
 
 export const indiaTariff: Guide = {
@@ -17,6 +18,7 @@ export const indiaTariff: Guide = {
   minutes: 6,
   updated: 'November 2026',
   category: 'billing',
+  icon: ReceiptIndianRupee,
   tags: ['electricity bill', 'tariff slabs', 'india', 'slab rate', 'electricity duty', 'fixed charge'],
   body: (
     <>

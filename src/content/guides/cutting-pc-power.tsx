@@ -7,6 +7,7 @@
  */
 import { Link } from 'react-router-dom';
 import { rupee } from './format';
+import { Scissors } from 'lucide-react';
 import type { Guide } from './types';
 
 export const cuttingPcPower: Guide = {
@@ -17,6 +18,7 @@ export const cuttingPcPower: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'power',
+  icon: Scissors,
   tags: ['sleep mode', 'undervolting', 'frame cap', 'reduce power', 'electricity bill', 'idle draw'],
   body: (
     <>

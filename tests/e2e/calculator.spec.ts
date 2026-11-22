@@ -100,7 +100,11 @@ test('navigate to all routes', async ({ page }) => {
   await expect(page.getByText(/Last updated/i)).toBeVisible();
 
   await page.goto('/guides');
-  await expect(page.getByRole('heading', { name: /Guides/i })).toBeVisible();
+  // The hub's visible title is a styled paragraph, not a heading — Layout
+  // already renders the route's single (visually hidden) h1, so the page keeps
+  // exactly one h1 and the category sections below it are the h2s. The hero's
+  // eyebrow is what marks the page as rendered.
+  await expect(page.getByText('PC hardware, explained')).toBeVisible();
   await expect(page.getByRole('link', { name: /How much power does a gaming PC/i })).toBeVisible();
 
   // Deep link renders the article, and links back to the calculator exist.

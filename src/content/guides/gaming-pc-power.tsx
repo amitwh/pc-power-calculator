@@ -7,6 +7,7 @@
  */
 import { Link } from 'react-router-dom';
 import { rupee } from './format';
+import { Gamepad2 } from 'lucide-react';
 import type { Guide } from './types';
 
 export const gamingPcPower: Guide = {
@@ -17,6 +18,7 @@ export const gamingPcPower: Guide = {
   minutes: 6,
   updated: 'November 2026',
   category: 'power',
+  icon: Gamepad2,
   tags: ['gaming pc', 'power draw', 'electricity cost', 'wattage', 'idle draw', 'annual cost'],
   body: (
     <>

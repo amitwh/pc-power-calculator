@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { MotherboardLayoutFigure } from '@/components/guides/Figures';
+import { CircuitBoard } from 'lucide-react';
 import type { Guide } from './types';
 
 export const motherboardExplained: Guide = {
@@ -16,6 +17,7 @@ export const motherboardExplained: Guide = {
   minutes: 8,
   updated: 'November 2026',
   category: 'hardware',
+  icon: CircuitBoard,
   tags: ['motherboard', 'socket', 'chipset', 'vrm', 'atx', 'micro atx', 'mini itx'],
   body: (
     <>

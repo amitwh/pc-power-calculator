@@ -57,7 +57,10 @@ test('renders the guides hub on /guides', () => {
       <Routes />
     </MemoryRouter>,
   );
-  expect(screen.getByRole('heading', { name: /Guides & explainers/i })).toBeInTheDocument();
+  // The hub's visible title is a styled paragraph, not a heading: Layout
+  // already renders the route's single sr-only h1, and the category headings
+  // below it are the page's h2s (same convention as the home page).
+  expect(screen.getByText('Guides & explainers')).toBeInTheDocument();
   // The nav's Guides menu lists the same article, so presence is the assertion.
   expect(screen.getAllByRole('link', { name: /PSU sizing explained/i }).length).toBeGreaterThan(0);
 });

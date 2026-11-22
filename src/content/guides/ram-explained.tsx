@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { RamChannelFigure } from '@/components/guides/Figures';
+import { MemoryStick } from 'lucide-react';
 import type { Guide } from './types';
 
 export const ramExplained: Guide = {
@@ -16,6 +17,7 @@ export const ramExplained: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'hardware',
+  icon: MemoryStick,
   tags: ['ram', 'ddr5', 'ddr4', 'dual channel', 'cas latency', 'xmp', 'expo', 'memory timings'],
   body: (
     <>

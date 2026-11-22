@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { ComputeUnitComparisonFigure } from '@/components/guides/Figures';
+import { Sigma } from 'lucide-react';
 import type { Guide } from './types';
 
 export const fpuExplained: Guide = {
@@ -16,6 +17,7 @@ export const fpuExplained: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'hardware',
+  icon: Sigma,
   tags: ['fpu', 'floating point', 'ieee 754', 'simd', 'avx', 'avx-512', 'fp64'],
   body: (
     <>

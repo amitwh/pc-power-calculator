@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { StorageSpeedFigure } from '@/components/guides/Figures';
+import { HardDrive } from 'lucide-react';
 import type { Guide } from './types';
 
 export const storageExplained: Guide = {
@@ -16,6 +17,7 @@ export const storageExplained: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'hardware',
+  icon: HardDrive,
   tags: ['ssd', 'nvme', 'hdd', 'sata', 'storage', 'tbw', 'endurance', 'thermal throttling'],
   body: (
     <>

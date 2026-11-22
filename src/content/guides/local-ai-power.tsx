@@ -7,6 +7,7 @@
  */
 import { Link } from 'react-router-dom';
 import { rupee } from './format';
+import { Brain } from 'lucide-react';
 import type { Guide } from './types';
 
 export const localAiPower: Guide = {
@@ -17,6 +18,7 @@ export const localAiPower: Guide = {
   minutes: 8,
   updated: 'November 2026',
   category: 'power',
+  icon: Brain,
   tags: ['local ai', 'llm inference', 'gpu training', 'vram', 'ai server', 'power draw'],
   body: (
     <>

@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { PsuEfficiencyCurveFigure, StandbyAndLoadFigure } from '@/components/guides/Figures';
+import { Zap } from 'lucide-react';
 import type { Guide } from './types';
 
 export const psuEfficiency: Guide = {
@@ -16,6 +17,7 @@ export const psuEfficiency: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'power',
+  icon: Zap,
   tags: ['80 plus', 'psu efficiency', 'gold', 'bronze', 'efficiency curve', 'psu rating'],
   body: (
     <>

@@ -24,9 +24,14 @@ import { storageExplained } from './storage-explained';
 import { vramExplained } from './vram-explained';
 import { wallPowerVsComponentPower } from './wall-power-vs-component-power';
 import { whatEachComponentDraws } from './what-each-component-draws';
-import type { Guide, GuideCategory } from './types';
+import type { Guide } from './types';
 
 export type { Guide, GuideCategory } from './types';
+export {
+  GUIDE_CATEGORIES,
+  GUIDE_CATEGORY_STYLES,
+  type GuideCategoryStyle,
+} from './categories';
 
 /**
  * The guide registry.
@@ -63,29 +68,4 @@ export const GUIDES: Guide[] = [
   storageExplained,
   pcieAndM2,
   hardwareGlossary,
-];
-
-/**
- * The sections the hub groups guides into.
- *
- * Why: the categories are content, not layout — the hub, the nav dropdown and
- * the category filter all read the same list, so the labels and blurbs are
- * written once.
- */
-export const GUIDE_CATEGORIES: { id: GuideCategory; label: string; blurb: string }[] = [
-  {
-    id: 'power',
-    label: 'Power & electricity',
-    blurb: 'How much a build draws, what the power supply does with it, and what it costs to run.',
-  },
-  {
-    id: 'hardware',
-    label: 'Hardware deep-dives',
-    blurb: 'What each part of a PC is, what it does, and why it draws the watts it draws.',
-  },
-  {
-    id: 'billing',
-    label: 'Electricity billing',
-    blurb: 'Slabs, duty and fixed charges — how an Indian bill is actually built.',
-  },
 ];

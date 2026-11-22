@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { PsuConnectorMapFigure } from '@/components/guides/Figures';
+import { Plug } from 'lucide-react';
 import type { Guide } from './types';
 
 export const psuConnectors: Guide = {
@@ -16,6 +17,7 @@ export const psuConnectors: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'power',
+  icon: Plug,
   tags: ['psu connectors', 'atx 24 pin', 'eps', 'pcie 8 pin', '12vhpwr', '12v-2x6', 'modular'],
   body: (
     <>

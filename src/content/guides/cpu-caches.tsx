@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { CacheHierarchyFigure } from '@/components/guides/Figures';
+import { Layers } from 'lucide-react';
 import type { Guide } from './types';
 
 export const cpuCaches: Guide = {
@@ -16,6 +17,7 @@ export const cpuCaches: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'hardware',
+  icon: Layers,
   tags: ['cpu cache', 'l1 cache', 'l2 cache', 'l3 cache', 'ram latency', 'gaming'],
   body: (
     <>

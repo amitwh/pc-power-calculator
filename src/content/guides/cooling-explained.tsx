@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { CoolingLoopFigure, ThermalThrottleFigure } from '@/components/guides/Figures';
+import { Fan } from 'lucide-react';
 import type { Guide } from './types';
 
 export const coolingExplained: Guide = {
@@ -16,6 +17,7 @@ export const coolingExplained: Guide = {
   minutes: 8,
   updated: 'November 2026',
   category: 'hardware',
+  icon: Fan,
   tags: ['cooling', 'thermal throttling', 'air cooler', 'aio', 'pump', 'fan curve', 'temperature'],
   body: (
     <>

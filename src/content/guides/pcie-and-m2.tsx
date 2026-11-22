@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { M2FormFactorFigure, PcieGenerationFigure } from '@/components/guides/Figures';
+import { Usb } from 'lucide-react';
 import type { Guide } from './types';
 
 export const pcieAndM2: Guide = {
@@ -16,6 +17,7 @@ export const pcieAndM2: Guide = {
   minutes: 8,
   updated: 'November 2026',
   category: 'hardware',
+  icon: Usb,
   tags: ['pcie', 'pcie 5.0', 'm.2', 'lanes', 'nvme', 'bandwidth', 'lane sharing'],
   body: (
     <>

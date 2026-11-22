@@ -7,6 +7,7 @@
  */
 import { Link } from 'react-router-dom';
 import { TariffSlabFigure } from '@/components/guides/Figures';
+import { Scale } from 'lucide-react';
 import type { Guide } from './types';
 
 export const howElectricityTariffsWork: Guide = {
@@ -17,6 +18,7 @@ export const howElectricityTariffsWork: Guide = {
   minutes: 6,
   updated: 'November 2026',
   category: 'billing',
+  icon: Scale,
   tags: ['tariff slabs', 'marginal rate', 'electricity duty', 'fixed charge', 'electricity bill', 'how billing works'],
   body: (
     <>

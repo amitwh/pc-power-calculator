@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { DataPathFigure, PowerPathFigure } from '@/components/guides/Figures';
+import { CircuitBoard } from 'lucide-react';
 import type { Guide } from './types';
 
 export const howAPcWorks: Guide = {
@@ -16,6 +17,7 @@ export const howAPcWorks: Guide = {
   minutes: 8,
   updated: 'November 2026',
   category: 'hardware',
+  icon: CircuitBoard,
   tags: ['how a pc works', 'pc parts', 'bus', 'data path', 'power supply', 'beginner guide'],
   body: (
     <>

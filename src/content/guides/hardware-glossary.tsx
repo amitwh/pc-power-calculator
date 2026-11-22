@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { ComputeUnitComparisonFigure } from '@/components/guides/Figures';
+import { BookOpen } from 'lucide-react';
 import type { Guide } from './types';
 
 export const hardwareGlossary: Guide = {
@@ -16,6 +17,7 @@ export const hardwareGlossary: Guide = {
   minutes: 9,
   updated: 'November 2026',
   category: 'hardware',
+  icon: BookOpen,
   tags: ['glossary', 'acronyms', 'terms', 'jargon', 'tpu', 'npu', 'ipc', 'tdp'],
   body: (
     <>

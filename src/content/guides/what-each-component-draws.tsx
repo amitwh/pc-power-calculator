@@ -7,6 +7,7 @@
  */
 import { Link } from 'react-router-dom';
 import { LoadCurveFigure } from '@/components/guides/Figures';
+import { BarChart3 } from 'lucide-react';
 import type { Guide } from './types';
 
 export const whatEachComponentDraws: Guide = {
@@ -17,6 +18,7 @@ export const whatEachComponentDraws: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'power',
+  icon: BarChart3,
   tags: ['cpu', 'gpu', 'ram', 'storage', 'motherboard', 'fans', 'monitor'],
   body: (
     <>

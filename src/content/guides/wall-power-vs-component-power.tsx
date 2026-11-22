@@ -7,6 +7,7 @@
  */
 import { Link } from 'react-router-dom';
 import { PowerPathFigure } from '@/components/guides/Figures';
+import { PlugZap } from 'lucide-react';
 import type { Guide } from './types';
 
 export const wallPowerVsComponentPower: Guide = {
@@ -17,6 +18,7 @@ export const wallPowerVsComponentPower: Guide = {
   minutes: 5,
   updated: 'November 2026',
   category: 'power',
+  icon: PlugZap,
   tags: ['wall power', 'component power', 'psu efficiency', 'power supply', 'smart plug', 'heat loss'],
   body: (
     <>

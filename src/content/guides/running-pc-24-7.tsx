@@ -7,6 +7,7 @@
  */
 import { Link } from 'react-router-dom';
 import { rupee } from './format';
+import { Timer } from 'lucide-react';
 import type { Guide } from './types';
 
 export const runningPc247: Guide = {
@@ -17,6 +18,7 @@ export const runningPc247: Guide = {
   minutes: 8,
   updated: 'November 2026',
   category: 'power',
+  icon: Timer,
   tags: ['always on', 'idle power', '24/7', 'sleep vs shutdown', 'server power', 'annual cost'],
   body: (
     <>

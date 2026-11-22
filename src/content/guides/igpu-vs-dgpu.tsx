@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { CpuDieBlockFigure } from '@/components/guides/Figures';
+import { PanelsTopLeft } from 'lucide-react';
 import type { Guide } from './types';
 
 export const igpuVsDgpu: Guide = {
@@ -16,6 +17,7 @@ export const igpuVsDgpu: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'hardware',
+  icon: PanelsTopLeft,
   tags: ['integrated graphics', 'igpu', 'apu', 'dedicated gpu', 'shared memory', 'intel arc', 'vega'],
   body: (
     <>

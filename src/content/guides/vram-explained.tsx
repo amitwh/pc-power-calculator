@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { VramBandwidthFigure } from '@/components/guides/Figures';
+import { MemoryStick } from 'lucide-react';
 import type { Guide } from './types';
 
 export const vramExplained: Guide = {
@@ -16,6 +17,7 @@ export const vramExplained: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'hardware',
+  icon: MemoryStick,
   tags: ['vram', 'gddr6', 'gddr6x', 'memory bandwidth', 'rtx 4090', 'local llm', 'hbm'],
   body: (
     <>

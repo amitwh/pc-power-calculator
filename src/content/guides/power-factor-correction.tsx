@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { PowerFactorFigure } from '@/components/guides/Figures';
+import { Activity } from 'lucide-react';
 import type { Guide } from './types';
 
 export const powerFactorCorrection: Guide = {
@@ -16,6 +17,7 @@ export const powerFactorCorrection: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'power',
+  icon: Activity,
   tags: ['power factor', 'pfc', 'reactive power', 'var', 'ups', 'harmonics', 'smart plug'],
   body: (
     <>

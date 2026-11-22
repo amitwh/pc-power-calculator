@@ -19,7 +19,9 @@ export default function MobileNav() {
           to={item.to}
           end={item.end}
           className={({ isActive }) =>
-            `font-body text-xs flex flex-col items-center px-1.5 min-w-[44px] min-h-[44px] justify-center rounded-12 ${isActive ? 'bg-brand/10 text-brand-text font-semibold' : 'text-gray-700 dark:text-gray-300'}`
+            // Why: the same brand tint the desktop pills use on hover, so a
+            // touched tab reads as interactive on a phone too.
+            `font-body text-xs flex flex-col items-center px-1.5 min-w-[44px] min-h-[44px] justify-center rounded-12 transition-colors ${isActive ? 'bg-brand/10 text-brand-text font-semibold' : 'text-gray-700 hover:bg-brand/10 hover:text-brand-text dark:text-gray-300 dark:hover:bg-brand/15 dark:hover:text-brand-light'}`
           }
         >
           {item.label}

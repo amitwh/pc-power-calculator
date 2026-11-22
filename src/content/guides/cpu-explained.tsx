@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { CpuDieBlockFigure } from '@/components/guides/Figures';
+import { Cpu } from 'lucide-react';
 import type { Guide } from './types';
 
 export const cpuExplained: Guide = {
@@ -16,6 +17,7 @@ export const cpuExplained: Guide = {
   minutes: 8,
   updated: 'November 2026',
   category: 'hardware',
+  icon: Cpu,
   tags: ['cpu', 'processor', 'cores', 'threads', 'tdp', 'boost clock', 'ipc'],
   body: (
     <>

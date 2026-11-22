@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { CpuDieBlockFigure } from '@/components/guides/Figures';
+import { Sparkles } from 'lucide-react';
 import type { Guide } from './types';
 
 export const npuExplained: Guide = {
@@ -16,6 +17,7 @@ export const npuExplained: Guide = {
   minutes: 7,
   updated: 'November 2026',
   category: 'hardware',
+  icon: Sparkles,
   tags: ['npu', 'ai accelerator', 'tops', 'neural engine', 'local ai', 'xDNA', 'ai pc'],
   body: (
     <>

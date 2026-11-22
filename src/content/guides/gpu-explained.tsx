@@ -6,6 +6,7 @@
  */
 import { Link } from 'react-router-dom';
 import { GpuPipelineFigure, LoadCurveFigure } from '@/components/guides/Figures';
+import { MonitorPlay } from 'lucide-react';
 import type { Guide } from './types';
 
 export const gpuExplained: Guide = {
@@ -16,6 +17,7 @@ export const gpuExplained: Guide = {
   minutes: 8,
   updated: 'November 2026',
   category: 'hardware',
+  icon: MonitorPlay,
   tags: ['gpu', 'graphics card', 'shader cores', 'cuda', 'tensor cores', 'ray tracing', 'dlss'],
   body: (
     <>

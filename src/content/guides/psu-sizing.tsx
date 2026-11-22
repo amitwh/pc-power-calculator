@@ -6,6 +6,7 @@
  * body JSX below is unchanged from the original `src/pages/Guides.tsx`.
  */
 import { Link } from 'react-router-dom';
+import { Gauge } from 'lucide-react';
 import type { Guide } from './types';
 
 export const psuSizing: Guide = {
@@ -16,6 +17,7 @@ export const psuSizing: Guide = {
   minutes: 5,
   updated: 'November 2026',
   category: 'power',
+  icon: Gauge,
   tags: ['psu sizing', 'power supply', 'headroom', '80 plus', 'wattage', 'efficiency'],
   body: (
     <>
