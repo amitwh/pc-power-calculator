@@ -193,10 +193,14 @@ async function handleMessage(req, res, rateLimit) {
 }
 
 /**
- * Build the HTTP server. The rate-limit Map is per server instance and pruned
- * on every request, so entries cannot outlive their window.
+ * Build the request handler. The rate-limit Map is per handler instance and
+ * pruned on every request, so entries cannot outlive their window.
+ *
+ * Exported separately from `createServer` so a host that serves the site
+ * itself — the Hostinger deployment, which has no nginx in front of it —
+ * can mount the same handler instead of proxying to a second process.
  */
-export function createServer() {
+export function createHandler() {
   const hits = new Map();
 
   function rateLimit(ip, now = Date.now()) {
@@ -216,7 +220,7 @@ export function createServer() {
     return { allowed: true };
   }
 
-  return http.createServer((req, res) => {
+  return (req, res) => {
     let pathname;
     try {
       pathname = new URL(req.url ?? '/', `http://${HOST}:${PORT}`).pathname;
@@ -255,7 +259,15 @@ export function createServer() {
         });
       }
     });
-  });
+  };
+}
+
+/**
+ * The standalone server: binds 127.0.0.1:3001 and is reached only through
+ * nginx's /api/v1/messages proxy on the Coolify deployment.
+ */
+export function createServer() {
+  return http.createServer(createHandler());
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
