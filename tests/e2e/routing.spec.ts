@@ -35,5 +35,9 @@ test('a real part page keeps its canonical and is indexable', async ({ page }) =
     'href',
     'https://pcpower.concreteinfo.co.in/parts/gpu-amd-rx-6400',
   );
-  expect(await robotsContent(page)).toBeNull();
+  // The prerendered page carries robots=index,follow; the client-side hook
+  // removes it once it has confirmed the route exists. Wait for that removal
+  // rather than reading the DOM in the gap between the two — the analytics
+  // loader can delay hydration enough to lose that race.
+  await expect(page.locator('meta[name="robots"]')).toHaveCount(0);
 });

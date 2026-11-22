@@ -198,11 +198,17 @@ async function main() {
       }
     }
 
-    if (!html.includes('googletagmanager.com/gtm.js')) {
-      fail(file, 'the Google Tag Manager loader is missing');
-    }
+    // Analytics must reach the page, one way or the other. Since 2026-11-22
+    // GA4 is loaded directly by the app (the Tag Manager container was
+    // removed — its own GA4 tag would have double-counted page views), so
+    // the measurement ID has to be in the client bundle when the deployment
+    // sets one. Without an ID the site still ships, and the consent banner
+    // is simply never shown.
     if (measurementId && !measurementIdInAssets && !html.includes(measurementId)) {
       fail(file, `the GA4 measurement ID "${measurementId}" appears in neither the page nor the bundle`);
+    }
+    if (!measurementId && html.includes('googletagmanager.com/gtm.js')) {
+      fail(file, 'a Tag Manager container is loaded but no GA4 measurement ID is set');
     }
   }
 

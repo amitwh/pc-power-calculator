@@ -24,7 +24,10 @@ export function PrivacyLink() {
       type="button"
       onClick={reopenBanner}
       className="fixed bottom-2 right-2 md:bottom-3 md:right-3 z-30 text-xs text-gray-500 dark:text-gray-400 underline underline-offset-2 hover:text-gray-700 dark:hover:text-gray-200 bg-white/70 dark:bg-gray-950/70 backdrop-blur px-2 py-1 rounded-8"
-      aria-label="Open privacy and analytics consent banner"
+      // Why the label starts with the visible text: WCAG 2.5.3 (Label in Name)
+      // requires the accessible name to contain the visible label, so a screen
+      // reader user hearing "Manage privacy" can match what they see.
+      aria-label={`${label} — open the privacy and analytics consent banner`}
     >
       {label}
     </button>

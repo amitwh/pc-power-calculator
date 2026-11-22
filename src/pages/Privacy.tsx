@@ -19,7 +19,7 @@ export default function Privacy() {
         <p className={BODY}>
           PC Power Calculator runs in your browser: your builds live only in local storage, and
           there are no accounts or server-side build storage. Analytics (Google Analytics 4,
-          delivered through Google Tag Manager) loads only after you allow it. Advertising is not
+          loaded directly by this site) loads only after you allow it. Advertising is not
           enabled today; if Google AdSense is enabled in future it will be consent-gated and
           non-personalized by default. The suggestion and feedback forms are the one exception to
           “nothing leaves your browser” — the details you submit are emailed to ConcreteInfo.
@@ -63,10 +63,10 @@ export default function Privacy() {
         <h2 className="text-base font-semibold">Analytics</h2>
         <p className={BODY}>
           We use Google Analytics 4 (GA4) to understand which pages and calculators are used and
-          where the site is slow. It is delivered through Google Tag Manager and governed by
-          Consent Mode v2: no analytics cookies or identifiers are set until you press “Allow
-          analytics” in the banner. IP anonymization is enabled. You can change your choice at any
-          time with the “Manage analytics” link; if you decline, analytics does not run.
+          where the site is slow. It is loaded directly by this site and governed by Consent Mode
+          v2: no analytics cookies or identifiers are set until you press “Allow analytics” in the
+          banner. IP anonymization is enabled. You can change your choice at any time with the
+          “Manage analytics” link; if you decline, analytics does not run.
         </p>
       </section>
 

@@ -19,7 +19,14 @@ export function CookieBanner() {
 
   if (!visible) return null;
   return (
-    <div className="fixed bottom-16 md:bottom-4 inset-x-4 md:right-4 md:left-auto md:w-96 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-12 p-3 shadow-lg z-50">
+    // Why the landmark: the banner floats over the page rather than sitting
+    // inside the main region, so without a role its text is page content
+    // outside every landmark — which axe flags as "region".
+    <div
+      role="region"
+      aria-label="Analytics consent"
+      className="fixed bottom-16 md:bottom-4 inset-x-4 md:right-4 md:left-auto md:w-96 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-12 p-3 shadow-lg z-50"
+    >
       <div className="text-sm">
         We use Google Analytics to understand which components people configure. No personal
         data, no tracking across sites.

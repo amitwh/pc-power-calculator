@@ -35,23 +35,22 @@
          it in <meta> tags. Enforced via nginx/default.conf instead.
          CSP also allowlists Google AdSense hosts (2026-11-05) — inert until a
          deployment sets VITE_ADSENSE_CLIENT; synced with nginx + public/_headers.
-         2026-11-21: GTM-MB4LMGGX is installed below; its inline stub is allowed
-         by SHA-256 hash (never 'unsafe-inline') and must be re-hashed if edited.
+         2026-11-22: the Google Tag Manager container was removed. Its GA4 tag
+         already tracked this site, so loading gtag.js as well would have counted
+         every page view twice; GA4 now arrives directly, gated by the app's own
+         Consent Mode v2 banner. googletagmanager.com stays in script-src because
+         gtag.js itself is served from there.
          2026-11-21: the client-side PDF export (react-pdf) compiles its Yoga
          layout via WebAssembly and loads font/asset blobs from data: URLs, so
          script-src adds 'wasm-unsafe-eval' and font/connect allow data:. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-WFRMLsMGdvJeEZAYZrUympeBpc2cT0AELK1vPulFTTM=' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' data: https://www.googletagmanager.com https://ipapi.co https://ipwho.is https://ip-api.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://*.doubleclick.net; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net; manifest-src 'self'; worker-src 'self' blob:; frame-src 'self' https://*.googlesyndication.com https://googleads.g.doubleclick.net https://fundingchoicesmessages.google.com; base-uri 'self'; form-action 'self'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self' data: https://www.googletagmanager.com https://ipapi.co https://ipwho.is https://ip-api.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://*.doubleclick.net; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net; manifest-src 'self'; worker-src 'self' blob:; frame-src 'self' https://*.googlesyndication.com https://googleads.g.doubleclick.net https://fundingchoicesmessages.google.com; base-uri 'self'; form-action 'self'" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <title>PC Power Calculator</title>
-    <!-- Google Tag Manager -->
-    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MB4LMGGX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    </script>
-    <!-- End Google Tag Manager -->
+    <!-- No Google Tag Manager here on purpose. GA4 is loaded directly by
+         src/lib/analytics/gtag.ts once the deployment sets
+         VITE_GA4_MEASUREMENT_ID, which keeps it behind the app's own Consent
+         Mode v2 banner — the GTM container fired before any consent was given. -->
   </head>
   <body>
     <div id="root">

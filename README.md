@@ -228,7 +228,10 @@ Google Analytics 4 (GA4) is integrated via **Consent Mode v2** with **default-de
    ```
    VITE_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
    ```
+   It must be a **build-time** variable — Vite inlines `VITE_*` values into the bundle, so a runtime-only variable never reaches the client.
 4. Trigger a redeploy. Coolify rebuilds with the new env var, the consent banner appears for every visitor, and analytics requests start flowing from opted-in users only.
+
+**Why there is no Tag Manager here (2026-11-22).** The site used to load the `GTM-MB4LMGGX` container, and that container already carried a GA4 configuration tag for `G-WCC9NEDCDH`. Loading `gtag.js` as well would have counted every page view twice, and the container fired before the user had agreed to anything — which is not what the privacy policy promises. The container was therefore removed from `index.html` and GA4 now arrives directly, behind the app's own Consent Mode v2 banner. Do not put the Tag Manager snippet back without first removing the GA4 tag from the container.
 
 ### What gets tracked
 
