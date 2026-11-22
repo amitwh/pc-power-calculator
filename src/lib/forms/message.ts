@@ -51,8 +51,32 @@ async function errorMessage(response: Response): Promise<string> {
 }
 
 /**
- * POST a suggestion or feedback message. Resolves only on HTTP 200; every other
- * outcome throws an Error carrying the API's human-readable message.
+ * True when the body is the API's `{ ok: true }` success envelope.
+ *
+ * Why this is checked at all: HTTP 200 does not mean the message was sent.
+ * A host with no API route — or one whose SPA fallback answers an unknown
+ * POST with the app shell — also returns 200, with HTML. Accepting that
+ * would tell the visitor their message was on its way when nothing had
+ * left the browser. Only the documented envelope counts as sent.
+ */
+async function isOkEnvelope(response: Response): Promise<boolean> {
+  try {
+    const body: unknown = await response.json();
+    return (
+      body !== null &&
+      typeof body === 'object' &&
+      (body as { ok?: unknown }).ok === true
+    );
+  } catch {
+    // Not JSON — the app shell, or an empty body. Not a sent message.
+    return false;
+  }
+}
+
+/**
+ * POST a suggestion or feedback message. Resolves only when the API answers
+ * with its success envelope; every other outcome throws an Error carrying the
+ * API's human-readable message.
  */
 export async function submitMessage(payload: MessagePayload): Promise<void> {
   let response: Response;
@@ -68,5 +92,9 @@ export async function submitMessage(payload: MessagePayload): Promise<void> {
 
   if (response.status !== 200) {
     throw new Error(await errorMessage(response));
+  }
+
+  if (!(await isOkEnvelope(response))) {
+    throw new Error(FALLBACK_ERROR);
   }
 }

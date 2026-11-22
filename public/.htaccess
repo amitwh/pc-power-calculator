@@ -32,6 +32,10 @@ DirectorySlash Off
   RewriteRule ^(.*)$ $1/index.html [L]
 
   # Not a file on disk (e.g. /build/<share token>): hand it to the SPA.
+  # /api/ is excluded on purpose: an API path that does not exist here must
+  # 404, not answer with the app shell, or a client that only reads the
+  # status code would believe a message had been sent.
+  RewriteCond %{REQUEST_URI} !^/api/
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
