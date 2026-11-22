@@ -82,13 +82,14 @@ const MIME_TYPES = {
 /**
  * Where the built site lives.
  *
- * Hostinger runs the entry file from a directory below the site root, and
- * the build output may be in `dist/` (the build directory) or already synced
- * to `public_html/` (the document root).
+ * The platform publishes each build into its own version directory and keeps
+ * a pointer at the current one. The entry file runs from inside the version
+ * it was started with, so the pointer — not the working directory — is what
+ * has to be followed, or every deploy after this one would be invisible.
  *
- * `public_html` is preferred wherever it is found: the platform points it at
- * the current build, so following it survives a deploy, where the versioned
- * `dist/` directory does not. The path is returned unresolved on purpose —
+ * The candidates are tried in order of how well they survive a deploy: a
+ * `current` pointer first, then the document root, then the versioned build
+ * directory as a last resort. The path is returned unresolved on purpose —
  * the symlink is resolved per request, so a new build is picked up.
  */
 async function findStaticRootPath() {
@@ -105,7 +106,15 @@ async function findStaticRootPath() {
     return null;
   }
 
-  for (const name of ['public_html', 'dist']) {
+  const relative = [
+    'current/nodejs/dist',
+    'current/dist',
+    'current/public_html',
+    'public_html',
+    'dist',
+  ];
+
+  for (const name of relative) {
     let dir = process.cwd();
     for (let depth = 0; depth < 6; depth += 1) {
       const candidate = path.join(dir, name);
@@ -128,6 +137,25 @@ const staticRoot = staticRootPath ? await realpath(staticRootPath).catch(() => n
 console.log(
   `[hostinger] serving ${staticRoot ?? '(no static root found)'} on ${HOST}:${PORT}`,
 );
+
+// The directory layout around the entry file, once, at startup. The platform
+// moves things between deployments, and a server that cannot find its files
+// says so here rather than serving nothing.
+try {
+  const { readdir } = await import('node:fs/promises');
+  const lines = [];
+  let dir = process.cwd();
+  for (let depth = 0; depth < 5; depth += 1) {
+    const names = await readdir(dir).catch(() => []);
+    lines.push(`${dir} -> ${names.join(', ')}`);
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+  console.log(`[hostinger] layout:\n  ${lines.join('\n  ')}`);
+} catch {
+  // The listing is a diagnostic; the server does not depend on it.
+}
 
 const mailHandler = createHandler();
 
