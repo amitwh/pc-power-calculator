@@ -308,6 +308,20 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // An API path that does not exist must 404, not answer with the app shell:
+  // a client asking for JSON would be handed HTML, and a 200 with a body it
+  // cannot parse is exactly the kind of thing that reads as a success it is
+  // not. This is what public/.htaccess already does when LiteSpeed serves
+  // the files directly.
+  if (pathname === '/api' || pathname.startsWith('/api/')) {
+    sendJson(res, 404, {
+      error: 'NOT_FOUND',
+      message: `There is no API endpoint at ${pathname}.`,
+      detail: {},
+    });
+    return;
+  }
+
   void (async () => {
     // A real file wins: assets, robots.txt, sitemap.xml, the key file.
     const direct = await fileAt(pathname);

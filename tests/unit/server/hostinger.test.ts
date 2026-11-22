@@ -133,4 +133,13 @@ describe('the Hostinger file server', () => {
     expect(res.headers['x-content-type-options']).toBe('nosniff');
     expect(res.headers['strict-transport-security']).toContain('max-age=');
   });
+
+  test('404s an API path that does not exist instead of serving the shell', async () => {
+    const res = await request('/api/v1/nothing-here');
+    expect(res.status).toBe(404);
+    expect(res.headers['content-type']).toContain('application/json');
+    // Not the app shell: a client asking for JSON must not be handed HTML.
+    expect(res.body).not.toContain('<title>root</title>');
+    expect(JSON.parse(res.body).error).toBe('NOT_FOUND');
+  });
 });
