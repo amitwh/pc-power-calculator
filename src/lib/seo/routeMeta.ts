@@ -181,6 +181,19 @@ const STATIC_ROUTES: Record<string, StaticMeta> = {
       'pc power calculator user guide',
     ],
   },
+  '/open-source': {
+    title: 'Open source · PC Power Calculator',
+    description:
+      'A directory of the open-source projects ConcreteInfo publishes — PC Power Calculator, GitHub Desktop for Linux, CurveStudio and Markdown Converter: what each one is, the licence it carries and where to get the source.',
+    keywords: [
+      'open source projects',
+      'free open source pc tools',
+      'github desktop for linux',
+      'curvestudio',
+      'markdown converter',
+      'concreteinfo open source',
+    ],
+  },
 };
 
 /**

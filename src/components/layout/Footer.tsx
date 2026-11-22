@@ -6,6 +6,7 @@ const LINKS = [
   { to: '/data', label: 'Data freshness' },
   { to: '/guides', label: 'Guides' },
   { to: '/help', label: 'Help' },
+  { to: '/open-source', label: 'Open source' },
   { to: '/privacy', label: 'Privacy' },
   { to: '/about', label: 'About' },
 ];

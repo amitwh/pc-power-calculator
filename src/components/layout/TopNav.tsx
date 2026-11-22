@@ -1,15 +1,25 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import { GUIDE_CATEGORIES, GUIDE_CATEGORY_STYLES, GUIDES } from '@/content/guides';
+import { OPEN_SOURCE_NAV_PROJECTS } from '@/content/openSource';
+import { useDropdownMenu } from '@/hooks/useDropdownMenu';
 
-// The nav order is Calculator · Compare · Guides · Help · About. The Guides
-// menu is rendered between the first two entries and the tail, so `items`
-// holds the four plain links in that same order — the first two above the
-// menu, the last two below it.
-const items = [
+// The nav order is Calculator · Compare · Guides · Open source · Help · About.
+// The two menus are rendered in that order, so the plain links are held in two
+// lists — the ones above the menus and the ones below them.
+interface NavItem {
+  to: string;
+  label: string;
+  /** Match the path exactly — the home link must not stay active on /compare. */
+  end?: boolean;
+}
+
+const LEAD_ITEMS: NavItem[] = [
   { to: '/', label: 'Calculator', end: true },
   { to: '/compare', label: 'Compare' },
+];
+
+const TAIL_ITEMS: NavItem[] = [
   { to: '/help', label: 'Help' },
   { to: '/about', label: 'About' },
 ];
@@ -25,9 +35,6 @@ const ACTIVE =
   'bg-white font-semibold text-brand-text shadow-card dark:bg-gray-800 dark:text-brand-light';
 const TRIGGER_OPEN =
   'bg-brand/10 font-semibold text-brand-text hover:bg-brand/15 dark:bg-brand/15 dark:text-brand-light';
-
-/** How long the panel lingers after the pointer leaves it, in milliseconds. */
-const CLOSE_DELAY_MS = 120;
 
 /**
  * Deal the category groups into two columns of roughly equal height.
@@ -55,73 +62,12 @@ function splitIntoColumns<T extends { guides: unknown[] }>(groups: T[]): T[][] {
  * Why a controlled dropdown and not `<details>`: the browser owns a details
  * element's open state, so navigating from a link inside it leaves the panel
  * hanging open over the article. React owns the state here, so a click can
- * close the menu on the way out.
+ * close the menu on the way out. The mechanics live in `useDropdownMenu`, so
+ * the open-source menu below behaves identically.
  */
 function GuidesMenu() {
-  const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // Why: the menu opens on hover, so a click usually lands on a panel that is
-  // already showing. Swallowing that first click — and letting the next one
-  // close the menu — stops the hover and the click from fighting.
-  const openedByHover = useRef(false);
-
-  const clearCloseTimer = useCallback(() => {
-    if (closeTimer.current !== null) {
-      clearTimeout(closeTimer.current);
-      closeTimer.current = null;
-    }
-  }, []);
-
-  const close = useCallback(
-    (returnFocus = false) => {
-      clearCloseTimer();
-      openedByHover.current = false;
-      setOpen(false);
-      if (returnFocus) triggerRef.current?.focus();
-    },
-    [clearCloseTimer],
-  );
-
-  const handlePointerEnter = () => {
-    clearCloseTimer();
-    openedByHover.current = true;
-    setOpen(true);
-  };
-
-  const handlePointerLeave = () => {
-    clearCloseTimer();
-    closeTimer.current = setTimeout(() => {
-      closeTimer.current = null;
-      openedByHover.current = false;
-      setOpen(false);
-    }, CLOSE_DELAY_MS);
-  };
-
-  // Escape closes and hands focus back to the trigger; a click outside the
-  // trigger and the panel closes without moving focus.
-  useEffect(() => {
-    if (!open) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return;
-      event.preventDefault();
-      close(true);
-    };
-    const onPointerDown = (event: PointerEvent) => {
-      const target = event.target as Node | null;
-      if (target && containerRef.current?.contains(target)) return;
-      close();
-    };
-
-    document.addEventListener('keydown', onKeyDown);
-    document.addEventListener('pointerdown', onPointerDown);
-    return () => {
-      document.removeEventListener('keydown', onKeyDown);
-      document.removeEventListener('pointerdown', onPointerDown);
-    };
-  }, [open, close]);
+  const { open, containerRef, triggerRef, toggle, close, handlePointerEnter, handlePointerLeave } =
+    useDropdownMenu();
 
   const groups = GUIDE_CATEGORIES.map((category) => ({
     category,
@@ -136,18 +82,7 @@ function GuidesMenu() {
         type="button"
         aria-expanded={open}
         aria-haspopup="true"
-        onClick={() => {
-          if (!open) {
-            clearCloseTimer();
-            setOpen(true);
-            return;
-          }
-          if (openedByHover.current) {
-            openedByHover.current = false;
-            return;
-          }
-          close();
-        }}
+        onClick={toggle}
         className={`${PILL} ${open ? TRIGGER_OPEN : INACTIVE} cursor-pointer`}
       >
         Guides
@@ -167,7 +102,10 @@ function GuidesMenu() {
             <Link
               to="/guides"
               onClick={() => close()}
-              className="block rounded-8 px-2.5 py-1.5 text-sm font-semibold text-brand-text hover:bg-gray-50 dark:hover:bg-gray-800"
+              // Why `dark:text-orange-300`: --color-brand-text is #a82d15,
+              // which reaches only 1.4:1 on the gray-900 dark panel — the
+              // same lift the guide rows and the open-source panel use.
+              className="block rounded-8 px-2.5 py-1.5 text-sm font-semibold text-brand-text hover:bg-gray-50 dark:text-orange-300 dark:hover:bg-gray-800"
             >
               All guides →
             </Link>
@@ -226,6 +164,91 @@ function GuidesMenu() {
   );
 }
 
+/**
+ * The open-source menu.
+ *
+ * Why the project rows leave the site: they are other projects, on other
+ * domains, and the reader is browsing a directory — so each one opens beside
+ * the directory rather than replacing it.
+ */
+function OpenSourceMenu() {
+  const { open, containerRef, triggerRef, toggle, close, handlePointerEnter, handlePointerLeave } =
+    useDropdownMenu();
+
+  return (
+    <div ref={containerRef} className="relative" onPointerEnter={handlePointerEnter} onPointerLeave={handlePointerLeave}>
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="true"
+        onClick={toggle}
+        className={`${PILL} ${open ? TRIGGER_OPEN : INACTIVE} cursor-pointer`}
+      >
+        Open source
+        <ChevronDown
+          aria-hidden
+          className={`ml-1 h-3.5 w-3.5 transition-transform ${open ? 'rotate-180' : ''}`}
+        />
+      </button>
+
+      {open && (
+        // The wrapper carries the hover bridge — its transparent top padding
+        // keeps the pointer inside the container while it travels from the
+        // trigger down to the panel.
+        <div className="absolute right-0 top-full z-50 w-fit pt-2">
+          <div className="w-[22rem] max-w-[calc(100vw-2rem)] rounded-12 border border-gray-200 bg-white p-2 shadow-card-raised dark:border-gray-700 dark:bg-gray-900">
+            <ul>
+              {OPEN_SOURCE_NAV_PROJECTS.map((project) => {
+                const Icon = project.icon;
+                return (
+                  <li key={project.id}>
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-start gap-2.5 rounded-8 px-2 py-2 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
+                    >
+                      <span
+                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-8 ${project.tile}`}
+                      >
+                        <Icon aria-hidden className="h-4 w-4" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-[13px] font-semibold leading-snug text-gray-700 group-hover:text-brand-text dark:text-gray-300 dark:group-hover:text-orange-300">
+                          {project.name}
+                        </span>
+                        {/* Why gray-300 and not gray-400 on the dark panel:
+                            gray-400 is #b0b0b0 on the gray-900 panel — 4.35:1,
+                            just under the 4.5:1 that 12px text needs. */}
+                        <span className="mt-0.5 block text-[12px] leading-snug text-gray-500 dark:text-gray-300">
+                          {project.short}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="my-1 border-t border-gray-100 dark:border-gray-800" />
+            {/* The directory itself: it is the one in-site destination, so it
+                opens in the same tab.
+                Why `dark:text-orange-300`: --color-brand-text is #a82d15,
+                which reaches only 1.4:1 on the gray-900 dark panel. */}
+            <Link
+              to="/open-source"
+              onClick={() => close()}
+              className="block rounded-8 px-2.5 py-1.5 text-sm font-semibold text-brand-text hover:bg-gray-50 dark:text-orange-300 dark:hover:bg-gray-800"
+            >
+              All open-source projects →
+            </Link>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function TopNav() {
   return (
     <header className="sticky top-0 z-40 hidden border-b border-gray-200/80 bg-white/85 backdrop-blur-md md:block dark:border-gray-800 dark:bg-gray-950/85">
@@ -249,7 +272,7 @@ export default function TopNav() {
           aria-label="Primary"
           className="flex items-center gap-1 rounded-full bg-gray-50 p-1 ring-1 ring-gray-200/70 dark:bg-gray-900/70 dark:ring-gray-800"
         >
-          {items.slice(0, 2).map((item) => (
+          {LEAD_ITEMS.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -264,7 +287,12 @@ export default function TopNav() {
               they belong one hover away rather than only behind the hub. */}
           <GuidesMenu />
 
-          {items.slice(2).map((item) => (
+          {/* The other open-source projects, one hover away: a reader who
+              wants the Git client or the curve fitter should not have to
+              find the directory page first. */}
+          <OpenSourceMenu />
+
+          {TAIL_ITEMS.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}

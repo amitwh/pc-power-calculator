@@ -10,6 +10,7 @@ import About from '@/pages/About';
 import Privacy from '@/pages/Privacy';
 import Guides from '@/pages/Guides';
 import Help from '@/pages/Help';
+import OpenSource from '@/pages/OpenSource';
 import Part from '@/pages/Part';
 import Cost from '@/pages/Cost';
 import NotFound from '@/pages/NotFound';
@@ -36,6 +37,7 @@ export default function AppRoutes() {
       <Route path="/guides" element={<Layout><Guides /></Layout>} />
       <Route path="/guides/:slug" element={<Layout><Guides /></Layout>} />
       <Route path="/help" element={<Layout><Help /></Layout>} />
+      <Route path="/open-source" element={<Layout><OpenSource /></Layout>} />
       <Route path="/parts/:id" element={<Layout><Part /></Layout>} />
       <Route path="/cost/:country" element={<Layout><Cost /></Layout>} />
       <Route path="/cost/:country/:state" element={<Layout><Cost /></Layout>} />

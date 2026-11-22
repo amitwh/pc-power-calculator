@@ -25,6 +25,7 @@ function renderNav() {
           <Route path="/" element={<div>home</div>} />
           <Route path="/guides" element={<div>guides hub</div>} />
           <Route path="/guides/:slug" element={<div>guide article</div>} />
+          <Route path="/open-source" element={<div>open-source directory</div>} />
         </Route>
       </Routes>
     </MemoryRouter>,
@@ -130,5 +131,111 @@ describe('TopNav guides menu', () => {
 
     expect(trigger()).toHaveAttribute('aria-expanded', 'true');
     expect(screen.getByRole('link', { name: 'All guides →' })).toBeInTheDocument();
+  });
+});
+
+const sourceTrigger = () => screen.getByRole('button', { name: /^open source$/i });
+
+describe('TopNav open-source menu', () => {
+  test('the trigger is a button that reports its collapsed state', () => {
+    renderNav();
+
+    const button = sourceTrigger();
+    expect(button).toHaveAttribute('aria-haspopup', 'true');
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByRole('link', { name: 'All open-source projects →' })).not.toBeInTheDocument();
+  });
+
+  test('hovering the trigger opens the panel with every project in it', async () => {
+    const user = userEvent.setup();
+    renderNav();
+
+    await user.hover(sourceTrigger());
+
+    expect(sourceTrigger()).toHaveAttribute('aria-expanded', 'true');
+    for (const name of [
+      'GitHub Desktop for Linux',
+      'CurveStudio',
+      'Markdown Converter',
+      'ConcreteInfo',
+    ]) {
+      expect(screen.getByRole('link', { name: new RegExp(name) })).toBeInTheDocument();
+    }
+  });
+
+  test('every project link opens in a new tab', async () => {
+    const user = userEvent.setup();
+    renderNav();
+
+    await user.hover(sourceTrigger());
+
+    for (const name of [
+      'GitHub Desktop for Linux',
+      'CurveStudio',
+      'Markdown Converter',
+      'ConcreteInfo',
+    ]) {
+      const link = screen.getByRole('link', { name: new RegExp(name) });
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    }
+  });
+
+  test('the directory link is an in-site link, not an outbound one', async () => {
+    const user = userEvent.setup();
+    renderNav();
+
+    await user.hover(sourceTrigger());
+    const link = screen.getByRole('link', { name: 'All open-source projects →' });
+
+    expect(link).not.toHaveAttribute('target');
+    expect(link).toHaveAttribute('href', '/open-source');
+  });
+
+  test('Escape closes the panel and hands focus back to the trigger', async () => {
+    const user = userEvent.setup();
+    renderNav();
+
+    await user.hover(sourceTrigger());
+    expect(sourceTrigger()).toHaveAttribute('aria-expanded', 'true');
+
+    await user.keyboard('{Escape}');
+
+    expect(screen.queryByRole('link', { name: 'All open-source projects →' })).not.toBeInTheDocument();
+    expect(sourceTrigger()).toHaveFocus();
+  });
+
+  test('a click outside the panel closes it', async () => {
+    const user = userEvent.setup();
+    renderNav();
+
+    await user.hover(sourceTrigger());
+    await user.click(document.body);
+
+    expect(screen.queryByRole('link', { name: 'All open-source projects →' })).not.toBeInTheDocument();
+  });
+
+  test('the pointer leaving the trigger and the panel closes it', async () => {
+    const user = userEvent.setup();
+    renderNav();
+
+    await user.hover(sourceTrigger());
+    await user.unhover(sourceTrigger());
+
+    await waitFor(() =>
+      expect(screen.queryByRole('link', { name: 'All open-source projects →' })).not.toBeInTheDocument(),
+    );
+  });
+
+  test('clicking the directory link navigates and closes the panel', async () => {
+    const user = userEvent.setup();
+    renderNav();
+
+    await user.hover(sourceTrigger());
+    await user.click(screen.getByRole('link', { name: 'All open-source projects →' }));
+
+    expect(screen.getByText('open-source directory')).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'All open-source projects →' })).not.toBeInTheDocument();
+    expect(sourceTrigger()).toHaveAttribute('aria-expanded', 'false');
   });
 });

@@ -118,6 +118,13 @@ test('navigate to all routes', async ({ page }) => {
   await expect(page.getByText('User guide')).toBeVisible();
   await expect(page.getByRole('heading', { name: /Quick start/i })).toBeVisible();
 
+  await page.goto('/open-source');
+  // The directory follows the same convention: a styled title paragraph in
+  // the hero, and each project name as an h2 below it.
+  await expect(page.getByText('The open-source directory')).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'CurveStudio' })).toBeVisible();
+  await expect(page.getByText('AGPL-3.0 · Python/TypeScript')).toBeVisible();
+
   // Deep link renders the article, and links back to the calculator exist.
   await page.goto('/guides/psu-sizing');
   await expect(page.getByRole('heading', { name: /PSU sizing explained/i })).toBeVisible();

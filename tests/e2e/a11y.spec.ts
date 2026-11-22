@@ -16,6 +16,7 @@ const ROUTES = [
   '/feedback',
   '/data',
   '/about',
+  '/open-source',
   '/privacy',
   '/guides',
   '/help',

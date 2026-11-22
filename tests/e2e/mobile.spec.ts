@@ -31,6 +31,7 @@ const ROUTES = [
   '/guides',
   '/guides/psu-sizing',
   '/help',
+  '/open-source',
   '/about',
   '/privacy',
   '/data',

@@ -391,6 +391,17 @@ export default function About() {
           })}
         </div>
 
+        {/* The directory holds the full catalogue — licences, download links
+            and the long descriptions — so the About page stays the short
+            version and points at it. */}
+        <p className={`mt-5 max-w-3xl ${BODY}`}>
+          The full directory, with every licence and download link, is on the{' '}
+          <Link to="/open-source" className={LINK}>
+            open-source page
+          </Link>
+          .
+        </p>
+
         {/* The company card. */}
         <div className="mt-5 rounded-16 border border-gray-200 bg-white p-5 shadow-card dark:border-gray-800 dark:bg-gray-900 md:p-6">
           <div className="flex flex-wrap items-start justify-between gap-4">

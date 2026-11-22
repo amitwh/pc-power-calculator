@@ -107,3 +107,29 @@ test('renders the user guide on /help', () => {
   expect(screen.getByText('User guide')).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: /Quick start/i })).toBeInTheDocument();
 });
+
+test('renders the open-source directory on /open-source', () => {
+  render(
+    <MemoryRouter initialEntries={['/open-source']}>
+      <Routes />
+    </MemoryRouter>,
+  );
+  // The hero's visible title is a styled paragraph, not a heading: Layout
+  // already renders the route's single sr-only h1, so the project names below
+  // it are the page's h2s.
+  expect(screen.getByText('The open-source directory')).toBeInTheDocument();
+  // Every project is a heading, and each carries its licence.
+  for (const name of [
+    'PC Power Calculator',
+    'GitHub Desktop for Linux',
+    'CurveStudio',
+    'Markdown Converter',
+    'ConcreteInfo',
+  ]) {
+    expect(screen.getByRole('heading', { level: 2, name })).toBeInTheDocument();
+  }
+  // Two projects are MIT · TypeScript, so the count is the assertion there.
+  expect(screen.getAllByText('MIT · TypeScript')).toHaveLength(2);
+  expect(screen.getByText('AGPL-3.0 · Python/TypeScript')).toBeInTheDocument();
+  expect(screen.getByText('MIT · JavaScript')).toBeInTheDocument();
+});
