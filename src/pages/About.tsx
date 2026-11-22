@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { SITE } from '@/lib/seo/routeMeta';
 import {
   ArrowUpRight,
   Briefcase,
@@ -25,6 +26,9 @@ import type { LucideIcon } from 'lucide-react';
  * gray-900 — the same lift the guides hub uses for its brand text.
  */
 const BRAND_TEXT = 'text-brand-text dark:text-orange-300';
+
+/** The bare host, for display — SITE carries the scheme. */
+const SITE_HOST = SITE.replace(/^https?:\/\//, '');
 
 /** The rule between two sections. */
 const RULE = 'mt-10 border-t border-gray-200 pt-6 dark:border-gray-800';
@@ -263,6 +267,13 @@ export default function About() {
             </ExternalLink>
             , which makes practical software for construction and engineering teams. The same idea
             applies here: clear numbers, sources you can check, and no sales pitch.
+          </p>
+          <p className={`mt-2 ${BODY}`}>
+            The calculator lives at{' '}
+            <ExternalLink href={SITE} className={LINK}>
+              {SITE_HOST}
+            </ExternalLink>{' '}
+            — open it in any browser, no sign-in and nothing to install.
           </p>
         </div>
       </Section>

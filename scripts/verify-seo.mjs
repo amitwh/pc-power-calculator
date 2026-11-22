@@ -15,7 +15,7 @@ import path from 'node:path';
 
 const ROOT = process.cwd();
 const DIST = path.join(ROOT, 'dist');
-const SITE = 'https://pcpower.concreteinfo.co.in';
+const SITE = 'https://pcpower.concreteinfo.net';
 
 /** The shell the service worker falls back to — not a real page. */
 const EXCLUDED_PAGES = new Set(['offline.html']);

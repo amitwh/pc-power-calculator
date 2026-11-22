@@ -2,7 +2,7 @@
 
 > A global, open-source calculator for estimating the **power consumption** and **electricity cost** of a personal computer — in any local currency.
 
-🌐 **Live:** https://pcpower.concreteinfo.co.in
+🌐 **Live:** https://pcpower.concreteinfo.net
 📐 **Design spec:** [`docs/superpowers/specs/2026-09-21-pc-power-calculator-design.md`](./docs/superpowers/specs/2026-09-21-pc-power-calculator-design.md)
 
 Pick your components, set the workload, and see how much power your PC draws and what it costs to run. Compare configurations side by side and get suggestions on power-vs-performance trade-offs.
@@ -40,7 +40,7 @@ Pick your components, set the workload, and see how much power your PC draws and
 | PWA | `vite-plugin-pwa` (Workbox) |
 | Tests | Vitest + React Testing Library + `fast-check` + Playwright + `@axe-core/playwright` |
 
-**Deployment:** Coolify (ConcreteInfo) behind Cloudflare CDN. Live URL: https://pcpower.concreteinfo.co.in
+**Deployment:** Coolify (ConcreteInfo) behind Cloudflare CDN. Live URL: https://pcpower.concreteinfo.net
 
 ---
 
@@ -90,7 +90,7 @@ Open http://localhost:5173 (dev) or http://localhost:4173 (preview) in your brow
 |-----------------|-------------------|---------------------------------------|-----|
 | Accessibility   | **0.95**          | 0.95                                  | Strict — the axe e2e suite enforces zero violations too. |
 | Performance     | **0.6**           | 0.9                                   | Headless Chrome runs under Lighthouse's "Slow 4G + 4x CPU throttling" which materially underestimates the real Cloudflare-served score. 0.6 is a smoke floor that catches regressions (oversized bundles, leaked images, blocking JS) without blocking on noise. |
-| PWA             | (not asserted)    | 0.9                                   | Lighthouse's PWA category audits require HTTPS; they don't run against `http://localhost`. Verify PWA score against the deployed URL with PageSpeed Insights or `npx lighthouse https://pcpower.concreteinfo.co.in --only-categories=pwa`. |
+| PWA             | (not asserted)    | 0.9                                   | Lighthouse's PWA category audits require HTTPS; they don't run against `http://localhost`. Verify PWA score against the deployed URL with PageSpeed Insights or `npx lighthouse https://pcpower.concreteinfo.net --only-categories=pwa`. |
 
 If you raise the production performance target, also bump the local smoke floor in `.lighthouserc.json`.
 
@@ -98,7 +98,7 @@ If you raise the production performance target, also bump the local smoke floor 
 
 ## 🚢 Deployment (Coolify + Cloudflare)
 
-The app is deployed to the **ConcreteInfo Coolify** instance (`coolify-hs`) behind **Cloudflare**, serving https://pcpower.concreteinfo.co.in.
+The app is deployed to the **ConcreteInfo Coolify** instance (`coolify-hs`) behind **Cloudflare**, serving https://pcpower.concreteinfo.net.
 
 The build is a pure static SPA — no server-side runtime, just `dist/` served by the Coolify-built Nginx image. Because the app uses **hash-based routing** (`HashRouter`), every deep link (`/#/compare`, `/#/suggestions`, etc.) works on any static host with no rewrite rules.
 
@@ -121,16 +121,16 @@ If a webhook is missed (e.g. you rebased after pushing, or `main` is ahead of th
 
 ```bash
 # status + last deployment
-curl -fsSL https://pcpower.concreteinfo.co.in/ | head -c 200
+curl -fsSL https://pcpower.concreteinfo.net/ | head -c 200
 # lighthouse-style perf check (no install)
-npx --yes lighthouse https://pcpower.concreteinfo.co.in --only-categories=performance,accessibility,pwa --quiet --chrome-flags="--headless"
+npx --yes lighthouse https://pcpower.concreteinfo.net --only-categories=performance,accessibility,pwa --quiet --chrome-flags="--headless"
 ```
 
 ### Security headers (CSP)
 
 The strict Content-Security-Policy from design spec §9.3, plus `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin`, are declared in three synced sources. The order below is **canonical-first**: the first source is authoritative, the others are intentional mirrors so a misconfigured host still ships a sane policy.
 
-1. **`nginx/default.conf`** — the **canonical** source. Emitted by the Coolify Nginx image on every response (including SPA-fallback 404s to `/index.html`). Verifiable with `curl -fsSLI https://pcpower.concreteinfo.co.in/ | grep -i 'content-security-policy'`. See the header comment at `nginx/default.conf:3-7` for why `frame-ancestors 'none'` is HTTP-only (the HTML spec disallows it inside `<meta>`).
+1. **`nginx/default.conf`** — the **canonical** source. Emitted by the Coolify Nginx image on every response (including SPA-fallback 404s to `/index.html`). Verifiable with `curl -fsSLI https://pcpower.concreteinfo.net/ | grep -i 'content-security-policy'`. See the header comment at `nginx/default.conf:3-7` for why `frame-ancestors 'none'` is HTTP-only (the HTML spec disallows it inside `<meta>`).
 2. **`index.html` `<meta http-equiv="Content-Security-Policy">`** — an HTML fallback for hosts that don't honour a Netlify `_headers` file (e.g. when previewing `vite preview` against a raw static server). Browser-supported directives only — `frame-ancestors` is intentionally omitted; see the comment above the meta tag.
 3. **`public/_headers`** — Netlify mirror, kept in lock-step with `nginx/default.conf` for anyone running the same build on Netlify or Cloudflare Pages. The same policy as (1) verbatim.
 
@@ -222,7 +222,7 @@ Google Analytics 4 (GA4) is integrated via **Consent Mode v2** with **default-de
 
 ### Setup
 
-1. Create a GA4 property in [Google Analytics](https://analytics.google.com/) for `pcpower.concreteinfo.co.in` (Web stream).
+1. Create a GA4 property in [Google Analytics](https://analytics.google.com/) for `pcpower.concreteinfo.net` (Web stream).
 2. Copy the `G-XXXXXXXXXX` Measurement ID.
 3. In Coolify, open the `pc-power-calculator` application → **Environment Variables** → add:
    ```

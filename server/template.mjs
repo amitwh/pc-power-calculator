@@ -107,7 +107,7 @@ function paragraphs(text) {
 function config(overrides = {}) {
   return {
     appName: overrides.appName ?? 'PC Power Calculator',
-    appUrl: overrides.appUrl ?? process.env.APP_URL ?? 'https://pcpower.concreteinfo.co.in',
+    appUrl: overrides.appUrl ?? process.env.APP_URL ?? 'https://pcpower.concreteinfo.net',
     supportEmail: overrides.supportEmail ?? process.env.SUPPORT_EMAIL ?? 'support@concreteinfo.in',
     companyUrl: overrides.companyUrl ?? process.env.COMPANY_URL ?? 'https://www.concreteinfo.in',
     linkedinUrl:

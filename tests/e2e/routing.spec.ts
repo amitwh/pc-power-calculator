@@ -33,7 +33,7 @@ test('a real part page keeps its canonical and is indexable', async ({ page }) =
 
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     'href',
-    'https://pcpower.concreteinfo.co.in/parts/gpu-amd-rx-6400',
+    'https://pcpower.concreteinfo.net/parts/gpu-amd-rx-6400',
   );
   // The prerendered page carries robots=index,follow; the client-side hook
   // removes it once it has confirmed the route exists. Wait for that removal

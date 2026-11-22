@@ -1,0 +1,38 @@
+# Hostinger (LiteSpeed) serves this build as static files from public_html.
+#
+# The prerenderer writes dist/<route>/index.html, so every route is a real
+# directory on disk. LiteSpeed's default DirectorySlash behaviour answers a
+# request for /guides with a 301 to /guides/ — but the canonical tags, the
+# sitemap and the report's re-import link all name the slash-less form, so
+# every one of those URLs would be a redirect.
+#
+# nginx has the same problem and the same fix, in nginx/default.conf:
+# `absolute_redirect off` plus a try_files order that serves the index file
+# directly. This is the Apache/LiteSpeed equivalent:
+#
+#   DirectorySlash Off  — serve /guides as /guides/index.html, no redirect.
+#   the rewrite rules  — serve a route's index.html directly, and send
+#                         anything that is not a file on disk (a share link
+#                         like /build/<token>) to the SPA shell, which is what
+#                         the nginx `try_files ... /index.html` does.
+#
+# The Coolify deployment ignores this file (nginx never reads .htaccess) and
+# enforces the same policy itself. Keep the two in sync.
+#
+# Every directive below is guarded so that a host without mod_rewrite, or one
+# that rejects .htaccess outright, degrades to the current behaviour instead
+# of taking the site down.
+DirectorySlash Off
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # A prerendered route: serve its index.html without a redirect.
+  RewriteCond %{REQUEST_FILENAME}/index.html -f
+  RewriteRule ^(.*)$ $1/index.html [L]
+
+  # Not a file on disk (e.g. /build/<share token>): hand it to the SPA.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

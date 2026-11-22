@@ -161,7 +161,7 @@ describe('buildExportHtml — document shape', () => {
     expect(out).toContain(REPORT_DISCLAIMER);
     expect(out).toContain('© 2026 ConcreteInfo');
     expect(out).toContain('Open in PC Power Calculator');
-    expect(out).toContain('https://pcpower.concreteinfo.co.in/compare?builds=');
+    expect(out).toContain('https://pcpower.concreteinfo.net/compare?builds=');
     expect(out).toContain('Report ID ');
     expect(out).toContain('(IST)');
   });
@@ -355,7 +355,7 @@ describe('buildExportHtml — safety and offline rendering', () => {
     const urls = out.match(/https?:\/\/[^\s"'<>)]+/g) ?? [];
     expect(urls).toHaveLength(2);
     for (const url of urls) {
-      expect(url.startsWith('https://pcpower.concreteinfo.co.in')).toBe(true);
+      expect(url.startsWith('https://pcpower.concreteinfo.net')).toBe(true);
     }
   });
 

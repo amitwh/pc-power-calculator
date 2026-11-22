@@ -2,7 +2,7 @@
 // participating engines).
 //
 // Run this *after* a production deploy: the engine fetches
-// https://pcpower.concreteinfo.co.in/<key>.txt to prove ownership, so the key
+// https://pcpower.concreteinfo.net/<key>.txt to prove ownership, so the key
 // file must already be live. Google does not participate in IndexNow and has
 // no equivalent ping endpoint — use Search Console's URL inspection for it.
 
@@ -13,7 +13,7 @@ const ROOT = process.cwd();
 const PUBLIC = path.join(ROOT, 'public');
 const SITEMAP = path.join(ROOT, 'dist', 'sitemap.xml');
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
-const HOST = 'pcpower.concreteinfo.co.in';
+const HOST = 'pcpower.concreteinfo.net';
 const KEY_PATTERN = /^[a-f0-9]{32}\.txt$/;
 
 /** The IndexNow key lives in its own public file, named after the key. */

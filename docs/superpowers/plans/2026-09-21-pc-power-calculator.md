@@ -4,7 +4,7 @@
 
 **Goal:** Build and ship a stateless, mobile-first PWA that estimates PC power consumption and electricity cost in any local currency, with workload-specific comparisons and PDF/HTML export.
 
-**Architecture:** Vite + React-TS single-page app, pure-function calculation engine in `src/lib/calc/`, Zustand store, bundled JSON data + free public APIs (with manual override). Pure static build deployed to Coolify behind Cloudflare at `pcpower.concreteinfo.co.in`.
+**Architecture:** Vite + React-TS single-page app, pure-function calculation engine in `src/lib/calc/`, Zustand store, bundled JSON data + free public APIs (with manual override). Pure static build deployed to Coolify behind Cloudflare at `pcpower.concreteinfo.net`.
 
 **Tech Stack:** Vite 5 · React 18 · TypeScript 5 · React Router v6 · Zustand · React Hook Form + Zod · TanStack Table v8 · ApexCharts · Tailwind + ConcreteInfo design tokens · `vite-plugin-pwa` · Vitest + React Testing Library + `fast-check` · Playwright + `@axe-core/playwright` · Lighthouse CI.
 
@@ -3096,7 +3096,7 @@ export function buildExportHtml(
 </head>
 <body>
 <h1>${build.name}</h1>
-<p>Generated ${date} · pcpower.concreteinfo.co.in</p>
+<p>Generated ${date} · pcpower.concreteinfo.net</p>
 <table>
   <thead><tr><th>Period</th><th>Energy</th><th>Cost</th></tr></thead>
   <tbody>
@@ -3105,7 +3105,7 @@ export function buildExportHtml(
     <tr><td>Yearly</td><td>${formatKwh(results.yearly.total.kwh)}</td><td>${formatCost(results.yearly.total.cost, currency)}</td></tr>
   </tbody>
 </table>
-<a class="reimport" href="https://pcpower.concreteinfo.co.in/#/compare?builds=${encodeURIComponent(btoa(json))}">Open in PC Power Calculator</a>
+<a class="reimport" href="https://pcpower.concreteinfo.net/#/compare?builds=${encodeURIComponent(btoa(json))}">Open in PC Power Calculator</a>
 <script type="application/json" id="build-config">${json.replace(/</g, '\\u003c')}</script>
 </body>
 </html>`;
@@ -4069,7 +4069,7 @@ gh release create v1.0.0 --title "PC Power Calculator v1.0.0" --notes "Initial p
 
 `src/lib/analytics/measurementId.ts`:
 ```ts
-// Site-specific GA4 Measurement ID for pcpower.concreteinfo.co.in.
+// Site-specific GA4 Measurement ID for pcpower.concreteinfo.net.
 // Configure via env var at build time: VITE_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
 export const GA4_MEASUREMENT_ID = (import.meta as any).env?.VITE_GA4_MEASUREMENT_ID ?? '';
 export const GA4_ENABLED = Boolean(GA4_MEASUREMENT_ID);
@@ -4187,7 +4187,7 @@ VITE_GA4_MEASUREMENT_ID=G-XXXXXXXXXX
 
 - [ ] **Step 7: Verify in browser**
 
-1. Open `pcpower.concreteinfo.co.in` with DevTools Network tab.
+1. Open `pcpower.concreteinfo.net` with DevTools Network tab.
 2. Decline analytics → no GA requests fire.
 3. Allow analytics → `gtag/js` and `google-analytics.com/g/collect` requests fire.
 4. Verify in GA4 debug view that events arrive.

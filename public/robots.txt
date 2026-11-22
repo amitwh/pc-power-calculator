@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 Disallow: /build/
 
-Sitemap: https://pcpower.concreteinfo.co.in/sitemap.xml
+Sitemap: https://pcpower.concreteinfo.net/sitemap.xml

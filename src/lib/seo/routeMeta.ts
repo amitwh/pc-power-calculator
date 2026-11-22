@@ -8,7 +8,7 @@ import { resolveLocationTariff } from '@/lib/data/tariffs';
 import type { Component } from '@/types/component';
 
 /** The canonical origin every absolute URL in the metadata is built from. */
-export const SITE = 'https://pcpower.concreteinfo.co.in';
+export const SITE = 'https://pcpower.concreteinfo.net';
 
 /** The social card every page points at. */
 export const OG_IMAGE = `${SITE}/og.png`;

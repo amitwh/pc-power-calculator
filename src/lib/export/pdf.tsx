@@ -64,7 +64,7 @@ const AMBER = '#a15c07';
 const GREEN = '#1a7a56';
 const RED = '#b91c1c';
 const USE_CASE_COLOR = '#6a5acd';
-const PDF_SOURCE_URL = 'https://pcpower.concreteinfo.co.in';
+const PDF_SOURCE_URL = 'https://pcpower.concreteinfo.net';
 /**
  * JetBrains Mono has no rupee glyph, so figures fall back to Inter for ₹ (and
  * any other character the numeric face lacks) while digits stay monospaced.
@@ -1253,7 +1253,7 @@ export function ReportDocument({
           render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`}
         />
         <Link fixed src={PDF_SOURCE_URL} style={[styles.footerLink, styles.footerSite]}>
-          pcpower.concreteinfo.co.in
+          pcpower.concreteinfo.net
         </Link>
         <Text fixed style={[styles.footerMuted, styles.footerReportId]}>
           {`Report ID ${reportId} · ${generated}`}

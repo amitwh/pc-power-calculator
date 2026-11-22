@@ -6,7 +6,7 @@ import { MemoryRouter, useNavigate } from 'react-router-dom';
 import { usePageMeta } from '@/hooks/usePageMeta';
 import { GUIDES } from '@/content/guides';
 
-const SITE = 'https://pcpower.concreteinfo.co.in';
+const SITE = 'https://pcpower.concreteinfo.net';
 const OG_IMAGE = `${SITE}/og.png`;
 
 /** Applies the hook, plus an optional button for in-app navigation. */

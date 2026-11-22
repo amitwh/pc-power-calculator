@@ -13,7 +13,7 @@ const ROOT = process.cwd();
 const DIST = path.join(ROOT, 'dist');
 const TEMPLATE_PATH = path.join(DIST, 'index.html');
 const SSR_ENTRY_PATH = path.join(ROOT, 'dist-ssr', 'entry-server.js');
-const SITE = 'https://pcpower.concreteinfo.co.in';
+const SITE = 'https://pcpower.concreteinfo.net';
 const OG_IMAGE = `${SITE}/og.png`;
 const TWITTER_CARD = 'summary_large_image';
 

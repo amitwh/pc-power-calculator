@@ -4,7 +4,7 @@
 |-------|-------|
 | **Project** | `pc-power-calculator` |
 | **Repo** | https://github.com/amitwh/pc-power-calculator |
-| **Live URL** | https://pcpower.concreteinfo.co.in |
+| **Live URL** | https://pcpower.concreteinfo.net |
 | **Author** | Amit Haridas |
 | **Date** | 2026-09-21 |
 | **Status** | ✅ Approved — ready for implementation planning |
@@ -44,7 +44,7 @@ Users pick their components, set a usage schedule (hours/day at each workload), 
 | Comparison depth | Workload-specific performance estimates (with curated benchmark database). |
 | v1 workloads | Gaming, Content creation, Productivity + dev, AI/ML + mining, Server workloads (home server / NAS / always-on). |
 | Deployment | Coolify + ConcreteInfo, served behind Cloudflare (global CDN). |
-| Domain | `pcpower.concreteinfo.co.in` |
+| Domain | `pcpower.concreteinfo.net` |
 | Build tool | Vite + React-TS SPA |
 | Currency | Local-currency rates per country AND per sub-national administration (state / province), with manual override and FX fallback. |
 | Location | Auto-detect via IP geolocation (ipapi.co), with manual country + subdivision selector. |
@@ -731,7 +731,7 @@ Data-only JSON changes deploy automatically — no code redeploy.
 |----------|--------|
 | Hosting | Coolify static site (existing ConcreteInfo instance) |
 | CDN | Cloudflare (in front of Coolify) |
-| Domain | `pcpower.concreteinfo.co.in` (subdomain of ConcreteInfo primary domain) |
+| Domain | `pcpower.concreteinfo.net` (subdomain of ConcreteInfo primary domain) |
 | TLS | Cloudflare universal SSL |
 | Build artifact | Vite static output (`dist/`) |
 
@@ -765,7 +765,7 @@ CI runs unit + component + a11y + visual on every PR. E2E + Lighthouse runs on `
 
 | Milestone | Scope | Done when |
 |-----------|-------|-----------|
-| **M0 — Skeleton** | Vite + React-TS, ConcreteInfo tokens, top nav, "hello world" on `/`. Deployed to Coolify. | Live at `pcpower.concreteinfo.co.in`, Lighthouse ≥ 90. |
+| **M0 — Skeleton** | Vite + React-TS, ConcreteInfo tokens, top nav, "hello world" on `/`. Deployed to Coolify. | Live at `pcpower.concreteinfo.net`, Lighthouse ≥ 90. |
 | **M1 — Core calculator** | Component picker (all 12 categories), schedule editor, flat-rate cost, single-workload result, India + 5 countries tariff. | E2E calculation works for one country. |
 | **M2 — Localisation** | Country + state/province selector, geolocation auto-detect, multi-currency, manual override, tiered tariffs. | Full country + subdivision picker working. |
 | **M3 — Comparison** | 2–N build comparison, per-workload cost table, comparison bars chart. | Side-by-side working with PDF + HTML export. |
@@ -779,7 +779,7 @@ CI runs unit + component + a11y + visual on every PR. E2E + Lighthouse runs on `
 | # | Item | Default if no decision | Decision needed by |
 |---|------|------------------------|-------------------|
 | 1 | **License** | MIT | M0 |
-| 2 | **Domain** | ✅ **Resolved:** `pcpower.concreteinfo.co.in` | — |
+| 2 | **Domain** | ✅ **Resolved:** `pcpower.concreteinfo.net` | — |
 | 3 | **Server workloads definition** | ✅ **Resolved:** home server / NAS / Plex / always-on workstation (24/7 low-to-mid utilization) | — |
 | 4 | **Tariff data sources for v1** | India (all states), US (all states), UK, EU, +10 popular countries — hand-curated | M2 |
 | 5 | **Benchmark data scope** | Top 30 GPUs + top 20 CPUs × 5 workload categories in v1 | M5 |
@@ -796,5 +796,5 @@ CI runs unit + component + a11y + visual on every PR. E2E + Lighthouse runs on `
 | Repo | https://github.com/amitwh/pc-power-calculator ✅ created |
 | README | ✅ in place (will be updated as design lands) |
 | License | TBD |
-| Live URL | https://pcpower.concreteinfo.co.in |
+| Live URL | https://pcpower.concreteinfo.net |
 | Topics | `pc-power-calculator` · `electricity` · `calculator` · `react` · `typescript` · `pwa` · `vite` · `concreteinfo` |

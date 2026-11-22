@@ -152,25 +152,25 @@ describe('ReportDocument', () => {
     'prints the QR permalink caption and URL',
     async () => {
       const text = await renderAndExtract(gamingReport, {
-        shareUrl: 'https://pcpower.concreteinfo.co.in/build/abc',
+        shareUrl: 'https://pcpower.concreteinfo.net/build/abc',
         qrDataUrl: TINY_PNG,
       });
 
       expect(text).toContain('Scan to open this build');
-      expect(text).toContain('https://pcpower.concreteinfo.co.in/build/abc');
+      expect(text).toContain('https://pcpower.concreteinfo.net/build/abc');
     },
   );
 
   test.skipIf(!hasBinary('pdftotext'))(
     'prints a shortened share URL, never the full build token',
     async () => {
-      const longUrl = `https://pcpower.concreteinfo.co.in/build/${'x'.repeat(400)}`;
+      const longUrl = `https://pcpower.concreteinfo.net/build/${'x'.repeat(400)}`;
       const text = await renderAndExtract(gamingReport, {
         shareUrl: longUrl,
         qrDataUrl: TINY_PNG,
       });
 
-      expect(text).toContain('pcpower.concreteinfo.co.in/build/…');
+      expect(text).toContain('pcpower.concreteinfo.net/build/…');
       expect(text).not.toContain('x'.repeat(100));
     },
   );

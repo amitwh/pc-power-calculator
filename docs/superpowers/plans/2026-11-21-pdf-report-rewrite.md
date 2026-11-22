@@ -55,7 +55,7 @@ npm install -D @types/qrcode
 
 - [ ] **Step 2: Create the spike page**
 
-`spike/pdf.html` loads `/spike/pdf.tsx`. The component renders a two-page `Document` with: page 1 containing a long `View wrap={false}` that pushes a second block to page 2; a `fixed` footer with `Page X of Y` via `Text render={({pageNumber,totalPages}) => ...}`; a `Link` to `https://pcpower.concreteinfo.co.in`; and an `Image` whose `src` is `QRCode.toDataURL('https://example.com')` generated in the click handler. A button calls `pdf(<Spike/>).toBlob()` and downloads the result.
+`spike/pdf.html` loads `/spike/pdf.tsx`. The component renders a two-page `Document` with: page 1 containing a long `View wrap={false}` that pushes a second block to page 2; a `fixed` footer with `Page X of Y` via `Text render={({pageNumber,totalPages}) => ...}`; a `Link` to `https://pcpower.concreteinfo.net`; and an `Image` whose `src` is `QRCode.toDataURL('https://example.com')` generated in the click handler. A button calls `pdf(<Spike/>).toBlob()` and downloads the result.
 
 - [ ] **Step 3: Run the spike in the browser**
 
@@ -366,9 +366,9 @@ git push origin main
 
 ```ts
 test('draws the QR caption and share link when a URL is supplied', async () => {
-  const text = await renderAndExtract(gamingReport, { shareUrl: 'https://pcpower.concreteinfo.co.in/build/abc', qrDataUrl: TINY_PNG });
+  const text = await renderAndExtract(gamingReport, { shareUrl: 'https://pcpower.concreteinfo.net/build/abc', qrDataUrl: TINY_PNG });
   expect(text).toContain('Scan to open this build');
-  expect(text).toContain('https://pcpower.concreteinfo.co.in/build/abc');
+  expect(text).toContain('https://pcpower.concreteinfo.net/build/abc');
 });
 test('omits the QR block when no URL is supplied', async () => {
   const text = await renderAndExtract(gamingReport, { shareUrl: null });

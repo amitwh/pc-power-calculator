@@ -1,4 +1,8 @@
 import { Link } from 'react-router-dom';
+import { SITE } from '@/lib/seo/routeMeta';
+
+/** The bare host, for display — SITE carries the scheme. */
+const SITE_HOST = SITE.replace(/^https?:\/\//, '');
 
 const LINKS = [
   { to: '/suggest', label: 'Suggest a part' },
@@ -22,6 +26,16 @@ export default function Footer() {
       <div className="flex flex-wrap items-start justify-between gap-x-10 gap-y-5">
         <div>
           <p className="text-sm font-bold text-gray-900 dark:text-gray-50">PC Power Calculator</p>
+          {/* The app's own address, on every page. It is the one URL a reader
+              may want to bookmark or pass on, and it has to match the
+              canonical origin the metadata is built from — so it is read from
+              SITE rather than typed. */}
+          <a
+            href={SITE}
+            className="mt-0.5 inline-block font-medium text-gray-600 underline-offset-2 hover:underline dark:text-gray-400"
+          >
+            {SITE_HOST}
+          </a>
           <p className="mt-1 leading-relaxed text-gray-500">
             Free PC power consumption and electricity cost calculator.
           </p>
