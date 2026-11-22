@@ -47,3 +47,7 @@ test-results/
 # Misc
 tmp/
 *.tsbuildinfo
+
+# Tool scratch (regenerated each session, never source)
+.playwright-mcp/
+.video_agent/

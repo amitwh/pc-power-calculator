@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>PC Power Calculator — UI preview v2</title>
+  <meta name="theme-color" content="#e5461f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* ConcreteInfo design tokens — exact copy from design system */
+      --color-brand: #e5461f;
+      --color-brand-dark: #c93a18;
+      --color-brand-light: #ff6b47;
+      --color-success: #1a7a56;
+      --color-warning: hsl(45, 93%, 47%);
+      --color-danger: hsl(0, 84%, 60%);
+      --color-info: hsl(199, 89%, 48%);
+      --gray-50: #fafbfc; --gray-100: #f1f3f5; --gray-200: #e6e8eb;
+      --gray-300: #cfd4d9; --gray-400: #9aa3ad; --gray-500: #6b7682;
+      --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937;
+      --gray-900: #111827; --gray-950: #0d0b09;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-display: 'Inter', system-ui, sans-serif;
+      --font-numeric: 'Inter', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      --radius-sm: 4px; --radius: 8px; --radius-lg: 12px; --radius-xl: 16px;
+      --transition: 300ms ease-in-out;
+      --chart-palette: #e5461f, #3b82f6, #10b981, #f59e0b, #8b5cf6, #ec4899, #06b6d4, #84cc16;
+    }
+    * { box-sizing: border-box; }
+    html { font-family: var(--font-body); font-size: 15px; color: var(--gray-900); -webkit-font-smoothing: antialiased; }
+    body { margin: 0; background: var(--gray-50); min-height: 100vh; }
+    .tabular-nums { font-variant-numeric: tabular-nums; font-family: var(--font-numeric); }
+    .font-body { font-family: var(--font-body); }
+    .font-display { font-family: var(--font-display); }
+    .font-mono { font-family: var(--font-mono); letter-spacing: -0.01em; }
+
+    /* Preview chrome */
+    .preview-bar {
+      background: var(--gray-950); color: var(--gray-50);
+      padding: 12px 24px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      border-bottom: 1px solid var(--gray-800);
+    }
+    .preview-bar h1 { margin: 0; font: 700 16px var(--font-display); }
+    .preview-bar .badge { background: var(--color-brand); color: white; padding: 2px 8px; border-radius: var(--radius-sm); font: 700 11px var(--font-body); letter-spacing: 0.04em; }
+    .preview-bar .badge.v2 { background: var(--color-success); }
+    .preview-bar .toggle-group { display: inline-flex; gap: 0; border: 1px solid var(--gray-700); border-radius: var(--radius); overflow: hidden; }
+    .preview-bar .toggle-group button { background: transparent; color: var(--gray-300); border: none; padding: 6px 12px; cursor: pointer; font: 600 12px var(--font-body); transition: background var(--transition); }
+    .preview-bar .toggle-group button:hover { background: var(--gray-800); color: white; }
+    .preview-bar .toggle-group button.active { background: var(--gray-700); color: white; }
+    .preview-bar .tabs { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+    .preview-bar .tabs button { background: transparent; color: var(--gray-300); border: 1px solid var(--gray-700); padding: 6px 12px; border-radius: var(--radius); cursor: pointer; font: 600 13px var(--font-body); transition: all var(--transition); }
+    .preview-bar .tabs button:hover { background: var(--gray-800); color: white; border-color: var(--gray-600); }
+    .preview-bar .tabs button.active { background: var(--color-brand); color: white; border-color: var(--color-brand); }
+
+    .stage { padding: 32px; display: flex; justify-content: center; }
+    .viewport {
+      width: 100%; max-width: 1280px; background: white;
+      border-radius: var(--radius-xl); overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+      min-height: 920px;
+      border: 1px solid var(--gray-200);
+    }
+    .viewport.mobile { max-width: 390px; min-height: 800px; }
+
+    /* TopNav */
+    .topnav { display: none; height: 64px; padding: 0 32px; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--gray-200); background: white; }
+    .viewport:not(.mobile) .topnav { display: flex; }
+    .topnav .brand { font: 800 20px var(--font-display); color: var(--color-brand); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .topnav .brand .bolt { font-size: 18px; }
+    .topnav nav { display: flex; gap: 28px; }
+    .topnav nav a { font: 600 14px var(--font-body); color: var(--gray-600); text-decoration: none; padding: 8px 0; border-bottom: 2px solid transparent; transition: all var(--transition); }
+    .topnav nav a:hover { color: var(--gray-900); }
+    .topnav nav a.active { color: var(--color-brand); font-weight: 700; border-bottom-color: var(--color-brand); }
+
+    /* MobileNav */
+    .mobile-nav {
+      display: flex; position: sticky; bottom: 0; inset-x: 0;
+      background: white; border-top: 1px solid var(--gray-200);
+      justify-content: space-around; padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px));
+      z-index: 50;
+    }
+    .viewport:not(.mobile) .mobile-nav { display: none; }
+    .viewport.mobile .topnav { display: none; }
+    .mobile-nav a { font: 600 11px var(--font-body); color: var(--gray-500); text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-width: 44px; min-height: 48px; padding: 4px 8px; transition: color var(--transition); }
+    .mobile-nav a:hover { color: var(--gray-700); }
+    .mobile-nav a.active { color: var(--color-brand); }
+    .mobile-nav a .icon { font-size: 18px; line-height: 1; }
+
+    /* Main content */
+    main { padding: 24px; }
+    .viewport:not(.mobile) main { padding: 32px; max-width: 1280px; margin: 0 auto; }
+    .viewport.mobile main { padding: 16px; padding-bottom: 80px; }
+
+    .grid { display: grid; gap: 16px; }
+    .viewport:not(.mobile) .grid-2col { grid-template-columns: 1fr 1fr; }
+    .viewport:not(.mobile) .grid-3col { grid-template-columns: 1fr 1fr 1fr; }
+    .full { grid-column: 1 / -1; }
+    .viewport.mobile .grid-2col, .viewport.mobile .grid-3col { grid-template-columns: 1fr; }
+
+    /* Card */
+    .card { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 20px; transition: border-color var(--transition); }
+    .card:hover { border-color: var(--gray-300); }
+    .card-title { font: 700 18px var(--font-display); margin: 0 0 16px; color: var(--gray-900); display: flex; align-items: center; justify-content: space-between; }
+    .card-title .step { font: 700 11px var(--font-body); color: var(--color-brand); background: rgba(229, 70, 31, 0.08); padding: 2px 8px; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 8px; }
+    .card-title-text { display: flex; align-items: center; }
+
+    /* System selector */
+    .system-selector { display: flex; gap: 8px; align-items: center; padding: 12px 16px; background: var(--gray-50); border-bottom: 1px solid var(--gray-200); overflow-x: auto; }
+    .system-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px;
+      background: white; border: 1px solid var(--gray-300);
+      font: 600 13px var(--font-body); color: var(--gray-700);
+      cursor: pointer; white-space: nowrap;
+      transition: all var(--transition);
+    }
+    .system-chip:hover { border-color: var(--gray-400); color: var(--gray-900); }
+    .system-chip.active { background: var(--color-brand); color: white; border-color: var(--color-brand); }
+    .system-chip .x { opacity: 0.6; font-size: 14px; line-height: 1; }
+    .system-chip.add { background: transparent; border-style: dashed; color: var(--gray-500); }
+    .system-chip.add:hover { border-color: var(--color-brand); color: var(--color-brand); background: rgba(229, 70, 31, 0.04); }
+    .system-chip .name-input { background: transparent; border: none; outline: none; font: 600 13px var(--font-body); color: inherit; min-width: 80px; }
+    .system-chip .rename { display: none; }
+    .system-chip:hover .rename { display: inline; }
+
+    /* Build picker */
+    .component-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      border: 1px solid var(--gray-200); border-radius: var(--radius);
+      padding: 12px; margin-top: 8px;
+      transition: all var(--transition);
+    }
+    .component-row:hover { border-color: var(--gray-300); background: var(--gray-50); }
+    .component-row .info { flex: 1; min-width: 0; }
+    .component-row .label { font: 600 11px var(--font-body); color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+    .component-row .name { font: 600 14px var(--font-body); color: var(--gray-900); display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .component-row .tdp { font: 600 13px var(--font-numeric); color: var(--gray-500); font-variant-numeric: tabular-nums; }
+    .component-row .tdp.overridden { color: var(--color-warning); }
+    .component-row .actions { display: flex; gap: 4px; }
+    .icon-btn { background: transparent; border: 1px solid transparent; width: 32px; height: 32px; border-radius: var(--radius-sm); cursor: pointer; color: var(--gray-500); display: inline-flex; align-items: center; justify-content: center; transition: all var(--transition); font-size: 14px; }
+    .icon-btn:hover { background: var(--gray-100); color: var(--gray-900); border-color: var(--gray-200); }
+    .icon-btn.danger:hover { background: rgba(229, 70, 31, 0.08); color: var(--color-danger); }
+
+    select, input[type="number"], input[type="text"] {
+      width: 100%; min-height: 44px; padding: 10px 12px;
+      border: 1px solid var(--gray-300); border-radius: var(--radius);
+      background: white; font: 500 14px var(--font-body); color: var(--gray-900);
+      transition: border-color var(--transition);
+    }
+    select:focus, input:focus { outline: none; border-color: var(--color-brand); box-shadow: 0 0 0 3px rgba(229, 70, 31, 0.1); }
+    select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7682' d='M2 4l4 4 4-4z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+    .input-group { display: flex; gap: 8px; align-items: stretch; }
+    .input-group .input-prefix { display: flex; align-items: center; padding: 0 12px; background: var(--gray-100); border: 1px solid var(--gray-300); border-right: none; border-radius: var(--radius) 0 0 var(--radius); font: 600 14px var(--font-body); color: var(--gray-700); }
+    .input-group input { border-radius: 0 var(--radius) var(--radius) 0; }
+
+    /* Customization drawer */
+    .customize-drawer { background: var(--gray-50); border: 1px dashed var(--gray-300); border-radius: var(--radius); padding: 12px; margin-top: 8px; }
+    .customize-drawer .header { font: 600 12px var(--font-body); color: var(--color-brand); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .customize-drawer .row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; font: 500 13px var(--font-body); }
+    .customize-drawer .row label { flex: 1; color: var(--gray-700); }
+    .customize-drawer .row input[type="number"] { max-width: 100px; min-height: 36px; padding: 6px 8px; }
+
+    /* Schedule editor */
+    .schedule-row { padding: 12px 0; border-bottom: 1px solid var(--gray-100); }
+    .schedule-row:last-child { border-bottom: none; }
+    .schedule-row .header { display: flex; justify-content: space-between; font: 600 14px var(--font-body); margin-bottom: 6px; }
+    .schedule-row .header .workload { color: var(--gray-900); display: flex; align-items: center; gap: 6px; }
+    .schedule-row .header .hours { color: var(--gray-500); font-variant-numeric: tabular-nums; font-family: var(--font-numeric); }
+    .schedule-row input[type="range"] { width: 100%; accent-color: var(--color-brand); height: 32px; margin: 0; padding: 0; }
+
+    /* Results */
+    .results-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+    .viewport.mobile .results-row { grid-template-columns: 1fr; gap: 8px; }
+    .result-card { border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 16px; transition: all var(--transition); position: relative; overflow: hidden; }
+    .result-card:hover { border-color: var(--gray-300); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .result-card.primary { background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-brand-dark) 100%); color: white; border-color: transparent; }
+    .result-card.primary .label, .result-card.primary .cost-sub { color: rgba(255,255,255,0.85); }
+    .result-card.primary .value, .result-card.primary .cost { color: white; }
+    .result-card .label { font: 700 11px var(--font-body); color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .result-card .value { font: 800 28px var(--font-display); color: var(--gray-900); margin: 4px 0; font-variant-numeric: tabular-nums; }
+    .result-card .cost { font: 700 20px var(--font-numeric); color: var(--color-brand); font-variant-numeric: tabular-nums; }
+    .result-card .cost-sub { font: 500 12px var(--font-body); color: var(--gray-500); }
+
+    /* Buttons */
+    .btn { min-height: 44px; padding: 0 18px; border-radius: var(--radius); font: 600 14px var(--font-body); cursor: pointer; border: 1px solid transparent; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: all var(--transition); }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--color-brand); color: white; }
+    .btn-primary:hover { background: var(--color-brand-dark); }
+    .btn-secondary { background: var(--gray-100); color: var(--gray-900); border-color: var(--gray-200); }
+    .btn-secondary:hover { background: var(--gray-200); border-color: var(--gray-300); }
+    .btn-ghost { background: transparent; color: var(--gray-700); }
+    .btn-ghost:hover { background: var(--gray-100); }
+    .btn-sm { min-height: 36px; padding: 0 12px; font-size: 13px; }
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+
+    /* Power breakdown */
+    .breakdown { display: grid; grid-template-columns: 240px 1fr; gap: 32px; align-items: center; padding: 16px; background: var(--gray-50); border-radius: var(--radius); margin-top: 8px; }
+    .viewport.mobile .breakdown { grid-template-columns: 1fr; gap: 16px; }
+    .legend { display: grid; gap: 8px; font: 500 13px var(--font-body); }
+    .legend-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: var(--radius-sm); background: white; border: 1px solid var(--gray-200); }
+    .legend-item .left { display: flex; align-items: center; gap: 8px; }
+    .legend-item .swatch { width: 12px; height: 12px; border-radius: 3px; }
+    .legend-item .label { font-weight: 600; color: var(--gray-900); }
+    .legend-item .watts { font: 700 14px var(--font-numeric); color: var(--gray-700); font-variant-numeric: tabular-nums; }
+
+    /* Per-workload perf */
+    .perf-list { display: grid; gap: 6px; margin-top: 16px; font: 500 13px var(--font-numeric); font-variant-numeric: tabular-nums; }
+    .perf-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--gray-50); border-radius: var(--radius-sm); }
+    .perf-item .workload { font-family: var(--font-body); color: var(--gray-700); }
+    .perf-item .metrics { display: flex; gap: 12px; color: var(--gray-900); font-weight: 600; }
+    .perf-item .metric-tag { background: var(--gray-200); color: var(--gray-700); padding: 1px 6px; border-radius: 3px; font-size: 11px; }
+
+    /* Multi-system summary */
+    .multi-summary { background: linear-gradient(135deg, var(--gray-50) 0%, white 100%); border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 20px; margin-top: 24px; }
+    .multi-summary h3 { font: 700 14px var(--font-display); margin: 0 0 12px; color: var(--gray-900); }
+    .multi-grid { display: grid; gap: 12px; }
+    .viewport:not(.mobile) .multi-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .viewport.mobile .multi-grid { grid-template-columns: 1fr; }
+    .multi-tile { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 14px; }
+    .multi-tile .name { font: 700 13px var(--font-body); color: var(--gray-900); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .multi-tile .kwh { font: 800 22px var(--font-display); color: var(--gray-900); font-variant-numeric: tabular-nums; }
+    .multi-tile .cost { font: 700 16px var(--font-numeric); color: var(--color-brand); font-variant-numeric: tabular-nums; }
+    .multi-tile .meta { font: 500 11px var(--font-body); color: var(--gray-500); margin-top: 4px; }
+
+    /* Compare */
+    table { width: 100%; border-collapse: collapse; font: 500 14px var(--font-numeric); font-variant-numeric: tabular-nums; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--gray-100); }
+    th { background: var(--gray-50); font: 700 11px var(--font-display); text-transform: uppercase; color: var(--gray-600); letter-spacing: 0.05em; }
+    tbody tr:hover { background: var(--gray-50); }
+    tfoot td { border-top: 2px solid var(--color-brand); font-weight: 700; }
+    .diff-positive { color: var(--color-success); font-weight: 600; }
+
+    /* Suggestions */
+    .suggestion { border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: 18px; border-left: 4px solid var(--color-brand); margin-bottom: 12px; background: white; transition: all var(--transition); }
+    .suggestion:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .suggestion .category { font: 700 11px var(--font-body); color: var(--color-brand); text-transform: uppercase; letter-spacing: 0.06em; }
+    .suggestion .swap { display: flex; justify-content: space-between; align-items: flex-start; margin: 8px 0; gap: 16px; }
+    .suggestion .current { color: var(--gray-400); text-decoration: line-through; font: 500 13px var(--font-body); }
+    .suggestion .alternative { font: 700 20px var(--font-display); margin-top: 2px; }
+    .suggestion .meta { font: 500 13px var(--font-body); color: var(--gray-600); margin-top: 4px; }
+    .suggestion .impact { text-align: right; font: 800 16px var(--font-numeric); color: var(--color-success); font-variant-numeric: tabular-nums; line-height: 1.4; }
+    .suggestion .impact .sub { font-size: 11px; color: var(--gray-500); }
+
+    /* Data freshness */
+    .freshness-row { display: grid; grid-template-columns: 200px 1fr auto; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--gray-100); align-items: center; }
+    .freshness-row:last-child { border-bottom: none; }
+    .freshness-row .key { font: 700 14px var(--font-display); color: var(--gray-900); }
+    .freshness-row .val { font: 500 13px var(--font-numeric); color: var(--gray-700); font-variant-numeric: tabular-nums; }
+    .freshness-row .action { font: 600 12px var(--font-body); color: var(--color-brand); background: none; border: none; cursor: pointer; padding: 4px 8px; }
+
+    /* About */
+    .about-section { margin-bottom: 24px; }
+    .about-section h2 { font: 700 18px var(--font-display); margin: 0 0 12px; color: var(--gray-900); }
+    .about-section p, .about-section li { font: 500 14px var(--font-body); line-height: 1.6; color: var(--gray-700); }
+    .formula { font: 500 13px var(--font-mono); background: var(--gray-100); padding: 12px 16px; border-radius: var(--radius); margin: 8px 0; border-left: 3px solid var(--color-brand); }
+
+    /* Screens */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* Notes */
+    .note { background: #fff8e1; border-left: 4px solid var(--color-warning); padding: 10px 14px; font: 500 13px var(--font-body); color: var(--gray-700); border-radius: 0 var(--radius) var(--radius) 0; margin-bottom: 16px; }
+    .note strong { color: var(--gray-900); }
+    .toast { background: var(--gray-950); color: white; padding: 12px 16px; border-radius: var(--radius); font: 500 13px var(--font-body); position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 100; }
+  </style>
+</head>
+<body>
+  <div class="preview-bar">
+    <h1>PC Power Calculator — UI preview</h1>
+    <span class="badge v2">v2 · Multi-system</span>
+    <div class="toggle-group">
+      <button id="vw-desktop" class="active">Desktop ≥1024 px</button>
+      <button id="vw-mobile">Mobile ≤768 px</button>
+    </div>
+    <div class="tabs">
+      <button data-screen="calculator" class="active">Calculator</button>
+      <button data-screen="compare">Compare</button>
+      <button data-screen="suggestions">Suggestions</button>
+      <button data-screen="data">Data</button>
+      <button data-screen="about">About</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="viewport" id="viewport">
+      <header class="topnav">
+        <a href="#" class="brand"><span class="bolt">⚡</span> PC Power Calculator</a>
+        <nav>
+          <a href="#" class="active">Calculator</a>
+          <a href="#">Compare</a>
+          <a href="#">Suggest</a>
+          <a href="#">Data</a>
+          <a href="#">About</a>
+        </nav>
+      </header>
+
+      <main>
+        <!-- ============ CALCULATOR ============ -->
+        <section class="screen active" data-screen="calculator">
+          <div class="note"><strong>Multi-system view:</strong> user can define several named systems (e.g. <em>Gaming PC</em>, <em>Workstation</em>, <em>NAS</em>), each with its own components + schedule. Switch via chips below. Results and donut update per system.</div>
+
+          <!-- System selector chips -->
+          <div class="system-selector">
+            <button class="system-chip active">⚡ Gaming PC <span class="x">×</span></button>
+            <button class="system-chip">💼 Workstation <span class="x">×</span></button>
+            <button class="system-chip">🗄️ Home NAS <span class="x">×</span></button>
+            <button class="system-chip">🤖 AI inference rig <span class="x">×</span></button>
+            <button class="system-chip add">+ Add system</button>
+          </div>
+
+          <div class="grid grid-2col" style="margin-top: 16px;">
+            <!-- 1. Build -->
+            <div class="card">
+              <h2 class="card-title"><span class="card-title-text"><span class="step">1</span>Your Build</span><button class="icon-btn" title="Customize">⚙</button></h2>
+
+              <div>
+                <select aria-label="Select CPU"><option>AMD Ryzen 7 7800X3D (120 W)</option></select>
+                <div class="component-row">
+                  <div class="info">
+                    <div class="label">CPU</div>
+                    <div class="name">AMD Ryzen 7 7800X3D <span class="tdp">120 W</span></div>
+                  </div>
+                  <div class="actions">
+                    <button class="icon-btn" title="Override TDP">✎</button>
+                    <button class="icon-btn danger" title="Remove">×</button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <select aria-label="Select GPU"><option>NVIDIA GeForce RTX 4070 (200 W)</option></select>
+                <div class="component-row">
+                  <div class="info">
+                    <div class="label">GPU</div>
+                    <div class="name">NVIDIA GeForce RTX 4070 <span class="tdp">200 W</span></div>
+                  </div>
+                  <div class="actions">
+                    <button class="icon-btn" title="Override TDP">✎</button>
+                    <button class="icon-btn danger" title="Remove">×</button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <select aria-label="Select motherboard"><option>ASUS ROG Strix X670E-E (12 W)</option></select>
+                <div class="component-row">
+                  <div class="info">
+                    <div class="label">Motherboard</div>
+                    <div class="name">ASUS ROG Strix X670E-E <span class="tdp">12 W</span></div>
+                  </div>
+                  <div class="actions">
+                    <button class="icon-btn" title="Override TDP">✎</button>
+                    <button class="icon-btn danger" title="Remove">×</button>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <select aria-label="Select PSU"><option>Corsair RM850x (850 W · Gold)</option></select>
+                <div class="component-row">
+                  <div class="info">
+                    <div class="label">PSU</div>
+                    <div class="name">Corsair RM850x <span class="tdp">850 W · Gold</span></div>
+                  </div>
+                  <div class="actions">
+                    <button class="icon-btn" title="Override TDP">✎</button>
+                    <button class="icon-btn danger" title="Remove">×</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Customisation drawer (collapsed by default) -->
+              <details class="customize-drawer">
+                <summary class="header">⚙ Customisation</summary>
+                <div style="margin-top: 8px;">
+                  <div class="row">
+                    <label>CPU TDP override (W)</label>
+                    <input type="number" min="0" step="1" placeholder="120" />
+                  </div>
+                  <div class="row">
+                    <label>GPU TDP override (W)</label>
+                    <input type="number" min="0" step="1" placeholder="200" />
+                  </div>
+                  <div class="row">
+                    <label>+ Add custom peripheral (e.g., extra fans, LED strip, USB hub)</label>
+                  </div>
+                  <div class="row" style="gap: 4px;">
+                    <input type="text" placeholder="Peripheral name" style="flex: 2;" />
+                    <input type="number" placeholder="W" min="0" step="0.5" style="flex: 1;" />
+                    <button class="btn btn-secondary btn-sm">Add</button>
+                  </div>
+                </div>
+              </details>
+
+              <button class="btn btn-ghost btn-sm" style="margin-top: 12px; width: 100%;">+ Add component (RAM, storage, cooler, monitor…)</button>
+            </div>
+
+            <!-- 2. Location & Tariff -->
+            <div class="card">
+              <h2 class="card-title"><span class="card-title-text"><span class="step">2</span>Location & Tariff</span></h2>
+              <div style="display: grid; gap: 12px;">
+                <label>
+                  <div style="font: 600 12px var(--font-body); color: var(--gray-700); margin-bottom: 4px;">Country</div>
+                  <select><option>India (IN)</option></select>
+                </label>
+                <label>
+                  <div style="font: 600 12px var(--font-body); color: var(--gray-700); margin-bottom: 4px;">State / Province</div>
+                  <select><option>Kerala (IN-KL)</option></select>
+                </label>
+                <div style="background: var(--gray-50); border-radius: var(--radius); padding: 12px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                    <div class="tabular-nums font-numeric">
+                      <div style="font: 700 18px; color: var(--color-brand);">₹7.50 <span style="font: 500 13px; color: var(--gray-500);">/ kWh</span></div>
+                      <div style="font: 500 11px; color: var(--gray-500); margin-top: 2px;">FX as of 2026-09-15 (bundled)</div>
+                    </div>
+                    <button class="btn btn-secondary btn-sm">Detect from IP ↻</button>
+                  </div>
+                </div>
+                <div>
+                  <div style="font: 600 12px var(--font-body); color: var(--gray-700); margin-bottom: 4px;">Override rate (₹/kWh)</div>
+                  <div class="input-group">
+                    <span class="input-prefix">₹</span>
+                    <input type="number" inputmode="decimal" min="0" step="0.01" placeholder="7.50" />
+                  </div>
+                </div>
+                <div style="font: 500 11px var(--font-body); color: var(--gray-500);">Tariff data last updated 2026-09-21 · Kerala KSEB slab tariff</div>
+              </div>
+            </div>
+
+            <!-- 3. Schedule -->
+            <div class="card full">
+              <h2 class="card-title"><span class="card-title-text"><span class="step">3</span>Usage schedule</span><span style="font: 500 13px var(--font-body); color: var(--gray-500);">Total: 24 h/day</span></h2>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px;">
+                <div class="schedule-row"><div class="header"><span class="workload">🎮 Gaming (1080p)</span><span class="hours">4 h/day</span></div><input type="range" min="0" max="24" step="0.5" value="4" /></div>
+                <div class="schedule-row"><div class="header"><span class="workload">📺 Office</span><span class="hours">8 h/day</span></div><input type="range" min="0" max="24" step="0.5" value="8" /></div>
+                <div class="schedule-row"><div class="header"><span class="workload">🌐 Browser</span><span class="hours">4 h/day</span></div><input type="range" min="0" max="24" step="0.5" value="4" /></div>
+                <div class="schedule-row"><div class="header"><span class="workload">💤 Idle</span><span class="hours">8 h/day</span></div><input type="range" min="0" max="24" step="0.5" value="8" /></div>
+                <div class="schedule-row"><div class="header"><span class="workload">🎬 Blender render</span><span class="hours">0 h/day</span></div><input type="range" min="0" max="24" step="0.5" value="0" /></div>
+                <div class="schedule-row"><div class="header"><span class="workload">🤖 LLM inference</span><span class="hours">0 h/day</span></div><input type="range" min="0" max="24" step="0.5" value="0" /></div>
+              </div>
+              <details class="customize-drawer">
+                <summary class="header">⚙ Custom workload</summary>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px;">
+                  <input type="text" placeholder="Name (e.g. Crypto)" />
+                  <input type="number" placeholder="CPU %" min="0" max="100" />
+                  <input type="number" placeholder="GPU %" min="0" max="100" />
+                  <button class="btn btn-secondary btn-sm">Add</button>
+                </div>
+              </details>
+            </div>
+
+            <!-- 4. Results -->
+            <div class="card full">
+              <h2 class="card-title"><span class="card-title-text"><span class="step">4</span>Results — Gaming PC</span><button class="btn btn-ghost btn-sm">⤓ Export</button></h2>
+              <div class="results-row">
+                <div class="result-card">
+                  <div class="label">Daily</div>
+                  <div class="value">1.2 kWh</div>
+                  <div class="cost">₹9.00</div>
+                  <div class="cost-sub">avg over 24 h schedule</div>
+                </div>
+                <div class="result-card">
+                  <div class="label">Monthly</div>
+                  <div class="value">36 kWh</div>
+                  <div class="cost">₹273</div>
+                  <div class="cost-sub">× 30.44 days</div>
+                </div>
+                <div class="result-card primary">
+                  <div class="label">Yearly</div>
+                  <div class="value">442 kWh</div>
+                  <div class="cost">₹3,318</div>
+                  <div class="cost-sub">× 365.25 days</div>
+                </div>
+              </div>
+
+              <div class="breakdown">
+                <svg viewBox="0 0 200 200" width="240" height="240" aria-label="Power draw breakdown donut">
+                  <!-- Donut: CPU 95W, GPU 220W, RAM 12W, MB 12W = 339W total; circumference 2πr=439.8 -->
+                  <circle cx="100" cy="100" r="70" fill="none" stroke="var(--color-brand)" stroke-width="40"
+                          stroke-dasharray="124 439" transform="rotate(-90 100 100)" />
+                  <circle cx="100" cy="100" r="70" fill="none" stroke="#3b82f6" stroke-width="40"
+                          stroke-dasharray="286 439" stroke-dashoffset="-124" transform="rotate(-90 100 100)" />
+                  <circle cx="100" cy="100" r="70" fill="none" stroke="#10b981" stroke-width="40"
+                          stroke-dasharray="15 439" stroke-dashoffset="-410" transform="rotate(-90 100 100)" />
+                  <circle cx="100" cy="100" r="70" fill="none" stroke="#f59e0b" stroke-width="40"
+                          stroke-dasharray="15 439" stroke-dashoffset="-425" transform="rotate(-90 100 100)" />
+                  <text x="100" y="94" text-anchor="middle" font-family="Inter" font-size="14" font-weight="700" fill="var(--gray-900)">339 W</text>
+                  <text x="100" y="115" text-anchor="middle" font-family="Inter" font-size="11" fill="var(--gray-500)">wall draw</text>
+                </svg>
+                <div class="legend">
+                  <div class="legend-item"><span class="left"><span class="swatch" style="background:var(--color-brand)"></span><span class="label">CPU</span></span><span class="watts">95 W</span></div>
+                  <div class="legend-item"><span class="left"><span class="swatch" style="background:#3b82f6"></span><span class="label">GPU</span></span><span class="watts">220 W</span></div>
+                  <div class="legend-item"><span class="left"><span class="swatch" style="background:#10b981"></span><span class="label">RAM</span></span><span class="watts">12 W</span></div>
+                  <div class="legend-item"><span class="left"><span class="swatch" style="background:#f59e0b"></span><span class="label">Motherboard</span></span><span class="watts">12 W</span></div>
+                </div>
+              </div>
+
+              <div class="perf-list">
+                <div class="perf-item"><span class="workload">🎮 Gaming (1080p)</span><span class="metrics"><span>88 fps <span class="metric-tag">RTX 4070</span></span><span>410 s <span class="metric-tag">CPU render</span></span></span></div>
+                <div class="perf-item"><span class="workload">📺 Office</span><span class="metrics"><span style="color: var(--gray-400);">—</span></span></div>
+                <div class="perf-item"><span class="workload">🌐 Browser</span><span class="metrics"><span style="color: var(--gray-400);">—</span></span></div>
+                <div class="perf-item"><span class="workload">💤 Idle</span><span class="metrics"><span style="color: var(--gray-400);">—</span></span></div>
+              </div>
+
+              <div class="btn-row">
+                <button class="btn btn-primary">⇄ Compare systems</button>
+                <button class="btn btn-secondary">💡 Suggest lower-power</button>
+                <button class="btn btn-secondary">⤓ Export PDF</button>
+                <button class="btn btn-secondary">⤓ Export HTML</button>
+                <button class="btn btn-ghost">↗ Share URL</button>
+              </div>
+
+              <!-- Multi-system summary -->
+              <div class="multi-summary">
+                <h3>📊 All your systems at a glance</h3>
+                <div class="multi-grid">
+                  <div class="multi-tile">
+                    <div class="name">⚡ Gaming PC</div>
+                    <div class="kwh">442 kWh/yr</div>
+                    <div class="cost">₹3,318/yr</div>
+                    <div class="meta">4 h gaming · 8 h office · 12 h idle</div>
+                  </div>
+                  <div class="multi-tile">
+                    <div class="name">💼 Workstation</div>
+                    <div class="kwh">286 kWh/yr</div>
+                    <div class="cost">₹2,145/yr</div>
+                    <div class="meta">8 h render · 8 h office · 8 h idle</div>
+                  </div>
+                  <div class="multi-tile">
+                    <div class="name">🗄️ Home NAS</div>
+                    <div class="kwh">142 kWh/yr</div>
+                    <div class="cost">₹1,065/yr</div>
+                    <div class="meta">24 h idle · 2 h heavy</div>
+                  </div>
+                  <div class="multi-tile">
+                    <div class="name">🤖 AI inference rig</div>
+                    <div class="kwh">1,840 kWh/yr</div>
+                    <div class="cost">₹13,800/yr</div>
+                    <div class="meta">12 h inference · 12 h idle</div>
+                  </div>
+                </div>
+                <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                  <div class="tabular-nums font-numeric">
+                    <span style="font: 500 13px var(--font-body); color: var(--gray-500);">All systems combined</span>
+                    <div style="font: 800 24px var(--font-display); color: var(--gray-900);">2,710 kWh/yr</div>
+                  </div>
+                  <div class="tabular-nums font-numeric" style="text-align: right;">
+                    <span style="font: 500 13px var(--font-body); color: var(--gray-500);">Total annual cost</span>
+                    <div style="font: 800 28px var(--font-display); color: var(--color-brand);">₹20,328</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ COMPARE ============ -->
+        <section class="screen" data-screen="compare">
+          <div class="note"><strong>Spec reference:</strong> T9 — TanStack Table side-by-side. Build picker lets the user select any 2 systems (from the chips) or import a custom one.</div>
+          <h1 class="card-title" style="font-size: 24px;">Compare systems</h1>
+          <div class="card" style="margin-bottom: 16px;">
+            <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center;">
+              <div>
+                <div style="font: 600 11px var(--font-body); color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">System A</div>
+                <select><option>⚡ Gaming PC (current)</option><option>💼 Workstation</option><option>🗄️ Home NAS</option></select>
+              </div>
+              <div style="font: 800 20px var(--font-display); color: var(--gray-400);">vs</div>
+              <div>
+                <div style="font: 600 11px var(--font-body); color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">System B</div>
+                <select><option>💼 Workstation</option><option>🗄️ Home NAS</option><option>+ Custom build…</option></select>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Workload</th>
+                  <th>Gaming PC · kWh/yr</th>
+                  <th>Gaming PC · ₹/yr</th>
+                  <th>Workstation · kWh/yr</th>
+                  <th>Workstation · ₹/yr</th>
+                  <th>Δ Cost</th>
+                  <th>B perf</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>🎮 Gaming (1080p)</td><td>105</td><td>₹788</td><td>0</td><td>₹0</td><td class="diff-positive">−₹788</td><td style="color: var(--gray-400);">—</td></tr>
+                <tr><td>🎬 Blender</td><td>0</td><td>₹0</td><td>180</td><td>₹1,350</td><td class="diff-positive">+₹1,350</td><td>410 s</td></tr>
+                <tr><td>📺 Office</td><td>67</td><td>₹503</td><td>52</td><td>₹390</td><td class="diff-positive">−₹113</td><td>—</td></tr>
+                <tr><td>🌐 Browser</td><td>34</td><td>₹255</td><td>26</td><td>₹195</td><td class="diff-positive">−₹60</td><td>—</td></tr>
+                <tr><td>💤 Idle</td><td>236</td><td>₹1,770</td><td>28</td><td>₹210</td><td class="diff-positive">−₹1,560</td><td>—</td></tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Yearly total</td>
+                  <td>442</td>
+                  <td style="color: var(--color-brand);">₹3,316</td>
+                  <td>286</td>
+                  <td style="color: var(--color-brand);">₹2,145</td>
+                  <td class="diff-positive">−₹1,171</td>
+                  <td>—</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <p style="margin-top: 16px; font-size: 14px; color: var(--gray-700);">
+            <strong style="color: var(--color-success);">Workstation saves ₹1,171/year</strong> on combined workloads (assuming the gaming workload is removed). Note: this comparison uses 24/7 schedules for both — adjust workload hours per system before drawing conclusions.
+          </p>
+          <div class="btn-row">
+            <button class="btn btn-primary">⤓ Export PDF</button>
+            <button class="btn btn-secondary">⤓ Export HTML</button>
+            <button class="btn btn-ghost">↗ Share URL</button>
+          </div>
+        </section>
+
+        <!-- ============ SUGGESTIONS ============ -->
+        <section class="screen" data-screen="suggestions">
+          <div class="note"><strong>Spec reference:</strong> T11 — rule-based lower-power alternatives with ≥90 % perf retention.</div>
+          <h1 class="card-title" style="font-size: 24px;">💡 Suggestions for Gaming PC</h1>
+          <p style="color: var(--gray-600); font-size: 14px; margin-bottom: 16px;">
+            Lower-power alternatives that retain ≥90 % of the relevant performance for this system. Suggestions are heuristic — verify benchmarks before swapping.
+          </p>
+          <div class="suggestion">
+            <div class="category">CPU</div>
+            <div class="swap">
+              <div style="flex: 1;">
+                <div class="current">AMD Ryzen 9 7900X · 170 W →</div>
+                <div class="alternative">AMD Ryzen 7 7800X3D</div>
+                <div class="meta">120 W · 95 % perf retained · 8-core / 16-thread · AM5</div>
+              </div>
+              <div class="impact">−132 kWh/yr<div class="sub">−₹990/yr</div></div>
+            </div>
+            <button class="btn btn-secondary btn-sm" style="margin-top: 12px;">Apply to Gaming PC</button>
+          </div>
+          <div class="suggestion">
+            <div class="category">GPU</div>
+            <div class="swap">
+              <div style="flex: 1;">
+                <div class="current">NVIDIA RTX 4070 Ti · 285 W →</div>
+                <div class="alternative">NVIDIA GeForce RTX 4070 SUPER</div>
+                <div class="meta">220 W · 92 % perf retained · 12 GB GDDR6X</div>
+              </div>
+              <div class="impact">−178 kWh/yr<div class="sub">−₹1,335/yr</div></div>
+            </div>
+            <button class="btn btn-secondary btn-sm" style="margin-top: 12px;">Apply to Gaming PC</button>
+          </div>
+          <div class="suggestion">
+            <div class="category">Motherboard</div>
+            <div class="swap">
+              <div style="flex: 1;">
+                <div class="current">ASUS ROG Strix X670E-E · 12 W →</div>
+                <div class="alternative">MSI MAG B650 Tomahawk WiFi</div>
+                <div class="meta">7 W · comparable features · ATX · DDR5</div>
+              </div>
+              <div class="impact">−14 kWh/yr<div class="sub">−₹105/yr</div></div>
+            </div>
+            <button class="btn btn-secondary btn-sm" style="margin-top: 12px;">Apply to Gaming PC</button>
+          </div>
+          <div class="suggestion">
+            <div class="category">Storage</div>
+            <div class="swap">
+              <div style="flex: 1;">
+                <div class="current">4× HDD array · 32 W →</div>
+                <div class="alternative">1× NVMe + 1× HDD (deduped)</div>
+                <div class="meta">14 W · similar capacity · much faster reads</div>
+              </div>
+              <div class="impact">−49 kWh/yr<div class="sub">−₹368/yr</div></div>
+            </div>
+            <button class="btn btn-secondary btn-sm" style="margin-top: 12px;">Apply to Gaming PC</button>
+          </div>
+        </section>
+
+        <!-- ============ DATA FRESHNESS ============ -->
+        <section class="screen" data-screen="data">
+          <div class="note"><strong>Spec reference:</strong> T16 — version + last-updated dates for every JSON.</div>
+          <h1 class="card-title" style="font-size: 24px;">📊 Data freshness</h1>
+          <div class="card">
+            <div class="freshness-row"><div class="key">components.json</div><div class="val">Last updated 2026-09-21 · 76 components</div><button class="action">↻ Refresh</button></div>
+            <div class="freshness-row"><div class="key">tariffs.json</div><div class="val">Last updated 2026-09-21 · 18 countries · 33 Indian states · 20 US states</div><button class="action">↻ Refresh</button></div>
+            <div class="freshness-row"><div class="key">benchmarks.json</div><div class="val">Last updated 2026-09-21 · 47 entries · 5 workload categories</div><button class="action">↻ Refresh</button></div>
+            <div class="freshness-row"><div class="key">currencies.json</div><div class="val">Last updated 2026-09-21 · 14 currencies</div></div>
+            <div class="freshness-row"><div class="key">fx_rates.json</div><div class="val">Snapshot 2026-09-15 · source: bundled</div><button class="action">↻ Refresh FX</button></div>
+            <div class="freshness-row"><div class="key">power_profiles.json</div><div class="val">Last updated 2026-09-21 · 7 idle profiles · 6 PSU curves</div></div>
+            <div class="freshness-row"><div class="key">workloads.json</div><div class="val">Last updated 2026-09-21 · 16 workloads</div></div>
+          </div>
+        </section>
+
+        <!-- ============ ABOUT ============ -->
+        <section class="screen" data-screen="about">
+          <div class="note"><strong>Spec reference:</strong> T16 — methodology + license + contribute.</div>
+          <h1 class="card-title" style="font-size: 24px;">ⓘ About & Methodology</h1>
+          <div class="about-section card">
+            <h2>How we calculate</h2>
+            <p>Per-component power at a workload is computed as:</p>
+            <pre class="formula">P(w) = P_idle + (P_tdp − P_idle) × util(w)</pre>
+            <p>PSU efficiency is interpolated from the 80+ curve for the rating tier and load percentage. Wall draw = component sum ÷ efficiency. Tiered (slab) tariffs are walked in order; taxes are applied per the location's rules.</p>
+          </div>
+          <div class="about-section card">
+            <h2>Data sources</h2>
+            <ul>
+              <li>Component specs — manufacturer pages, TechPowerUp database</li>
+              <li>Electricity tariffs — public utility regulators (CEA, EIA, Ofgem, Eurostat)</li>
+              <li>FX rates — exchangerate.host (free, no key)</li>
+              <li>Geolocation — ipapi.co (free tier)</li>
+              <li>Benchmarks — TechPowerUp, Gamers Nexus, Blender Open Data, PassMark, WhatToMine, Puget Systems</li>
+            </ul>
+          </div>
+          <div class="about-section card">
+            <h2>Customisation</h2>
+            <p>Every component has a per-system TDP override (e.g., for overclocked CPUs, third-party coolers). Per-system custom peripherals (fans, RGB, USB hubs) and per-system custom workloads (utilization profile) are supported.</p>
+          </div>
+          <div class="about-section card">
+            <h2>Disclaimer</h2>
+            <p>Numbers are estimates. Your actual electricity bill is the ground truth. Tariffs change frequently — always verify with your utility.</p>
+          </div>
+          <div class="about-section card">
+            <h2>Contribute</h2>
+            <p>PRs welcome on <a href="https://github.com/amitwh/pc-power-calculator" style="color: var(--color-brand);">github.com/amitwh/pc-power-calculator</a>. Especially: new countries / states / components / benchmarks.</p>
+          </div>
+        </section>
+      </main>
+
+      <nav class="mobile-nav">
+        <a href="#" class="active"><span class="icon">⚡</span>Calc</a>
+        <a href="#"><span class="icon">⇄</span>Compare</a>
+        <a href="#"><span class="icon">💡</span>Suggest</a>
+        <a href="#"><span class="icon">📊</span>Data</a>
+        <a href="#"><span class="icon">ⓘ</span>About</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="toast">Multi-system view saved · 4 systems</div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tabs button[data-screen]');
+    const screens = document.querySelectorAll('.screen');
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        screens.forEach((s) => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`.screen[data-screen="${tab.dataset.screen}"]`).classList.add('active');
+      });
+    });
+
+    const viewport = document.getElementById('viewport');
+    document.getElementById('vw-desktop').addEventListener('click', () => {
+      viewport.classList.remove('mobile');
+      document.getElementById('vw-desktop').classList.add('active');
+      document.getElementById('vw-mobile').classList.remove('active');
+    });
+    document.getElementById('vw-mobile').addEventListener('click', () => {
+      viewport.classList.add('mobile');
+      document.getElementById('vw-mobile').classList.add('active');
+      document.getElementById('vw-desktop').classList.remove('active');
+    });
+
+    // System chip switching
+    document.querySelectorAll('.system-chip:not(.add)').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.system-chip:not(.add)').forEach((c) => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
