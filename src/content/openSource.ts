@@ -118,7 +118,7 @@ export const OPEN_SOURCE_PROJECTS: OpenSourceProject[] = [
       "CurveExpert's commercial licence is one a student or a small laboratory cannot justify, and closed software cannot be checked. AGPL keeps the source public and lets a lab audit exactly how a fit was produced. A fit that does not converge is reported as failed, never replaced by a plausible-looking result.",
     links: [
       { label: 'Source', href: 'https://github.com/amitwh/ConcreteInfo_CurveStudio' },
-      { label: 'Open the app', href: 'https://curvestudio.concreteinfo.co.in' },
+      { label: 'Open the app', href: 'https://curvestudio.concreteinfo.cloud' },
     ],
   },
   {
