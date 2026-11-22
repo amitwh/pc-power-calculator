@@ -130,10 +130,13 @@ const TOOLS: Tool[] = [
     icon: FileType2,
     tile: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-500/20 dark:text-cyan-300',
     repo: 'https://github.com/amitwh/markdown-converter',
-    what: 'A cross-platform Markdown editor and document converter powered by Pandoc, built with Electron 45 and Node 24, with no proprietary dependencies. Live preview while you write, then export to PDF, Word, HTML, EPUB and LaTeX. It also carries a visual flowchart editor — a maxGraph canvas with a connector tool, exporting SVG, PNG and VSDX — a PDF toolkit (merge, split, rotate, delete, reorder, watermark, encrypt), find-and-replace with a live match counter, and an ASCII art studio.',
+    what: 'A cross-platform Markdown editor and document converter powered by Pandoc, built with Electron 45 and Node 24, with no proprietary dependencies. Live preview while you write, then export to PDF, Word, HTML, EPUB and LaTeX. It also carries a visual flowchart editor — a maxGraph canvas with a connector tool, exporting SVG, PNG and VSDX — a PDF toolkit (merge, split, rotate, delete, reorder, watermark, encrypt), find-and-replace with a live match counter, and an ASCII art studio. The current release, 4.14.1, ships a .deb, an AppImage, a macOS .dmg and a Windows .exe.',
     whyFree:
       'Pandoc, the engine underneath, is free and open source, and so is everything wrapped around it. No account, no usage limits, no telemetry, no proprietary dependencies. A document tool that sits on your machine all day should not cost anything to own.',
-    links: [{ label: 'Source', href: 'https://github.com/amitwh/markdown-converter' }],
+    links: [
+      { label: 'Source', href: 'https://github.com/amitwh/markdown-converter' },
+      { label: 'Releases', href: 'https://github.com/amitwh/markdown-converter/releases' },
+    ],
   },
 ];
 
@@ -182,7 +185,7 @@ export default function About() {
       {/* The hero. The page now carries card grids rather than a single column
           of prose, so it opens on the guides hub's wide, blob-washed panel
           instead of the old narrow rule-and-paragraph stack. */}
-      <section className="relative overflow-hidden rounded-16 border border-gray-200 bg-white p-6 shadow-card dark:border-gray-800 dark:bg-gray-900 md:p-10">
+      <section className="relative overflow-hidden rounded-16 border border-gray-200 bg-white p-5 shadow-card dark:border-gray-800 dark:bg-gray-900 md:p-10">
         {/* A soft brand wash bleeding in from the corner. Decorative, so it
             stays out of the accessibility tree. */}
         <div
@@ -197,18 +200,21 @@ export default function About() {
               (visually hidden), so this stays a styled paragraph to keep
               exactly one h1 in the accessibility tree — the same convention
               the home page, the guides hub and the help page use. */}
-          <p className="mt-2 font-display text-3xl font-bold tracking-tight text-gray-950 dark:text-gray-50 md:text-4xl">
+          <p className="mt-2 font-display text-2xl font-bold tracking-tight text-gray-950 dark:text-gray-50 md:text-4xl">
             About &amp; methodology
           </p>
-          <p className="mt-3 max-w-2xl text-sm text-gray-600 dark:text-gray-300">
+          <p className="mt-2 max-w-2xl text-sm text-gray-600 dark:text-gray-300 md:mt-3">
             Who makes it, why it is free, how the estimate is built, where to check our figures — and
             the free tools ConcreteInfo builds alongside it.
           </p>
 
           {/* The three promises, as cards. The <dt> and <dd> stay direct
               children of their grouping <div> — the pattern HTML allows
-              inside a <dl>, and the one axe's definition-list rule accepts. */}
-          <dl className="mt-6 grid gap-3 sm:grid-cols-3">
+              inside a <dl>, and the one axe's definition-list rule accepts.
+              Why the tighter mobile margin: the cards stack into a single
+              column on a phone, and the old 24px gap pushed the first card
+              off the first screen. */}
+          <dl className="mt-4 grid gap-3 sm:grid-cols-3 md:mt-6">
             {VALUES.map((value) => {
               const Icon = value.icon;
               return (
@@ -334,6 +340,57 @@ export default function About() {
           are the tools that are free to take and use.
         </p>
 
+        {/* The three tools. One column on a phone, two on a tablet, three on a
+            desktop. */}
+        <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {TOOLS.map((tool) => {
+            const Icon = tool.icon;
+            return (
+              <div
+                key={tool.name}
+                className="flex flex-col rounded-12 border border-gray-200 bg-white p-5 shadow-card dark:border-gray-800 dark:bg-gray-900"
+              >
+                <span
+                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${tool.tile}`}
+                >
+                  <Icon aria-hidden className="h-5 w-5" />
+                </span>
+                <h3 className="mt-3 font-display text-base font-bold">
+                  <ExternalLink href={tool.repo} className="hover:underline">
+                    {tool.name}
+                    <ArrowUpRight aria-hidden className="ml-1 inline h-3.5 w-3.5" />
+                  </ExternalLink>
+                </h3>
+                <p className={`mt-2 ${BODY}`}>{tool.what}</p>
+                {/* Why it is free, set apart: this is the point the card is
+                    making, so it gets its own tinted panel and its own label. */}
+                <div className="mt-4 rounded-12 bg-brand/5 p-4 dark:bg-brand/10">
+                  <p className={`text-[11px] font-semibold uppercase tracking-wide ${BRAND_TEXT}`}>
+                    Why it&rsquo;s free for everyone
+                  </p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                    {tool.whyFree}
+                  </p>
+                </div>
+                {/* mt-auto keeps the links on one line across all three cards,
+                    whatever the length of the paragraphs above them. */}
+                <div className="mt-auto flex flex-wrap gap-x-5 gap-y-1 pt-4">
+                  {tool.links.map((link) => (
+                    <ExternalLink
+                      key={link.href}
+                      href={link.href}
+                      className={`inline-flex min-h-11 items-center gap-1 text-sm font-semibold ${BRAND_TEXT} hover:underline`}
+                    >
+                      {link.label}
+                      <ArrowUpRight aria-hidden className="h-3.5 w-3.5" />
+                    </ExternalLink>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
         {/* The company card. */}
         <div className="mt-5 rounded-16 border border-gray-200 bg-white p-5 shadow-card dark:border-gray-800 dark:bg-gray-900 md:p-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
@@ -402,57 +459,6 @@ export default function About() {
               +91 9930954848
             </a>
           </div>
-        </div>
-
-        {/* The three tools. One column on a phone, two on a tablet, three on a
-            desktop. */}
-        <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {TOOLS.map((tool) => {
-            const Icon = tool.icon;
-            return (
-              <div
-                key={tool.name}
-                className="flex flex-col rounded-12 border border-gray-200 bg-white p-5 shadow-card dark:border-gray-800 dark:bg-gray-900"
-              >
-                <span
-                  className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${tool.tile}`}
-                >
-                  <Icon aria-hidden className="h-5 w-5" />
-                </span>
-                <h3 className="mt-3 font-display text-base font-bold">
-                  <ExternalLink href={tool.repo} className="hover:underline">
-                    {tool.name}
-                    <ArrowUpRight aria-hidden className="ml-1 inline h-3.5 w-3.5" />
-                  </ExternalLink>
-                </h3>
-                <p className={`mt-2 ${BODY}`}>{tool.what}</p>
-                {/* Why it is free, set apart: this is the point the card is
-                    making, so it gets its own tinted panel and its own label. */}
-                <div className="mt-4 rounded-12 bg-brand/5 p-4 dark:bg-brand/10">
-                  <p className={`text-[11px] font-semibold uppercase tracking-wide ${BRAND_TEXT}`}>
-                    Why it&rsquo;s free for everyone
-                  </p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-                    {tool.whyFree}
-                  </p>
-                </div>
-                {/* mt-auto keeps the links on one line across all three cards,
-                    whatever the length of the paragraphs above them. */}
-                <div className="mt-auto flex flex-wrap gap-x-5 gap-y-1 pt-4">
-                  {tool.links.map((link) => (
-                    <ExternalLink
-                      key={link.href}
-                      href={link.href}
-                      className={`inline-flex min-h-11 items-center gap-1 text-sm font-semibold ${BRAND_TEXT} hover:underline`}
-                    >
-                      {link.label}
-                      <ArrowUpRight aria-hidden className="h-3.5 w-3.5" />
-                    </ExternalLink>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
         </div>
 
         <p className={`mt-5 max-w-3xl ${BODY}`}>

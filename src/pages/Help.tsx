@@ -329,7 +329,7 @@ export default function Help() {
     <div className="mx-auto max-w-[1240px] px-4 py-6 md:px-8">
       {/* The hero. A guide page wants the weight of the guides hub, so it opens
           on the same wide, blob-washed panel. */}
-      <section className="relative overflow-hidden rounded-16 border border-gray-200 bg-white p-6 shadow-card dark:border-gray-800 dark:bg-gray-900 md:p-10">
+      <section className="relative overflow-hidden rounded-16 border border-gray-200 bg-white p-5 shadow-card dark:border-gray-800 dark:bg-gray-900 md:p-10">
         {/* A soft brand wash bleeding in from the corner. Decorative, so it
             stays out of the accessibility tree. */}
         <div
@@ -340,10 +340,10 @@ export default function Help() {
           <p className={`text-xs font-semibold uppercase tracking-[0.18em] ${BRAND_TEXT}`}>
             User guide
           </p>
-          <p className="mt-2 font-display text-3xl font-bold tracking-tight text-gray-950 dark:text-gray-50 md:text-4xl">
+          <p className="mt-2 font-display text-2xl font-bold tracking-tight text-gray-950 dark:text-gray-50 md:text-4xl">
             Help
           </p>
-          <p className="mt-3 max-w-2xl text-sm text-gray-600 dark:text-gray-300">
+          <p className="mt-2 max-w-2xl text-sm text-gray-600 dark:text-gray-300 md:mt-3">
             Add your parts, tell it how you use the machine, pick your tariff — then read the number
             and check where it came from.
           </p>

@@ -190,7 +190,7 @@ function GuidesHub() {
           app's 1240px measure rather than the 768px reading measure — at 768px
           there is room for exactly one column and 26 guides become an endless
           scroll. */}
-      <section className="relative overflow-hidden rounded-16 border border-gray-200 bg-white p-6 shadow-card dark:border-gray-800 dark:bg-gray-900 md:p-10">
+      <section className="relative overflow-hidden rounded-16 border border-gray-200 bg-white p-5 shadow-card dark:border-gray-800 dark:bg-gray-900 md:p-10">
         {/* A soft brand wash bleeding in from the corner. Decorative, so it
             stays out of the accessibility tree. */}
         <div
@@ -204,19 +204,27 @@ function GuidesHub() {
           {/* Visible page title. Layout already renders the route's single h1
               (visually hidden), so this stays a styled paragraph to keep
               exactly one h1 in the accessibility tree. */}
-          <p className="mt-2 font-display text-3xl font-bold tracking-tight text-gray-950 dark:text-gray-50 md:text-4xl">
+          <p className="mt-2 font-display text-2xl font-bold tracking-tight text-gray-950 dark:text-gray-50 md:text-4xl">
             Guides &amp; explainers
           </p>
           {/* Why the import: the visible lede and the page's meta description
               describe the same collection, so they read the same string — one
               place to change, and no chance of the two drifting apart. */}
-          <p className="mt-3 max-w-2xl text-sm text-gray-600 dark:text-gray-300">
+          <p className="mt-2 max-w-2xl text-sm text-gray-600 dark:text-gray-300 md:mt-3">
             {GUIDES_DESCRIPTION}
           </p>
           {/* One chip per category: the colour, the name and how many guides
               sit behind it. The chips are the page's colour signal, so the
-              count is never the only thing distinguishing them. */}
-          <div className="mt-5 flex flex-wrap gap-2">
+              count is never the only thing distinguishing them.
+              Why the tighter mobile classes: the category names are 18–19
+              characters, so at `text-sm` with a 24px tile each chip was over
+              200px wide and all three sat on their own row — pushing the
+              first guide card off the first screen. On a phone the tile is
+              dropped and the type shrunk: the chip keeps its colour tint and
+              its count, and the full-size icons are repeated in the filter
+              row directly below the hero, so no identity is lost. Two chips
+              then share a row at 320px as well as at 390px. */}
+          <div className="mt-4 flex flex-wrap gap-1 md:mt-5 md:gap-2">
             {GUIDE_CATEGORIES.map((item) => {
               const style = GUIDE_CATEGORY_STYLES[item.id];
               const Icon = style.symbol;
@@ -227,19 +235,28 @@ function GuidesHub() {
                   type="button"
                   aria-pressed={active}
                   onClick={() => setCategory(active ? 'all' : item.id)}
-                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900 ${
+                  className={`inline-flex items-center gap-1 rounded-full border px-1.5 py-1 text-[10px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900 md:gap-2 md:px-3 md:py-1.5 md:text-sm ${
                     active
                       ? 'border-brand/50 bg-brand/10 dark:border-brand/40 dark:bg-brand/15'
                       : `border-transparent ${style.chip} hover:border-brand/40`
                   }`}
                 >
                   <span
-                    className={`flex h-6 w-6 items-center justify-center rounded-full bg-white dark:bg-gray-900 ${style.icon}`}
+                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white dark:bg-gray-900 ${style.icon}`}
                   >
                     <Icon aria-hidden className="h-3.5 w-3.5" />
                   </span>
-                  <span className="text-gray-800 dark:text-gray-100">{item.label}</span>
-                  <span className="text-xs tabular-nums text-gray-600 dark:text-gray-300">
+                  {/* The short name below `sm`: at 320px the full labels and
+                      the icon tile cannot share a row, and the tile is worth
+                      more than the words — the full names are one row below in
+                      the filter pills. */}
+                  <span className="text-gray-800 dark:text-gray-100 sm:hidden">{style.short}</span>
+                  <span className="hidden text-gray-800 dark:text-gray-100 sm:inline">{item.label}</span>
+                  {/* The space is a flex-ignored whitespace node: it adds
+                      nothing visually, but it puts a gap in the accessible
+                      name so the button reads "Power 10", not "Power10". */}
+                  {' '}
+                  <span className="text-[11px] tabular-nums text-gray-600 dark:text-gray-300 md:text-xs">
                     {countInCategory(item.id).toLocaleString('en-IN')}
                   </span>
                 </button>

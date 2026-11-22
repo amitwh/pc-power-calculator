@@ -1,5 +1,5 @@
-import { describe, expect, test, beforeEach, afterEach } from 'vitest';
-import { getConsent, setConsent } from '@/lib/analytics/consent';
+import { describe, expect, test, beforeEach, afterEach, vi } from 'vitest';
+import { getConsent, setConsent, onConsentChange } from '@/lib/analytics/consent';
 
 const KEY = 'pc-power-consent';
 
@@ -24,5 +24,23 @@ describe('consent', () => {
   test('setConsent("denied") persists across getConsent calls', () => {
     setConsent('denied');
     expect(getConsent()).toBe('denied');
+  });
+});
+
+describe('onConsentChange', () => {
+  test('notifies the listener when the consent state is written', () => {
+    const listener = vi.fn();
+    const off = onConsentChange(listener);
+    setConsent('granted');
+    expect(listener).toHaveBeenCalledTimes(1);
+    off();
+  });
+
+  test('stops notifying after the unsubscribe function is called', () => {
+    const listener = vi.fn();
+    const off = onConsentChange(listener);
+    off();
+    setConsent('denied');
+    expect(listener).not.toHaveBeenCalled();
   });
 });

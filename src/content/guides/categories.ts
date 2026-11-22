@@ -4,6 +4,15 @@ import type { GuideCategory } from './types';
 
 export interface GuideCategoryStyle {
   label: string;
+  /**
+   * The short name, for the places a phone is too narrow for the full one.
+   *
+   * Why: the hero chips carry an icon tile, and at 320px the full labels
+   * ("Hardware deep-dives") cannot share a row with one — the pair needs
+   * 261px in a 251px row. The short names fit two to a row with the tile
+   * intact, and the full names still appear in the filter row right below.
+   */
+  short: string;
   blurb: string;
   /** Tailwind classes for the icon tile behind the guide icon. */
   tile: string;
@@ -50,6 +59,7 @@ export interface GuideCategoryStyle {
 export const GUIDE_CATEGORY_STYLES: Record<GuideCategory, GuideCategoryStyle> = {
   power: {
     label: 'Power & electricity',
+    short: 'Power',
     blurb:
       'How much a build draws, what the power supply does with it, and what it costs to run.',
     tile: 'bg-brand/10',
@@ -62,6 +72,7 @@ export const GUIDE_CATEGORY_STYLES: Record<GuideCategory, GuideCategoryStyle> = 
   },
   hardware: {
     label: 'Hardware deep-dives',
+    short: 'Hardware',
     blurb:
       'What each part of a PC is, what it does, and why it draws the watts it draws.',
     tile: 'bg-sky-100 dark:bg-sky-500/20',
@@ -74,6 +85,7 @@ export const GUIDE_CATEGORY_STYLES: Record<GuideCategory, GuideCategoryStyle> = 
   },
   billing: {
     label: 'Electricity billing',
+    short: 'Billing',
     blurb: 'Slabs, duty and fixed charges — how an Indian bill is actually built.',
     tile: 'bg-emerald-100 dark:bg-emerald-500/20',
     icon: 'text-emerald-800 dark:text-emerald-300',
